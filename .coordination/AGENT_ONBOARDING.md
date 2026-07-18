@@ -8,10 +8,11 @@ Bất kể bạn là agent gì (Antigravity, Claude Code, hoặc con người t�
 
 1. Đọc `BRIEF.md` — hiểu mục tiêu, constraints, non-goals.
 2. Đọc `TASKS.md` — biết có gì đang active, ai đang làm gì.
-3. Đọc 5 entry cuối của `DECISIONS.md` — nắm quyết định kiến trúc mới nhất.
+3. Đọc 5 entry cuối của `DECISIONS.md` — nắm quyết định kiến trúc mới nhất (đặc biệt D-004: `docs/KE_HOACH_PHAT_TRIEN_HOMESTAY.md` là nguồn sự thật scope/phase hiện tại, không phải `docs/ARCHITECTURE.md` gốc).
 4. Đọc `reports/{your-agent-name}.md` — session trước mình làm đến đâu, có blocker gì chưa resolve.
+5. Chạy `git config core.hooksPath .githooks` (idempotent — an toàn chạy lại) để bật commit-msg/pre-commit hook của repo. Xem `.githooks/README.md`.
 
-Nếu 1 trong 4 file trên thiếu / rỗng / không parse được → **STOP, escalate coordinator.** Không được tự đoán.
+Nếu 1 trong 4 file ở bước 1-4 thiếu / rỗng / không parse được → **STOP, escalate coordinator.** Không được tự đoán.
 
 ---
 

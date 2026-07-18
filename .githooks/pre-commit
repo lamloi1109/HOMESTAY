@@ -1,0 +1,45 @@
+#!/bin/sh
+# Kỷ luật commit (docs/PROMPT_EXECUTOR_FABLE5.md): "Không commit code chưa
+# chạy lint + test local." Repo hiện là greenfield (chưa có package.json) —
+# hook này tự phát hiện tooling khi nó xuất hiện, và không chặn commit trước
+# đó (docs-only) khi chưa có gì để lint/test.
+
+set -e
+
+REPO_ROOT=$(git rev-parse --show-toplevel)
+cd "$REPO_ROOT"
+
+STAGED_APP_FILES=$(git diff --cached --name-only --diff-filter=ACM \
+  | grep -Ev '^(docs/|\.coordination/|WORKFLOW.*\.md$|README\.md$)' || true)
+
+if [ -z "$STAGED_APP_FILES" ]; then
+  # Chỉ đổi docs/coordination — không có gì để lint/test.
+  exit 0
+fi
+
+if [ ! -f package.json ]; then
+  echo "pre-commit: chưa có package.json — bỏ qua lint/test (chưa có tooling để chạy)." >&2
+  exit 0
+fi
+
+run_script() {
+  script_name="$1"
+  if node -e "process.exit(require('./package.json').scripts && require('./package.json').scripts['$script_name'] ? 0 : 1)" 2>/dev/null; then
+    if [ -f pnpm-lock.yaml ]; then runner="pnpm"
+    elif [ -f yarn.lock ]; then runner="yarn"
+    else runner="npm run"
+    fi
+    echo "pre-commit: chạy '$runner $script_name'..."
+    if ! $runner $script_name; then
+      echo "pre-commit: '$script_name' FAILED — commit bị chặn. Sửa lỗi trước khi commit." >&2
+      exit 1
+    fi
+  else
+    echo "pre-commit: không có script '$script_name' trong package.json — bỏ qua." >&2
+  fi
+}
+
+run_script lint
+run_script test
+
+exit 0

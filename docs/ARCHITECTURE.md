@@ -1,30 +1,55 @@
 # Kiến trúc Hệ thống OTA Homestay Thế hệ mới
 
-> **Phiên bản:** 1.0 — 2026-07-17
+> **Phiên bản:** 1.0 — 2026-07-17 (bản gốc, Fable 5 Orchestrator)
 > **Tác giả:** Fable 5 (Orchestrator)
-> **Trạng thái:** Bản thiết kế nền cho Task Decomposition ở `.coordination/TASKS.md`. Mọi thay đổi kiến trúc phải log vào `.coordination/DECISIONS.md`.
+
+> ## ⚠️ GHI CHÚ SUPERSEDE — 2026-07-18 (xem D-004 trong `.coordination/DECISIONS.md`)
+> Toàn bộ tài liệu bên dưới mô tả kiến trúc **v1 "big design"** ban đầu (Redis
+> Redlock, Kafka, PayOS, e-KYC, RPA C06, multi-OTA channel manager) — đây KHÔNG
+> còn là scope MVP. Nguồn sự thật hiện tại về scope/phase là
+> **`/docs/KE_HOACH_PHAT_TRIEN_HOMESTAY.md`**, bản đã hiệu chỉnh sau thẩm định D3
+> (loại bỏ giả định chưa kiểm chứng, đặc biệt là RPA auto-submit C06).
+>
+> **Đối chiếu nhanh — phần nào của tài liệu này áp dụng cho MVP (Phase 1-6) và
+> phần nào dời sang Phase 7+:**
+>
+> | Phần trong tài liệu này | MVP (Phase 1-6) | Phase 7+ |
+> |---|---|---|
+> | §1 Stack: Next.js, PostgreSQL | ✅ Giữ nguyên | — |
+> | §1 Stack: Redis Redlock | ❌ MVP dùng Postgres `SELECT ... FOR UPDATE` + optimistic lock, không Redis | ✅ Bật khi lưu lượng thật sự cần (đã có interface `LockService` để swap) |
+> | §1 Stack: Kafka + outbox pattern | ❌ Không có ở MVP (cron job + Postgres là đủ ở quy mô vài căn) | ✅ Khi cần đồng bộ nhiều hệ thống/OTA thời gian thực |
+> | §1 Stack: PayOS | ❌ MVP dùng **VNPay + Momo** (redirect flow) | ✅ VietQR động (PayOS/Casso) |
+> | §3 Channel Manager (Booking.com/Agoda) | ❌ Non-goal MVP | ✅ Ưu tiên #1 khi khách mở rộng nhiều căn |
+> | §4 e-KYC (envelope encryption, 2 provider) | ❌ Non-goal MVP | ✅ Khi khách cần self-check-in không người trực |
+> | §5 Khai báo C06 — Kênh 2 (RPA bot Playwright) | ❌ **Đã loại bỏ** — MVP chỉ xuất dữ liệu chuẩn để chủ nhà tự nhập VNeID/Cổng DVC/ASM, không tự động điền form | Cân nhắc lại ở Phase 7+ chỉ nếu có API/kết nối chính thức xác nhận được (Kênh 1) |
+> | §5 Khai báo C06 — Kênh 1 (API/kết nối chính thức ASM) | ✅ Giữ làm hướng hỗ trợ khai báo, không tự động hóa toàn phần | — |
+> | §6 Multi-tenant (`organizations` là tenant gốc) | ✅ **Có** — KE_HOACH Phase 1 thiết kế multi-tenant từ đầu, ngược lại note "non-goal v1" cũ ở `BRIEF.md` (đã sửa, xem D-004) | — |
+>
+> Phần thiết kế kỹ thuật chi tiết bên dưới (Redlock flow, outbox, e-KYC fallback
+> chain, C06 RPA) vẫn có giá trị tham khảo cho Phase 7+ — không xóa, chỉ không
+> áp dụng cho MVP.
 
 ---
 
-## 1. Tổng quan hệ thống
+## 1. Tổng quan hệ thống (bối cảnh gốc — xem ghi chú supersede ở trên cho scope MVP hiện tại)
 
 **Bài toán:** Nền tảng OTA cho homestay Việt Nam, 3 cam kết cứng:
 1. **Không overbooking** — kể cả khi 2 khách bấm Book cùng lúc, hoặc booking đến từ OTA ngoài (Booking.com/Agoda) song song với booking nội bộ.
 2. **Không giá ảo** — giá khách thấy lúc quote = giá lúc thanh toán; server không bao giờ tin giá do client gửi lên.
-3. **Tuân thủ pháp lý** — khai báo lưu trú C06 (VNeID) đúng hạn, dữ liệu e-KYC mã hóa và quản lý theo Nghị định 13/2023 (PDPL) + QĐ 19/2026.
+3. **Tuân thủ pháp lý** — hỗ trợ khai báo lưu trú C06 (VNeID) đúng hạn, dữ liệu định danh khách mã hóa và quản lý theo Luật Bảo vệ dữ liệu cá nhân số 91/2025/QH15 (hiệu lực 1/1/2026).
 
-**Stack (frozen — xem D-001):**
+**Stack gốc (Phase 7+ target — xem bảng đối chiếu ở trên cho MVP):**
 
 | Tầng | Công nghệ | Vai trò |
 |---|---|---|
 | Frontend + BFF | Next.js 15 App Router (TypeScript) | UI Bento Grid, Server Actions/Route Handlers làm API |
-| CSDL chính | PostgreSQL 16 | Source of truth: bookings, inventory, users, e-KYC ciphertext |
-| Cache + Lock | Redis 7 (3 node cho Redlock) | Distributed lock, quote cache, hold TTL, rate limit |
-| Event bus | Kafka | Sự kiện booking/inventory → sync OTA, notification, C06 queue |
-| Thanh toán | PayOS | Payment link + webhook |
-| e-KYC | Provider chính + provider phụ (chọn ở T-010) | OCR/NFC CCCD |
+| CSDL chính | PostgreSQL 16 | Source of truth: bookings, inventory, users |
+| Cache + Lock | Redis 7 (3 node cho Redlock) — **Phase 7+** | Distributed lock, quote cache, hold TTL, rate limit |
+| Event bus | Kafka — **Phase 7+** | Sự kiện booking/inventory → sync OTA, notification, C06 queue |
+| Thanh toán | VNPay + Momo ở MVP; PayOS/VietQR động — **Phase 7+** | Payment link + webhook/IPN |
+| e-KYC | **Phase 7+** — Provider chính + provider phụ (chọn ở T-010) | OCR/NFC CCCD |
 
-**Nguyên tắc kiến trúc xuyên suốt (defense in depth):** Redis Redlock là *cổng điều phối* (giảm tranh chấp, giữ throughput), nhưng **bảo chứng cuối cùng chống overbooking là ràng buộc ở PostgreSQL** (EXCLUDE constraint). Nếu Redlock hỏng (clock drift, failover), hệ thống chậm đi chứ không sai. Xem D-002.
+**Nguyên tắc kiến trúc xuyên suốt (defense in depth) — áp dụng cho cả MVP lẫn Phase 7+:** dù tầng điều phối là Postgres row lock (MVP) hay Redis Redlock (Phase 7+), **bảo chứng cuối cùng chống overbooking luôn là ràng buộc ở PostgreSQL** (transaction + `FOR UPDATE`, nâng cấp lên EXCLUDE constraint khi cần). Nếu tầng điều phối hỏng, hệ thống chậm đi chứ không sai. Xem D-002.
 
 ---
 

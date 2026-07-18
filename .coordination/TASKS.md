@@ -5,6 +5,10 @@
 > 2. Mỗi task 1 branch theo convention: `{agent}/T-{id}-{slug}`.
 > 3. Sau mỗi session, append report vào `reports/{agent}.md`.
 > 4. Nếu 2 task có overlap trong `files_touched` → flag BLOCKED, escalate coordinator.
+> 5. **Mỗi task PHẢI gán `Phase` khớp với `docs/KE_HOACH_PHAT_TRIEN_HOMESTAY.md`**
+>    (0-6, hoặc 7+ cho mở rộng). Task không thuộc phase đang mở → không được
+>    claim, ghi vào `docs/backlog-observations.md` thay vì tạo task ở đây
+>    (xem D-004 trong `DECISIONS.md`).
 
 ---
 
@@ -23,6 +27,7 @@
 
 ### T-001 — [Title ngắn gọn]
 
+- **Phase:** [0-6 hoặc 7+, khớp KE_HOACH_PHAT_TRIEN_HOMESTAY.md]
 - **Status:** `todo`
 - **Owner:** —
 - **Branch:** —
@@ -42,6 +47,7 @@
 
 ### T-002 — [Title]
 
+- **Phase:** [0-6 hoặc 7+]
 - **Status:** `todo`
 - **Owner:** —
 - **Branch:** —

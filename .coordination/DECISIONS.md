@@ -167,3 +167,11 @@ cho phép test tự động (Tempering Phase 2) chạy độc lập UI.
 - CI sau này chạy 2 pipeline: pytest (backend) + lint/build (frontend).
 
 ---
+
+### D-006: Frontend guest — Be Vietnam Pro + lucide-react + SVG art placeholder thay ảnh
+- **Date:** 2026-07-19 | **Author:** claude-code (art direction do khách duyệt qua mockup, coordinator chuyển) | **Status:** active
+- **Why:** (1) Be Vietnam Pro thiết kế riêng cho tiếng Việt, đủ weight 400-800 khớp mockup; (2) lucide-react khớp cột `amenities.icon` đã seed tên icon lucide từ T-001; (3) chưa có upload ảnh (Phase 1 còn lại) → dùng SVG gradient/pattern ấm theo palette làm placeholder có chủ đích, tránh block UI vì thiếu ảnh.
+- **Alternatives rejected:** Inter/Roboto (không có cá tính, VN subset kém hơn); ảnh stock (bản quyền + không phải BĐS thật của khách).
+- **Affects:** T-002; task upload ảnh tương lai sẽ thay placeholder bằng ảnh thật.
+
+---

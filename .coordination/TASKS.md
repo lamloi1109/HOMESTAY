@@ -67,21 +67,26 @@
 
 ---
 
-### T-002 — [Title]
+### T-002 — Guest frontend theo art direction khách duyệt (cream/terracotta)
 
-- **Phase:** [0-6 hoặc 7+]
-- **Status:** `todo`
-- **Owner:** —
-- **Branch:** —
-- **Assigned type:** …
-- **Files touched:** …
-- **Depends on:** —
-- **Complexity:** …
+- **Phase:** 4 (Guest UX — kéo sớm theo chỉ đạo coordinator vì khách đã duyệt mockup; booking/payment flow đầy đủ vẫn theo Phase 2-3)
+- **Status:** `in_progress`
+- **Owner:** claude-code
+- **Branch:** `claude-code/T-002-guest-frontend`
+- **Assigned type:** `CLAUDE_CODE` (coordinator chỉ đạo trực tiếp; Antigravity sẽ tiếp quản UI admin sau)
+- **Files touched:** `frontend/src/**`, `backend/app/api/v1/catalog.py` + `backend/app/schemas/catalog.py` (expose rooms + available-rooms), `backend/tests/test_available_rooms.py` (mới)
+- **Depends on:** T-001
+- **Complexity:** L
 - **Acceptance criteria:**
-  - [ ] …
-- **Verification:** …
-- **Blocker:** —
-- **Updated:** YYYY-MM-DD HH:MM by …
+  - [ ] Theme theo mockup khách duyệt: nền kem, terracotta accent, Be Vietnam Pro, card bo tròn, tiếng Việt
+  - [ ] Trang chủ: hero + tìm kiếm, danh sách property từ API thật
+  - [ ] Trang chi tiết property: tiện ích theo nhóm, room types, chọn ngày → phòng trống (API available-rooms)
+  - [ ] Flow đặt phòng end-to-end: form → tạo booking pending → trang trạng thái có mã booking + đếm ngược 15 phút hold
+  - [ ] Tra cứu booking theo mã
+  - [ ] `npm run build` pass, backend pytest pass (test mới cho available-rooms)
+- **Verification:** `npm run build`; pytest backend; xem UI thật trên browser (screenshot)
+- **Blocker:** Chưa có upload ảnh property (Phase 1 việc còn lại) → dùng SVG art placeholder, thay bằng ảnh thật khi có T-00x upload ảnh
+- **Updated:** 2026-07-19 18:40 by claude-code
 
 ---
 

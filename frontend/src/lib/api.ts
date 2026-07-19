@@ -3,6 +3,9 @@
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://127.0.0.1:8000";
 
+/** URL tuyệt đối cho file tĩnh backend serve (vd /uploads/x.jpg). */
+export const assetUrl = (path: string) => `${API_BASE}${path}`;
+
 export interface Property {
   id: string;
   org_id: string;
@@ -12,6 +15,15 @@ export interface Property {
   address: string | null;
   city: string | null;
   status: "draft" | "active" | "inactive";
+  /** Chỉ có ở endpoint list — ảnh bìa (đường dẫn tương đối backend). */
+  cover_image?: string | null;
+}
+
+export interface PropertyImage {
+  id: string;
+  url: string;
+  alt: string | null;
+  sort_order: number;
 }
 
 export interface Amenity {
@@ -42,6 +54,7 @@ export interface RoomType {
 export interface PropertyDetail extends Property {
   room_types: RoomType[];
   amenities: Amenity[];
+  images: PropertyImage[];
 }
 
 export type BookingStatus =

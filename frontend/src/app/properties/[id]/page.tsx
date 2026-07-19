@@ -1,9 +1,9 @@
 import { notFound } from "next/navigation";
 import { MapPin } from "lucide-react";
-import { ApiError, fetchPropertyDetail, type Amenity } from "@/lib/api";
+import { ApiError, assetUrl, fetchPropertyDetail, type Amenity } from "@/lib/api";
 import { AmenityIcon } from "@/components/AmenityIcon";
 import { BookingWidget } from "@/components/BookingWidget";
-import { PropertyArt } from "@/components/PropertyArt";
+import { PropertyMedia } from "@/components/PropertyMedia";
 
 export const dynamic = "force-dynamic";
 
@@ -48,9 +48,30 @@ export default async function PropertyDetailPage({
     <main className="mx-auto max-w-4xl px-5 py-10">
       <div className="overflow-hidden rounded-3xl border border-line shadow-sm">
         <div className="aspect-[21/9]">
-          <PropertyArt name={property.name} />
+          <PropertyMedia
+            name={property.name}
+            imagePath={property.images[0]?.url}
+            alt={property.images[0]?.alt}
+          />
         </div>
       </div>
+      {property.images.length > 1 ? (
+        <div className="mt-3 grid grid-cols-4 gap-3">
+          {property.images.slice(1, 5).map((img) => (
+            <div
+              key={img.id}
+              className="aspect-[4/3] overflow-hidden rounded-xl border border-line"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={assetUrl(img.url)}
+                alt={img.alt ?? property.name}
+                className="h-full w-full object-cover"
+              />
+            </div>
+          ))}
+        </div>
+      ) : null}
 
       <div className="mt-6">
         <h1 className="text-3xl font-extrabold tracking-tight">

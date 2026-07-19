@@ -2,7 +2,7 @@ import Link from "next/link";
 import { MapPin } from "lucide-react";
 import type { Property } from "@/lib/api";
 import { formatVnd } from "@/lib/format";
-import { PropertyArt } from "@/components/PropertyArt";
+import { PropertyMedia } from "@/components/PropertyMedia";
 
 export function PropertyCard({
   property,
@@ -20,8 +20,9 @@ export function PropertyCard({
       className="group overflow-hidden rounded-2xl border border-line bg-surface shadow-sm transition-shadow hover:shadow-md"
     >
       <div className="aspect-[4/3] overflow-hidden">
-        <PropertyArt
+        <PropertyMedia
           name={property.name}
+          imagePath={property.cover_image}
           className="transition-transform duration-300 group-hover:scale-[1.03]"
         />
       </div>

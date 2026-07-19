@@ -59,3 +59,28 @@
 **Next step for next session:**
 - Coordinator review/merge chuỗi branch: T-000 → T-001 → T-002.
 - Đề xuất task mới: upload ảnh property (thay PropertyArt), trang admin skeleton (Antigravity), cron expire chạy nền, CI pipeline.
+
+## Session 2026-07-19 20:00
+
+**Tasks touched:** T-003
+**Status changes:**
+- T-003: (mới, claim) → review
+
+**Commits:**
+- f30b7dd [phase-1][feat]: property images — storage interface, upload/delete API, static serve, migration (T-003)
+- 85556c0 [phase-1][test]: property images RBAC + magic bytes + cover test (T-003)
+- 791c25e [phase-1][fix]: demo seed email .local -> example.com (T-003)
+- 89417c8 [phase-4][feat]: hien thi anh property tren card + detail, fallback SVG art (T-003)
+
+**Decisions made:** none (theo interface StorageService đã định trong D-005/D-006 hướng)
+
+**Blockers:** none
+
+**Ghi chú:**
+- Phát hiện + sửa bug T-001: seed email `owner@demo.local` bị email-validator chặn khi login → `owner@example.com`.
+- Docker Desktop và uvicorn bị tắt giữa session (máy user) — đã ghi memory: Docker phải start tay.
+- pytest 11/11; upload ảnh demo thật qua API, verify ảnh 200 trên UI browser.
+
+**Next step for next session:**
+- Coordinator merge chuỗi: T-000 → T-001 → T-002 → T-003.
+- Đề xuất tiếp: admin UI cho owner (upload ảnh không cần Swagger — giao Antigravity theo phân công), cron expire tự động, CI pipeline.

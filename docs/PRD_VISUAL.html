@@ -1,0 +1,598 @@
+<title>PRD Homestay — Bản trực quan</title>
+<style>
+  :root {
+    --paper: #F5F6F1;
+    --card: #FFFFFF;
+    --ink: #22302A;
+    --ink-soft: #5C6B62;
+    --line: #DDE2D9;
+    --pine: #1E5C44;
+    --pine-soft: #E4EEE7;
+    --amber: #C98A1B;
+    --amber-soft: #F7EDD8;
+    --good: #2E7D4F;
+    --warn: #B3641E;
+    --shadow: 0 1px 2px rgba(30, 48, 40, .06), 0 8px 24px rgba(30, 48, 40, .07);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #131A16;
+      --card: #1C2620;
+      --ink: #E7EDE7;
+      --ink-soft: #9CABA0;
+      --line: #2E3B33;
+      --pine: #6FC79A;
+      --pine-soft: #21332A;
+      --amber: #E3B159;
+      --amber-soft: #33291A;
+      --good: #6FC79A;
+      --warn: #E09A5A;
+      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="light"] {
+    --paper: #F5F6F1; --card: #FFFFFF; --ink: #22302A; --ink-soft: #5C6B62;
+    --line: #DDE2D9; --pine: #1E5C44; --pine-soft: #E4EEE7; --amber: #C98A1B;
+    --amber-soft: #F7EDD8; --good: #2E7D4F; --warn: #B3641E;
+    --shadow: 0 1px 2px rgba(30,48,40,.06), 0 8px 24px rgba(30,48,40,.07);
+  }
+  :root[data-theme="dark"] {
+    --paper: #131A16; --card: #1C2620; --ink: #E7EDE7; --ink-soft: #9CABA0;
+    --line: #2E3B33; --pine: #6FC79A; --pine-soft: #21332A; --amber: #E3B159;
+    --amber-soft: #33291A; --good: #6FC79A; --warn: #E09A5A;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.35);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+    line-height: 1.65;
+    font-size: 16.5px;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+  .wide { max-width: 980px; margin: 0 auto; padding: 0 24px; }
+
+  h1, h2, h3 { font-family: "Palatino Linotype", Cambria, "Times New Roman", serif; font-weight: 600; text-wrap: balance; line-height: 1.25; }
+  h2 { font-size: 1.75rem; margin: 0 0 .5rem; }
+  h3 { font-size: 1.15rem; margin: 0 0 .35rem; }
+  p { margin: 0 0 1rem; }
+  .muted { color: var(--ink-soft); }
+
+  .eyebrow {
+    display: inline-block; font-size: .74rem; font-weight: 600;
+    letter-spacing: .14em; text-transform: uppercase; color: var(--pine);
+    margin-bottom: .75rem;
+  }
+  section { padding: 56px 0; }
+  section + section { border-top: 1px solid var(--line); }
+
+  /* ---------- Hero ---------- */
+  header.hero { padding: 72px 0 60px; }
+  .draft-badge {
+    display: inline-flex; align-items: center; gap: .5em;
+    background: var(--amber-soft); color: var(--amber);
+    border: 1px solid var(--amber);
+    font-size: .78rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+    padding: .3em 1em; border-radius: 999px; margin-bottom: 1.5rem;
+  }
+  .draft-badge::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--amber); }
+  h1 {
+    font-size: clamp(2.1rem, 5.5vw, 3.1rem);
+    margin: 0 0 1rem;
+  }
+  h1 em { font-style: normal; color: var(--pine); }
+  .hero-sub { font-size: 1.15rem; color: var(--ink-soft); max-width: 34em; }
+  .hero-meta { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1.75rem; }
+  .chip {
+    background: var(--card); border: 1px solid var(--line); border-radius: 999px;
+    padding: .35em 1em; font-size: .85rem; color: var(--ink-soft);
+  }
+  .chip b { color: var(--ink); font-variant-numeric: tabular-nums; }
+
+  /* ---------- Pain cards ---------- */
+  .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 1.5rem; }
+  .card {
+    background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+    padding: 20px 22px; box-shadow: var(--shadow);
+  }
+  .card h3 { color: var(--ink); }
+  .card p { margin: 0; font-size: .95rem; color: var(--ink-soft); }
+
+  /* ---------- Checklist ---------- */
+  ul.checks { list-style: none; padding: 0; margin: 1.25rem 0 0; display: grid; gap: 10px; }
+  ul.checks li {
+    background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+    padding: 12px 16px 12px 46px; position: relative; font-size: .96rem;
+  }
+  ul.checks li::before {
+    content: "✓"; position: absolute; left: 16px; top: 11px;
+    color: var(--good); font-weight: 700;
+  }
+  ul.checks li b { font-variant-numeric: tabular-nums; }
+
+  /* ---------- Roles ---------- */
+  .roles { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; margin-top: 1.5rem; }
+  .role { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; }
+  .role .who { font-family: Georgia, serif; font-size: 1.1rem; font-weight: 600; color: var(--pine); }
+  .role p { font-size: .9rem; color: var(--ink-soft); margin: .4rem 0 0; }
+
+  /* ---------- Timeline ---------- */
+  .timeline { margin-top: 2rem; display: grid; gap: 0; }
+  .phase {
+    display: grid; grid-template-columns: 56px 1fr; gap: 18px; position: relative;
+    padding-bottom: 26px;
+  }
+  .phase:not(:last-child)::before {
+    content: ""; position: absolute; left: 27px; top: 44px; bottom: 0;
+    width: 2px; background: var(--line);
+  }
+  .phase .dot {
+    width: 56px; height: 44px; border-radius: 12px;
+    background: var(--pine-soft); color: var(--pine);
+    display: flex; align-items: center; justify-content: center;
+    font-family: Georgia, serif; font-weight: 700; font-size: 1.05rem;
+    border: 1px solid var(--line);
+  }
+  .phase.star .dot { background: var(--pine); color: #fff; border-color: var(--pine); }
+  :root[data-theme="dark"] .phase.star .dot, :root:not([data-theme="light"]) .phase.star .dot { color: var(--paper); }
+  .phase.gate .dot { background: var(--amber-soft); color: var(--amber); border-color: var(--amber); }
+  .phase h3 { margin-bottom: .2rem; }
+  .phase h3 .tag {
+    font-family: "Segoe UI", system-ui, sans-serif; font-size: .68rem; font-weight: 700;
+    letter-spacing: .1em; text-transform: uppercase; vertical-align: middle;
+    margin-left: .6em; padding: .2em .7em; border-radius: 999px;
+  }
+  .tag.core { background: var(--pine-soft); color: var(--pine); }
+  .tag.new { background: var(--amber-soft); color: var(--amber); }
+  .phase p { font-size: .94rem; color: var(--ink-soft); margin: 0; max-width: 40em; }
+
+  /* ---------- Phone wireframes ---------- */
+  .phones { display: flex; flex-wrap: wrap; gap: 24px; justify-content: center; margin-top: 2rem; }
+  .phone-col { text-align: center; }
+  .phone {
+    width: 218px; height: 420px; margin: 0 auto;
+    background: var(--card); border: 1px solid var(--line); border-radius: 26px;
+    box-shadow: var(--shadow); padding: 14px 12px; overflow: hidden;
+    display: flex; flex-direction: column; gap: 8px; text-align: left;
+    font-size: .62rem; line-height: 1.4; color: var(--ink-soft);
+  }
+  .phone .bar { height: 8px; border-radius: 6px; background: var(--pine-soft); }
+  .phone .bar.wide { width: 100%; } .phone .bar.mid { width: 70%; } .phone .bar.short { width: 45%; }
+  .phone .img {
+    border-radius: 10px; background:
+      linear-gradient(135deg, var(--pine-soft), var(--line));
+    display: flex; align-items: center; justify-content: center;
+    color: var(--ink-soft); font-size: 1.3rem;
+  }
+  .phone .row { display: flex; gap: 6px; flex-wrap: wrap; }
+  .phone .pill {
+    border: 1px solid var(--line); border-radius: 999px; padding: 2px 8px;
+    background: var(--paper); white-space: nowrap;
+  }
+  .phone .pill.on { background: var(--pine); color: #fff; border-color: var(--pine); }
+  .phone .box {
+    border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; background: var(--paper);
+  }
+  .phone .box .t { font-weight: 700; color: var(--ink); font-size: .66rem; }
+  .phone .ad {
+    border: 1.5px dashed var(--amber); background: var(--amber-soft);
+    border-radius: 10px; padding: 10px; text-align: center; color: var(--amber);
+    font-weight: 600; letter-spacing: .06em;
+  }
+  .phone .cta {
+    margin-top: auto; background: var(--pine); color: #fff; border-radius: 10px;
+    text-align: center; padding: 8px; font-weight: 700; font-size: .68rem;
+  }
+  .phone-col figcaption { margin-top: 12px; font-size: .85rem; color: var(--ink-soft); max-width: 230px; margin-left: auto; margin-right: auto; }
+  .phone-col figcaption b { color: var(--ink); }
+  figure { margin: 0; }
+
+  /* ---------- Decision cards ---------- */
+  .decision {
+    background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--amber);
+    border-radius: 14px; padding: 24px 26px; box-shadow: var(--shadow); margin-top: 20px;
+  }
+  .decision .qnum {
+    font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--amber); margin-bottom: .4rem;
+  }
+  .decision h3 { font-size: 1.25rem; }
+  .options { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin-top: 1rem; }
+  .option { border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; background: var(--paper); }
+  .option.rec { border-color: var(--pine); background: var(--pine-soft); }
+  .option .opt-label { font-weight: 700; font-size: .92rem; color: var(--ink); }
+  .option.rec .opt-label::after {
+    content: "Khuyến nghị"; font-size: .64rem; font-weight: 700; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--pine); border: 1px solid var(--pine);
+    border-radius: 999px; padding: .15em .6em; margin-left: .6em; vertical-align: middle;
+  }
+  .option p { font-size: .87rem; color: var(--ink-soft); margin: .35rem 0 0; }
+
+  /* ---------- Non-goals ---------- */
+  ul.non-goals { list-style: none; padding: 0; margin: 1.25rem 0 0; display: grid; gap: 8px; }
+  ul.non-goals li {
+    padding: 10px 14px 10px 42px; position: relative; font-size: .94rem;
+    color: var(--ink-soft); border-bottom: 1px dashed var(--line);
+  }
+  ul.non-goals li::before {
+    content: "—"; position: absolute; left: 14px; color: var(--warn); font-weight: 700;
+  }
+  ul.non-goals li b { color: var(--ink); font-weight: 600; }
+
+  /* ---------- Risk table ---------- */
+  .table-scroll { overflow-x: auto; margin-top: 1.25rem; }
+  table { border-collapse: collapse; width: 100%; min-width: 560px; font-size: .9rem; }
+  th { text-align: left; font-size: .72rem; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-soft); padding: 10px 14px; border-bottom: 2px solid var(--line); }
+  td { padding: 12px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .sev { font-weight: 700; white-space: nowrap; }
+  .sev.med { color: var(--warn); } .sev.low { color: var(--good); } .sev.high { color: var(--amber); }
+
+  /* ---------- Footer / gate ---------- */
+  .gate {
+    background: var(--pine); color: #fff; border-radius: 18px;
+    padding: 36px 32px; margin: 56px auto 72px; max-width: 760px;
+  }
+  :root[data-theme="dark"] .gate { color: var(--paper); }
+  .gate h2 { color: inherit; margin-bottom: .75rem; }
+  .gate ol { margin: 0; padding-left: 1.3em; display: grid; gap: .5rem; font-size: .98rem; }
+  .gate .note { margin-top: 1.25rem; font-size: .85rem; opacity: .85; }
+
+  footer.colophon { text-align: center; padding: 0 24px 48px; font-size: .8rem; color: var(--ink-soft); }
+
+  @media (max-width: 560px) {
+    section { padding: 44px 0; }
+    header.hero { padding: 52px 0 40px; }
+  }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="draft-badge">Bản nháp v0.1 — chờ chốt &amp; ký</span>
+    <h1>Kênh bán phòng <em>trực tiếp</em> cho homestay của bạn</h1>
+    <p class="hero-sub">Website đặt phòng riêng — khách tự tìm, tự đặt, tự thanh toán qua VNPay/Momo. Không trùng lịch, không mất hoa hồng OTA, kèm blog kéo khách từ Google.</p>
+    <div class="hero-meta">
+      <span class="chip"><b>0</b> double-booking</span>
+      <span class="chip">Giữ phòng <b>15 phút</b></span>
+      <span class="chip">Thanh toán <b>VNPay + Momo</b></span>
+      <span class="chip">Blog + SEO <b>+ AdSense</b></span>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <span class="eyebrow">Vấn đề hôm nay</span>
+    <h2>Bán phòng thủ công đang tốn của bạn những gì?</h2>
+    <div class="grid2">
+      <div class="card">
+        <h3>Trùng lịch</h3>
+        <p>Nhận đặt phòng qua Zalo, điện thoại, OTA cùng lúc — không gì bảo đảm hai khách không đặt trùng một phòng, một đêm.</p>
+      </div>
+      <div class="card">
+        <h3>Mất hoa hồng OTA</h3>
+        <p>Không có kênh bán trực tiếp, mỗi booking qua Booking/Agoda đều trích 15–20% hoa hồng.</p>
+      </div>
+      <div class="card">
+        <h3>Vận hành rời rạc</h3>
+        <p>Không có công cụ tập trung để quản lý phòng, đối soát thanh toán, xuất dữ liệu khai báo lưu trú.</p>
+      </div>
+      <div class="card">
+        <h3>Phụ thuộc lưu lượng OTA</h3>
+        <p>Không có kênh nội dung riêng (blog/SEO) — khách đến từ đâu hoàn toàn do OTA quyết định.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="eyebrow">Thước đo thành công</span>
+    <h2>Nghiệm thu bằng con số, không bằng cảm tính</h2>
+    <p class="muted">Mỗi tiêu chí dưới đây đều có test tự động hoặc kiểm chứng được trực tiếp trước khi bàn giao.</p>
+    <ul class="checks">
+      <li><b>0 trùng lịch</b> khi nhiều khách đặt cùng một phòng, một đêm cùng lúc — chỉ đúng 1 người thành công.</li>
+      <li>Đơn chưa thanh toán quá <b>15 phút</b> tự hủy và nhả phòng cho khách khác.</li>
+      <li>Chỉ xác nhận booking khi <b>cổng thanh toán báo tiền về</b> (VNPay/Momo IPN) — sai chữ ký là từ chối và ghi log.</li>
+      <li>Khách đặt phòng trọn gói <b>từ điện thoại thật</b>: tìm → đặt → thanh toán → nhận email xác nhận.</li>
+      <li>Khách <b>lọc được phòng theo tiện ích</b> cần: có bếp, máy giặt, bãi đỗ xe…</li>
+      <li>Blog đăng bài mới có chuẩn SEO, <b>không làm chậm</b> trang tìm phòng và đặt phòng.</li>
+      <li>Xuất được <b>100% dữ liệu khai báo lưu trú</b>; nhắc trước 21:00 nếu có khách check-in chưa xuất báo cáo.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="eyebrow">Ai dùng hệ thống</span>
+    <h2>Bốn vai trò, phân quyền rõ ràng</h2>
+    <div class="roles">
+      <div class="role">
+        <div class="who">Khách / Thành viên</div>
+        <p>Tìm phòng, đọc blog, đặt phòng, thanh toán, xem lịch sử chuyến đi.</p>
+      </div>
+      <div class="role">
+        <div class="who">Nhân viên</div>
+        <p>Check-in/out, cập nhật dọn phòng, xem danh sách booking trong ngày.</p>
+      </div>
+      <div class="role">
+        <div class="who">Chủ nhà</div>
+        <p>Quản lý căn hộ, giá phòng, doanh thu, đối soát; viết và duyệt bài blog.</p>
+      </div>
+      <div class="role">
+        <div class="who">Quản trị</div>
+        <p>Toàn quyền cấu hình hệ thống, quản lý vị trí quảng cáo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="eyebrow">Lộ trình</span>
+    <h2>7 chặng, mỗi chặng có cổng nghiệm thu</h2>
+    <p class="muted">Chặng sau chỉ mở khi chặng trước đạt tiêu chí. Hai chặng đánh dấu đậm là lõi kỹ thuật quan trọng nhất.</p>
+    <div class="timeline">
+      <div class="phase gate">
+        <div class="dot">0</div>
+        <div>
+          <h3>Chốt PRD &amp; ký hợp đồng <span class="tag new">Đang ở đây</span></h3>
+          <p>Bạn trả lời 3 câu hỏi bên dưới → ký PRD → tạm ứng 20% → bắt đầu.</p>
+        </div>
+      </div>
+      <div class="phase">
+        <div class="dot">1</div>
+        <div>
+          <h3>Nền móng</h3>
+          <p>Cấu trúc dữ liệu: tổ chức → căn hộ → loại phòng → phòng. Bổ sung danh mục <b>tiện ích chuẩn hóa</b> (tên + icon + nhóm) để trang khách lọc/tìm được.</p>
+        </div>
+      </div>
+      <div class="phase star">
+        <div class="dot">2</div>
+        <div>
+          <h3>Lõi đặt phòng <span class="tag core">Trọng tâm</span></h3>
+          <p>Chống trùng lịch bằng khóa dữ liệu ở tầng cơ sở dữ liệu — nơi quyết định tiêu chí "0 double-booking".</p>
+        </div>
+      </div>
+      <div class="phase star">
+        <div class="dot">3</div>
+        <div>
+          <h3>Thanh toán <span class="tag core">Trọng tâm</span></h3>
+          <p>VNPay + Momo. Tiền về mới xác nhận đơn; sổ cái ghi kép để đối soát chính xác từng đồng.</p>
+        </div>
+      </div>
+      <div class="phase">
+        <div class="dot">4</div>
+        <div>
+          <h3>Trải nghiệm khách <span class="tag new">Mở rộng mới</span></h3>
+          <p>Trang tìm phòng, chi tiết căn hộ với tiện ích theo nhóm, lọc theo tiện ích. <b>Mới:</b> blog SEO + quảng cáo AdSense (chỉ trên blog).</p>
+        </div>
+      </div>
+      <div class="phase">
+        <div class="dot">5</div>
+        <div>
+          <h3>Vận hành</h3>
+          <p>Công cụ cho nhân viên và chủ nhà: check-in/out, dọn phòng, doanh thu, xuất dữ liệu khai báo lưu trú.</p>
+        </div>
+      </div>
+      <div class="phase">
+        <div class="dot">6</div>
+        <div>
+          <h3>Kiểm thử &amp; bàn giao</h3>
+          <p>Rà soát bảo mật, chạy thử với người dùng thật, triển khai chính thức. Hồ sơ AdSense nộp sớm từ chặng 4–5 vì Google duyệt mất vài ngày tới vài tuần.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wide">
+    <div class="wrap" style="padding: 0;">
+      <span class="eyebrow">Hình dung sản phẩm</span>
+      <h2>Ba màn hình nói thay ba quyết định</h2>
+      <p class="muted">Phác thảo minh họa — thiết kế chi tiết sẽ làm sau khi ký. Mỗi màn hình gắn với một câu hỏi ở phần kế tiếp.</p>
+    </div>
+    <div class="phones">
+      <figure class="phone-col">
+        <div class="phone">
+          <div class="box"><span class="t">Đà Lạt · 24–26/07 · 2 khách</span></div>
+          <div class="row"><span class="pill">Giá</span><span class="pill on">Tiện ích</span><span class="pill">Sắp xếp</span></div>
+          <div class="box">
+            <span class="t">Lọc theo tiện ích</span><br>
+            Bếp riêng ✓ &nbsp; Máy giặt ✓<br>
+            Bãi đỗ xe ✓ &nbsp; Ban công ☐
+          </div>
+          <div class="img" style="height:64px;">🏡</div>
+          <div class="bar wide"></div>
+          <div class="bar mid"></div>
+          <div class="img" style="height:64px;">🌲</div>
+          <div class="bar wide"></div>
+          <div class="cta">Áp dụng (12 kết quả)</div>
+        </div>
+        <figcaption><b>Tìm theo tiện ích.</b> Khách tick "có bếp, có máy giặt" và thấy ngay phòng phù hợp — cần danh mục tiện ích chuẩn hóa (câu hỏi 3).</figcaption>
+      </figure>
+      <figure class="phone-col">
+        <div class="phone">
+          <div class="img" style="height:90px;">🖼️ 1/12</div>
+          <div class="bar wide"></div>
+          <div class="bar short"></div>
+          <div class="box">
+            <span class="t">Tiện ích</span><br>
+            <b>Cơ bản:</b> Wifi · Điều hòa · TV<br>
+            <b>Bếp:</b> Bếp riêng · Tủ lạnh · Máy giặt<br>
+            <b>Khác:</b> Bãi đỗ xe · Ban công
+          </div>
+          <div class="box">
+            <span class="t">Phòng đôi view vườn</span><br>
+            2 khách · 1 giường đôi<br>
+            850.000 ₫/đêm
+          </div>
+          <div class="cta">Đặt phòng</div>
+        </div>
+        <figcaption><b>Trang căn hộ.</b> Tiện ích hiển thị theo nhóm có icon, khách yên tâm trước khi bấm đặt.</figcaption>
+      </figure>
+      <figure class="phone-col">
+        <div class="phone">
+          <div class="bar mid"></div>
+          <div class="img" style="height:76px;">📝</div>
+          <div class="bar wide"></div>
+          <div class="bar wide"></div>
+          <div class="bar mid"></div>
+          <div class="ad">Quảng cáo</div>
+          <div class="bar wide"></div>
+          <div class="bar short"></div>
+          <div class="box">
+            <span class="t">Đặt phòng tại Mộc Homestay</span><br>
+            từ 850.000 ₫/đêm → Xem phòng
+          </div>
+        </div>
+        <figcaption><b>Blog + quảng cáo.</b> Ads chỉ nằm trong bài viết, có nhãn rõ ràng — không bao giờ chen vào luồng đặt phòng (câu hỏi 1 &amp; 2).</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="eyebrow">Cần bạn quyết</span>
+    <h2>Ba câu hỏi để ký được PRD</h2>
+    <p class="muted">Đây là mục duy nhất chặn việc ký. Mỗi câu có hai phương án kèm khuyến nghị của đội phát triển.</p>
+
+    <div class="decision">
+      <div class="qnum">Câu hỏi 1 · Blog</div>
+      <h3>Ai đăng bài blog trong giai đoạn đầu?</h3>
+      <div class="options">
+        <div class="option rec">
+          <div class="opt-label">Dev đăng giúp (markdown tĩnh)</div>
+          <p>Bạn gửi nội dung, đội phát triển đưa lên. Đủ cho vài bài mỗi tháng, chi phí thấp, không làm chậm tiến độ chặng 4. Nâng cấp lên trang quản trị ở giai đoạn sau khi cần đăng thường xuyên.</p>
+        </div>
+        <div class="option">
+          <div class="opt-label">Trang quản trị tự đăng ngay</div>
+          <p>Bạn tự soạn và đăng bài qua giao diện quản trị. Chủ động hơn nhưng tăng đáng kể khối lượng chặng 4: cần trang soạn thảo, quản lý bài, chuyên mục, ảnh.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="decision">
+      <div class="qnum">Câu hỏi 2 · Quảng cáo</div>
+      <h3>Quảng cáo AdSense đặt ở đâu?</h3>
+      <div class="options">
+        <div class="option rec">
+          <div class="opt-label">Chỉ trên trang blog</div>
+          <p>Bảo vệ tốc độ tải và tỷ lệ khách bấm "Đặt phòng". Blog không nằm trong luồng mua nên rủi ro thấp.</p>
+        </div>
+        <div class="option">
+          <div class="opt-label">Cả trang tìm phòng / căn hộ</div>
+          <p>Thêm chỗ hiển thị ads nhưng làm chậm trang và có thể giảm số khách đặt thành công — cần bạn chấp nhận rủi ro này bằng văn bản.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="decision">
+      <div class="qnum">Câu hỏi 3 · Tiện ích</div>
+      <h3>Tiện ích căn hộ khai báo kiểu nào?</h3>
+      <div class="options">
+        <div class="option rec">
+          <div class="opt-label">Danh mục chuẩn (chọn từ danh sách)</div>
+          <p>Mỗi tiện ích có tên + icon + nhóm thống nhất. Nhờ vậy khách mới lọc được "có bếp, có máy giặt" như màn hình minh họa ở trên.</p>
+        </div>
+        <div class="option">
+          <div class="opt-label">Tự gõ tùy ý</div>
+          <p>Linh hoạt nhưng mỗi nhà gõ một kiểu ("máy giặt" / "washing machine" / "giặt sấy") — bộ lọc tìm kiếm gần như không dùng được.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="eyebrow">Ranh giới phạm vi</span>
+    <h2>Những gì MVP chưa làm (để giữ tiến độ &amp; ngân sách)</h2>
+    <p class="muted">Các mục này đưa vào giai đoạn mở rộng sau khi hệ thống chạy ổn — không phải "không bao giờ làm".</p>
+    <ul class="non-goals">
+      <li><b>Đồng bộ Airbnb / Booking / Agoda</b> (Channel Manager) — giai đoạn 7+.</li>
+      <li><b>Ví escrow + tự động hoàn tiền</b> — giai đoạn 7+.</li>
+      <li><b>Quét CCCD e-KYC</b> — giai đoạn 7+.</li>
+      <li><b>Tự động nộp khai báo lưu trú C06</b> — hệ thống chỉ hỗ trợ xuất dữ liệu; việc khai báo thuộc chủ cơ sở.</li>
+      <li><b>Đặt phòng theo giờ</b> — MVP chỉ theo ngày và qua đêm.</li>
+      <li><b>Khóa cửa thông minh, gửi PIN qua Zalo OA</b>.</li>
+      <li><b>Ứng dụng mobile riêng</b> — website đã tối ưu đầy đủ cho điện thoại.</li>
+      <li><b>Trang quản trị blog đầy đủ</b> (soạn thảo nâng cao, duyệt bài nhiều người) — trừ khi bạn chọn phương án B ở câu hỏi 1.</li>
+      <li><b>Quảng cáo ngoài trang blog</b> — trừ khi bạn chọn phương án B ở câu hỏi 2.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="eyebrow">Minh bạch rủi ro</span>
+    <h2>Rủi ro từ yêu cầu blog + quảng cáo</h2>
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr><th>Rủi ro</th><th>Mức</th><th>Cách giảm thiểu</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Quảng cáo làm chậm trang, giảm điểm SEO của chính blog</td>
+            <td class="sev med">Trung bình</td>
+            <td>Ads chỉ ở blog, tải trễ (lazy-load), tuyệt đối không trên luồng đặt phòng</td>
+          </tr>
+          <tr>
+            <td>Google duyệt AdSense chậm hoặc từ chối (site mới, ít truy cập)</td>
+            <td class="sev med">Trung bình</td>
+            <td>Nộp hồ sơ sớm từ chặng 4–5; blog vẫn chạy tốt kể cả khi ads chưa được duyệt</td>
+          </tr>
+          <tr>
+            <td>Blog cần người viết bài liên tục — ai chịu trách nhiệm nội dung?</td>
+            <td class="sev high">Trung–Cao</td>
+            <td>Cần thống nhất rõ: đội phát triển làm hạ tầng, nội dung do phía chủ nhà đảm nhận</td>
+          </tr>
+          <tr>
+            <td>Hai nguồn thu (booking + ads) làm rối báo cáo doanh thu</td>
+            <td class="sev low">Thấp</td>
+            <td>Doanh thu ads xem trực tiếp trên Google AdSense, tách hoàn toàn khỏi sổ sách booking</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="eyebrow">Nền tảng &amp; pháp lý</span>
+    <h2>Cam kết kỹ thuật và tuân thủ</h2>
+    <div class="grid2">
+      <div class="card">
+        <h3>Công nghệ</h3>
+        <p>Next.js + TypeScript, cơ sở dữ liệu PostgreSQL với cơ chế khóa chống trùng lịch. Thanh toán VNPay + Momo (chuyển hướng sang cổng an toàn). Kiến trúc gọn cho MVP, mở rộng được về sau.</p>
+      </div>
+      <div class="card">
+        <h3>Pháp lý</h3>
+        <p>Tuân thủ Luật Bảo vệ dữ liệu cá nhân 91/2025/QH15 (hiệu lực 1/1/2026) cho thông tin khách lưu trú. Có trang Privacy Policy/Cookie theo yêu cầu của Google AdSense. Hỗ trợ xuất dữ liệu khai báo lưu trú.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="gate">
+  <h2>Bước tiếp theo</h2>
+  <ol>
+    <li>Bạn chọn phương án cho <b>3 câu hỏi</b> ở trên (mỗi câu đã có khuyến nghị).</li>
+    <li>Hai bên ký xác nhận PRD này.</li>
+    <li>Tạm ứng <b>20%</b> theo kế hoạch chặng 0.</li>
+    <li>Đội phát triển bắt đầu chặng 1 — Nền móng.</li>
+  </ol>
+  <p class="note">Tài liệu nguồn: PRD v0.1 (18/07/2026) · Kế hoạch phát triển homestay · Chưa ký = chưa bắt đầu code.</p>
+</div>
+
+<footer class="colophon">
+  PRD trực quan v0.1 — dựng từ docs/PRD.md · Wireframe chỉ mang tính minh họa
+</footer>

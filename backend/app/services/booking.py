@@ -280,6 +280,38 @@ async def expire_pending_bookings(session: AsyncSession) -> int:
     return len(stale_ids)
 
 
+async def get_available_rooms(
+    session: AsyncSession, room_type_id: uuid.UUID, check_in: date, check_out: date
+) -> list[Room]:
+    """Các phòng active của room_type còn trống TRỌN khoảng [check_in, check_out).
+
+    Read-only cho UI chọn phòng — nguồn sự thật cuối vẫn là create_booking
+    (lock + unique constraint), nên kết quả này chỉ mang tính hiển thị.
+    """
+    if check_in >= check_out:
+        return []
+    held_room_ids = (
+        select(BookingNight.room_id)
+        .join(Booking, Booking.id == BookingNight.booking_id)
+        .where(
+            BookingNight.night >= check_in,
+            BookingNight.night < check_out,
+            Booking.status.in_(HOLDING_STATUSES),
+            (Booking.status != BookingStatus.pending) | (Booking.expires_at >= _now()),
+        )
+    )
+    result = await session.execute(
+        select(Room)
+        .where(
+            Room.room_type_id == room_type_id,
+            Room.status == RoomStatus.active,
+            Room.id.not_in(held_room_ids),
+        )
+        .order_by(Room.code)
+    )
+    return list(result.scalars().all())
+
+
 async def get_unavailable_nights(
     session: AsyncSession, room_id: uuid.UUID, date_from: date, date_to: date
 ) -> list[date]:

@@ -82,8 +82,12 @@ class RoomOut(BaseModel):
     status: RoomStatus
 
 
+class RoomTypeDetailOut(RoomTypeOut):
+    rooms: list[RoomOut] = []
+
+
 class PropertyDetailOut(PropertyOut):
-    room_types: list[RoomTypeOut] = []
+    room_types: list[RoomTypeDetailOut] = []
     amenities: list[AmenityOut] = []
 
 

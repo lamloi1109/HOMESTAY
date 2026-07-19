@@ -1,4 +1,5 @@
 import uuid
+from datetime import date
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy import select
@@ -24,9 +25,11 @@ from app.schemas.catalog import (
     RoomCreate,
     RoomOut,
     RoomTypeCreate,
+    RoomTypeDetailOut,
     RoomTypeOut,
     SetAmenitiesRequest,
 )
+from app.services.booking import get_available_rooms
 
 router = APIRouter(tags=["catalog"])
 
@@ -70,7 +73,7 @@ async def property_detail(property_id: uuid.UUID, db: AsyncSession = Depends(get
         select(Property)
         .where(Property.id == property_id)
         .options(
-            selectinload(Property.room_types),
+            selectinload(Property.room_types).selectinload(RoomType.rooms),
             selectinload(Property.amenities).selectinload(PropertyAmenity.amenity),
         )
     )
@@ -78,7 +81,7 @@ async def property_detail(property_id: uuid.UUID, db: AsyncSession = Depends(get
         raise HTTPException(status.HTTP_404_NOT_FOUND, "Property không tồn tại")
     return PropertyDetailOut(
         **PropertyOut.model_validate(prop).model_dump(),
-        room_types=[RoomTypeOut.model_validate(rt) for rt in prop.room_types],
+        room_types=[RoomTypeDetailOut.model_validate(rt) for rt in prop.room_types],
         amenities=[AmenityOut.model_validate(pa.amenity) for pa in prop.amenities],
     )
 
@@ -122,6 +125,20 @@ async def create_room(
     db.add(room)
     await db.commit()
     return room
+
+
+@router.get("/room-types/{room_type_id}/available-rooms", response_model=list[RoomOut])
+async def available_rooms(
+    room_type_id: uuid.UUID,
+    check_in: date,
+    check_out: date,
+    db: AsyncSession = Depends(get_db),
+):
+    """Phòng còn trống trọn khoảng ngày — UI dùng để chọn phòng trước khi đặt."""
+    room_type = await db.get(RoomType, room_type_id)
+    if room_type is None:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, "Room type không tồn tại")
+    return await get_available_rooms(db, room_type_id, check_in, check_out)
 
 
 @router.get("/amenities", response_model=list[AmenityOut])

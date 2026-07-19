@@ -41,9 +41,10 @@ Hệ thống này là nền tảng đặt phòng + quản lý vận hành cho ho
 > **loại bỏ** — KE_HOACH Phase 1 thiết kế multi-tenant (`organizations` là
 > tenant gốc) ngay từ đầu, vì đây là phần nền móng đắt nhất nếu sửa sau.
 
-## Tech stack — MVP (xem D-004; bản gốc "frozen D-001" nay là target Phase 7+)
+## Tech stack — MVP (xem D-004, D-005; bản gốc "frozen D-001" nay là target Phase 7+)
 
-- **Frontend + BFF:** Next.js App Router, TypeScript
+- **Frontend:** Next.js App Router, TypeScript (chỉ frontend — không kiêm BFF, xem D-005)
+- **Backend API:** Python FastAPI + SQLAlchemy 2.0 + Alembic (D-005)
 - **Backend data:** PostgreSQL — soft-hold lock (`FOR UPDATE`) + optimistic `version` lock. Redis/Redlock **không** dùng ở MVP, chỉ chừa interface `LockService` để swap ở Phase 7+.
 - **Thanh toán:** VNPay + Momo (redirect flow). VietQR động (PayOS/Casso) là Phase 7+.
 - **e-KYC:** không có ở MVP (Phase 7+, chốt vendor sau).

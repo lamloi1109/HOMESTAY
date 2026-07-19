@@ -121,3 +121,49 @@ giá trị kỹ thuật khi hệ thống mở rộng thật.
   kế gốc — không tự ý trộn 2 kiến trúc.
 
 ---
+
+## D-005: Tách backend Python FastAPI riêng — Next.js chỉ làm frontend
+
+- **Date:** 2026-07-19
+- **Author:** human (coordinator chỉ đạo trực tiếp) + claude-code
+- **Status:** active
+- **Supersedes:** một phần D-004/BRIEF mục Tech stack ("Frontend + BFF: Next.js" — Next.js không còn kiêm BFF/backend).
+
+**Context:**
+Coordinator quyết định bắt đầu code phần lõi (core) của hệ thống — phần không
+đổi dù khách chốt scope thế nào — và chỉ định stack: backend Python FastAPI,
+frontend Next.js, database PostgreSQL. BRIEF/D-004 trước đó ngầm định Next.js
+fullstack (App Router + BFF, API routes trong cùng codebase).
+
+**Options considered:**
+1. **Next.js fullstack (giữ nguyên D-004)** — 1 codebase, 1 deploy.
+   - Pros: ít repo/process hơn, không cần CORS/API contract riêng.
+   - Cons: booking engine + lock + ledger viết bằng TS trong API routes khó
+     test race condition độc lập; Python ecosystem (SQLAlchemy/Alembic/pytest)
+     mạnh hơn cho transaction-heavy domain; coordinator muốn tách.
+2. **FastAPI backend + Next.js frontend-only (chọn)** — tách 2 service.
+   - Pros: backend lõi (lock, booking, ledger, RBAC) độc lập, test được bằng
+     pytest chạy thẳng vào Postgres; frontend/UI (Antigravity) và backend
+     (Claude Code) làm song song không giẫm file; đúng chỉ đạo coordinator.
+   - Cons: thêm CORS, API contract, 2 process khi dev (docker-compose bù lại).
+
+**Decision:**
+Chọn Option 2. Cấu trúc repo: `backend/` (FastAPI + SQLAlchemy 2.0 async +
+Alembic, PostgreSQL), `frontend/` (Next.js App Router, TypeScript),
+`docker-compose.yml` (Postgres dev). Toàn bộ nguyên tắc lock/booking của
+KE_HOACH Phase 2 giữ nguyên (Postgres `FOR UPDATE` + optimistic `version`,
+không Redis ở MVP, interface `LockService` để swap Phase 7+).
+
+**Rationale:**
+Chỉ đạo trực tiếp của coordinator; đồng thời phần lõi đắt nhất của hệ thống
+(booking engine chống race, sổ cái, RBAC) là transaction-heavy — tách riêng
+cho phép test tự động (Tempering Phase 2) chạy độc lập UI.
+
+**Consequences:**
+- BRIEF.md mục Tech stack và PRD.md mục 8 cập nhật theo (log tại đây).
+- SEO/SSR các trang public (property, blog) vẫn thuộc Next.js — frontend gọi
+  FastAPI qua HTTP; cần định nghĩa API contract (OpenAPI tự sinh từ FastAPI).
+- T-001 (core scaffold) tạo mới để thực thi decision này.
+- CI sau này chạy 2 pipeline: pytest (backend) + lint/build (frontend).
+
+---

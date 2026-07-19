@@ -28,7 +28,7 @@
 ### T-000 — Soạn PRD ngắn + chốt scope Phase 0
 
 - **Phase:** 0
-- **Status:** `in_progress`
+- **Status:** `review`
 - **Owner:** claude-code
 - **Branch:** `claude-code/T-000-phase0-prd`
 - **Assigned type:** `CLAUDE_CODE`
@@ -45,23 +45,25 @@
 
 ---
 
-### T-001 — [Title ngắn gọn]
+### T-001 — Core scaffold: FastAPI backend + Next.js frontend + Postgres (D-005)
 
-- **Phase:** [0-6 hoặc 7+, khớp KE_HOACH_PHAT_TRIEN_HOMESTAY.md]
-- **Status:** `todo`
-- **Owner:** —
-- **Branch:** —
-- **Assigned type:** `ANTIGRAVITY` | `CLAUDE_CODE` | `STITCH` | `HUMAN`
-- **Files touched:** `[src/pages/login.tsx, src/components/LoginForm.tsx]`
-- **Depends on:** — (hoặc `T-000`)
-- **Complexity:** S | M | L
+- **Phase:** 1
+- **Status:** `in_progress`
+- **Owner:** claude-code
+- **Branch:** `claude-code/T-001-core-scaffold`
+- **Assigned type:** `CLAUDE_CODE`
+- **Files touched:** `backend/**` (mới), `frontend/**` (mới), `docker-compose.yml` (mới), `README.md` (mới)
+- **Depends on:** — (T-000 đang review; coordinator chỉ đạo bắt đầu phần lõi — phần không đổi dù khách chốt scope thế nào)
+- **Complexity:** L
 - **Acceptance criteria:**
-  - [ ] AC1 — [đo được]
-  - [ ] AC2 — [đo được]
-  - [ ] Không console error, không network 4xx/5xx
-- **Verification:** [lệnh / URL / screenshot yêu cầu]
+  - [ ] Schema Phase 1 đầy đủ qua Alembic migration: organizations → properties → room_types → rooms; users + roles + user_org_roles (permission-based, seed 4 role); amenities + property_amenities; bookings; payments; ledger_entries (để trống); audit_logs
+  - [ ] Auth email/password (JWT) + RBAC dependency theo org hoạt động
+  - [ ] Booking core: create với `SELECT ... FOR UPDATE` + unique constraint (room_id, night); pending TTL 15 phút; optimistic `version`; interface `LockService`
+  - [ ] Test tự động pass: race condition (N request đồng thời → đúng 1 thành công), TTL expire nhả phòng, RBAC (staff không xem được doanh thu)
+  - [ ] `frontend/` Next.js App Router TS build được
+- **Verification:** `docker compose up -d db` + `pytest` trong `backend/` (all pass); `npm run build` trong `frontend/`
 - **Blocker:** —
-- **Updated:** YYYY-MM-DD HH:MM by [agent-name]
+- **Updated:** 2026-07-19 by claude-code
 
 ---
 

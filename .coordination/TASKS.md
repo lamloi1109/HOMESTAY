@@ -70,7 +70,7 @@
 ### T-002 — Guest frontend theo art direction khách duyệt (cream/terracotta)
 
 - **Phase:** 4 (Guest UX — kéo sớm theo chỉ đạo coordinator vì khách đã duyệt mockup; booking/payment flow đầy đủ vẫn theo Phase 2-3)
-- **Status:** `in_progress`
+- **Status:** `review`
 - **Owner:** claude-code
 - **Branch:** `claude-code/T-002-guest-frontend`
 - **Assigned type:** `CLAUDE_CODE` (coordinator chỉ đạo trực tiếp; Antigravity sẽ tiếp quản UI admin sau)
@@ -78,13 +78,13 @@
 - **Depends on:** T-001
 - **Complexity:** L
 - **Acceptance criteria:**
-  - [ ] Theme theo mockup khách duyệt: nền kem, terracotta accent, Be Vietnam Pro, card bo tròn, tiếng Việt
-  - [ ] Trang chủ: hero + tìm kiếm, danh sách property từ API thật
-  - [ ] Trang chi tiết property: tiện ích theo nhóm, room types, chọn ngày → phòng trống (API available-rooms)
-  - [ ] Flow đặt phòng end-to-end: form → tạo booking pending → trang trạng thái có mã booking + đếm ngược 15 phút hold
-  - [ ] Tra cứu booking theo mã
-  - [ ] `npm run build` pass, backend pytest pass (test mới cho available-rooms)
-- **Verification:** `npm run build`; pytest backend; xem UI thật trên browser (screenshot)
+  - [x] Theme theo mockup khách duyệt: nền kem, terracotta accent, Be Vietnam Pro, card bo tròn, tiếng Việt
+  - [x] Trang chủ: hero + tìm kiếm, danh sách property từ API thật
+  - [x] Trang chi tiết property: tiện ích theo nhóm, room types, chọn ngày → phòng trống (API available-rooms)
+  - [x] Flow đặt phòng end-to-end: form → tạo booking pending → trang trạng thái có mã booking + đếm ngược 15 phút hold (verify trên UI thật: mã BKCHTH72RD, countdown 14:57, availability giảm 2→1 real-time)
+  - [x] Tra cứu booking theo mã
+  - [x] `npm run build` + `npm run lint` pass, backend pytest 10/10 pass
+- **Verification:** pytest 10 passed; lint + build pass; flow đặt phòng chạy thật trên browser (accessibility tree — screenshot tool lỗi môi trường, không phải lỗi app)
 - **Blocker:** Chưa có upload ảnh property (Phase 1 việc còn lại) → dùng SVG art placeholder, thay bằng ảnh thật khi có T-00x upload ảnh
 - **Updated:** 2026-07-19 18:40 by claude-code
 

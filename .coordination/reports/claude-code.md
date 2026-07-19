@@ -36,3 +36,26 @@
 **Next step for next session:**
 - Coordinator review + merge 2 branch (T-000 → T-001).
 - Task kế tiếp đề xuất: T-002 admin skeleton UI (ANTIGRAVITY, cần Stitch mockup trước), T-003 upload ảnh property (S3-compatible), T-004 CI pipeline (pytest + next build), T-005 cron expire (Task Scheduler/container).
+
+## Session 2026-07-19 19:10
+
+**Tasks touched:** T-002
+**Status changes:**
+- T-002: (mới, claim) → review
+
+**Commits:**
+- 7fb980d chore(coord): claim T-002 guest frontend, log D-006
+- 571b008 [phase-2][feat]: available-rooms API + rooms in property detail, with tests (T-002)
+- a988e9b [phase-4][feat]: guest UI theo art direction khách duyệt (T-002)
+
+**Decisions made:** D-006 (Be Vietnam Pro + lucide-react + SVG art placeholder)
+
+**Blockers:** none. Lưu ý: chưa có upload ảnh property → UI dùng SVG art placeholder (mái ngói, tông màu theo tên property); task upload ảnh sẽ thay bằng ảnh thật.
+
+**Verification:**
+- pytest 10/10 (thêm test_available_rooms), npm lint + build pass.
+- Flow đặt phòng chạy thật trên browser: chọn ngày → còn N phòng → form → mã booking + countdown 15' → availability giảm real-time.
+
+**Next step for next session:**
+- Coordinator review/merge chuỗi branch: T-000 → T-001 → T-002.
+- Đề xuất task mới: upload ảnh property (thay PropertyArt), trang admin skeleton (Antigravity), cron expire chạy nền, CI pipeline.

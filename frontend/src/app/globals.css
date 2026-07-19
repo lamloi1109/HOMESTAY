@@ -1,26 +1,61 @@
 @import "tailwindcss";
 
+/* Art direction khách duyệt (mockup 2026-07-19): nền kem ấm, terracotta,
+   chữ nâu đậm, card trắng bo tròn. Thiết kế 1 theme sáng duy nhất — đúng mockup. */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #faf5ec;
+  --surface: #ffffff;
+  --ink: #2d2419;
+  --muted: #857157;
+  --terra: #c2511d;
+  --terra-deep: #9e3f12;
+  --line: #eadfce;
+  --wash: #f3eada;
+  --sage: #7c9885;
+  --lake: #5c8a8a;
+  --sand: #d9a05b;
+  --star: #e08f28;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-terra: var(--terra);
+  --color-terra-deep: var(--terra-deep);
+  --color-line: var(--line);
+  --color-wash: var(--wash);
+  --color-sage: var(--sage);
+  --color-lake: var(--lake);
+  --color-sand: var(--sand);
+  --color-star: var(--star);
+  --font-sans: var(--font-bvp);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-bvp), "Segoe UI", sans-serif;
+}
+
+::selection {
+  background: var(--terra);
+  color: #fff;
+}
+
+/* Focus rõ ràng cho bàn phím, theo màu thương hiệu */
+:focus-visible {
+  outline: 2px solid var(--terra);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }

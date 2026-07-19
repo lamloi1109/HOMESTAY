@@ -90,6 +90,28 @@
 
 ---
 
+### T-003 — Upload ảnh property (local storage, interface swap S3 sau)
+
+- **Phase:** 1 (mục "Property CRUD + upload ảnh" còn lại của Phase 1)
+- **Status:** `in_progress`
+- **Owner:** claude-code
+- **Branch:** `claude-code/T-003-property-images`
+- **Assigned type:** `CLAUDE_CODE`
+- **Files touched:** `backend/app/models/property.py`, `backend/app/services/storage.py` (mới), `backend/app/api/v1/catalog.py`, `backend/app/schemas/catalog.py`, `backend/migrations/versions/*` (mới), `backend/tests/test_property_images.py` (mới), `frontend/src/components/PropertyCard.tsx`, `frontend/src/components/PropertyMedia.tsx` (mới), `frontend/src/app/properties/[id]/page.tsx`, `frontend/src/lib/api.ts`
+- **Depends on:** T-002
+- **Complexity:** M
+- **Acceptance criteria:**
+  - [ ] Bảng `property_images` + migration; upload multipart (jpg/png/webp, ≤10MB) qua `POST /properties/{id}/images` yêu cầu `property:write`
+  - [ ] Ảnh serve tại `/uploads/*`; property detail + list trả kèm ảnh (cover); xóa ảnh được
+  - [ ] Storage qua interface (LocalDiskStorage) — swap S3-compatible ở phase sau không đụng API
+  - [ ] Test: staff bị 403, owner upload OK, ảnh xuất hiện trong detail, delete OK
+  - [ ] Frontend: card + hero dùng ảnh thật nếu có, fallback SVG art như cũ
+- **Verification:** pytest; upload ảnh thật qua API rồi thấy trên UI browser
+- **Blocker:** —
+- **Updated:** 2026-07-19 19:30 by claude-code
+
+---
+
 ## Done
 
 > Move task xuống đây sau khi merge. Giữ full metadata để truy vết.

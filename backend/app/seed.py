@@ -71,15 +71,15 @@ async def seed_core(session: AsyncSession) -> None:
 
 
 async def seed_demo(session: AsyncSession) -> None:
-    """Org + property + 2 phòng + owner demo (owner@demo.local / demo12345)."""
+    """Org + property + 2 phòng + owner demo (owner@example.com / demo12345)."""
     if await session.scalar(select(Organization).where(Organization.slug == "demo-homestay")):
         print("Demo org đã tồn tại — bỏ qua.")
         return
     owner_role = await session.scalar(select(Role).where(Role.code == "owner"))
-    user = await session.scalar(select(User).where(User.email == "owner@demo.local"))
+    user = await session.scalar(select(User).where(User.email == "owner@example.com"))
     if user is None:
         user = User(
-            email="owner@demo.local",
+            email="owner@example.com",
             hashed_password=hash_password("demo12345"),
             full_name="Chủ nhà Demo",
         )
@@ -119,7 +119,7 @@ async def seed_demo(session: AsyncSession) -> None:
         if amenity:
             session.add(PropertyAmenity(property_id=prop.id, amenity_id=amenity.id))
     await session.commit()
-    print("Seeded demo org/property/rooms. Login: owner@demo.local / demo12345")
+    print("Seeded demo org/property/rooms. Login: owner@example.com / demo12345")
 
 
 async def main() -> None:

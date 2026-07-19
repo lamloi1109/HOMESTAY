@@ -32,7 +32,7 @@ npm install
 npm run dev
 ```
 
-Tài khoản demo: `owner@demo.local` / `demo12345`.
+Tài khoản demo: `owner@example.com` / `demo12345`.
 
 > Lưu ý Windows: dùng `127.0.0.1` thay vì `localhost` khi trỏ Postgres —
 > `localhost` có thể resolve sang `::1` (IPv6) và treo với docker port-mapping.

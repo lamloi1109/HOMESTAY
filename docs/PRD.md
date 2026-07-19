@@ -120,9 +120,10 @@ mới nộp hồ sơ.
 4. *(các mục "..." khách đang cân nhắc thêm — bổ sung vào đây khi có, không
    tự đoán.)*
 
-## 8. Tech stack MVP (không đổi so với D-004/BRIEF.md)
+## 8. Tech stack MVP (D-004 + D-005)
 
-- Next.js App Router, TypeScript.
+- Frontend: Next.js App Router, TypeScript (SSR/SSG cho SEO property + blog).
+- Backend API: Python FastAPI + SQLAlchemy + Alembic (D-005).
 - PostgreSQL — soft-hold lock (`FOR UPDATE`) + optimistic `version`. Không
   Redis ở MVP.
 - VNPay + Momo (redirect flow) cho thanh toán.

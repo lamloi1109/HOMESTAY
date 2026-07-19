@@ -48,7 +48,7 @@
 ### T-001 — Core scaffold: FastAPI backend + Next.js frontend + Postgres (D-005)
 
 - **Phase:** 1
-- **Status:** `in_progress`
+- **Status:** `review`
 - **Owner:** claude-code
 - **Branch:** `claude-code/T-001-core-scaffold`
 - **Assigned type:** `CLAUDE_CODE`
@@ -56,14 +56,14 @@
 - **Depends on:** — (T-000 đang review; coordinator chỉ đạo bắt đầu phần lõi — phần không đổi dù khách chốt scope thế nào)
 - **Complexity:** L
 - **Acceptance criteria:**
-  - [ ] Schema Phase 1 đầy đủ qua Alembic migration: organizations → properties → room_types → rooms; users + roles + user_org_roles (permission-based, seed 4 role); amenities + property_amenities; bookings; payments; ledger_entries (để trống); audit_logs
-  - [ ] Auth email/password (JWT) + RBAC dependency theo org hoạt động
-  - [ ] Booking core: create với `SELECT ... FOR UPDATE` + unique constraint (room_id, night); pending TTL 15 phút; optimistic `version`; interface `LockService`
-  - [ ] Test tự động pass: race condition (N request đồng thời → đúng 1 thành công), TTL expire nhả phòng, RBAC (staff không xem được doanh thu)
-  - [ ] `frontend/` Next.js App Router TS build được
-- **Verification:** `docker compose up -d db` + `pytest` trong `backend/` (all pass); `npm run build` trong `frontend/`
+  - [x] Schema Phase 1 đầy đủ qua Alembic migration: organizations → properties → room_types → rooms; users + roles + user_org_roles (permission-based, seed 4 role); amenities + property_amenities; bookings; payments; ledger_entries (để trống); audit_logs — migration `dacb56ff968b`
+  - [x] Auth email/password (JWT) + RBAC dependency theo org hoạt động
+  - [x] Booking core: create với `SELECT ... FOR UPDATE` + unique constraint (room_id, night); pending TTL 15 phút; optimistic `version`; interface `LockService`
+  - [x] Test tự động pass: race condition (10 request đồng thời → đúng 1 thành công), TTL expire nhả phòng, RBAC (staff không xem được doanh thu) — 8/8 pass
+  - [x] `frontend/` Next.js App Router TS build được (Next 16.2.10)
+- **Verification:** `docker compose up -d db` + `pytest` trong `backend/` → 8 passed; `npm run build` trong `frontend/` → OK; smoke test HTTP: đặt phòng 201, đặt trùng 409, availability trả đúng đêm bị giữ
 - **Blocker:** —
-- **Updated:** 2026-07-19 by claude-code
+- **Updated:** 2026-07-19 18:20 by claude-code
 
 ---
 

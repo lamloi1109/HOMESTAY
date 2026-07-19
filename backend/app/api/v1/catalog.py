@@ -1,8 +1,8 @@
 import uuid
 from datetime import date
 
-from fastapi import APIRouter, Depends, HTTPException, status
-from sqlalchemy import select
+from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile, status
+from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
@@ -12,15 +12,24 @@ from app.models import (
     Amenity,
     Property,
     PropertyAmenity,
+    PropertyImage,
     Room,
     RoomType,
     User,
+)
+from app.services.storage import (
+    MAX_IMAGE_BYTES,
+    InvalidImageError,
+    detect_image_ext,
+    get_storage,
 )
 from app.models.property import PropertyStatus
 from app.schemas.catalog import (
     AmenityOut,
     PropertyCreate,
     PropertyDetailOut,
+    PropertyImageOut,
+    PropertyListItemOut,
     PropertyOut,
     RoomCreate,
     RoomOut,
@@ -59,12 +68,22 @@ async def create_property(
     return prop
 
 
-@router.get("/properties", response_model=list[PropertyOut])
-async def list_properties(db: AsyncSession = Depends(get_db)) -> list[Property]:
+@router.get("/properties", response_model=list[PropertyListItemOut])
+async def list_properties(db: AsyncSession = Depends(get_db)):
     result = await db.execute(
-        select(Property).where(Property.status == PropertyStatus.active).order_by(Property.created_at)
+        select(Property)
+        .where(Property.status == PropertyStatus.active)
+        .options(selectinload(Property.images))
+        .order_by(Property.created_at)
     )
-    return list(result.scalars().all())
+    storage = get_storage()
+    return [
+        PropertyListItemOut(
+            **PropertyOut.model_validate(p).model_dump(),
+            cover_image=storage.public_url(p.images[0].stored_name) if p.images else None,
+        )
+        for p in result.scalars().all()
+    ]
 
 
 @router.get("/properties/{property_id}", response_model=PropertyDetailOut)
@@ -75,14 +94,25 @@ async def property_detail(property_id: uuid.UUID, db: AsyncSession = Depends(get
         .options(
             selectinload(Property.room_types).selectinload(RoomType.rooms),
             selectinload(Property.amenities).selectinload(PropertyAmenity.amenity),
+            selectinload(Property.images),
         )
     )
     if prop is None:
         raise HTTPException(status.HTTP_404_NOT_FOUND, "Property không tồn tại")
+    storage = get_storage()
     return PropertyDetailOut(
         **PropertyOut.model_validate(prop).model_dump(),
         room_types=[RoomTypeDetailOut.model_validate(rt) for rt in prop.room_types],
         amenities=[AmenityOut.model_validate(pa.amenity) for pa in prop.amenities],
+        images=[
+            PropertyImageOut(
+                id=img.id,
+                url=storage.public_url(img.stored_name),
+                alt=img.alt,
+                sort_order=img.sort_order,
+            )
+            for img in prop.images
+        ],
     )
 
 
@@ -139,6 +169,68 @@ async def available_rooms(
     if room_type is None:
         raise HTTPException(status.HTTP_404_NOT_FOUND, "Room type không tồn tại")
     return await get_available_rooms(db, room_type_id, check_in, check_out)
+
+
+@router.post(
+    "/properties/{property_id}/images",
+    response_model=PropertyImageOut,
+    status_code=status.HTTP_201_CREATED,
+)
+async def upload_property_image(
+    property_id: uuid.UUID,
+    file: UploadFile = File(...),
+    alt: str | None = Form(default=None),
+    user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+) -> PropertyImageOut:
+    """Upload ảnh (JPG/PNG/WebP, ≤10MB). Kiểm tra magic bytes, không tin Content-Type."""
+    prop = await _get_property_or_404(db, property_id)
+    await ensure_permission(db, user, prop.org_id, Perm.PROPERTY_WRITE)
+
+    data = await file.read(MAX_IMAGE_BYTES + 1)
+    try:
+        ext = detect_image_ext(data)
+    except InvalidImageError as exc:
+        raise HTTPException(status.HTTP_422_UNPROCESSABLE_ENTITY, str(exc)) from exc
+
+    storage = get_storage()
+    stored_name = await storage.save(data, ext)
+    next_order = (
+        await db.scalar(
+            select(func.coalesce(func.max(PropertyImage.sort_order), -1)).where(
+                PropertyImage.property_id == property_id
+            )
+        )
+    ) + 1
+    image = PropertyImage(
+        property_id=property_id,
+        stored_name=stored_name,
+        original_name=file.filename,
+        alt=alt,
+        sort_order=next_order,
+    )
+    db.add(image)
+    await db.commit()
+    return PropertyImageOut(
+        id=image.id, url=storage.public_url(stored_name), alt=alt, sort_order=next_order
+    )
+
+
+@router.delete("/property-images/{image_id}", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_property_image(
+    image_id: uuid.UUID,
+    user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+) -> None:
+    image = await db.get(PropertyImage, image_id)
+    if image is None:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, "Ảnh không tồn tại")
+    prop = await _get_property_or_404(db, image.property_id)
+    await ensure_permission(db, user, prop.org_id, Perm.PROPERTY_WRITE)
+    stored_name = image.stored_name
+    await db.delete(image)
+    await db.commit()
+    await get_storage().delete(stored_name)
 
 
 @router.get("/amenities", response_model=list[AmenityOut])

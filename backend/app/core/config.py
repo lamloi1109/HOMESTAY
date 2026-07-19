@@ -23,6 +23,9 @@ class Settings(BaseSettings):
 
     cors_origins: list[str] = ["http://localhost:3000"]
 
+    # Thư mục lưu ảnh upload (LocalDiskStorage — swap S3 ở phase sau).
+    upload_dir: str = "uploads"
+
 
 @lru_cache
 def get_settings() -> Settings:

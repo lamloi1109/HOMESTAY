@@ -86,9 +86,21 @@ class RoomTypeDetailOut(RoomTypeOut):
     rooms: list[RoomOut] = []
 
 
+class PropertyImageOut(BaseModel):
+    id: uuid.UUID
+    url: str
+    alt: str | None
+    sort_order: int
+
+
+class PropertyListItemOut(PropertyOut):
+    cover_image: str | None = None
+
+
 class PropertyDetailOut(PropertyOut):
     room_types: list[RoomTypeDetailOut] = []
     amenities: list[AmenityOut] = []
+    images: list[PropertyImageOut] = []
 
 
 class SetAmenitiesRequest(BaseModel):

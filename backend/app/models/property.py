@@ -35,6 +35,9 @@ class Property(UUIDPKMixin, TimestampMixin, Base):
 
     room_types: Mapped[list["RoomType"]] = relationship(back_populates="property")
     amenities: Mapped[list["PropertyAmenity"]] = relationship(back_populates="property")
+    images: Mapped[list["PropertyImage"]] = relationship(
+        back_populates="property", order_by="PropertyImage.sort_order"
+    )
 
 
 class RoomType(UUIDPKMixin, TimestampMixin, Base):
@@ -74,6 +77,26 @@ class Room(UUIDPKMixin, TimestampMixin, Base):
     )
 
     room_type: Mapped[RoomType] = relationship(back_populates="rooms")
+
+
+class PropertyImage(UUIDPKMixin, TimestampMixin, Base):
+    """Ảnh property — file lưu qua StorageService (MVP: local disk, Phase sau
+    swap S3-compatible không đổi bảng). `stored_name` là tên file đã sinh
+    (uuid.ext), URL public = /uploads/{stored_name}.
+    """
+
+    __tablename__ = "property_images"
+    __table_args__ = (UniqueConstraint("stored_name", name="uq_property_image_file"),)
+
+    property_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("properties.id", ondelete="CASCADE"), nullable=False
+    )
+    stored_name: Mapped[str] = mapped_column(String(128), nullable=False)
+    original_name: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    alt: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    sort_order: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
+
+    property: Mapped[Property] = relationship(back_populates="images")
 
 
 class Amenity(UUIDPKMixin, TimestampMixin, Base):

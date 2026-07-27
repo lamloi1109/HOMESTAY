@@ -41,14 +41,19 @@
   - [ ] Không mâu thuẫn với `docs/KE_HOACH_PHAT_TRIEN_HOMESTAY.md` hay `.coordination/BRIEF.md`
 - **Verification:** Review thủ công bởi coordinator (human) — đây là gate "chưa ký chưa code" của Phase 0, không tự động verify được.
 - **Blocker:** Cần họp khách chốt số căn/loại hình BĐS/phương thức thanh toán trước khi PRD có thể "ký" thật — bản PRD này là bản nháp để coordinator review trước.
-- **Updated:** 2026-07-18 22:30 by claude-code
+- **Lưu ý:** File `docs/PRD.md` đã nằm trong `main` (theo chuỗi merge 2026-07-27) nhưng task vẫn `review`, KHÔNG phải `done`: gate của Phase 0 là chữ ký khách, chưa có. Acceptance criteria còn để trống chờ review người thật.
+- **Updated:** 2026-07-27 by claude-code
 
 ---
+
+## Done
+
+> Move task xuống đây sau khi merge. Giữ full metadata để truy vết.
 
 ### T-001 — Core scaffold: FastAPI backend + Next.js frontend + Postgres (D-005)
 
 - **Phase:** 1
-- **Status:** `review`
+- **Status:** `done`
 - **Owner:** claude-code
 - **Branch:** `claude-code/T-001-core-scaffold`
 - **Assigned type:** `CLAUDE_CODE`
@@ -63,14 +68,15 @@
   - [x] `frontend/` Next.js App Router TS build được (Next 16.2.10)
 - **Verification:** `docker compose up -d db` + `pytest` trong `backend/` → 8 passed; `npm run build` trong `frontend/` → OK; smoke test HTTP: đặt phòng 201, đặt trùng 409, availability trả đúng đêm bị giữ
 - **Blocker:** —
-- **Updated:** 2026-07-19 18:20 by claude-code
+- **Merged:** 2026-07-27 — fast-forward `97f2449` → `504fe1e` (gộp chung chuỗi T-001 → T-002 → T-003)
+- **Updated:** 2026-07-27 by claude-code
 
 ---
 
 ### T-002 — Guest frontend theo art direction khách duyệt (cream/terracotta)
 
 - **Phase:** 4 (Guest UX — kéo sớm theo chỉ đạo coordinator vì khách đã duyệt mockup; booking/payment flow đầy đủ vẫn theo Phase 2-3)
-- **Status:** `review`
+- **Status:** `done`
 - **Owner:** claude-code
 - **Branch:** `claude-code/T-002-guest-frontend`
 - **Assigned type:** `CLAUDE_CODE` (coordinator chỉ đạo trực tiếp; Antigravity sẽ tiếp quản UI admin sau)
@@ -85,15 +91,16 @@
   - [x] Tra cứu booking theo mã
   - [x] `npm run build` + `npm run lint` pass, backend pytest 10/10 pass
 - **Verification:** pytest 10 passed; lint + build pass; flow đặt phòng chạy thật trên browser (accessibility tree — screenshot tool lỗi môi trường, không phải lỗi app)
-- **Blocker:** Chưa có upload ảnh property (Phase 1 việc còn lại) → dùng SVG art placeholder, thay bằng ảnh thật khi có T-00x upload ảnh
-- **Updated:** 2026-07-19 18:40 by claude-code
+- **Blocker:** — (đã gỡ: T-003 thay SVG art placeholder bằng ảnh thật khi property có ảnh)
+- **Merged:** 2026-07-27 — trong chuỗi fast-forward `97f2449` → `504fe1e`
+- **Updated:** 2026-07-27 by claude-code
 
 ---
 
 ### T-003 — Upload ảnh property (local storage, interface swap S3 sau)
 
 - **Phase:** 1 (mục "Property CRUD + upload ảnh" còn lại của Phase 1)
-- **Status:** `review`
+- **Status:** `done`
 - **Owner:** claude-code
 - **Branch:** `claude-code/T-003-property-images`
 - **Assigned type:** `CLAUDE_CODE`
@@ -108,12 +115,6 @@
   - [x] Frontend: card + hero dùng ảnh thật nếu có, fallback SVG art như cũ; verify trên browser (ảnh /uploads 200)
 - **Verification:** pytest 11 passed; lint + build pass; upload ảnh demo qua API → hiện trên UI thật
 - **Bonus fix:** demo seed email `.local` bị email-validator từ chối → đổi `owner@example.com` (cập nhật DB + README)
-- **Updated:** 2026-07-19 19:55 by claude-code
-
----
-
-## Done
-
-> Move task xuống đây sau khi merge. Giữ full metadata để truy vết.
-
-(empty)
+- **Merged:** 2026-07-27 — fast-forward vào `main` tại `504fe1e`
+- **Lưu ý còn nợ:** `sort_order` tính bằng `max(sort_order)+1` ngoài transaction lock → 2 upload đồng thời có thể trùng số thứ tự (không vỡ dữ liệu, chỉ sai thứ tự hiển thị)
+- **Updated:** 2026-07-27 by claude-code

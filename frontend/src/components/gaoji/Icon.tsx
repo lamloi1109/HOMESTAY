@@ -1,6 +1,9 @@
 import {
+  ArrowRight,
+  BadgeCheck,
   Bath,
   BedDouble,
+  CalendarCheck,
   CookingPot,
   DoorOpen,
   Heart,
@@ -32,8 +35,11 @@ import {
  * thay vì `import *` để bundle chỉ chứa icon thật sự dùng.
  */
 const REGISTRY: Record<string, LucideIcon> = {
+  "arrow-right": ArrowRight,
+  "badge-check": BadgeCheck,
   bath: Bath,
   "bed-double": BedDouble,
+  "calendar-check": CalendarCheck,
   "cooking-pot": CookingPot,
   "door-open": DoorOpen,
   heart: Heart,

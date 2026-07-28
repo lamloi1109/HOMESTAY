@@ -37,3 +37,87 @@
   --font-sans: var(--font-bvp);
   --font-serif: var(--font-cormorant);
 }
+
+/* ── Style riêng của app (không thuộc design system) ─────────────── */
+
+/* Link trên nav: gạch chân chạy ra khi rê chuột, theo thiết kế trang chủ. */
+.gh-nav-link {
+  border-bottom: 1.5px solid transparent;
+  padding-bottom: 1px;
+  transition: color var(--dur-base) var(--ease-standard),
+    border-color var(--dur-base) var(--ease-standard);
+}
+.gh-nav-link:hover {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+/* Vào màn hình thì trôi lên — dùng cho các khối trong hero. */
+@keyframes gh-fade-up-in {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.gh-au {
+  animation: gh-fade-up-in 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.gh-au-1 { animation-delay: 0.05s; }
+.gh-au-2 { animation-delay: 0.2s; }
+.gh-au-3 { animation-delay: 0.35s; }
+.gh-au-4 { animation-delay: 0.5s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .gh-au { animation: none; }
+}
+
+/* Hiện icon theo theme mà không cần state React — xem ThemeToggle.tsx. */
+.gh-when-dark { display: none; }
+[data-theme="dark"] .gh-when-light { display: none; }
+[data-theme="dark"] .gh-when-dark { display: inline-flex; }
+
+/* Lưới bento trang chủ: ô lớn trái chiếm 2 hàng, ô rộng trên phải,
+   hai ô nhỏ dưới. Dưới 744px thì xếp dọc theo đúng breakpoint design system. */
+.gh-bento-home {
+  display: grid;
+  grid-template-columns: 5fr 3.2fr 2.8fr;
+  grid-template-rows: 380px 270px;
+  grid-template-areas:
+    "a b b"
+    "a c d";
+  gap: 18px;
+}
+
+@media (max-width: 743px) {
+  .gh-bento-home {
+    grid-template-columns: 1fr;
+    grid-template-rows: none;
+    grid-template-areas: "a" "b" "c" "d";
+  }
+  .gh-bento-home > * {
+    min-height: 300px;
+  }
+}
+
+/* Card chỗ nghỉ: nhấc lên và đổ bóng sâu hơn khi rê chuột. */
+.gh-prop-card {
+  transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out);
+}
+.gh-prop-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-xl);
+}
+
+/* Thanh cuộn ngang của dải card: ẩn thanh cuộn, vẫn cuộn được. */
+.gh-scroll-x {
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.gh-scroll-x::-webkit-scrollbar {
+  display: none;
+}

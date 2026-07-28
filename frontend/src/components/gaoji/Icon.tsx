@@ -10,11 +10,13 @@ import {
   Images,
   LoaderCircle,
   MapPin,
+  Moon,
   Phone,
   Search,
   ShieldCheck,
   Sparkles,
   Star,
+  Sun,
   Users,
   type LucideIcon,
 } from "lucide-react";
@@ -46,11 +48,13 @@ const REGISTRY: Record<string, LucideIcon> = {
   images: Images,
   "loader-circle": LoaderCircle,
   "map-pin": MapPin,
+  moon: Moon,
   phone: Phone,
   search: Search,
   "shield-check": ShieldCheck,
   sparkles: Sparkles,
   star: Star,
+  sun: Sun,
   users: Users,
 };
 

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Be_Vietnam_Pro, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
-import { Header } from "@/components/Header";
+import { Header, NAV_HEIGHT } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
 
@@ -51,10 +51,26 @@ export default function RootLayout({
       lang="vi"
       data-theme="light"
       className={`${beVietnam.variable} ${cormorant.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
+      <head>
+        {/*
+          Đặt theme TRƯỚC khi trình duyệt vẽ, nếu không trang sẽ chớp màu sáng
+          rồi mới nhảy sang tối. Phải là script chặn render, không dùng useEffect
+          được. Chỉ đọc localStorage của chính mình, không nhận dữ liệu ngoài.
+        */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{var t=localStorage.getItem("gh-theme");if(t==="dark"||t==="light"){document.documentElement.setAttribute("data-theme",t)}}catch(e){}`,
+          }}
+        />
+      </head>
       <body className="flex min-h-full flex-col">
         <Header />
-        <div className="flex-1">{children}</div>
+        {/* Nav ở chế độ fixed nên phải chừa đúng chiều cao của nó. */}
+        <div className="flex-1" style={{ paddingTop: NAV_HEIGHT }}>
+          {children}
+        </div>
         <Footer />
       </body>
     </html>

@@ -46,6 +46,29 @@
 
 ---
 
+### T-004 — Kéo design token Gaoji House vào frontend (D-007)
+
+- **Phase:** 4 (Guest UX — nền thiết kế, cùng nhóm với T-002)
+- **Status:** `review`
+- **Owner:** claude-code
+- **Branch:** `claude-code/T-004-gaoji-tokens`
+- **Assigned type:** `CLAUDE_CODE`
+- **Files touched:** `frontend/src/styles/gaoji/**` (mới), `frontend/src/app/globals.css`, `frontend/src/app/layout.tsx`, `.coordination/DECISIONS.md`
+- **Depends on:** T-002
+- **Complexity:** S
+- **Acceptance criteria:**
+  - [x] Token màu/chữ/khoảng cách/bo góc/đổ bóng/hiệu ứng/base chép nguyên bản từ design system `5c995ee4-97d7-49ab-9cb1-cc0a72096d37`
+  - [x] Tailwind `@theme inline` trỏ sang token Gaoji — 87 chỗ dùng class cũ trong 11 file không phải sửa
+  - [x] Cormorant Garamond + Be Vietnam Pro nạp qua `next/font` (self-host, subset `vietnamese`), không gọi Google Fonts CDN
+  - [x] Dark mode `[data-theme="dark"]` hoạt động
+  - [x] `npm run lint` + `npm run build` pass
+- **Verification:** lint sạch, build production sạch (5 route). Đo trên trình duyệt: `--canvas #f3efe6`, `--accent #bc5b3a`, body `rgb(243,239,230)`; bật `data-theme="dark"` → body `rgb(21,17,11)`, accent `#d07a54`. Screenshot lỗi môi trường như T-002 — verify bằng computed style, không phải bằng mắt.
+- **Blocker:** —
+- **Chưa làm (có chủ đích):** component và UI kit của design system chưa kéo về; `docs/DESIGN.md` bị D-007 bác nhưng chưa xoá (chờ designer xác nhận).
+- **Updated:** 2026-07-28 by claude-code
+
+---
+
 ## Done
 
 > Move task xuống đây sau khi merge. Giữ full metadata để truy vết.

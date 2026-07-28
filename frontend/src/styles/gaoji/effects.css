@@ -1,0 +1,24 @@
+/* Gaoji House — Texture & motion tokens
+   Digital-fatigue antidote: a 3-4% procedural grain overlay ("noise") gives
+   surfaces a natural, tactile roughness. Motion favours spring physics
+   (overshoot) to simulate elastic, physical response. */
+:root {
+  /* Procedural grain (feTurbulence) — a texture generator, not imagery */
+  --noise-opacity: 0.045;
+  --noise-url: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+
+  /* Motion */
+  --ease-standard: cubic-bezier(.4, 0, .2, 1);
+  --ease-out: cubic-bezier(.22, 1, .36, 1);
+  --ease-in: cubic-bezier(.55, 0, 1, .45);
+  --ease-spring: cubic-bezier(.34, 1.56, .64, 1);   /* pronounced overshoot */
+  --ease-spring-soft: cubic-bezier(.5, 1.28, .68, 1);
+
+  --dur-fast: 140ms;
+  --dur-base: 220ms;
+  --dur-slow: 420ms;
+  --dur-slower: 640ms;
+
+  --press-scale: 0.965;  /* tactile tap compression */
+  --hover-lift: -3px;
+}

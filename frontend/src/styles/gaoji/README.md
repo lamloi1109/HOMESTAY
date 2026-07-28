@@ -35,13 +35,40 @@ Trong Claude Code:
 
 Claude đọc thẳng project qua công cụ DesignSync — không cần export hay tải file tay.
 
+## Component đã kéo về
+
+Nằm ở `frontend/src/components/gaoji/`. **Khác với token, đây là bản CHUYỂN chứ
+không phải bản sao** — đã đổi sang TypeScript, JSX thay cho `React.createElement`,
+và thêm `"use client"` cho component có trạng thái hover/press.
+
+| Component | Ghi chú |
+| --- | --- |
+| `interactions.ts` | `useTactile`, `tactileTransform` |
+| `Icon.tsx` | **Đổi nhiều nhất** — xem phần dưới |
+| `Badge.tsx`, `RatingStars.tsx`, `RoomSpecs.tsx` | Không có trạng thái nên render được ở server |
+| `IconButton.tsx`, `Card.tsx`, `PropertyCard.tsx` | Client component (hover/press) |
+
+### Icon đổi gì
+
+Bản gốc nạp Lucide từ CDN rồi bơm SVG bằng `innerHTML` trong `useEffect`. Trong
+Next.js cách đó làm server render ra thẻ rỗng — Google không thấy icon, mà trang
+này sống bằng SEO. Bản trong repo dùng `lucide-react` (đã có sẵn theo D-006) với
+một `REGISTRY` liệt kê tay từng icon để bundle không phải gánh cả bộ. Giao diện
+prop giữ nguyên (`name` kebab-case) nên component khác không phải sửa.
+
+Icon chưa đăng ký thì **không vẽ gì** và cảnh báo ở chế độ dev — thà thiếu còn
+hơn vẽ nhầm glyph khác nghĩa. Cần icon mới thì thêm vào `REGISTRY`.
+
+### Lỗi phát hiện ở bản gốc
+
+`components/travel/PropertyCard.jsx` dùng `var(--clay-300)` cho gradient thứ ba,
+nhưng bảng màu không có `--clay-300` (chỉ 50/100/200/400/500/600/700) nên gradient
+đó hỏng. Bản trong repo tạm thay bằng `--clay-400`. **Cần sửa trên design system.**
+
 ## Chưa kéo về
 
-Design system còn nhiều thứ chưa mang sang, chỉ kéo khi thật sự cần tới:
-
-- `components/` — thư viện React (Button, Card, SearchBar, PropertyCard, …).
-  Viết bằng React thuần + style nội tuyến trỏ vào biến CSS, không dùng Tailwind
-  nên không xung đột. Kéo từng cái, nhớ thêm `"use client"`.
+- `components/` phần còn lại — `Button`, `SearchBar`, `TopNav`, `Input`, `Stepper`,
+  `Tag`, `BentoGrid`, `ThemeToggle`, `LanguageSwitcher`, `ReservationCard`.
 - `ui_kits/guest-web` — Home, Listing, Checkout. Dùng làm bản tham chiếu bố cục.
 - `ui_kits/owner-console` — Dashboard, Bookings, báo cáo lưu trú.
 - `guidelines/` — thẻ đặc tả nền tảng (màu, chữ, khoảng cách).

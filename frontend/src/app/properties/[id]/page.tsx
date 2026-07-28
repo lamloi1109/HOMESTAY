@@ -1,11 +1,81 @@
+import { cache } from "react";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { MapPin } from "lucide-react";
-import { ApiError, assetUrl, fetchPropertyDetail, type Amenity } from "@/lib/api";
+import {
+  ApiError,
+  assetUrl,
+  fetchPropertyDetail,
+  type Amenity,
+  type PropertyDetail,
+} from "@/lib/api";
 import { AmenityIcon } from "@/components/AmenityIcon";
 import { BookingWidget } from "@/components/BookingWidget";
 import { PropertyMedia } from "@/components/PropertyMedia";
+import { SITE_NAME, SITE_URL } from "@/lib/site";
 
 export const dynamic = "force-dynamic";
+
+/** `cache` để generateMetadata và page dùng chung một lần gọi API, không gọi đôi. */
+const loadProperty = cache(
+  async (id: string): Promise<PropertyDetail | null> => {
+    try {
+      return await fetchPropertyDetail(id);
+    } catch (err) {
+      if (err instanceof ApiError && err.status === 404) return null;
+      throw err;
+    }
+  },
+);
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}): Promise<Metadata> {
+  const { id } = await params;
+
+  let property: PropertyDetail | null = null;
+  try {
+    property = await loadProperty(id);
+  } catch {
+    return { title: "Chỗ ở" }; // backend chết — vẫn phải trả metadata hợp lệ
+  }
+  if (!property) return { title: "Không tìm thấy chỗ ở" };
+
+  const location = [property.address, property.city].filter(Boolean).join(", ");
+  const description =
+    property.description ??
+    (location
+      ? `${property.name} tại ${location}. Đặt trực tiếp, tư vấn trước khi đặt.`
+      : `${property.name}. Đặt trực tiếp, tư vấn trước khi đặt.`);
+  const cover = property.images[0]?.url;
+  const path = `/properties/${property.id}`;
+
+  return {
+    title: property.name,
+    description,
+    alternates: { canonical: path },
+    openGraph: {
+      type: "website",
+      locale: "vi_VN",
+      siteName: SITE_NAME,
+      title: property.name,
+      description,
+      url: path,
+      // Ảnh serve từ backend nên phải là URL tuyệt đối, metadataBase không lo được.
+      images: cover ? [{ url: assetUrl(cover), alt: property.images[0]?.alt ?? property.name }] : undefined,
+    },
+  };
+}
+
+/** Khoảng giá cho JSON-LD. Chỉ một mức giá thì ghi một số, không ghi "X - X". */
+function priceRange(prices: number[]): string {
+  const min = Math.min(...prices);
+  const max = Math.max(...prices);
+  const vnd = (n: number) => `${n.toLocaleString("vi-VN")}₫`;
+  return min === max ? vnd(min) : `${vnd(min)} - ${vnd(max)}`;
+}
 
 function groupAmenities(amenities: Amenity[]): Map<string, Amenity[]> {
   const groups = new Map<string, Amenity[]>();
@@ -27,11 +97,10 @@ export default async function PropertyDetailPage({
   const { id } = await params;
   const query = await searchParams;
 
-  let property;
+  let property: PropertyDetail | null;
   try {
-    property = await fetchPropertyDetail(id);
-  } catch (err) {
-    if (err instanceof ApiError && err.status === 404) notFound();
+    property = await loadProperty(id);
+  } catch {
     return (
       <main className="mx-auto max-w-4xl px-5 py-16">
         <p className="text-muted">
@@ -40,12 +109,43 @@ export default async function PropertyDetailPage({
       </main>
     );
   }
+  if (!property) notFound();
 
   const location = [property.address, property.city].filter(Boolean).join(", ");
   const amenityGroups = groupAmenities(property.amenities);
+  const prices = property.room_types.map((rt) => Number(rt.base_price)).filter(Number.isFinite);
+
+  // Dữ liệu có cấu trúc cho Google — giúp hiện dạng kết quả giàu thông tin.
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "LodgingBusiness",
+    name: property.name,
+    description: property.description ?? undefined,
+    url: `${SITE_URL}/properties/${property.id}`,
+    image: property.images.map((img) => assetUrl(img.url)),
+    address: location
+      ? {
+          "@type": "PostalAddress",
+          streetAddress: property.address ?? undefined,
+          addressLocality: property.city ?? undefined,
+          addressCountry: "VN",
+        }
+      : undefined,
+    priceRange: prices.length ? priceRange(prices) : undefined,
+    amenityFeature: property.amenities.map((a) => ({
+      "@type": "LocationFeatureSpecification",
+      name: a.name,
+      value: true,
+    })),
+  };
 
   return (
     <main className="mx-auto max-w-4xl px-5 py-10">
+      <script
+        type="application/ld+json"
+        // Dữ liệu tự sinh từ DB của mình, không phải input người dùng ngoài.
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <div className="overflow-hidden rounded-3xl border border-line shadow-sm">
         <div className="aspect-[21/9]">
           <PropertyMedia

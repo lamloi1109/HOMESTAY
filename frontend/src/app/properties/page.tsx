@@ -4,7 +4,12 @@ import { SearchBar } from "@/components/SearchBar";
 
 export const dynamic = "force-dynamic";
 
-export const metadata = { title: "Chỗ ở — Gaoji House" };
+export const metadata = {
+  title: "Chỗ ở",
+  description:
+    "Danh sách chỗ nghỉ của Gaoji House — xem ảnh thật, tiện ích và giá theo đêm.",
+  alternates: { canonical: "/properties" },
+};
 
 function normalize(s: string): string {
   return s

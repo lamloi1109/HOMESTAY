@@ -4,7 +4,7 @@ import { SearchBar } from "@/components/SearchBar";
 
 export const dynamic = "force-dynamic";
 
-export const metadata = { title: "Chỗ ở — Homestay" };
+export const metadata = { title: "Chỗ ở — Gaoji House" };
 
 function normalize(s: string): string {
   return s

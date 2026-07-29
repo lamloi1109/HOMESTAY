@@ -46,14 +46,18 @@
 
 ---
 
+## Done
+
+> Move task xuống đây sau khi merge. Giữ full metadata để truy vết.
+
 ### T-004 — Kéo design token Gaoji House vào frontend (D-007)
 
 - **Phase:** 4 (Guest UX — nền thiết kế, cùng nhóm với T-002)
-- **Status:** `review`
+- **Status:** `done`
 - **Owner:** claude-code
 - **Branch:** `claude-code/T-004-gaoji-tokens`
 - **Assigned type:** `CLAUDE_CODE`
-- **Files touched:** `frontend/src/styles/gaoji/**` (mới), `frontend/src/components/gaoji/**` (mới), `frontend/src/app/globals.css`, `frontend/src/app/layout.tsx`, `frontend/src/components/PropertyCard.tsx`, `frontend/src/components/Header.tsx`, `frontend/src/components/Footer.tsx`, `frontend/src/app/properties/page.tsx`, `.claude/launch.json`, `.coordination/DECISIONS.md`
+- **Files touched:** `frontend/src/styles/gaoji/**` (mới), `frontend/src/components/gaoji/**` (mới), `frontend/src/app/globals.css`, `frontend/src/app/layout.tsx`, `frontend/src/components/PropertyCard.tsx`, `frontend/src/components/Header.tsx`, `frontend/src/components/Footer.tsx`, `frontend/src/app/properties/page.tsx`, `frontend/src/app/page.tsx`, `frontend/src/app/properties/[id]/page.tsx`, `frontend/src/app/robots.ts` + `sitemap.ts` (mới), `frontend/src/components/HeroSearch.tsx` + `ThemeToggle.tsx` (mới), `frontend/src/lib/site.ts` (mới), `frontend/.env.example` + `.gitignore`, `.claude/launch.json`, `.coordination/DECISIONS.md`
 - **Depends on:** T-002
 - **Complexity:** S
 - **Acceptance criteria:**
@@ -64,18 +68,20 @@
   - [x] Chuyển 8 component sang TypeScript: `interactions`, `Icon`, `Badge`, `RatingStars`, `RoomSpecs`, `IconButton`, `Card`, `PropertyCard`
   - [x] `PropertyCard` của app dựng theo ngôn ngữ thị giác Gaoji, giữ `<Link>` (SEO) và bỏ tim lưu / điểm đánh giá vì chưa có dữ liệu
   - [x] Đổi tên thương hiệu sang Gaoji House, wordmark Cormorant Garamond
+  - [x] Trang chủ dựng theo `Gaoji House - Homepage.dc.html` (project `82e78453-138e-4233-be6e-b9ca5bb4ec5b`): hero gradient + grain, tiêu đề Cormorant có dòng nghiêng, panel tìm kiếm, dải tin cậy, lưới Bento
+  - [x] Nav kính mờ cố định (`NAV_HEIGHT = 68`) + `ThemeToggle` không state React, theme đặt bằng script chặn render nên không chớp màu
+  - [x] Nền tảng SEO: `metadataBase` + template title, Open Graph, `sitemap.ts` (động, fallback khi backend chết), `robots.ts` (chặn `/lookup` + `/bookings/`), JSON-LD `LodgingBusiness` ở trang chi tiết
   - [x] `npm run lint` + `npm run build` pass
-- **Verification:** lint sạch, build production sạch (5 route). Đo trên trình duyệt với backend + Postgres chạy thật: token `--canvas #f3efe6` / `--accent #bc5b3a`; card thật có `border-radius 28px` (`--radius-lg`), grain `opacity .045` blend `multiply`, tiêu đề `18px` màu `#211C14`, ảnh thật từ T-003, `href` crawl được; wordmark render bằng Cormorant Garamond màu `rgb(188,91,58)`; bật `data-theme="dark"` → body `rgb(21,17,11)`, accent `#d07a54`. Screenshot lỗi môi trường như T-002 — verify bằng computed style, không phải bằng mắt.
+- **Verification:** lint sạch, build production sạch (8 route sau khi thêm sitemap/robots). Đo trên trình duyệt với backend + Postgres chạy thật: token `--canvas #f3efe6` / `--accent #bc5b3a`; card thật có `border-radius 28px` (`--radius-lg`), grain `opacity .045` blend `multiply`, tiêu đề `18px` màu `#211C14`, ảnh thật từ T-003, `href` crawl được; wordmark render bằng Cormorant Garamond màu `rgb(188,91,58)`; bật `data-theme="dark"` → body `rgb(21,17,11)`, accent `#d07a54`. Screenshot lỗi môi trường như T-002 — verify bằng computed style, không phải bằng mắt. Trang chủ đo riêng: nav `position: fixed` cao 68px `blur(20px)` `z-index 200`; lưới bento cột `529.078 / 338.625 / 296.297`, hàng `380 / 270`, areas `"a b b" "a c d"`, gap 18px, ô A cao 668px trọn 2 hàng, ô B rộng 653px trọn 2 cột — khớp thiết kế; dark mode giữ nguyên khi chuyển trang; 375px không tràn ngang, panel tìm kiếm xếp dọc.
 - **Blocker:** —
-- **Chưa làm (có chủ đích):** phần còn lại của `components/` (Button, SearchBar, TopNav, Input, Stepper, Tag, BentoGrid, ThemeToggle, LanguageSwitcher, ReservationCard) và cả hai `ui_kits/` chưa kéo về — kéo khi có task cần.
+- **Chưa làm (có chủ đích):** phần còn lại của `components/` (Button, SearchBar, TopNav, Input, Stepper, Tag, BentoGrid, LanguageSwitcher, ReservationCard) và cả hai `ui_kits/` chưa kéo về — kéo khi có task cần.
+- **Khối trong thiết kế cố ý không dựng (không có dữ liệu đứng sau):** Flash Sale + đếm ngược (DB không có trường giảm giá), bản đồ 6 ghim giá (không có toạ độ), đánh giá sao + tim lưu chỗ nghỉ (không có bảng đánh giá, không có tài khoản khách), Đăng nhập/Đăng ký + mục "Chủ nhà" (một chủ, không phải sàn), tab "Theo giờ"/"Theo ngày" (backend tính theo đêm), 12 link footer (chưa có trang thật). Copy "Xác nhận tức thì" / "Tự nhận phòng 24/7" / "Miễn phí huỷ 24 giờ" bị thay vì mô tả tính năng không tồn tại.
 - **Lỗi phát hiện ở design system (cần designer sửa trên claude.ai/design):** `components/travel/PropertyCard.jsx` dùng `var(--clay-300)` không tồn tại trong bảng màu → gradient thứ ba hỏng; repo tạm thay bằng `--clay-400`.
-- **Updated:** 2026-07-28 by claude-code
+- **Nợ trước khi lên production:** `NEXT_PUBLIC_SITE_URL` phải trỏ domain thật (không thì Google index localhost); chưa có ảnh Open Graph mặc định 1200×630 cho trang chủ; nav trên điện thoại ẩn hết link mà không có menu thay thế (đúng thiết kế gốc, nhưng khách mobile không có đường tới `/properties` ngoài panel tìm kiếm).
+- **Merged:** 2026-07-29 — PR #1, merge commit `e566eeb` (35 file, +2572/−188)
+- **Updated:** 2026-07-29 by claude-code
 
 ---
-
-## Done
-
-> Move task xuống đây sau khi merge. Giữ full metadata để truy vết.
 
 ### T-001 — Core scaffold: FastAPI backend + Next.js frontend + Postgres (D-005)
 

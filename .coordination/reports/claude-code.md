@@ -84,3 +84,54 @@
 **Next step for next session:**
 - Coordinator merge chuỗi: T-000 → T-001 → T-002 → T-003.
 - Đề xuất tiếp: admin UI cho owner (upload ảnh không cần Swagger — giao Antigravity theo phân công), cron expire tự động, CI pipeline.
+
+## Session 2026-07-27 → 2026-07-29
+
+**Tasks touched:** T-001, T-002, T-003 (merge), T-004
+**Status changes:**
+- T-001, T-002, T-003: review → done (fast-forward `97f2449` → `504fe1e`, rồi `main` lên `0a144b7`)
+- T-004: (mới, claim) → review → done (PR #1, merge commit `e566eeb`)
+
+**Commits (T-004, 7 commit):**
+- ecb949e [phase-4][feat]: keo design token Gaoji House vao frontend
+- 21cd4de [phase-4][feat]: keo component Gaoji House (Card, PropertyCard + phu thuoc)
+- abe64d1 [phase-4][feat]: doi ten thuong hieu sang Gaoji House, wordmark serif
+- 4f3fb0f chore(coord): cap nhat T-004 — component, doi ten thuong hieu, ket qua verify
+- 248bddf [phase-4][feat]: dung lai trang chu theo ui_kits/guest-web/HomeScreen
+- 89a3b3f [phase-4][feat]: SEO nen tang — metadata, Open Graph, sitemap, robots, JSON-LD
+- 5247fb1 [phase-4][feat]: dung trang chu theo thiet ke Gaoji House - Homepage
+
+**Decisions made:** D-007 (design system trên claude.ai/design là nguồn sự thật cho thiết kế; repo giữ bản sao một chiều ở `frontend/src/styles/gaoji/`; "Gaoji House" là tên thương hiệu chính thức; D-006 được nâng cấp chứ không bị bãi bỏ; `docs/DESIGN.md` bị bác và xoá)
+
+**Blockers:** none
+
+**Ghi chú — thay đổi lớn về hiểu scope:**
+- Khách (chị chủ) **đã có nền tảng quản lý nhân viên + thanh toán**, và cùng nhân viên đang dùng **KiotViet** + quản lý đơn hàng qua **Excel**. Thứ chị ấy thật sự cần là **trang quảng bá để khách liên hệ tư vấn**, không phải booking engine tự phục vụ.
+- Chốt hiển thị: **vẫn hiện giá, nhưng luôn để trạng thái còn phòng** — khách phải liên hệ để chốt.
+- KiotViet có sản phẩm riêng cho lưu trú (**KiotViet Hotel**: sơ đồ phòng, giá theo giờ/ngày/qua đêm, đồng bộ 100+ OTA chống overbooking). **Nếu chị chủ dùng bản này thì phần lớn backend booking của ta là làm thừa.** Chưa hỏi được chị ấy dùng bản nào → đã chủ động **đóng băng đầu tư thêm vào booking engine** (chưa vá auth `/internal/expire-bookings`, chưa đưa `jwt_secret` ra env, chưa dựng scheduler).
+- Ngược lại, nếu chị ấy chỉ dùng KiotViet bán lẻ + Excel thì **hai nhân viên cùng sửa một file Excel CHÍNH LÀ bài toán đặt trùng phòng** → ràng buộc `UNIQUE (room_id, night)` của T-001 vẫn có giá trị thật.
+
+**Ghi chú — kỹ thuật:**
+- `Icon.tsx` phải viết lại chứ không port được: bản gốc nạp Lucide từ CDN rồi `innerHTML` trong `useEffect` → server render ra rỗng, máy tìm kiếm không thấy gì. Bản mới dùng `lucide-react` + registry liệt kê tay 19 icon.
+- `ThemeToggle` cố ý không giữ state React (ESLint `react-hooks/set-state-in-effect` chặn đúng) — nguồn sự thật là `data-theme` trên `<html>`, đặt bằng script chặn render trong `layout.tsx`.
+- `frontend/.env.example` từ T-001 tới giờ **chưa bao giờ được commit** vì rule `.env*` trong `frontend/.gitignore` — đã thêm `!.env.example`.
+- Gỡ hai chỗ nội dung marketing bịa: banner "ƯU ĐÃI MÙA HÈ — Giảm 20%" có sẵn trên trang chủ cũ, và copy tin cậy của design system ("Xác nhận tức thì", "Giữ giá 10 phút", "Miễn phí huỷ 24 giờ") mô tả tính năng không tồn tại.
+
+**Nợ kỹ thuật đã ghi nhận, CHƯA sửa:**
+- **Pre-commit hook chưa từng chạy một lần nào.** Nó tìm `package.json` ở gốc repo, nhưng đây là repo tách `frontend/` + `backend/` → in "bỏ qua lint/test" ở mọi commit từ `97f2449`. Repo **không có CI**. PR #1 merge với đúng một lớp bảo vệ: agent chạy lint/build bằng tay.
+- Trước production: `NEXT_PUBLIC_SITE_URL` phải trỏ domain thật; thiếu ảnh Open Graph 1200×630 cho trang chủ; nav mobile ẩn hết link mà không có menu thay thế.
+
+**Next step for next session:**
+1. **CI trước tiên** — GitHub Actions chạy `npm run lint` + `npm run build` (frontend) và `pytest` (backend, cần service Postgres). Repo vừa có PR flow thật ở PR #1, CI làm ngay thì PR sau tự được kiểm.
+2. **Nút liên hệ tư vấn** — trang hiện chưa có số điện thoại, nút Zalo, hay form để lại thông tin. Đứng ở góc "trang quảng bá, khách liên hệ để tư vấn" thì đây là lỗ hổng lớn nhất còn lại.
+3. Dựng tiếp `Gaoji House - Property.dc.html` (trang chi tiết) — có dữ liệu thật đứng sau nên dựng được gần trọn vẹn.
+
+**Cần hỏi khách (chặn quyết định kiến trúc):**
+- Chị chủ dùng KiotViet bản nào — bán lẻ hay KiotViet Hotel?
+- Xin file Excel đặt phòng thật (đã xoá thông tin cá nhân khách).
+- Đã bao giờ đặt trùng phòng vì Excel chưa?
+
+**Cần designer (chính là coordinator) làm trên claude.ai/design:**
+- Sửa `components/travel/PropertyCard.jsx`: dùng `var(--clay-300)` không tồn tại trong `tokens/colors.css` (chỉ có 50/100/200/400/500/600/700) → gradient thứ ba hỏng. Repo tạm thay `--clay-400`.
+- Bổ sung menu cho nav mobile.
+- Cấp ảnh Open Graph 1200×630 cho trang chủ.

@@ -62,9 +62,12 @@
   - [x] Job `backend`: Postgres 16 service container → `ruff check .` → `pytest` (Python 3.13, cache pip)
   - [x] Postgres cho test lấy từ `services:` của Actions, không phụ thuộc Docker của máy dev; `POSTGRES_DB: homestay_test` thay cho `scripts/init-test-db.sql` (service container không mount volume được)
   - [x] Không phải sửa `conftest.py`: nó dùng `os.environ.setdefault` nên biến `HOMESTAY_DATABASE_URL` đặt ở job thắng giá trị mặc định
-  - [x] Sửa 2 lỗi ruff có sẵn để CI xanh ngay lần đầu: `get_permissions_in_org` (bookings.py) và `select` (test_available_rooms.py) import thừa
+  - [x] Sửa 2 lỗi ruff có sẵn: `get_permissions_in_org` (bookings.py) và `select` (test_available_rooms.py) import thừa
+  - [x] `backend/ruff.toml` chốt cứng `select = ["E4","E7","E9","F"]` + chặn trên `ruff<0.17` trong `requirements-dev.txt`
   - [ ] Run thật trên GitHub xanh cả hai job
 - **Verification:** chạy thật trên GitHub Actions, không chỉ đọc file YAML.
+- **Sự cố run đầu (đã sửa):** job frontend xanh, job backend đỏ ở `ruff check .` với **70 lỗi** — trên code mà máy dev báo sạch. Nguyên nhân: `requirements-dev.txt` để `ruff>=0.5` không chặn trên → máy dev 0.15.22, CI cài 0.16.0, hai bản bật bộ rule mặc định khác nhau. Trong 70 lỗi có **43 cái là B008** ("đừng gọi hàm trong giá trị mặc định của tham số") nhắm vào `Depends()` — cú pháp bắt buộc của FastAPI, báo sai hoàn toàn. Sửa bằng cách chốt cứng bộ rule trong `ruff.toml` thay vì phụ thuộc mặc định của từng bản ruff. Đã nâng ruff local lên 0.16.0 cho khớp CI và verify lại trước khi push.
+- **Task nối tiếp đáng làm:** mở rộng bộ rule lint (`I` sắp xếp import, `UP` cú pháp hiện đại, `DTZ` timezone). Riêng **DTZ011 — `date.today()` không kèm timezone — đáng xem thật với hệ đặt phòng**, dù cả 3 chỗ hiện nằm trong test. Phải tắt B008 nếu mở `B`.
 - **Blocker:** —
 - **Ghi chú:** build frontend KHÔNG cần backend chạy vì mọi trang gọi API đều `force-dynamic` + `try/catch`, và không có `generateStaticParams` nào. Nếu sau này thêm trang prerender có fetch thì build sẽ đỏ — lúc đó dựng backend service trong job, đừng bỏ qua lỗi.
 - **Chưa làm:** hook `pre-commit` vẫn hỏng, chưa sửa trong task này (đã tách task riêng).

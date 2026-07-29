@@ -1,0 +1,26 @@
+# Chốt CỨNG bộ rule, không xài mặc định của ruff.
+#
+# Vì sao: `requirements-dev.txt` để `ruff>=0.5` (không chặn trên), nên máy dev
+# đang 0.15.22 còn CI cài về 0.16.0. Hai bản mặc định bật bộ rule khác nhau →
+# cùng một đoạn code, local xanh mà CI đỏ 70 lỗi. Lint mà đổi hành vi theo
+# ngày cài đặt thì không dùng để gác cổng được.
+#
+# Bộ dưới đây đúng bằng mặc định kinh điển của ruff (E4/E7/E9/F) — chính là
+# thứ codebase này được viết dựa theo từ T-001. Chốt lại để CI kiểm đúng cái
+# đã luôn được kiểm, không nhiều hơn không ít hơn.
+#
+# MỞ RỘNG BỘ RULE LÀ TASK RIÊNG, đừng nhét vào PR khác. Bật hết mặc định của
+# 0.16 thì ra 70 lỗi, trong đó:
+#   - B008 × 43 (63%): "đừng gọi hàm trong giá trị mặc định của tham số" —
+#     nhắm vào `Depends()`. Đây là cú pháp BẮT BUỘC của FastAPI, báo sai hoàn
+#     toàn. Có mở rule nào thì cũng phải tắt cái này.
+#   - DTZ011 × 3: `date.today()` không kèm timezone. Đáng xem thật với hệ đặt
+#     phòng, dù cả 3 chỗ hiện nằm trong test.
+#   - Còn lại là dọn dẹp: I001 sắp xếp import, UP007 `Optional[X]` → `X | None`,
+#     RUF100 noqa thừa, SIM103, UP035, RUF022.
+
+target-version = "py313"
+line-length = 100
+
+[lint]
+select = ["E4", "E7", "E9", "F"]

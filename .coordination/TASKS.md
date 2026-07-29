@@ -46,10 +46,14 @@
 
 ---
 
+## Done
+
+> Move task xuống đây sau khi merge. Giữ full metadata để truy vết.
+
 ### T-005 — CI: lint + build + test tự động trên GitHub Actions
 
 - **Phase:** 1 (hạ tầng dev — mục "CI pipeline" đã đề xuất từ session T-002/T-003 mà chưa làm)
-- **Status:** `in_progress`
+- **Status:** `done`
 - **Owner:** claude-code
 - **Branch:** `claude-code/T-005-ci`
 - **Assigned type:** `CLAUDE_CODE`
@@ -64,8 +68,11 @@
   - [x] Không phải sửa `conftest.py`: nó dùng `os.environ.setdefault` nên biến `HOMESTAY_DATABASE_URL` đặt ở job thắng giá trị mặc định
   - [x] Sửa 2 lỗi ruff có sẵn: `get_permissions_in_org` (bookings.py) và `select` (test_available_rooms.py) import thừa
   - [x] `backend/ruff.toml` chốt cứng `select = ["E4","E7","E9","F"]` + chặn trên `ruff<0.17` trong `requirements-dev.txt`
-  - [ ] Run thật trên GitHub xanh cả hai job
-- **Verification:** chạy thật trên GitHub Actions, không chỉ đọc file YAML.
+  - [x] Run thật trên GitHub xanh cả hai job
+- **Verification:** chạy thật trên GitHub Actions. `main` tại `91a3c5e` xanh cả hai job — backend 46s, frontend 43s. `pytest` chạy trên Postgres service container: **11 passed in 12.43s** (race condition test cần đúng semantics `SELECT ... FOR UPDATE` cũng pass). Lần đầu tiên repo có kiểm tự động chạy thành công, sau 5 task và 4 PR.
+- **Sai lầm quy trình đã mắc:** mở PR #3 TRƯỚC khi CI chạy xong → coordinator merge một thứ chưa ai chứng minh là xanh → `main` đỏ 10 phút. Tệ hơn: commit vá nằm trên branch mà không có run nào chạy cho nó, vì PR đã đóng nên `pull_request` không kích hoạt còn `push` chỉ chạy trên `main` → phải mở PR #4. **Bài học: đợi run xanh rồi mới đưa PR cho người merge.**
+- **Cảnh báo chưa gây hại:** cả hai job in "Node.js 20 is deprecated" cho `actions/checkout@v4`, `actions/setup-python@v5`, `actions/setup-node@v4`. GitHub đang tự chạy trên Node 24; khi bỏ lớp tương thích thì cả ba hỏng cùng lúc. Task nhỏ, chưa gấp.
+- **Merged:** 2026-07-29 — PR #3 (`bd0f7d4`) + PR #4 (`91a3c5e`)
 - **Sự cố run đầu (đã sửa):** job frontend xanh, job backend đỏ ở `ruff check .` với **70 lỗi** — trên code mà máy dev báo sạch. Nguyên nhân: `requirements-dev.txt` để `ruff>=0.5` không chặn trên → máy dev 0.15.22, CI cài 0.16.0, hai bản bật bộ rule mặc định khác nhau. Trong 70 lỗi có **43 cái là B008** ("đừng gọi hàm trong giá trị mặc định của tham số") nhắm vào `Depends()` — cú pháp bắt buộc của FastAPI, báo sai hoàn toàn. Sửa bằng cách chốt cứng bộ rule trong `ruff.toml` thay vì phụ thuộc mặc định của từng bản ruff. Đã nâng ruff local lên 0.16.0 cho khớp CI và verify lại trước khi push.
 - **Task nối tiếp đáng làm:** mở rộng bộ rule lint (`I` sắp xếp import, `UP` cú pháp hiện đại, `DTZ` timezone). Riêng **DTZ011 — `date.today()` không kèm timezone — đáng xem thật với hệ đặt phòng**, dù cả 3 chỗ hiện nằm trong test. Phải tắt B008 nếu mở `B`.
 - **Blocker:** —
@@ -74,10 +81,6 @@
 - **Updated:** 2026-07-29 by claude-code
 
 ---
-
-## Done
-
-> Move task xuống đây sau khi merge. Giữ full metadata để truy vết.
 
 ### T-004 — Kéo design token Gaoji House vào frontend (D-007)
 

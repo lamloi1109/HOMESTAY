@@ -135,3 +135,51 @@
 - Sửa `components/travel/PropertyCard.jsx`: dùng `var(--clay-300)` không tồn tại trong `tokens/colors.css` (chỉ có 50/100/200/400/500/600/700) → gradient thứ ba hỏng. Repo tạm thay `--clay-400`.
 - Bổ sung menu cho nav mobile.
 - Cấp ảnh Open Graph 1200×630 cho trang chủ.
+
+## Session 2026-07-29 (chiều) — T-005 CI
+
+**Tasks touched:** T-005
+**Status changes:**
+- T-005: (mới) → in_progress → done (PR #3 + PR #4, `main` tại `91a3c5e`)
+
+**Commits:**
+- f99495b [phase-1][ci]: GitHub Actions — lint + build frontend, ruff + pytest backend
+- 80888eb [phase-1][ci]: chot cung bo rule ruff, chan tren phien ban
+
+**Decisions made:** none mới (thi hành đề xuất "CI pipeline" treo từ session T-002/T-003)
+
+**Blockers:** none
+
+**Kết quả cuối:** `main` xanh cả hai job. `pytest` chạy thật trên CI: **11 passed in 12.43s**. Đây là lần đầu tiên repo có kiểm tự động chạy thành công, sau 5 task và 4 PR.
+
+### Cạm bẫy đã sập vào — ĐỌC TRƯỚC KHI ĐỤNG VÀO LINT
+
+`requirements-dev.txt` để `ruff>=0.5`, **không chặn trên**. Máy dev đang 0.15.22, CI cài về 0.16.0. Hai bản bật bộ rule mặc định khác nhau → cùng một đoạn code, local báo sạch mà CI đỏ **70 lỗi**.
+
+Trong 70 lỗi đó, **43 cái (63%) là `B008`** — "đừng gọi hàm trong giá trị mặc định của tham số" — nhắm vào `Depends()`. Đây là cú pháp **bắt buộc** của FastAPI; rule này với FastAPI là báo sai hoàn toàn.
+
+Cách sửa đã áp dụng: `backend/ruff.toml` chốt cứng `select = ["E4","E7","E9","F"]` (đúng bằng mặc định kinh điển của ruff, chính là thứ codebase được viết dựa theo từ T-001), cộng chặn trên `ruff>=0.16,<0.17`.
+
+**Nếu định mở rộng bộ rule lint:** đọc comment trong `backend/ruff.toml` trước. Mở nhóm `B` thì **bắt buộc** phải tắt `B008`, nếu không sẽ ăn lại đúng 43 lỗi giả này. Nhóm đáng mở thật: `I` (sắp xếp import), `UP` (cú pháp hiện đại), `DTZ`. Riêng **`DTZ011` — `date.today()` không kèm múi giờ — đáng xem thật với hệ đặt phòng**, dù cả 3 chỗ hiện nằm trong test.
+
+### Sai lầm quy trình đã mắc (đừng lặp lại)
+
+Mở PR #3 **trước khi** CI chạy xong → coordinator merge một thứ chưa ai chứng minh là xanh → `main` đỏ trong 10 phút. Tệ hơn: commit vá nằm trên branch mà **không có run nào chạy cho nó**, vì PR đã đóng nên sự kiện `pull_request` không kích hoạt, còn `push` chỉ chạy trên `main`. Phải mở PR #4 mới đưa bản vá lên được.
+
+**Bài học:** đợi run xanh rồi mới đưa PR cho người merge.
+
+### Ghi chú môi trường
+
+- Đã nâng ruff trên máy dev lên 0.16.0 cho khớp CI. Máy khác cài lại từ `requirements-dev.txt` là tự khớp.
+- Job backend lấy Postgres từ `services:` của Actions, **không phụ thuộc Docker của máy dev**. Đặt thẳng `POSTGRES_DB: homestay_test` thay `scripts/init-test-db.sql` vì service container không mount volume được.
+- `conftest.py` dùng `os.environ.setdefault` nên `HOMESTAY_DATABASE_URL` đặt ở job thắng giá trị mặc định — **không phải sửa code test**.
+- Build frontend không cần backend chạy: mọi trang gọi API đều `force-dynamic` + `try/catch`, không có `generateStaticParams` nào.
+
+**Cảnh báo chưa gây hại:** cả hai job in "Node.js 20 is deprecated" cho `actions/checkout@v4`, `actions/setup-python@v5`, `actions/setup-node@v4`. GitHub đang tự chạy chúng trên Node 24. Khi bỏ lớp tương thích thì cả ba hỏng cùng lúc — nâng bản là task nhỏ, chưa gấp.
+
+**Next step for next session:**
+1. **Nút liên hệ tư vấn** — trang chưa có số điện thoại, nút Zalo, hay form để lại thông tin. Đứng ở góc "trang quảng bá, khách liên hệ để tư vấn" thì đây là lỗ hổng lớn nhất còn lại.
+2. Dựng tiếp `Gaoji House - Property.dc.html` (trang chi tiết) — có dữ liệu thật đứng sau.
+3. Sửa hook `pre-commit` (vẫn hỏng, đã tách task riêng). CI là lớp bảo vệ thật; hook chỉ là tiện lợi.
+
+**Vẫn treo, không đổi từ session trước:** ba câu hỏi cho khách (KiotViet bản nào, xin file Excel, đã đặt trùng phòng chưa) và ba việc cho designer trên claude.ai/design (`--clay-300`, menu nav mobile, ảnh Open Graph).

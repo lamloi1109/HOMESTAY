@@ -175,3 +175,44 @@ cho phép test tự động (Tempering Phase 2) chạy độc lập UI.
 - **Affects:** T-002; task upload ảnh tương lai sẽ thay placeholder bằng ảnh thật.
 
 ---
+
+### D-007: Design system "Gaoji House" trên claude.ai/design là nguồn sự thật về thiết kế
+- **Date:** 2026-07-28 | **Author:** claude-code (chốt bởi designer của dự án) | **Status:** active
+
+**Context:**
+Designer của dự án đã dựng sẵn một design system hoàn chỉnh trên claude.ai/design
+(project `5c995ee4-97d7-49ab-9cb1-cc0a72096d37`): token màu/chữ/khoảng cách/bo
+góc/đổ bóng/hiệu ứng, thư viện component React, và hai UI kit (`guest-web`,
+`owner-console`). Trước đó repo có ba mô tả thiết kế khác nhau và mâu thuẫn nhau.
+
+**Decision:**
+1. **Design system trên claude.ai/design là nguồn sự thật về thiết kế.** Repo chỉ
+   giữ bản sao token tại `frontend/src/styles/gaoji/`, đồng bộ một chiều từ trên
+   xuống. Muốn đổi thiết kế thì sửa trên design system rồi kéo lại, không sửa CSS
+   trong repo.
+2. **"Gaoji House" là tên thương hiệu chính thức** (chủ cơ sở đặt). Thay tên tạm
+   "Homestay" ở metadata và các chỗ hiển thị thương hiệu.
+3. **D-006 không bị huỷ mà được nâng cấp.** Clay `#BC5B3A` chính là terracotta đã
+   duyệt, `--canvas #F3EFE6` chính là nền kem; Be Vietnam Pro và Lucide giữ nguyên.
+   Bổ sung: serif Cormorant Garamond cho tiêu đề lớn, dark mode, lớp grain.
+4. **`docs/DESIGN.md` (design system kiểu Apple, SF Pro, `#0066cc`) bị bác.** Mâu
+   thuẫn cả D-006 lẫn D-007, không thuộc task nào, chưa từng được commit.
+
+**Rationale:**
+Thiết kế do designer của dự án làm ra và trên đó có công cụ chuyên dụng; giữ nó
+làm nguồn sự thật tránh việc CSS trong repo và mockup trôi dạt khỏi nhau. Token
+là CSS custom property thuần nên chép sang Next.js không cần chuyển đổi gì.
+
+**Consequences:**
+- Tên class Tailwind cũ (`bg-bg`, `text-terra`…) giữ nguyên, chỉ đổi thứ chúng
+  trỏ tới trong `@theme inline` — 87 chỗ dùng trong 11 file không phải sửa.
+- Font nạp qua `next/font` (self-host) thay vì `@import` Google Fonts của design
+  system; ngoại lệ này gói gọn trong `next-adapter.css`.
+- Component và UI kit chưa kéo về — kéo từng cái khi có task cần tới.
+- **Cảnh báo phạm vi:** design system mô tả một OTA đặt phòng trực tuyến đầy đủ
+  (checkout, thanh toán, "xác nhận tức thì"), rộng hơn nhu cầu hiện tại của chủ
+  cơ sở (trang quảng bá + thu yêu cầu tư vấn). Token và component nền dùng chung
+  được; các màn hình thanh toán thì chưa. Cần một decision riêng chốt phạm vi sản
+  phẩm trước khi dựng luồng khách mới.
+
+---

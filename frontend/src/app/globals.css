@@ -1,61 +1,123 @@
 @import "tailwindcss";
 
-/* Art direction khách duyệt (mockup 2026-07-19): nền kem ấm, terracotta,
-   chữ nâu đậm, card trắng bo tròn. Thiết kế 1 theme sáng duy nhất — đúng mockup. */
-:root {
-  --bg: #faf5ec;
-  --surface: #ffffff;
-  --ink: #2d2419;
-  --muted: #857157;
-  --terra: #c2511d;
-  --terra-deep: #9e3f12;
-  --line: #eadfce;
-  --wash: #f3eada;
-  --sage: #7c9885;
-  --lake: #5c8a8a;
-  --sand: #d9a05b;
-  --star: #e08f28;
-}
+/* Gaoji House design system — token nguồn từ claude.ai/design.
+   Xem frontend/src/styles/gaoji/README.md để biết cách đồng bộ lại.
+   Thứ tự nhập đúng như styles.css của design system: màu → chữ → khoảng cách
+   → bo góc → đổ bóng → hiệu ứng → base (base đọc được mọi token nên vào cuối),
+   riêng next-adapter trỏ token font sang next/font nên phải sau typography. */
+@import "../styles/gaoji/colors.css";
+@import "../styles/gaoji/typography.css";
+@import "../styles/gaoji/spacing.css";
+@import "../styles/gaoji/radius.css";
+@import "../styles/gaoji/elevation.css";
+@import "../styles/gaoji/effects.css";
+@import "../styles/gaoji/base.css";
+@import "../styles/gaoji/next-adapter.css";
 
+/* Cầu nối Tailwind → token Gaoji House.
+   Giữ nguyên tên class cũ (bg-bg, text-ink, text-terra…) để không phải sửa
+   87 chỗ trong các trang; chỉ đổi thứ chúng trỏ tới. Muốn đổi màu thương hiệu
+   thì sửa trên design system rồi kéo token về, không sửa ở đây. */
 @theme inline {
-  --color-bg: var(--bg);
-  --color-surface: var(--surface);
-  --color-ink: var(--ink);
-  --color-muted: var(--muted);
-  --color-terra: var(--terra);
-  --color-terra-deep: var(--terra-deep);
-  --color-line: var(--line);
-  --color-wash: var(--wash);
-  --color-sage: var(--sage);
-  --color-lake: var(--lake);
-  --color-sand: var(--sand);
-  --color-star: var(--star);
+  --color-bg: var(--canvas);
+  --color-surface: var(--surface-raised);
+  --color-ink: var(--text-primary);
+  --color-muted: var(--text-muted);
+  --color-terra: var(--accent);
+  --color-terra-deep: var(--accent-hover);
+  --color-line: var(--border-subtle);
+  --color-wash: var(--linen-150);
+
+  /* Màu nhóm tiện ích + trạng thái booking */
+  --color-sage: var(--jade-300);
+  --color-lake: var(--info-600);
+  --color-sand: var(--sanddeep-300);
+  --color-star: var(--rating);
+
   --font-sans: var(--font-bvp);
+  --font-serif: var(--font-cormorant);
 }
 
-body {
-  background: var(--bg);
-  color: var(--ink);
-  font-family: var(--font-bvp), "Segoe UI", sans-serif;
+/* ── Style riêng của app (không thuộc design system) ─────────────── */
+
+/* Link trên nav: gạch chân chạy ra khi rê chuột, theo thiết kế trang chủ. */
+.gh-nav-link {
+  border-bottom: 1.5px solid transparent;
+  padding-bottom: 1px;
+  transition: color var(--dur-base) var(--ease-standard),
+    border-color var(--dur-base) var(--ease-standard);
+}
+.gh-nav-link:hover {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
 }
 
-::selection {
-  background: var(--terra);
-  color: #fff;
+/* Vào màn hình thì trôi lên — dùng cho các khối trong hero. */
+@keyframes gh-fade-up-in {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
-
-/* Focus rõ ràng cho bàn phím, theo màu thương hiệu */
-:focus-visible {
-  outline: 2px solid var(--terra);
-  outline-offset: 2px;
-  border-radius: 4px;
+.gh-au {
+  animation: gh-fade-up-in 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
+.gh-au-1 { animation-delay: 0.05s; }
+.gh-au-2 { animation-delay: 0.2s; }
+.gh-au-3 { animation-delay: 0.35s; }
+.gh-au-4 { animation-delay: 0.5s; }
 
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
+  .gh-au { animation: none; }
+}
+
+/* Hiện icon theo theme mà không cần state React — xem ThemeToggle.tsx. */
+.gh-when-dark { display: none; }
+[data-theme="dark"] .gh-when-light { display: none; }
+[data-theme="dark"] .gh-when-dark { display: inline-flex; }
+
+/* Lưới bento trang chủ: ô lớn trái chiếm 2 hàng, ô rộng trên phải,
+   hai ô nhỏ dưới. Dưới 744px thì xếp dọc theo đúng breakpoint design system. */
+.gh-bento-home {
+  display: grid;
+  grid-template-columns: 5fr 3.2fr 2.8fr;
+  grid-template-rows: 380px 270px;
+  grid-template-areas:
+    "a b b"
+    "a c d";
+  gap: 18px;
+}
+
+@media (max-width: 743px) {
+  .gh-bento-home {
+    grid-template-columns: 1fr;
+    grid-template-rows: none;
+    grid-template-areas: "a" "b" "c" "d";
   }
+  .gh-bento-home > * {
+    min-height: 300px;
+  }
+}
+
+/* Card chỗ nghỉ: nhấc lên và đổ bóng sâu hơn khi rê chuột. */
+.gh-prop-card {
+  transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out);
+}
+.gh-prop-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-xl);
+}
+
+/* Thanh cuộn ngang của dải card: ẩn thanh cuộn, vẫn cuộn được. */
+.gh-scroll-x {
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.gh-scroll-x::-webkit-scrollbar {
+  display: none;
 }

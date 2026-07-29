@@ -1,0 +1,14 @@
+/* Gaoji House — Radius tokens
+   Soft, tactile (claymorphic) corner language. Almost nothing is hard-cornered;
+   interactive elements round generously, pills for chips/search, circles for
+   orbs/avatars. */
+:root {
+  --radius-xs: 8px;
+  --radius-sm: 12px;
+  --radius-md: 18px;   /* inputs, small cards */
+  --radius-lg: 28px;   /* property / bento cards */
+  --radius-xl: 40px;   /* feature cells, glass panels */
+  --radius-2xl: 56px;  /* hero blobs */
+  --radius-pill: 999px;
+  --radius-circle: 50%;
+}

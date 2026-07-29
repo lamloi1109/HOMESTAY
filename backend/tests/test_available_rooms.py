@@ -2,8 +2,6 @@
 
 from datetime import date, timedelta
 
-from sqlalchemy import select
-
 from app.models import Room
 from app.services.booking import create_booking, get_available_rooms
 

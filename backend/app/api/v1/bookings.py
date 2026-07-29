@@ -10,7 +10,6 @@ from app.api.deps import (
     get_current_user,
     get_db,
     get_optional_user,
-    get_permissions_in_org,
 )
 from app.core.permissions import Perm
 from app.models import Booking, BookingStatus, User

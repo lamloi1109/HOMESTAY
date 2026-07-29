@@ -46,6 +46,32 @@
 
 ---
 
+### T-005 — CI: lint + build + test tự động trên GitHub Actions
+
+- **Phase:** 1 (hạ tầng dev — mục "CI pipeline" đã đề xuất từ session T-002/T-003 mà chưa làm)
+- **Status:** `in_progress`
+- **Owner:** claude-code
+- **Branch:** `claude-code/T-005-ci`
+- **Assigned type:** `CLAUDE_CODE`
+- **Files touched:** `.github/workflows/ci.yml` (mới), `backend/app/api/v1/bookings.py`, `backend/tests/test_available_rooms.py`
+- **Depends on:** —
+- **Complexity:** S
+- **Lý do:** Repo chạy tới PR #1 mà **chưa từng có một lần kiểm tự động nào**. Hook `pre-commit` có tồn tại nhưng tìm `package.json` ở gốc repo — đây là repo tách `frontend/` + `backend/` nên gốc không có file đó, và nó in "bỏ qua lint/test" ở mọi commit từ `97f2449`. PR #1 merge với đúng một lớp bảo vệ: agent chạy lint/build bằng tay.
+- **Acceptance criteria:**
+  - [x] Job `frontend`: `npm ci` → `npm run lint` → `npm run build` (Node 22, cache npm)
+  - [x] Job `backend`: Postgres 16 service container → `ruff check .` → `pytest` (Python 3.13, cache pip)
+  - [x] Postgres cho test lấy từ `services:` của Actions, không phụ thuộc Docker của máy dev; `POSTGRES_DB: homestay_test` thay cho `scripts/init-test-db.sql` (service container không mount volume được)
+  - [x] Không phải sửa `conftest.py`: nó dùng `os.environ.setdefault` nên biến `HOMESTAY_DATABASE_URL` đặt ở job thắng giá trị mặc định
+  - [x] Sửa 2 lỗi ruff có sẵn để CI xanh ngay lần đầu: `get_permissions_in_org` (bookings.py) và `select` (test_available_rooms.py) import thừa
+  - [ ] Run thật trên GitHub xanh cả hai job
+- **Verification:** chạy thật trên GitHub Actions, không chỉ đọc file YAML.
+- **Blocker:** —
+- **Ghi chú:** build frontend KHÔNG cần backend chạy vì mọi trang gọi API đều `force-dynamic` + `try/catch`, và không có `generateStaticParams` nào. Nếu sau này thêm trang prerender có fetch thì build sẽ đỏ — lúc đó dựng backend service trong job, đừng bỏ qua lỗi.
+- **Chưa làm:** hook `pre-commit` vẫn hỏng, chưa sửa trong task này (đã tách task riêng).
+- **Updated:** 2026-07-29 by claude-code
+
+---
+
 ## Done
 
 > Move task xuống đây sau khi merge. Giữ full metadata để truy vết.

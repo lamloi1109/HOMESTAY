@@ -1,0 +1,90 @@
+# CI cho repo tách đôi frontend/ + backend/.
+#
+# Lưu ý cho người sửa file này: hook pre-commit trong repo tìm package.json ở
+# GỐC repo, mà gốc repo không có package.json — nên nó chưa từng chạy một lần
+# kiểm nào. Workflow này là lớp bảo vệ thật đầu tiên; đừng gỡ nó ra với lý do
+# "đã có pre-commit rồi".
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# Push liên tiếp lên cùng một PR thì huỷ run cũ, khỏi tốn phút chạy.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  frontend:
+    name: Frontend — lint + build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - run: npm ci
+
+      - run: npm run lint
+
+      # Mọi trang gọi API đều là force-dynamic + try/catch nên build KHÔNG cần
+      # backend chạy. Nếu sau này thêm trang prerender có fetch, build sẽ đỏ ở
+      # đây — lúc đó dựng backend service ở job này chứ đừng bỏ qua lỗi.
+      - run: npm run build
+
+  backend:
+    name: Backend — ruff + pytest
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: homestay
+          POSTGRES_PASSWORD: homestay
+          # Tạo thẳng DB test ở đây, khỏi cần scripts/init-test-db.sql như
+          # docker-compose (service container không mount volume được).
+          POSTGRES_DB: homestay_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U homestay"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
+
+    env:
+      # conftest.py dùng os.environ.setdefault → biến này thắng giá trị mặc định.
+      HOMESTAY_DATABASE_URL: postgresql+asyncpg://homestay:homestay@127.0.0.1:5432/homestay_test
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+          cache-dependency-path: |
+            backend/requirements.txt
+            backend/requirements-dev.txt
+
+      - run: pip install -r requirements-dev.txt
+
+      - run: ruff check .
+
+      # Test chạy trên Postgres thật, không SQLite: race condition test cần
+      # đúng semantics SELECT ... FOR UPDATE của Postgres.
+      - run: pytest -q

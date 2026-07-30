@@ -1,13 +1,12 @@
 #!/bin/sh
 # Kỷ luật commit (docs/PROMPT_EXECUTOR_FABLE5.md): "Không commit code chưa
-# chạy lint + test local." Repo hiện là greenfield (chưa có package.json) —
-# hook này tự phát hiện tooling khi nó xuất hiện, và không chặn commit trước
-# đó (docs-only) khi chưa có gì để lint/test.
+# chạy lint + test local." Repo tách frontend/ + backend/, không có
+# package.json ở gốc — bản hook trước tìm package.json ở gốc nên luôn no-op
+# (xem TASKS.md T-005). Bản này lint/test đúng thư mục có file staged.
 
 set -e
 
 REPO_ROOT=$(git rev-parse --show-toplevel)
-cd "$REPO_ROOT"
 
 STAGED_APP_FILES=$(git diff --cached --name-only --diff-filter=ACM \
   | grep -Ev '^(docs/|\.coordination/|WORKFLOW.*\.md$|README\.md$)' || true)
@@ -17,29 +16,49 @@ if [ -z "$STAGED_APP_FILES" ]; then
   exit 0
 fi
 
-if [ ! -f package.json ]; then
-  echo "pre-commit: chưa có package.json — bỏ qua lint/test (chưa có tooling để chạy)." >&2
-  exit 0
+FRONTEND_STAGED=$(printf '%s\n' "$STAGED_APP_FILES" | grep -E '^frontend/' || true)
+BACKEND_STAGED=$(printf '%s\n' "$STAGED_APP_FILES" | grep -E '^backend/' || true)
+
+fail=0
+
+if [ -n "$FRONTEND_STAGED" ] && [ -f "$REPO_ROOT/frontend/package.json" ]; then
+  echo "pre-commit: frontend/ có thay đổi — chạy npm run lint..."
+  if ! (cd "$REPO_ROOT/frontend" && npm run lint); then
+    echo "pre-commit: frontend lint FAILED." >&2
+    fail=1
+  fi
 fi
 
-run_script() {
-  script_name="$1"
-  if node -e "process.exit(require('./package.json').scripts && require('./package.json').scripts['$script_name'] ? 0 : 1)" 2>/dev/null; then
-    if [ -f pnpm-lock.yaml ]; then runner="pnpm"
-    elif [ -f yarn.lock ]; then runner="yarn"
-    else runner="npm run"
+if [ -n "$BACKEND_STAGED" ]; then
+  if [ -x "$REPO_ROOT/backend/.venv/bin/ruff" ]; then
+    RUFF="$REPO_ROOT/backend/.venv/bin/ruff"
+    PY="$REPO_ROOT/backend/.venv/bin/python"
+  elif command -v ruff >/dev/null 2>&1; then
+    RUFF="ruff"
+    PY="python3"
+  else
+    RUFF=""
+  fi
+
+  if [ -n "$RUFF" ]; then
+    echo "pre-commit: backend/ có thay đổi — chạy ruff check..."
+    if ! (cd "$REPO_ROOT/backend" && "$RUFF" check .); then
+      echo "pre-commit: ruff FAILED." >&2
+      fail=1
     fi
-    echo "pre-commit: chạy '$runner $script_name'..."
-    if ! $runner $script_name; then
-      echo "pre-commit: '$script_name' FAILED — commit bị chặn. Sửa lỗi trước khi commit." >&2
-      exit 1
+    echo "pre-commit: chạy pytest backend (cần Postgres tại HOMESTAY_DATABASE_URL)..."
+    if ! (cd "$REPO_ROOT/backend" && "$PY" -m pytest -q); then
+      echo "pre-commit: pytest FAILED." >&2
+      fail=1
     fi
   else
-    echo "pre-commit: không có script '$script_name' trong package.json — bỏ qua." >&2
+    echo "pre-commit: backend/ có thay đổi nhưng không tìm thấy ruff (chưa tạo backend/.venv?) — BỎ QUA kiểm tra backend, tự chạy 'ruff check .' + 'pytest' tay trước khi push." >&2
   fi
-}
+fi
 
-run_script lint
-run_script test
+if [ "$fail" -eq 1 ]; then
+  echo "pre-commit: có bước kiểm tra FAILED — commit bị chặn. Sửa lỗi trước khi commit (hoặc --no-verify nếu thật sự cần, phải nêu rõ lý do)." >&2
+  exit 1
+fi
 
 exit 0

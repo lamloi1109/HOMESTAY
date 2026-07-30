@@ -77,7 +77,7 @@
 - **Task nối tiếp đáng làm:** mở rộng bộ rule lint (`I` sắp xếp import, `UP` cú pháp hiện đại, `DTZ` timezone). Riêng **DTZ011 — `date.today()` không kèm timezone — đáng xem thật với hệ đặt phòng**, dù cả 3 chỗ hiện nằm trong test. Phải tắt B008 nếu mở `B`.
 - **Blocker:** —
 - **Ghi chú:** build frontend KHÔNG cần backend chạy vì mọi trang gọi API đều `force-dynamic` + `try/catch`, và không có `generateStaticParams` nào. Nếu sau này thêm trang prerender có fetch thì build sẽ đỏ — lúc đó dựng backend service trong job, đừng bỏ qua lỗi.
-- **Chưa làm:** hook `pre-commit` vẫn hỏng, chưa sửa trong task này (đã tách task riêng).
+- **Đã sửa (2026-07-30, phiên chuẩn bị deploy Railway/Vercel):** hook `pre-commit` — 2 bug gốc: (1) tìm `package.json` ở gốc repo (không tồn tại trong repo tách frontend/+backend/) nên luôn no-op im lặng; (2) cả 2 file hook được commit ở mode không executable (644) nên dù `core.hooksPath` đúng, git vẫn âm thầm bỏ qua. Sửa: hook phân biệt đúng thư mục staged (frontend/ → `npm run lint`; backend/ → `ruff check` + `pytest`), cả 2 file chuyển mode 755. Xem `.githooks/pre-commit` + `.githooks/README.md`.
 - **Updated:** 2026-07-29 by claude-code
 
 ---
@@ -181,5 +181,5 @@
 - **Verification:** pytest 11 passed; lint + build pass; upload ảnh demo qua API → hiện trên UI thật
 - **Bonus fix:** demo seed email `.local` bị email-validator từ chối → đổi `owner@example.com` (cập nhật DB + README)
 - **Merged:** 2026-07-27 — fast-forward vào `main` tại `504fe1e`
-- **Lưu ý còn nợ:** `sort_order` tính bằng `max(sort_order)+1` ngoài transaction lock → 2 upload đồng thời có thể trùng số thứ tự (không vỡ dữ liệu, chỉ sai thứ tự hiển thị)
+- **Đã sửa (2026-07-30):** `sort_order` từng tính bằng `max(sort_order)+1` ngoài lock → 2 upload đồng thời trùng số thứ tự. Thêm `SELECT ... FOR UPDATE` trên row property trước khi tính (cùng pattern lock phòng lúc đặt booking). Test `test_concurrent_uploads_get_distinct_sort_order` verify fail 3/3 lần trên code cũ, pass ổn định sau fix.
 - **Updated:** 2026-07-27 by claude-code

@@ -195,6 +195,10 @@ async def upload_property_image(
 
     storage = get_storage()
     stored_name = await storage.save(data, ext)
+    # Khoa row property (giai phong khi commit) de serialize tinh next_order:
+    # thieu lock nay, 2 upload dong thoi cho cung property doc chung max()
+    # truoc khi ben nao insert, sinh 2 anh trung sort_order.
+    await db.execute(select(Property.id).where(Property.id == property_id).with_for_update())
     next_order = (
         await db.scalar(
             select(func.coalesce(func.max(PropertyImage.sort_order), -1)).where(

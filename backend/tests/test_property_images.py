@@ -1,5 +1,6 @@
 """Upload ảnh property: RBAC, magic bytes, hiển thị trong detail, xóa (T-003)."""
 
+import asyncio
 import struct
 import zlib
 
@@ -129,3 +130,24 @@ async def test_owner_uploads_staff_forbidden_and_detail_shows_image(client):
     assert r.status_code == 204
     r = await client.get(f"/api/v1/properties/{prop_id}")
     assert r.json()["images"] == []
+
+
+async def test_concurrent_uploads_get_distinct_sort_order(client):
+    """Race: N upload đồng thời cho cùng property không được trùng sort_order
+    (bug T-003 — max(sort_order)+1 đọc ngoài lock, 2 request đọc cùng max)."""
+    owner = await _login(client, "owner-race@example.com")
+    prop_id = await _setup_property(client, owner)
+    png = make_png()
+
+    async def _upload(i: int):
+        r = await client.post(
+            f"/api/v1/properties/{prop_id}/images",
+            files={"file": (f"anh{i}.png", png, "image/png")},
+            headers=owner,
+        )
+        assert r.status_code == 201, r.text
+        return r.json()["sort_order"]
+
+    n = 8
+    orders = await asyncio.gather(*[_upload(i) for i in range(n)])
+    assert sorted(orders) == list(range(n)), f"kỳ vọng {n} sort_order khác nhau, got: {orders}"

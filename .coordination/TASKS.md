@@ -90,13 +90,20 @@
 ### T-008 — Đồng bộ Design System Gaoji House v2 (EB Garamond, Barlow Condensed, 0px Radius)
 
 - **Phase:** 4 (Design)
-- **Status:** `todo`
-- **Owner:** —
-- **Branch:** —
+- **Status:** `done`
+- **Owner:** antigravity
+- **Branch:** `antigravity/T-008-gaoji-design-system-v2`
 - **Assigned type:** `ANTIGRAVITY`
 - **Files touched:** `frontend/src/styles/gaoji/**`, `frontend/src/components/gaoji/**`, `frontend/src/app/globals.css`, `frontend/src/app/layout.tsx`
 - **Depends on:** —
 - **Complexity:** M
+- **Acceptance criteria:**
+  - [x] Thiết lập Google Fonts `EB_Garamond` (Display) + `Barlow_Condensed` (UI/Body) + `Newsreader` (Italic) qua `next/font/google`
+  - [x] Cập nhật toàn bộ design tokens v2 (`colors.css`, `typography.css`, `radius.css` 0px, `elevation.css`, `motion.css`, `next-adapter.css`)
+  - [x] Cầu nối `@theme inline` Tailwind CSS v4 trong `globals.css`
+  - [x] Xây dựng bộ component primitives v2: `Button`, `Badge`, `Tag`, `Input`, `Select`, `Icon`, `ContactRail`, `InquiryModal`, `Logo`
+  - [x] `npm run lint` pass (0 errors) & `npm run build` pass (0 errors)
+- **Verification:** `npm run lint` exit code 0; `npm run build` exit code 0 (Compiled successfully in Turbopack, static pages generated).
 - **Updated:** 2026-08-20 by antigravity
 
 ---

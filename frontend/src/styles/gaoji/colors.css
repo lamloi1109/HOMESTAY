@@ -1,136 +1,102 @@
-/* Gaoji House — Colour tokens.
-   Warm, restrained palette: Cloud Dancer neutrals + Clay (primary) + Jade
-   (secondary) + functional semantics. Two moods from one token set: the
-   default light "retreat", and [data-theme="dark"] "urgent booking".
-   The light values bind to :root AND [data-theme="light"] so an explicit
-   data-theme="light" re-asserts the retreat mood even inside a dark scope. */
-:root, [data-theme="light"] {
-  /* ── Cloud Dancer neutrals — warm off-white → ink ────────── */
-  --paper-50:  #FBF9F3;
-  --cloud-100: #F3EFE6;   /* Cloud Dancer — Pantone 11-4201 (approx) */
-  --linen-150: #ECE6D9;
-  --sand-250:  #E3DAC8;
-  --sanddeep-300: #D6CBB4;
-  --taupe-400: #BCB09A;
-  --stone-500: #8B8069;
-  --stone-600: #6E6350;
-  --umber-700: #4F4433;
-  --espresso-800: #33291D;
-  --ink-900:   #211C14;   /* warm near-black — never pure black */
-  --ink-950:   #15110B;   /* dark-mode base */
+/* Gao Ji House — colour tokens (v2).
+   Lifted verbatim from the client's design system package (87b48ff7).
+   Four voices: warm paper canvases, jade architecture, gold ceremony,
+   clay warmth. Ink is a warm near-black, never pure #000. */
+:root {
+  /* Ink */
+  --ink-900: #1A1A1A;
+  --ink-800: #242424;
+  --ink-700: #383838;
+  --ink-500: #6B6255;
 
-  /* ── Clay — primary accent (claymorphic terracotta) ──────── */
-  --clay-50:  #F6E5DB;
-  --clay-100: #EAC6B3;
-  --clay-200: #DCA184;
-  --clay-400: #CB744F;
-  --clay-500: #BC5B3A;
-  --clay-600: #A64B2D;
-  --clay-700: #89391F;
+  /* Jade — the architectural primary */
+  --jade-900: #0D3B22;
+  --jade-700: #1F3A2E;
+  --jade-500: #2E5344;
+  --jade-100: rgba(31, 58, 46, .12);
 
-  /* ── Jade — secondary accent (muted pine) ────────────────── */
-  --jade-50:  #DEE8E2;
-  --jade-100: #B6CCC0;
-  --jade-300: #6E9384;
-  --jade-500: #3B5D4F;
-  --jade-600: #2E4A3F;
-  --jade-700: #21372F;
+  /* Gold — ceremony, rules, focus */
+  --gold-500: #D4AF37;
+  --gold-600: #C59B27;
+  --gold-700: #B08D57;
+  --gold-800: #9C721D;
+  --gold-900: #8A6214;
+  --gold-100: #EFEAD8;
+  --gold-050: #E2C068;
 
-  /* ── Functional hues (each + soft tint) ──────────────────── */
-  --gold-500: #B08A3E; --gold-50: #F0E4C8;
-  --success-600: #3E7D5A; --success-50: #D6E8DC;
-  --warning-600: #BE852B; --warning-50: #F5E8CC;
-  --danger-600:  #A43B3B; --danger-50:  #F1D8D6;
-  --info-600:    #3F6C86; --info-50:    #D6E3EA;
+  /* Clay — human warmth, the "welcome home" accent */
+  --clay-500: #C27358;
+  --clay-700: #A6573C;
+  --clay-100: #F3E2DA;
 
-  /* ── Surfaces ────────────────────────────────────────────── */
-  --canvas:         var(--cloud-100);
-  --surface:        var(--paper-50);
-  --surface-raised: #FFFFFF;
-  --surface-sunken: var(--sand-250);
-  --surface-inverse: var(--ink-900);
+  /* Paper — warm canvases */
+  --paper-000: #FFFFFF;
+  --paper-050: #FAF8F5;
+  --paper-100: #F9F7F2;
+  --paper-150: #FAF3EA;
+  --paper-200: #F6F3EB;
+  --paper-300: #EAE4D7;
+  --paper-400: #E8E4DB;
 
-  /* ── Text ────────────────────────────────────────────────── */
-  --text-primary:     var(--ink-900);
-  --text-body:        var(--espresso-800);
-  --text-secondary:   var(--umber-700);
-  --text-muted:       var(--stone-600);
-  --text-placeholder: var(--stone-500);
-  --text-inverse:     var(--cloud-100);
-  --text-on-accent:   #FEF7F2;
+  /* ── Semantic surfaces ── */
+  --canvas: var(--paper-100);
+  --canvas-warm: var(--paper-150);
+  --surface: var(--paper-050);
+  --surface-raised: var(--paper-000);
+  --surface-sunken: var(--paper-200);
+  --surface-inverse: var(--jade-700);
+  --surface-ink: var(--ink-900);
 
-  /* ── Borders ─────────────────────────────────────────────── */
-  --border-subtle:  var(--linen-150);
-  --border-default: var(--sanddeep-300);
-  --border-strong:  var(--taupe-400);
-  --hairline:       rgba(33, 28, 20, .10);
+  /* ── Semantic text ── */
+  --text-primary: var(--ink-900);
+  --text-body: var(--ink-800);
+  --text-muted: var(--ink-500);
+  --text-inverse: var(--paper-150);
+  --text-on-jade: var(--paper-150);
+  --text-on-gold: var(--ink-900);
+  --text-gold: var(--gold-900);
 
-  /* ── Accent aliases ──────────────────────────────────────── */
-  --accent:        var(--clay-500);
-  --accent-hover:  var(--clay-600);
-  --accent-active: var(--clay-700);
-  --accent-soft:   var(--clay-50);
-  --accent-on:     #FEF7F2;
-  --accent-2:       var(--jade-500);
-  --accent-2-hover: var(--jade-600);
-  --accent-2-soft:  var(--jade-50);
-  --accent-2-on:    #F1F6F2;
-  --focus-ring:    var(--clay-500);
-  --rating:        var(--gold-500);
+  /* ── Lines ── */
+  --hairline: var(--paper-400);
+  --hairline-strong: rgba(31, 58, 46, .20);
+  --rule-gold: var(--gold-700);
+  --border-ink: var(--ink-900);
+  --border-subtle: var(--hairline);
 
-  --success: var(--success-600); --success-soft: var(--success-50);
-  --warning: var(--warning-600); --warning-soft: var(--warning-50);
-  --danger:  var(--danger-600);  --danger-soft:  var(--danger-50);
-  --info:    var(--info-600);    --info-soft:    var(--info-50);
+  /* ── Accents ── */
+  --accent: var(--jade-700);
+  --accent-hover: var(--jade-900);
+  --accent-on: var(--paper-150);
+  --accent-2: var(--gold-500);
+  --accent-2-hover: var(--gold-600);
+  --accent-2-on: var(--ink-900);
+  --accent-3: var(--clay-500);
+  --accent-3-hover: var(--clay-700);
+  --accent-3-on: var(--paper-000);
+  --focus-ring: var(--gold-500);
+  --selection-bg: var(--clay-500);
+  --selection-fg: #FFFFFF;
 
-  /* ── Overlays & glass ────────────────────────────────────── */
-  --scrim:        rgba(21, 17, 11, .55);
-  --glass-bg:     rgba(251, 249, 243, .55);
-  --glass-border: rgba(255, 255, 255, .55);
-  --glass-hi:     rgba(255, 255, 255, .7);
-}
+  /* ── Semantic status ── */
+  --success: #2E7D51;
+  --success-soft: #DFEAE1;
+  --warning: var(--gold-800);
+  --warning-soft: var(--gold-100);
+  --danger: #B50000;
+  --danger-soft: #F2DCDC;
+  --info: #3F6C86;
+  --info-soft: #E0EBF5;
 
-/* ── Dark-luxury "urgent booking" mood ─────────────────────── */
-[data-theme="dark"] {
-  --canvas:         var(--ink-950);
-  --surface:        #211B14;
-  --surface-raised: #2A231A;
-  --surface-sunken: #100C07;
-  --surface-inverse: var(--cloud-100);
+  /* ── Contact channels ── */
+  --channel-zalo: #0068FF;
+  --channel-wechat: #07C160;
+  --channel-whatsapp: #25D366;
 
-  --text-primary:     #F2EEE4;
-  --text-body:        #E4DCCF;
-  --text-secondary:   #C3B8A4;
-  --text-muted:       #988B72;
-  --text-placeholder: #7C7059;
-  --text-inverse:     var(--ink-900);
-  --text-on-accent:   #1A130D;
-
-  --border-subtle:  rgba(240, 236, 225, .08);
-  --border-default: rgba(240, 236, 225, .14);
-  --border-strong:  rgba(240, 236, 225, .26);
-  --hairline:       rgba(240, 236, 225, .10);
-
-  --accent:        #D07A54;
-  --accent-hover:  #DB8B67;
-  --accent-active: #E5A078;
-  --accent-soft:   rgba(208, 122, 84, .16);
-  --accent-on:     #1A130D;
-  --accent-2:       #7FA695;
-  --accent-2-hover: #93B7A7;
-  --accent-2-soft:  rgba(127, 166, 149, .16);
-  --accent-2-on:    #12211B;
-  --focus-ring:    #D07A54;
-  --rating:        #D3A85A;
-  --gold-50:       rgba(211, 168, 90, .18);
-
-  --success: #5FA47C; --success-soft: rgba(95, 164, 124, .16);
-  --warning: #D6A24A; --warning-soft: rgba(214, 162, 74, .16);
-  --danger:  #CE6060; --danger-soft:  rgba(206, 96, 96, .16);
-  --info:    #6C9AB4; --info-soft:    rgba(108, 154, 180, .16);
-
-  --scrim:        rgba(6, 4, 2, .68);
-  --glass-bg:     rgba(42, 35, 26, .55);
-  --glass-border: rgba(240, 236, 225, .14);
-  --glass-hi:     rgba(240, 236, 225, .10);
+  /* ── Overlays ── */
+  --scrim: rgba(13, 20, 15, .58);
+  --scrim-soft: rgba(26, 26, 26, .32);
+  --glass-warm: rgba(250, 243, 234, .95);
+  --glass-ink: rgba(26, 26, 26, .72);
+  --protect-top: linear-gradient(180deg, rgba(13,20,15,.72) 0%, rgba(13,20,15,.28) 46%, rgba(13,20,15,.62) 100%);
+  --protect-bottom: linear-gradient(0deg, rgba(13,20,15,.78) 0%, rgba(13,20,15,0) 62%);
 }

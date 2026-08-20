@@ -1,50 +1,45 @@
-/* Gaoji House — Typography tokens.
-   Two families: Cormorant Garamond (editorial display serif, ≥18px only) and
-   Be Vietnam Pro (Vietnamese-native grotesque for all UI/body). The serif is
-   the loud voice used sparingly & large; the sans is the quiet workhorse.
-
-   NOTE: --font-display / --font-sans are re-bound to next/font variables in
-   next-adapter.css (fonts are self-hosted by Next, not loaded from a CDN). */
+/* Gao Ji House — typography tokens (v2).
+   Three roles, four faces:
+   - EB Garamond        every headline. The brand's voice.
+   - Newsreader italic  editorial asides, pull quotes, photo captions.
+   - Barlow Condensed   ALL body copy, UI, and caps labels. The workhorse.
+   - Great Vibes        the wordmark only. Never body, never headlines. */
 :root {
-  --font-display: "Cormorant Garamond", "Playfair Display", Georgia, "Times New Roman", serif;
-  --font-sans: "Be Vietnam Pro", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", sans-serif;
+  --font-display: var(--font-eb-garamond, "EB Garamond", Georgia, "Times New Roman", serif);
+  --font-italic: var(--font-newsreader, "Newsreader", "EB Garamond", Georgia, serif);
+  --font-sans: var(--font-barlow-condensed, "Barlow Condensed", "Segoe UI", system-ui, sans-serif);
   --font-body: var(--font-sans);
-  --font-mono: "Be Vietnam Pro", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --font-mono: ui-monospace, "SFMono-Regular", Menlo, monospace;
 
-  /* Weights */
   --fw-light: 300;
   --fw-regular: 400;
   --fw-medium: 500;
   --fw-semibold: 600;
   --fw-bold: 700;
 
-  /* Fluid editorial display scale — serif heroes (56 → 96) */
-  --fs-display-2xl: clamp(3.5rem, 3rem + 6vw, 6rem);
-  --fs-display-xl:  clamp(2.75rem, 2.3rem + 3.6vw, 4.25rem);
-  --fs-display-lg:  clamp(2.25rem, 2rem + 2.4vw, 3.25rem);
-  --fs-display-md:  clamp(1.9rem, 1.75rem + 1.6vw, 2.5rem);
+  /* Display — EB Garamond */
+  --fs-display-xl: clamp(3rem, 2.6rem + 2.1vw, 4.6rem);
+  --fs-display-lg: clamp(2.37rem, 2.2rem + .84vw, 3.16rem);
+  --fs-headline-md: clamp(1.78rem, 1.65rem + .63vw, 2.37rem);
+  --fs-headline-sm: clamp(1.33rem, 1.24rem + .47vw, 1.78rem);
 
-  /* Fixed UI scale */
-  --fs-h1: 2.25rem;
-  --fs-h2: 1.75rem;
-  --fs-h3: 1.375rem;
-  --fs-h4: 1.125rem;
-  --fs-body-lg: 1.125rem;
-  --fs-body: 1rem;
-  --fs-body-sm: 0.875rem;
-  --fs-caption: 0.8125rem;
-  --fs-micro: 0.6875rem;
+  /* Body — Barlow Condensed */
+  --fs-body-lg: 1.12rem;
+  --fs-body-md: 1rem;
+  --fs-body-sm: .875rem;
+  --fs-label: .75rem;
+  --fs-micro: .625rem;
 
-  /* Line heights */
-  --lh-tight: 1.05;
-  --lh-snug: 1.18;
-  --lh-normal: 1.5;
-  --lh-relaxed: 1.65;
+  --lh-display: 1.05;
+  --lh-headline: 1.15;
+  --lh-headline-sm: 1.25;
+  --lh-body: 1.6;
+  --lh-label: 1.2;
 
-  /* Letter spacing */
-  --tracking-tighter: -0.03em;
-  --tracking-tight: -0.015em;
+  --tracking-display: -.02em;
   --tracking-normal: 0;
-  --tracking-wide: 0.04em;
-  --tracking-caps: 0.14em;   /* uppercase eyebrows / badges */
+  --tracking-caps: .15em;
+  --tracking-caps-wide: .25em;
+
+  --label-caps-weight: var(--fw-semibold);
 }

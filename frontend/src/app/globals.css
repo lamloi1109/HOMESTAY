@@ -14,28 +14,35 @@
 @import "../styles/gaoji/base.css";
 @import "../styles/gaoji/next-adapter.css";
 
-/* Cầu nối Tailwind → token Gaoji House.
-   Giữ nguyên tên class cũ (bg-bg, text-ink, text-terra…) để không phải sửa
-   87 chỗ trong các trang; chỉ đổi thứ chúng trỏ tới. Muốn đổi màu thương hiệu
-   thì sửa trên design system rồi kéo token về, không sửa ở đây. */
+/* Cầu nối Tailwind v4 → token Gaoji House Design System v2. */
 @theme inline {
   --color-bg: var(--canvas);
-  --color-surface: var(--surface-raised);
+  --color-canvas: var(--canvas);
+  --color-canvas-warm: var(--canvas-warm);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-surface-sunken: var(--surface-sunken);
   --color-ink: var(--text-primary);
+  --color-ink-900: var(--ink-900);
   --color-muted: var(--text-muted);
-  --color-terra: var(--accent);
-  --color-terra-deep: var(--accent-hover);
-  --color-line: var(--border-subtle);
-  --color-wash: var(--linen-150);
+  --color-terra: var(--clay-500);
+  --color-clay: var(--clay-500);
+  --color-clay-deep: var(--clay-700);
+  --color-jade: var(--jade-700);
+  --color-jade-deep: var(--jade-900);
+  --color-gold: var(--gold-700);
+  --color-gold-bright: var(--gold-500);
+  --color-line: var(--hairline);
+  --color-line-strong: var(--hairline-strong);
 
-  /* Màu nhóm tiện ích + trạng thái booking */
-  --color-sage: var(--jade-300);
-  --color-lake: var(--info-600);
-  --color-sand: var(--sanddeep-300);
-  --color-star: var(--rating);
+  --color-zalo: var(--channel-zalo);
+  --color-wechat: var(--channel-wechat);
+  --color-whatsapp: var(--channel-whatsapp);
 
-  --font-sans: var(--font-bvp);
-  --font-serif: var(--font-cormorant);
+  --font-sans: var(--font-barlow-condensed);
+  --font-serif: var(--font-eb-garamond);
+  --font-display: var(--font-eb-garamond);
+  --font-italic: var(--font-newsreader);
 }
 
 /* ── Style riêng của app (không thuộc design system) ─────────────── */

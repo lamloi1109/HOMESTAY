@@ -1,19 +1,10 @@
-/* Gaoji House → Next.js adapter.
-   The ONLY file in this folder that deviates from the design system upstream.
-   Everything else is a byte-faithful copy so re-syncing is a clean diff.
-
-   Why this exists: the design system's tokens/fonts.css pulls Cormorant
-   Garamond + Be Vietnam Pro from the Google Fonts CDN via @import. In Next.js
-   that would be a render-blocking third-party request on every page load, and
-   it would duplicate the fonts next/font already self-hosts. So we skip
-   tokens/fonts.css entirely and re-point the two family tokens at the CSS
-   variables next/font generates in layout.tsx.
-
-   Same typefaces, same weights, same Vietnamese coverage — just served from
-   our own origin. If a licensed brand font ever replaces them, change
-   layout.tsx and this file; no other file needs to know. */
+/* Cầu nối giữa next/font và design system Gaoji House v2.
+   next/font/google đưa biến --font-eb-garamond, --font-barlow-condensed, --font-newsreader
+   vào <html>; file này trỏ các token typography của design system sang các biến đó. */
 :root {
-  --font-display: var(--font-cormorant), "Cormorant Garamond", "Playfair Display", Georgia, "Times New Roman", serif;
-  --font-sans: var(--font-bvp), "Be Vietnam Pro", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", sans-serif;
-  --font-mono: var(--font-bvp), ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --font-display: var(--font-eb-garamond), Georgia, "Times New Roman", serif;
+  --font-serif: var(--font-eb-garamond), Georgia, "Times New Roman", serif;
+  --font-italic: var(--font-newsreader), var(--font-eb-garamond), Georgia, serif;
+  --font-sans: var(--font-barlow-condensed), "Segoe UI", system-ui, sans-serif;
+  --font-body: var(--font-sans);
 }

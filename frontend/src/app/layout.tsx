@@ -1,30 +1,39 @@
 import type { Metadata } from "next";
-import { Be_Vietnam_Pro, Cormorant_Garamond } from "next/font/google";
+import { Barlow_Condensed, EB_Garamond, Newsreader } from "next/font/google";
 import "./globals.css";
 import { Header, NAV_HEIGHT } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
 
-// Cặp chữ của design system Gaoji House: serif biên tập cho tiêu đề lớn,
-// grotesque Việt cho phần còn lại. next/font tự host nên không gọi ra CDN.
-const beVietnam = Be_Vietnam_Pro({
-  variable: "--font-bvp",
+// Bộ typography Design System Gaoji House v2:
+// - EB Garamond: Display/Headlines
+// - Barlow Condensed: Sans UI/Body/Caps
+// - Newsreader: Editorial italic asides
+const ebGaramond = EB_Garamond({
+  variable: "--font-eb-garamond",
   subsets: ["vietnamese", "latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
 });
 
-const cormorant = Cormorant_Garamond({
-  variable: "--font-cormorant",
+const barlowCondensed = Barlow_Condensed({
+  variable: "--font-barlow-condensed",
   subsets: ["vietnamese", "latin"],
   weight: ["300", "400", "500", "600", "700"],
+  style: ["normal", "italic"],
+});
+
+const newsreader = Newsreader({
+  variable: "--font-newsreader",
+  subsets: ["vietnamese", "latin"],
+  weight: ["400", "500"],
   style: ["normal", "italic"],
 });
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `${SITE_NAME} — Tìm nơi trú ẩn hoàn hảo của bạn`,
-    // Trang con chỉ cần đặt title ngắn, tên thương hiệu tự nối vào sau.
+    default: `${SITE_NAME} — Căn Hộ Dịch Vụ Cho Thuê · Vinhomes Central Park`,
     template: `%s — ${SITE_NAME}`,
   },
   description: SITE_DESCRIPTION,
@@ -33,7 +42,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "vi_VN",
     siteName: SITE_NAME,
-    title: `${SITE_NAME} — Tìm nơi trú ẩn hoàn hảo của bạn`,
+    title: `${SITE_NAME} — Căn Hộ Dịch Vụ Cho Thuê · Vinhomes Central Park`,
     description: SITE_DESCRIPTION,
     url: "/",
   },
@@ -50,7 +59,7 @@ export default function RootLayout({
     <html
       lang="vi"
       data-theme="light"
-      className={`${beVietnam.variable} ${cormorant.variable} h-full antialiased`}
+      className={`${barlowCondensed.variable} ${ebGaramond.variable} ${newsreader.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <head>

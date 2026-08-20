@@ -49,4 +49,27 @@
 **Blockers:** none
 
 **Next step for next session:**
-- Chuyển sang Phase 4: **Task T-008** — Đồng bộ Design System Gaoji House v2 (EB Garamond, Barlow Condensed, 0px Radius, Palette tokens) vào `frontend/`.
+- Hoàn thành T-008.
+
+---
+
+## Session 2026-08-20 21:35
+
+**Tasks touched:** T-008
+**Status changes:**
+- T-008: todo → in_progress → done
+
+**Commits / Changes:**
+- [phase-4][feat]: Đồng bộ Design System Gaoji House v2 (EB Garamond, Barlow Condensed, 0px Radius) (T-008)
+- Tokens: `frontend/src/styles/gaoji/` (`colors.css`, `typography.css`, `radius.css` 0px, `elevation.css`, `motion.css`, `next-adapter.css`).
+- Typography: Next.js Google Fonts `EB_Garamond`, `Barlow_Condensed`, `Newsreader` configured in `frontend/src/app/layout.tsx`.
+- Tailwind: Tailwind CSS v4 `@theme inline` bridged with brand color palette (Jade `#1F3A2E`, Gold `#D4AF37`, Clay `#C27358`, Canvas `#F9F7F2`).
+- Components: `frontend/src/components/gaoji/` (`Button`, `Badge`, `Tag`, `Input`, `Select`, `Icon`, `ContactRail`, `InquiryModal`, `Logo`, `index.ts`).
+- Verification: `npm run lint` pass (0 errors), `npm run build` pass (0 errors).
+
+**Decisions made:** none
+
+**Blockers:** none
+
+**Next step for next session:**
+- Tiến hành Phase 4: **Task T-009** — Tái cấu trúc Guest Web (Trang chủ Hero/Bento/Collections, Trang chi tiết căn hộ, Bộ lọc tìm kiếm, Gallery ảnh & Inquiry Modal).

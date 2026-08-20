@@ -12,3 +12,4 @@ export * from "./RatingStars";
 export * from "./RoomSpecs";
 export * from "./Select";
 export * from "./Tag";
+export * from "./UnitCard";

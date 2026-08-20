@@ -111,13 +111,21 @@
 ### T-009 — Tái cấu trúc Guest Web: Homepage, Tìm Kiếm, Chi Tiết Căn Hộ, Thư Viện Ảnh & Lead Modal
 
 - **Phase:** 4 (Guest UX)
-- **Status:** `todo`
-- **Owner:** —
-- **Branch:** —
+- **Status:** `done`
+- **Owner:** antigravity
+- **Branch:** `antigravity/T-009-guest-web-refactor`
 - **Assigned type:** `ANTIGRAVITY`
-- **Files touched:** `frontend/src/app/page.tsx`, `frontend/src/app/properties/**`, `frontend/src/app/gallery/**`, `frontend/src/components/**`
+- **Files touched:** `frontend/src/app/page.tsx`, `frontend/src/app/properties/**`, `frontend/src/components/Header.tsx`, `frontend/src/components/Footer.tsx`, `frontend/src/components/gaoji/UnitCard.tsx` (mới), `frontend/src/lib/api.ts`, `frontend/public/assets/**`
 - **Depends on:** T-007, T-008
 - **Complexity:** L
+- **Acceptance criteria:**
+  - [x] Header & Footer chuẩn nhận diện Gao Ji House v2 (Logo live type, Zalo `0889237833`, Hotline `088 923 7833`, Đặt phòng / Hỏi giá)
+  - [x] Trang chủ (`page.tsx`): Hero kiến trúc sang trọng, Thanh tra cứu / lọc căn theo phòng ngủ, Bộ sưu tập 5 căn hộ thật kèm giá thuê tháng/đêm & thông số phòng, Giới thiệu vị trí Vinhomes Central Park & Tiện ích
+  - [x] Trang danh sách & chi tiết căn hộ (`/properties/[id]`): Thư viện ảnh kiến trúc, bảng phân rã layout phòng, danh mục tiện ích chi tiết, Card CTA tư vấn gắn Zalo + Inquiry Modal
+  - [x] Tích hợp `ContactRail` cố định góc phải màn hình trên toàn bộ website
+  - [x] Tích hợp `InquiryModal` tương tác thực gửi dữ liệu về backend API `/api/v1/inquiries`
+  - [x] Lint & Build pass 100% (Turbopack 2.1s, 7/7 routes pass)
+- **Verification:** `npm run lint` pass (0 errors, 0 warnings); `npm run build` pass (0 errors).
 - **Updated:** 2026-08-20 by antigravity
 
 ---

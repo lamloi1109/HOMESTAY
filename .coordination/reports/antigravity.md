@@ -72,4 +72,29 @@
 **Blockers:** none
 
 **Next step for next session:**
-- Tiến hành Phase 4: **Task T-009** — Tái cấu trúc Guest Web (Trang chủ Hero/Bento/Collections, Trang chi tiết căn hộ, Bộ lọc tìm kiếm, Gallery ảnh & Inquiry Modal).
+- Hoàn thành T-009.
+
+---
+
+## Session 2026-08-20 21:40
+
+**Tasks touched:** T-009
+**Status changes:**
+- T-009: todo → in_progress → done
+
+**Commits / Changes:**
+- [phase-4][feat]: Tái cấu trúc Guest Web: Homepage, Chi Tiết Căn Hộ, Thư Viện Ảnh & Lead Modal (T-009)
+- Layout: `Header.tsx` & `Footer.tsx` cập nhật nhận diện Gao Ji House v2, Contact numbers (`0889237833`), Zalo và CTA.
+- Homepage: `frontend/src/app/page.tsx` — Hero sang trọng, Stats bar, Bộ sưu tập 5 căn hộ thật (`L1.29.08`, `L3.44.09`, `L81.07.12`, `P1.27.10`, `P3.42.12`), Vị trí Landmark 81 & Công viên 14ha, Dịch vụ du lịch.
+- Unit Detail: `frontend/src/app/properties/[id]/page.tsx` — Breadcrumb, Thư viện ảnh gallery, Bảng layout phòng (Room layout), Tiện nghi, Sticky Sidebar Card tư vấn chốt khách.
+- Component: `frontend/src/components/gaoji/UnitCard.tsx` — Hiển thị căn hộ kèm ảnh thật, giá thuê tháng/đêm, specs và nút hỏi giá.
+- API Client: `frontend/src/lib/api.ts` mở rộng dữ liệu 5 căn hộ Vinhomes Central Park, Tour Services, Inquiry Input & Fallback offline.
+- Assets: Sao chép 17 hình ảnh căn hộ & QR codes vào `frontend/public/assets/`.
+- Verification: `npm run lint` pass (0 errors, 0 warnings); `npm run build` pass (0 errors, 7/7 routes compiled).
+
+**Decisions made:** none
+
+**Blockers:** none
+
+**Next step for next session:**
+- Tiến hành Phase 5: **Task T-010** — Xây dựng Admin Dashboard CMS (Status Board 5 căn, Inquiry CRM Inbox quản lý stage lead, Quản lý hợp đồng & cảnh báo 30 ngày).

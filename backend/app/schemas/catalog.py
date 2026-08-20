@@ -43,10 +43,36 @@ class PropertyOut(BaseModel):
     org_id: uuid.UUID
     name: str
     slug: str
-    description: str | None
-    address: str | None
-    city: str | None
+    unit_code: str | None = None
+    tower: str | None = None
+    floor: str | None = None
+    view_type: str | None = None
+    price_monthly: Decimal | None = None
+    price_nightly: Decimal | None = None
+    sqm: int | None = None
+    bedrooms: int | None = 1
+    bathrooms: int | None = 1
+    max_guests: int | None = 2
+    room_layout: list[dict] | dict | None = None
+    operational_status: str | None = "available"
+    description: str | None = None
+    address: str | None = None
+    city: str | None = None
     status: PropertyStatus
+
+
+class UnitAdminUpdate(BaseModel):
+    price_monthly: Decimal | None = None
+    price_nightly: Decimal | None = None
+    operational_status: str | None = None  # available, held, occupied, maintenance
+    description: str | None = None
+    status: PropertyStatus | None = None
+    view_type: str | None = None
+    sqm: int | None = None
+    bedrooms: int | None = None
+    bathrooms: int | None = None
+    max_guests: int | None = None
+    room_layout: list[dict] | dict | None = None
 
 
 class RoomTypeCreate(BaseModel):

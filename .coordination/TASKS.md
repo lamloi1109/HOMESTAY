@@ -66,13 +66,23 @@
 ### T-007 — Backend API Endpoints: Guest Inquiries, Admin CRM & CMS Services
 
 - **Phase:** 2 (API)
-- **Status:** `todo`
-- **Owner:** —
-- **Branch:** —
+- **Status:** `done`
+- **Owner:** antigravity
+- **Branch:** `antigravity/T-007-backend-apis`
 - **Assigned type:** `ANTIGRAVITY`
-- **Files touched:** `backend/app/api/v1/inquiries.py` (mới), `backend/app/api/v1/services.py` (mới), `backend/app/api/v1/units.py` (mới), `backend/app/schemas/*`, `backend/tests/test_api_inquiries.py`
+- **Files touched:** `backend/app/api/v1/inquiries.py` (mới), `backend/app/api/v1/services.py` (mới), `backend/app/api/v1/admin_inquiries.py` (mới), `backend/app/api/v1/admin_units.py` (mới), `backend/app/api/v1/admin_services.py` (mới), `backend/app/api/v1/admin_leases.py` (mới), `backend/app/schemas/inquiry.py` (mới), `backend/app/schemas/service.py` (mới), `backend/app/schemas/lease.py` (mới), `backend/app/schemas/catalog.py`, `backend/tests/test_api_inquiries_and_admin.py` (mới)
 - **Depends on:** T-006
 - **Complexity:** M
+- **Acceptance criteria:**
+  - [x] `POST /api/v1/inquiries` tiếp nhận Lead từ Guest (validate phone, auto gán default org nếu không truyền)
+  - [x] `GET /api/v1/services` trả về danh sách dịch vụ đang hoạt động (active)
+  - [x] `GET /api/v1/admin/inquiries` và `PATCH /api/v1/admin/inquiries/{id}` quản lý Lead CRM (phân quyền `owner`/`ops`)
+  - [x] `GET /api/v1/admin/units` và `PATCH /api/v1/admin/units/{id}` cập nhật giá tháng/đêm và trạng thái phòng
+  - [x] `GET/POST/PATCH/DELETE /api/v1/admin/services` quản trị danh mục dịch vụ
+  - [x] `GET/POST/PATCH /api/v1/admin/leases` quản trị hợp đồng và cảnh báo hạn tạm trú < 30 ngày
+  - [x] Mở rộng `catalog.py` trả về đầy đủ các trường mới của Property
+  - [x] Tests tự động cho toàn bộ API endpoints mới, ruff check sạch (0 lỗi)
+- **Verification:** `ruff check .` pass sạch; 34 OpenAPI endpoints đăng ký thành công trên FastAPI.
 - **Updated:** 2026-08-20 by antigravity
 
 ---

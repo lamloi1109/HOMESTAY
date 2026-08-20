@@ -2,7 +2,7 @@ import enum
 import uuid
 from decimal import Decimal
 
-from sqlalchemy import Enum, ForeignKey, Integer, Numeric, String, Text, UniqueConstraint
+from sqlalchemy import JSON, Enum, ForeignKey, Integer, Numeric, String, Text, UniqueConstraint
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -24,6 +24,20 @@ class Property(UUIDPKMixin, TimestampMixin, Base):
     )
     name: Mapped[str] = mapped_column(String(255), nullable=False)
     slug: Mapped[str] = mapped_column(String(255), nullable=False)
+    unit_code: Mapped[str | None] = mapped_column(String(64), unique=True, nullable=True)
+    tower: Mapped[str | None] = mapped_column(String(64), nullable=True)  # e.g. "Landmark 1", "Park 1"
+    floor: Mapped[str | None] = mapped_column(String(64), nullable=True)  # e.g. "Tầng 29"
+    view_type: Mapped[str | None] = mapped_column(String(120), nullable=True)  # e.g. "Sông Sài Gòn"
+    price_monthly: Mapped[Decimal | None] = mapped_column(Numeric(12, 0), nullable=True)
+    price_nightly: Mapped[Decimal | None] = mapped_column(Numeric(12, 0), nullable=True)
+    sqm: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    bedrooms: Mapped[int | None] = mapped_column(Integer, default=1, nullable=True)
+    bathrooms: Mapped[int | None] = mapped_column(Integer, default=1, nullable=True)
+    max_guests: Mapped[int | None] = mapped_column(Integer, default=2, nullable=True)
+    room_layout: Mapped[dict | list | None] = mapped_column(JSON, nullable=True)
+    operational_status: Mapped[str | None] = mapped_column(
+        String(64), default="available", nullable=True
+    )  # available, held, occupied, maintenance
     description: Mapped[str | None] = mapped_column(Text, nullable=True)
     address: Mapped[str | None] = mapped_column(String(500), nullable=True)
     city: Mapped[str | None] = mapped_column(String(120), nullable=True)

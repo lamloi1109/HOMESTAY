@@ -133,14 +133,21 @@
 ### T-010 — Xây dựng Admin Dashboard CMS: Status Board, Inquiry CRM Inbox, Quản lý Căn hộ & Hợp đồng
 
 - **Phase:** 5 (Admin Portal)
-- **Status:** `todo`
-- **Owner:** —
-- **Branch:** —
-- **Assigned type:** `ANTIGRAVITY`
+- **Status:** `in_progress`
+- **Owner:** codex
+- **Branch:** `codex/T-010-admin-dashboard-cms`
+- **Assigned type:** `CODEX`
 - **Files touched:** `frontend/src/app/admin/**`, `frontend/src/components/admin/**`
 - **Depends on:** T-007, T-008
 - **Complexity:** L
-- **Updated:** 2026-08-20 by antigravity
+- **Acceptance criteria:**
+  - [ ] `/admin/login` đăng nhập bằng API thật; session hết hạn hoặc 401 đưa người dùng về trang đăng nhập
+  - [ ] Dashboard có 4 khu vực theo `design/Quan Tri.dc.html`: tình trạng căn hộ, hộp yêu cầu, quản lý căn hộ, hợp đồng & khách thuê
+  - [ ] Dữ liệu lấy từ API admin thật, không dùng fallback/mock; có loading, empty, retry và thông báo lỗi rõ ràng
+  - [ ] Inquiry cập nhật được stage/ghi chú và mở đúng kênh liên hệ; thay đổi còn sau khi tải lại trang
+  - [ ] Căn hộ cập nhật được giá tháng/đêm, trạng thái vận hành và mô tả; hợp đồng tạo/sửa được với validation phía client
+  - [ ] Giao diện responsive, điều khiển bàn phím được, focus rõ; `npm run lint` và `npm run build` pass
+- **Updated:** 2026-09-04 by codex
 
 ---
 
@@ -183,6 +190,25 @@
 - **Depends on:** T-006, T-007, T-008, T-009, T-010, T-011, T-012
 - **Complexity:** M
 - **Updated:** 2026-08-20 by antigravity
+
+---
+
+### T-015 — Harden Admin APIs với Tenant Isolation & Permission-Based RBAC
+
+- **Phase:** 5 (Admin Portal Security)
+- **Status:** `todo`
+- **Owner:** —
+- **Branch:** —
+- **Assigned type:** `CODEX`
+- **Files touched:** `backend/app/api/v1/admin_inquiries.py`, `backend/app/api/v1/admin_units.py`, `backend/app/api/v1/admin_leases.py`, `backend/app/api/v1/admin_services.py`, `backend/app/core/permissions.py`, `backend/tests/test_api_inquiries_and_admin.py`
+- **Depends on:** T-007
+- **Complexity:** M
+- **Acceptance criteria:**
+  - [ ] Mọi truy vấn admin chỉ đọc/ghi dữ liệu thuộc organization mà user có membership
+  - [ ] Endpoint đọc/ghi kiểm tra permission theo RBAC; user ngoài organization nhận 403
+  - [ ] Tests bao phủ cross-tenant read/write và quyền owner/ops/staff
+- **Blocker:** T-010 được phép triển khai UI trước theo chỉ đạo coordinator; `/admin` chỉ dùng nội bộ cho tới khi task này hoàn tất
+- **Updated:** 2026-09-04 by codex
 
 ---
 

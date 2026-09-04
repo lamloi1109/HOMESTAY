@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import { Cormorant_Garamond, Inter, Barlow_Condensed, EB_Garamond, Great_Vibes, Newsreader } from "next/font/google";
 import "./globals.css";
 import { LanguageProvider } from "@/context/LanguageContext";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
+import { PublicChrome } from "@/components/PublicChrome";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
 
 // Bộ typography nghệ thuật & hiện đại:
@@ -96,11 +95,7 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <LanguageProvider>
-          <Header />
-          <div className="flex-1">
-            {children}
-          </div>
-          <Footer />
+          <PublicChrome>{children}</PublicChrome>
         </LanguageProvider>
       </body>
     </html>

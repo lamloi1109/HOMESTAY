@@ -32,7 +32,7 @@ export function AdminLogin() {
   }
 
   return (
-    <main className="min-h-screen bg-[var(--canvas)] text-[var(--ink-900)] grid lg:grid-cols-[minmax(320px,0.8fr)_minmax(480px,1.2fr)]">
+    <main className="admin-root min-h-screen bg-[var(--canvas)] text-[var(--ink-900)] grid lg:grid-cols-[minmax(320px,0.8fr)_minmax(480px,1.2fr)]">
       <section className="bg-[var(--jade-900)] text-[var(--gold-050)] p-8 sm:p-12 lg:p-16 flex flex-col justify-between min-h-[320px] lg:min-h-screen border-r border-[rgba(212,175,55,.28)]">
         <Logo variant="dark" size="md" showTagline={false} />
         <div className="max-w-lg py-12">

@@ -34,13 +34,6 @@ export function StatusView({ units, inquiries, leases }: { units: AdminUnit[]; i
         {stats.map((stat) => <div key={stat.label} className="bg-[var(--surface-raised)] p-5 sm:p-6 grid gap-2"><strong className="font-display text-3xl sm:text-4xl font-normal leading-none" style={{ color: stat.color }}>{stat.value}</strong><span className="font-sans text-[.6875rem] font-semibold uppercase tracking-[.15em] text-[var(--text-muted)]">{stat.label}</span></div>)}
       </div>
 
-      {urgent.length > 0 && <section className="border border-[var(--clay-500)] bg-[var(--canvas-warm)] p-5" aria-labelledby="urgent-title">
-        <h2 id="urgent-title" className="font-sans text-xs font-semibold uppercase tracking-[.18em] text-[var(--clay-500)]">Cần xử lý trong 30 ngày</h2>
-        <ul className="mt-3 grid gap-2 font-sans text-sm text-[var(--text-body)]">
-          {urgent.map((lease) => <li key={lease.id}><strong>{lease.guest_name} · {lease.unit_code ?? lease.property_name}</strong> — hợp đồng hết hạn {dateLabel(lease.end_date)} ({lease.days_remaining} ngày), tạm trú {lease.residence_status === "registered" ? "đã đăng ký" : "chưa hoàn tất"}.</li>)}
-        </ul>
-      </section>}
-
       <section className="border border-[var(--hairline-strong)] bg-[var(--surface-raised)]" aria-labelledby="board-title">
         <div className="p-5 border-b border-[var(--hairline)] flex flex-wrap gap-3 items-baseline justify-between"><h2 id="board-title" className="font-display text-2xl font-normal">Tình trạng thực tế {units.length} căn hộ</h2><span className="font-sans text-xs text-[var(--text-muted)]">Tổng hợp từ căn hộ và hợp đồng hiện hành</span></div>
         {units.length === 0 ? <p className="p-8 font-italic italic text-[var(--text-muted)]">Chưa có căn hộ để theo dõi.</p> : <div className="grid gap-px bg-[var(--hairline)]">

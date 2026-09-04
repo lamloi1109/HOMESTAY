@@ -1,20 +1,17 @@
 "use client";
 
+import React from "react";
 import { Badge } from "./Badge";
 import { IconButton } from "./IconButton";
 import { RatingStars } from "./RatingStars";
 import { RoomSpecs, type RoomSpecsProps } from "./RoomSpecs";
-import { useTactile } from "./interactions";
 
-// LƯU Ý: bản gốc trên design system dùng var(--clay-300) ở gradient thứ ba,
-// nhưng bảng màu không có --clay-300 (chỉ có 50/100/200/400/500/600/700) nên
-// gradient đó hỏng. Ở đây thay bằng --clay-400. Cần sửa lại trên design system.
 const GRADS = [
-  "linear-gradient(140deg, var(--clay-200), var(--clay-400))",
-  "linear-gradient(140deg, var(--jade-100), var(--jade-300))",
-  "linear-gradient(150deg, var(--sand-250), var(--clay-400))",
-  "linear-gradient(150deg, var(--jade-300), var(--jade-600))",
-  "linear-gradient(140deg, var(--clay-100), var(--sanddeep-300))",
+  "linear-gradient(140deg, var(--clay-200, #F3E2DA), var(--clay-400, #C27358))",
+  "linear-gradient(140deg, var(--jade-100, rgba(31,58,46,.12)), var(--jade-300, #2E5344))",
+  "linear-gradient(150deg, var(--sand-250, #EAE4D7), var(--clay-400, #C27358))",
+  "linear-gradient(150deg, var(--jade-300, #2E5344), var(--jade-600, #1F3A2E))",
+  "linear-gradient(140deg, var(--clay-100, #F3E2DA), var(--sanddeep-300, #6B6255))",
 ];
 
 function grad(seed?: string) {
@@ -38,7 +35,12 @@ export interface PropertyCardProps {
   originalPrice?: number;
   unit?: string;
   rating?: number;
-  badge?: { label: string; tone?: "neutral" | "accent" | "jade" | "gold" | "success" | "warning" | "danger" | "info"; icon?: string; variant?: "soft" | "solid" | "glass" | "outline" };
+  badge?: {
+    label: string;
+    tone?: "neutral" | "accent" | "jade" | "gold" | "success" | "warning" | "danger" | "info";
+    icon?: string;
+    variant?: "soft" | "solid" | "glass" | "outline";
+  };
   saved?: boolean;
   onSave?: () => void;
   onClick?: () => void;
@@ -49,11 +51,6 @@ export interface PropertyCardProps {
   className?: string;
 }
 
-/**
- * PropertyCard — card danh sách lấy ảnh làm chính. Tấm ảnh có grain kèm tim lưu
- * và badge nổi, bên dưới là tên / địa điểm / thông số / đánh giá / giá. Có
- * `originalPrice` thì hiện giá gạch ngang + phần trăm giảm.
- */
 export function PropertyCard({
   title,
   location,
@@ -75,32 +72,22 @@ export function PropertyCard({
   const hasDiscount =
     typeof originalPrice === "number" && typeof price === "number" && originalPrice > price;
   const off = hasDiscount ? Math.round((1 - (price as number) / originalPrice) * 100) : 0;
-  const { hover, press, bind } = useTactile();
 
   return (
     <div
-      className={`gh-property ${className}`.trim()}
+      className={`gh-property flex flex-col gap-3 rounded-none ${className}`.trim()}
       onClick={onClick}
-      {...bind}
       style={{
-        display: "flex",
-        flexDirection: "column",
-        gap: 12,
         cursor: onClick ? "pointer" : "default",
-        transform: onClick ? (press ? "scale(0.99)" : hover ? "translateY(-3px)" : "none") : "none",
-        transition: "transform var(--dur-base) var(--ease-spring)",
         ...style,
       }}
     >
       <div
-        className="gh-noise"
         style={{
           position: "relative",
           aspectRatio: aspect,
-          borderRadius: "var(--radius-lg)",
           overflow: "hidden",
           background: image ? `center/cover no-repeat url("${image}")` : grad(title || location),
-          boxShadow: "inset 0 0 0 1px rgba(33,28,20,.05)",
         }}
       >
         {badge ? (
@@ -113,11 +100,9 @@ export function PropertyCard({
 
         <div style={{ position: "absolute", top: 10, right: 10, zIndex: 2 }}>
           <IconButton
-            name="heart"
-            variant="glass"
+            icon="heart"
+            variant="outline"
             size="md"
-            active={saved}
-            className={saved ? "gh-fill" : ""}
             label={saved ? "Bỏ lưu" : "Lưu chỗ nghỉ"}
             onClick={(e) => {
               e.stopPropagation();
@@ -147,11 +132,10 @@ export function PropertyCard({
             style={{
               margin: 0,
               fontFamily: "var(--font-sans)",
-              fontSize: "var(--fs-h4)",
-              fontWeight: "var(--fw-semibold)",
+              fontSize: "var(--fs-h4, 1.125rem)",
+              fontWeight: 600,
               color: "var(--text-primary)",
               lineHeight: 1.25,
-              letterSpacing: "var(--tracking-tight)",
             }}
           >
             {title}
@@ -167,7 +151,7 @@ export function PropertyCard({
           <div style={{ fontSize: "var(--fs-body-sm)", color: "var(--text-muted)" }}>{location}</div>
         ) : null}
 
-        {specs ? <RoomSpecs size="sm" separator style={{ marginTop: 2 }} {...specs} /> : null}
+        {specs ? <RoomSpecs {...specs} /> : null}
 
         <div style={{ marginTop: 6, display: "flex", alignItems: "baseline", gap: 7, flexWrap: "wrap" }}>
           {hasDiscount ? (
@@ -178,8 +162,8 @@ export function PropertyCard({
           <span
             style={{
               fontFamily: "var(--font-sans)",
-              fontSize: "var(--fs-body-lg)",
-              fontWeight: "var(--fw-semibold)",
+              fontSize: "var(--fs-body-lg, 1.125rem)",
+              fontWeight: 600,
               color: hasDiscount ? "var(--danger)" : "var(--text-primary)",
             }}
           >

@@ -1,14 +1,21 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { ContactRail } from "@/components/gaoji/ContactRail";
-import { InquiryModal } from "@/components/gaoji/InquiryModal";
-import { UnitCard } from "@/components/gaoji/UnitCard";
+import {
+  Button,
+  ContactRail,
+  FilterTabs,
+  Icon,
+  InquiryModal,
+  SectionHeader,
+  UnitCard,
+} from "@/components/gaoji";
 import { fetchProperties, type Property } from "@/lib/api";
 
 export default function PropertiesPage() {
   const [units, setUnits] = useState<Property[]>([]);
-  const [selectedBedroom, setSelectedBedroom] = useState<number | "all">("all");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedBedroom, setSelectedBedroom] = useState<string | number>("all");
   const [inquiryOpen, setInquiryOpen] = useState(false);
   const [selectedUnitCode, setSelectedUnitCode] = useState<string>("");
 
@@ -22,55 +29,57 @@ export default function PropertiesPage() {
   };
 
   const filteredUnits = units.filter((u) => {
-    if (selectedBedroom === "all") return true;
-    return u.bedrooms === selectedBedroom;
+    const matchBed =
+      selectedBedroom === "all" ? true : u.bedrooms === Number(selectedBedroom);
+    const matchQuery =
+      searchQuery.trim() === ""
+        ? true
+        : (u.name + " " + (u.unit_code || "") + " " + (u.tower || "") + " " + (u.description || ""))
+            .toLowerCase()
+            .includes(searchQuery.toLowerCase());
+    return matchBed && matchQuery;
   });
 
   return (
-    <main className="min-h-screen bg-[var(--canvas)] text-[var(--text-primary)] py-12">
-      <div className="max-w-[1360px] mx-auto px-4 sm:px-8">
-        {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 border-b border-[var(--hairline)]">
-          <div>
-            <div className="flex items-center gap-2 mb-2">
-              <span className="w-6 h-px bg-[var(--gold-700)]" />
-              <span className="font-sans text-xs font-semibold uppercase tracking-[0.18em] text-[var(--gold-900)]">
-                Vinhomes Central Park · Gao Ji House
-              </span>
-            </div>
-            <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl font-normal text-[var(--ink-900)]">
-              Danh Sách Căn Hộ Dịch Vụ
-            </h1>
-            <p className="font-sans text-sm sm:text-base text-[var(--text-muted)] mt-2">
-              Cho thuê theo tháng (bao phí quản lý), theo tuần và theo đêm. Liên hệ quản lý căn hộ để xem nhà trực tiếp.
-            </p>
+    <main className="min-h-screen bg-[var(--canvas,#F9F7F2)] text-[var(--text-primary,#1A1A1A)] py-12 sm:py-16 px-4 sm:px-8 lg:px-12">
+      <div className="max-w-[1600px] mx-auto">
+        <SectionHeader
+          eyebrow="BẢNG GIÁ THUÊ & MẶT BẰNG CĂN HỘ · VINHOMES CENTRAL PARK"
+          title="Bộ Sưu Tập Căn Hộ Dịch Vụ"
+          aside="Cho thuê theo tháng (đã bao gồm toàn bộ phí quản lý toà nhà), theo tuần và theo đêm. Liên hệ quản lý căn hộ để xem nhà trực tiếp 24/7."
+        />
+
+        {/* Toolbar */}
+        <div className="mt-8 p-4 bg-[var(--surface-raised)] border border-[var(--hairline)] flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="flex-1 max-w-md">
+            <input
+              type="search"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Tìm theo mã căn, toà Landmark, view sông..."
+              className="w-full h-11 px-4 bg-[var(--surface-sunken)] border border-[var(--hairline-strong)] text-sm font-sans rounded-none focus:outline-2 focus:outline-[var(--gold-500)]"
+            />
           </div>
 
-          {/* Filter tabs */}
-          <div className="flex flex-wrap items-center gap-1.5 p-1 bg-[var(--surface-raised)] border border-[var(--hairline-strong)]">
-            {[
-              { label: "Tất Cả (5 Căn)", value: "all" },
-              { label: "1 Phòng Ngủ", value: 1 },
-              { label: "2 Phòng Ngủ", value: 2 },
-              { label: "3 Phòng Ngủ", value: 3 },
-            ].map((tab) => (
-              <button
-                key={String(tab.value)}
-                type="button"
-                onClick={() => setSelectedBedroom(tab.value as number | "all")}
-                className={`px-4 py-2 font-sans text-xs font-semibold uppercase tracking-[0.12em] transition-colors cursor-pointer ${
-                  selectedBedroom === tab.value
-                    ? "bg-[var(--jade-700)] text-white"
-                    : "text-[var(--text-muted)] hover:text-[var(--ink-900)]"
-                }`}
-              >
-                {tab.label}
-              </button>
-            ))}
+          <div className="flex flex-wrap items-center gap-3">
+            <FilterTabs
+              tabs={[
+                { label: "Tất Cả (5 Căn)", value: "all" },
+                { label: "1 Phòng Ngủ", value: 1 },
+                { label: "2 Phòng Ngủ", value: 2 },
+                { label: "3 Phòng Ngủ", value: 3 },
+              ]}
+              value={selectedBedroom}
+              onChange={(val) => setSelectedBedroom(val)}
+            />
+
+            <span className="font-sans text-xs font-semibold uppercase tracking-wider text-[var(--gold-900)] ml-auto md:ml-2">
+              {filteredUnits.length} Căn Hộ
+            </span>
           </div>
         </div>
 
-        {/* Units Grid */}
+        {/* Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-10">
           {filteredUnits.map((unit) => (
             <UnitCard
@@ -80,14 +89,38 @@ export default function PropertiesPage() {
             />
           ))}
         </div>
+
+        {/* Empty state */}
+        {filteredUnits.length === 0 && (
+          <div className="mt-12 p-12 bg-[var(--surface-raised)] border border-[var(--hairline)] text-center grid gap-4 justify-items-center">
+            <Icon name="search" size={36} color="var(--gold-700)" />
+            <h3 className="font-display text-2xl text-[var(--ink-900)]">
+              Không tìm thấy căn hộ phù hợp với từ khoá
+            </h3>
+            <div className="flex gap-3 mt-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  setSearchQuery("");
+                  setSelectedBedroom("all");
+                }}
+              >
+                Xoá Bộ Lọc
+              </Button>
+              <Button
+                variant="gold"
+                size="sm"
+                onClick={() => handleOpenInquiry()}
+              >
+                Liên Hệ Quản Lý
+              </Button>
+            </div>
+          </div>
+        )}
       </div>
 
-      <ContactRail
-        zalo="https://zalo.me/0889237833"
-        phone="0889237833"
-        email="stay@gaojihouse.vn"
-        onInquire={() => handleOpenInquiry()}
-      />
+      <ContactRail onInquire={() => handleOpenInquiry()} />
 
       <InquiryModal
         open={inquiryOpen}

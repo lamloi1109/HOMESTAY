@@ -1,19 +1,110 @@
 import React from "react";
 import { Icon } from "./Icon";
 
-export type Tone = "neutral" | "jade" | "gold" | "clay" | "accent" | "success" | "warning" | "danger" | "info";
+export type Tone =
+  | "neutral"
+  | "jade"
+  | "gold"
+  | "clay"
+  | "accent"
+  | "success"
+  | "warning"
+  | "danger"
+  | "info"
+  | "available"
+  | "held"
+  | "paper";
+
 export type Variant = "soft" | "solid" | "outline" | "glass";
 
-const TONES: Record<Tone, { solidBg: string; solidOn: string; softBg: string; softOn: string; border: string }> = {
-  neutral: { solidBg: "var(--ink-900)", solidOn: "var(--paper-150)", softBg: "var(--paper-200)", softOn: "var(--ink-900)", border: "var(--hairline-strong)" },
-  jade: { solidBg: "var(--jade-700)", solidOn: "var(--paper-150)", softBg: "rgba(31,58,46,.12)", softOn: "var(--jade-700)", border: "var(--jade-700)" },
-  accent: { solidBg: "var(--jade-700)", solidOn: "var(--paper-150)", softBg: "rgba(31,58,46,.12)", softOn: "var(--jade-700)", border: "var(--jade-700)" },
-  gold: { solidBg: "var(--gold-500)", solidOn: "var(--ink-900)", softBg: "var(--gold-100)", softOn: "var(--gold-900)", border: "var(--gold-700)" },
-  clay: { solidBg: "var(--clay-500)", solidOn: "var(--paper-000)", softBg: "var(--clay-100)", softOn: "var(--clay-700)", border: "var(--clay-500)" },
-  success: { solidBg: "var(--success)", solidOn: "#ffffff", softBg: "var(--success-soft)", softOn: "var(--success)", border: "var(--success)" },
-  warning: { solidBg: "var(--warning)", solidOn: "var(--ink-900)", softBg: "var(--warning-soft)", softOn: "var(--warning)", border: "var(--warning)" },
-  danger: { solidBg: "var(--danger)", solidOn: "#ffffff", softBg: "var(--danger-soft)", softOn: "var(--danger)", border: "var(--danger)" },
-  info: { solidBg: "var(--info)", solidOn: "#ffffff", softBg: "var(--info-soft)", softOn: "var(--info)", border: "var(--info)" },
+const TONES: Record<
+  Tone,
+  { solidBg: string; solidOn: string; softBg: string; softOn: string; border: string }
+> = {
+  neutral: {
+    solidBg: "var(--ink-900)",
+    solidOn: "var(--paper-150)",
+    softBg: "var(--paper-200)",
+    softOn: "var(--ink-900)",
+    border: "var(--hairline-strong)",
+  },
+  jade: {
+    solidBg: "var(--jade-700)",
+    solidOn: "var(--paper-150)",
+    softBg: "rgba(31,58,46,.12)",
+    softOn: "var(--jade-700)",
+    border: "var(--jade-700)",
+  },
+  accent: {
+    solidBg: "var(--jade-700)",
+    solidOn: "var(--paper-150)",
+    softBg: "rgba(31,58,46,.12)",
+    softOn: "var(--jade-700)",
+    border: "var(--jade-700)",
+  },
+  gold: {
+    solidBg: "var(--gold-500)",
+    solidOn: "var(--ink-900)",
+    softBg: "var(--gold-100)",
+    softOn: "var(--gold-900)",
+    border: "var(--gold-700)",
+  },
+  clay: {
+    solidBg: "var(--clay-500)",
+    solidOn: "var(--paper-000)",
+    softBg: "var(--clay-100)",
+    softOn: "var(--clay-700)",
+    border: "var(--clay-500)",
+  },
+  success: {
+    solidBg: "var(--success)",
+    solidOn: "#ffffff",
+    softBg: "var(--success-soft)",
+    softOn: "var(--success)",
+    border: "var(--success)",
+  },
+  available: {
+    solidBg: "var(--success)",
+    solidOn: "#ffffff",
+    softBg: "var(--success-soft)",
+    softOn: "var(--success)",
+    border: "var(--success)",
+  },
+  warning: {
+    solidBg: "var(--warning)",
+    solidOn: "var(--ink-900)",
+    softBg: "var(--warning-soft)",
+    softOn: "var(--warning)",
+    border: "var(--warning)",
+  },
+  held: {
+    solidBg: "var(--warning)",
+    solidOn: "var(--ink-900)",
+    softBg: "var(--warning-soft)",
+    softOn: "var(--warning)",
+    border: "var(--warning)",
+  },
+  danger: {
+    solidBg: "var(--danger)",
+    solidOn: "#ffffff",
+    softBg: "var(--danger-soft)",
+    softOn: "var(--danger)",
+    border: "var(--danger)",
+  },
+  info: {
+    solidBg: "var(--info)",
+    solidOn: "#ffffff",
+    softBg: "var(--info-soft)",
+    softOn: "var(--info)",
+    border: "var(--info)",
+  },
+  paper: {
+    solidBg: "var(--glass-warm)",
+    solidOn: "var(--ink-900)",
+    softBg: "var(--glass-warm)",
+    softOn: "var(--ink-900)",
+    border: "var(--hairline)",
+  },
 };
 
 export interface BadgeProps {
@@ -49,8 +140,20 @@ export function Badge({
       style={{
         height: size === "sm" ? 22 : 26,
         padding: size === "sm" ? "0 8px" : "0 10px",
-        background: glass ? "rgba(250,243,234,.9)" : outline ? "transparent" : solid ? t.solidBg : t.softBg,
-        color: glass ? "var(--ink-900)" : outline ? t.softOn : solid ? t.solidOn : t.softOn,
+        background: glass
+          ? "rgba(250,243,234,.9)"
+          : outline
+          ? "transparent"
+          : solid
+          ? t.solidBg
+          : t.softBg,
+        color: glass
+          ? "var(--ink-900)"
+          : outline
+          ? t.softOn
+          : solid
+          ? t.solidOn
+          : t.softOn,
         border: glass ? "1px solid var(--hairline-strong)" : `1px solid ${t.border}`,
         backdropFilter: glass ? "blur(8px)" : undefined,
         ...style,

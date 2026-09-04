@@ -1,10 +1,10 @@
+@import url("https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Great+Vibes&family=Inter:wght@300;400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&display=swap");
 @import "tailwindcss";
 
 /* Gaoji House design system — token nguồn từ claude.ai/design.
-   Xem frontend/src/styles/gaoji/README.md để biết cách đồng bộ lại.
    Thứ tự nhập đúng như styles.css của design system: màu → chữ → khoảng cách
-   → bo góc → đổ bóng → hiệu ứng → base (base đọc được mọi token nên vào cuối),
-   riêng next-adapter trỏ token font sang next/font nên phải sau typography. */
+   → bo góc → đổ bóng → hiệu ứng → base,
+   next-adapter trỏ token font sang next/font nên ở sau typography. */
 @import "../styles/gaoji/colors.css";
 @import "../styles/gaoji/typography.css";
 @import "../styles/gaoji/spacing.css";
@@ -39,92 +39,95 @@
   --color-wechat: var(--channel-wechat);
   --color-whatsapp: var(--channel-whatsapp);
 
-  --font-sans: var(--font-barlow-condensed);
-  --font-serif: var(--font-eb-garamond);
-  --font-display: var(--font-eb-garamond);
-  --font-italic: var(--font-newsreader);
+  --font-sans: var(--font-inter), var(--font-barlow-condensed), sans-serif;
+  --font-serif: var(--font-cormorant-garamond), var(--font-eb-garamond), serif;
+  --font-display: var(--font-cormorant-garamond), var(--font-eb-garamond), serif;
+  --font-italic: var(--font-newsreader), serif;
 }
 
-/* ── Style riêng của app (không thuộc design system) ─────────────── */
-
-/* Link trên nav: gạch chân chạy ra khi rê chuột, theo thiết kế trang chủ. */
-.gh-nav-link {
-  border-bottom: 1.5px solid transparent;
-  padding-bottom: 1px;
-  transition: color var(--dur-base) var(--ease-standard),
-    border-color var(--dur-base) var(--ease-standard);
+/* ── Global Styles & Sliders verbatim from Landing Page.dc.html ── */
+body {
+  margin: 0;
+  background: var(--canvas, #F9F7F2);
+  font-family: var(--font-sans);
+  color: var(--text-primary, #1A1A1A);
 }
-.gh-nav-link:hover {
-  color: var(--accent);
-  border-bottom-color: var(--accent);
+img {
+  display: block;
 }
-
-/* Vào màn hình thì trôi lên — dùng cho các khối trong hero. */
-@keyframes gh-fade-up-in {
-  from {
-    opacity: 0;
-    transform: translateY(22px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
+html {
+  scroll-behavior: smooth;
 }
-.gh-au {
-  animation: gh-fade-up-in 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
+a {
+  color: var(--gold-900);
 }
-.gh-au-1 { animation-delay: 0.05s; }
-.gh-au-2 { animation-delay: 0.2s; }
-.gh-au-3 { animation-delay: 0.35s; }
-.gh-au-4 { animation-delay: 0.5s; }
-
+a:hover {
+  color: var(--clay-700);
+}
+::selection {
+  background: var(--clay-500);
+  color: #fff;
+}
+:focus-visible {
+  outline: 2px solid var(--gold-500);
+  outline-offset: 3px;
+  border-radius: 0px;
+}
 @media (prefers-reduced-motion: reduce) {
-  .gh-au { animation: none; }
-}
-
-/* Hiện icon theo theme mà không cần state React — xem ThemeToggle.tsx. */
-.gh-when-dark { display: none; }
-[data-theme="dark"] .gh-when-light { display: none; }
-[data-theme="dark"] .gh-when-dark { display: inline-flex; }
-
-/* Lưới bento trang chủ: ô lớn trái chiếm 2 hàng, ô rộng trên phải,
-   hai ô nhỏ dưới. Dưới 744px thì xếp dọc theo đúng breakpoint design system. */
-.gh-bento-home {
-  display: grid;
-  grid-template-columns: 5fr 3.2fr 2.8fr;
-  grid-template-rows: 380px 270px;
-  grid-template-areas:
-    "a b b"
-    "a c d";
-  gap: 18px;
-}
-
-@media (max-width: 743px) {
-  .gh-bento-home {
-    grid-template-columns: 1fr;
-    grid-template-rows: none;
-    grid-template-areas: "a" "b" "c" "d";
-  }
-  .gh-bento-home > * {
-    min-height: 300px;
+  * {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
   }
 }
 
-/* Card chỗ nghỉ: nhấc lên và đổ bóng sâu hơn khi rê chuột. */
-.gh-prop-card {
-  transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out);
+/* Dual Range Slider styling from Landing Page.dc.html */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 24px;
+  background: transparent;
+  pointer-events: none;
+  margin: 0;
 }
-.gh-prop-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-xl);
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 24px;
+  background: transparent;
+  border: 0;
+}
+input[type="range"]::-moz-range-track {
+  height: 24px;
+  background: transparent;
+  border: 0;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  pointer-events: auto;
+  width: 16px;
+  height: 16px;
+  margin-top: 4px;
+  border: 1px solid var(--gold-700);
+  background: var(--jade-700);
+  cursor: pointer;
+  border-radius: 0px;
+}
+input[type="range"]::-moz-range-thumb {
+  pointer-events: auto;
+  width: 16px;
+  height: 16px;
+  border: 1px solid var(--gold-700);
+  border-radius: 0px;
+  background: var(--jade-700);
+  cursor: pointer;
+}
+input[type="range"]:focus-visible {
+  outline: 2px solid var(--gold-500);
+  outline-offset: 3px;
 }
 
-/* Thanh cuộn ngang của dải card: ẩn thanh cuộn, vẫn cuộn được. */
-.gh-scroll-x {
-  overflow-x: auto;
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
-}
-.gh-scroll-x::-webkit-scrollbar {
-  display: none;
+/* Reveal on scroll animations */
+[data-reveal="1"] {
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }

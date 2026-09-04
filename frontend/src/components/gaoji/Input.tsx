@@ -39,8 +39,8 @@ export function Input({
     <label className={`flex flex-col gap-1.5 w-full ${className}`.trim()} style={style}>
       {label && (
         <span
-          className="font-sans text-[0.6875rem] font-semibold uppercase tracking-[0.15em]"
-          style={{ color: onDark ? "var(--gold-050)" : "var(--text-muted)" }}
+          className="font-sans text-[0.75rem] font-bold uppercase tracking-[0.14em]"
+          style={{ color: onDark ? "#E2C068" : "var(--text-muted)" }}
         >
           {label}
         </span>
@@ -49,7 +49,7 @@ export function Input({
         {icon && (
           <span
             className="absolute left-3 flex items-center pointer-events-none"
-            style={{ color: onDark ? "var(--gold-700)" : "var(--text-muted)" }}
+            style={{ color: onDark ? "#D4AF37" : "var(--text-muted)" }}
           >
             <Icon name={icon} size={16} />
           </span>
@@ -65,11 +65,11 @@ export function Input({
               setIsFocused(false);
               onBlur?.(e);
             }}
-            className="w-full px-3.5 py-3 font-sans text-[0.9375rem] leading-relaxed rounded-none outline-none resize-y transition-colors duration-150"
+            className="w-full px-3.5 py-3 font-sans text-[0.9375rem] font-medium leading-relaxed rounded-none outline-none resize-y transition-colors duration-150"
             style={{
               paddingLeft: icon ? "36px" : "14px",
-              background: onDark ? "rgba(250,243,234,.06)" : "var(--surface-raised)",
-              color: onDark ? "var(--text-inverse)" : "var(--text-primary)",
+              background: onDark ? "rgba(0,0,0,0.4)" : "var(--surface-raised)",
+              color: onDark ? "#FFFFFF" : "var(--text-primary)",
               border: `1px solid ${border}`,
             }}
             {...(props as React.TextareaHTMLAttributes<HTMLTextAreaElement>)}
@@ -84,11 +84,11 @@ export function Input({
               setIsFocused(false);
               onBlur?.(e);
             }}
-            className="w-full h-[48px] px-3.5 font-sans text-[0.9375rem] leading-none rounded-none outline-none transition-colors duration-150"
+            className="w-full h-[48px] px-3.5 font-sans text-[0.9375rem] font-medium leading-none rounded-none outline-none transition-colors duration-150"
             style={{
               paddingLeft: icon ? "36px" : "14px",
-              background: onDark ? "rgba(250,243,234,.06)" : "var(--surface-raised)",
-              color: onDark ? "var(--text-inverse)" : "var(--text-primary)",
+              background: onDark ? "rgba(0,0,0,0.4)" : "var(--surface-raised)",
+              color: onDark ? "#FFFFFF" : "var(--text-primary)",
               border: `1px solid ${border}`,
             }}
             {...(props as React.InputHTMLAttributes<HTMLInputElement>)}

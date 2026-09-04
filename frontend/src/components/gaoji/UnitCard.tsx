@@ -2,154 +2,194 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
-import { type Property } from "@/lib/api";
-import { formatVnd } from "@/lib/format";
+import React, { useState } from "react";
 import { Badge } from "./Badge";
 import { Button } from "./Button";
-import { Icon } from "./Icon";
+import { RoomSpecs } from "./RoomSpecs";
+
+export interface UnitCardItem {
+  id: string;
+  name: string;
+  unit_code?: string | null;
+  floor?: string | number | null;
+  tower?: string | null;
+  bedrooms?: number | null;
+  bathrooms?: number | null;
+  sqm?: number | null;
+  guests?: number | null;
+  price_monthly?: number | string | null;
+  price_nightly?: number | string | null;
+  status?: string | null;
+  cover_image?: string | null;
+  view_type?: string | null;
+  description?: string | null;
+  slug?: string | null;
+}
 
 export interface UnitCardProps {
-  unit: Property;
+  unit: UnitCardItem;
   onInquire?: (unitCode: string) => void;
+  onView?: (unitCode: string) => void;
+  labels?: {
+    view?: string;
+    inquire?: string;
+    month?: string;
+    night?: string;
+  };
   className?: string;
   style?: React.CSSProperties;
 }
 
-export function UnitCard({ unit, onInquire, className = "", style }: UnitCardProps) {
+const formatPriceVnd = (n: number) => {
+  if (n >= 1e6) {
+    return (n / 1e6).toLocaleString("vi-VN", { maximumFractionDigits: 1 }) + " Triệu VNĐ";
+  }
+  return n.toLocaleString("vi-VN") + " VNĐ";
+};
+
+export function UnitCard({
+  unit,
+  onInquire,
+  onView,
+  labels = {},
+  className = "",
+  style,
+}: UnitCardProps) {
+  const [hover, setHover] = useState(false);
+
+  const t = {
+    view: "Xem Chi Tiết Căn Hộ",
+    inquire: "Đặt Phòng / Hỏi Giá",
+    month: "Giá Thuê Tháng",
+    night: "Giá Theo Đêm",
+    ...labels,
+  };
+
   const photo = unit.cover_image || "/assets/photos/living-open-plan.jpg";
-  const monthlyPrice = unit.price_monthly ? Number(unit.price_monthly) : null;
-  const nightlyPrice = unit.price_nightly ? Number(unit.price_nightly) : null;
+  const monthlyRateVnd = unit.price_monthly ? Number(unit.price_monthly) : null;
+  const nightlyRateVnd = unit.price_nightly ? Number(unit.price_nightly) : null;
+  const isAvailable = unit.status === "available" || !unit.status;
+
+  const floorText = unit.floor
+    ? `Tầng ${unit.floor} · ${unit.tower || "Landmark"} · Vinhomes Central Park`
+    : unit.tower
+    ? `${unit.tower} · Vinhomes Central Park`
+    : null;
 
   return (
     <article
-      className={`group relative flex flex-col bg-[var(--surface-raised)] border border-[var(--hairline-strong)] hover:border-[var(--gold-700)] transition-all duration-300 rounded-none shadow-sm hover:shadow-md ${className}`.trim()}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      className={`flex flex-col bg-[var(--surface-raised)] border border-[var(--hairline)] rounded-none transition-colors duration-200 ${className}`.trim()}
       style={style}
     >
-      {/* Image container with 0px radius and 800ms smooth zoom */}
-      <div className="relative aspect-[16/10] w-full overflow-hidden bg-[var(--jade-900)]">
+      {/* 4:3 Aspect Ratio Image Container */}
+      <div className="relative aspect-[4/3] overflow-hidden bg-[var(--surface-sunken)]">
         <Image
           src={photo}
           alt={unit.name}
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+          className="object-cover transition-transform duration-700 ease-out"
+          style={{
+            transform: hover ? "scale(1.04)" : "scale(1)",
+          }}
         />
-        {/* Subtle overlay gradient */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
 
-        {/* Unit Code Tag */}
-        <div className="absolute top-3 left-3 z-10">
-          <Badge tone="gold" variant="solid">
+        {/* Top-Left Code Badge */}
+        <span className="absolute top-3 left-3 z-10">
+          <Badge tone="paper">
             {unit.unit_code || unit.name}
           </Badge>
-        </div>
+        </span>
 
-        {/* Tower & Floor Badge */}
-        {unit.tower && (
-          <div className="absolute top-3 right-3 z-10">
-            <span className="px-2.5 py-1 bg-black/60 backdrop-blur-xs text-[var(--paper-150)] font-sans text-[0.6875rem] font-semibold uppercase tracking-[0.12em]">
-              {unit.tower} {unit.floor ? `· Tầng ${unit.floor}` : ""}
-            </span>
-          </div>
-        )}
+        {/* Top-Right Status Badge */}
+        <span className="absolute top-3 right-3 z-10">
+          <Badge
+            tone={isAvailable ? "available" : "held"}
+            icon={isAvailable ? "badge-check" : "calendar-check"}
+          >
+            {isAvailable ? "Còn Phòng" : "Đã Giữ Chỗ · Nhận Chờ"}
+          </Badge>
+        </span>
+      </div>
 
-        {/* View overlay */}
+      {/* Details Header */}
+      <div className="p-4 sm:p-5 pb-0">
         {unit.view_type && (
-          <div className="absolute bottom-3 left-3 right-3 z-10 flex items-center gap-1.5 text-white/95 font-sans text-xs">
-            <Icon name="eye" size={13} color="var(--gold-500)" />
-            <span className="truncate">{unit.view_type}</span>
-          </div>
+          <span className="font-sans text-[0.625rem] font-semibold tracking-[0.15em] uppercase text-[var(--gold-900)] block">
+            {unit.view_type}
+          </span>
+        )}
+        <h3
+          className="mt-1.5 font-display text-[1.33rem] sm:text-[1.45rem] font-medium leading-[1.25] transition-colors"
+          style={{ color: hover ? "var(--gold-900)" : "var(--text-primary)" }}
+        >
+          {unit.name}
+        </h3>
+        {floorText && (
+          <p className="mt-1.5 font-serif italic text-[0.875rem] text-[var(--text-muted)]">
+            {floorText}
+          </p>
         )}
       </div>
 
-      {/* Body content */}
-      <div className="flex flex-1 flex-col justify-between p-5 sm:p-6 gap-4">
-        <div className="grid gap-2.5">
-          <h3 className="font-display text-xl sm:text-2xl font-normal text-[var(--ink-900)] leading-snug group-hover:text-[var(--jade-700)] transition-colors">
-            <Link href={`/properties/${unit.id || unit.slug}`}>
-              {unit.name}
-            </Link>
-          </h3>
+      {/* Room Specs Strip */}
+      <div className="my-4 py-2 border-y border-[var(--hairline)]">
+        <RoomSpecs
+          beds={unit.bedrooms}
+          baths={unit.bathrooms}
+          sqm={unit.sqm}
+          guests={unit.guests}
+        />
+      </div>
 
-          {/* Specs bar */}
-          <div className="flex flex-wrap items-center gap-3 py-2 border-y border-[var(--hairline)] font-sans text-xs text-[var(--text-muted)]">
-            <span className="flex items-center gap-1">
-              <Icon name="bed" size={14} color="var(--gold-900)" />
-              <strong>{unit.bedrooms || 2}</strong> PN
-            </span>
-            <span className="text-[var(--hairline-strong)]">|</span>
-            <span className="flex items-center gap-1">
-              <Icon name="bath" size={14} color="var(--gold-900)" />
-              <strong>{unit.bathrooms || 2}</strong> WC
-            </span>
-            <span className="text-[var(--hairline-strong)]">|</span>
-            <span className="flex items-center gap-1">
-              <Icon name="maximize-2" size={13} color="var(--gold-900)" />
-              <strong>{unit.sqm || 82}</strong> m²
-            </span>
-            <span className="text-[var(--hairline-strong)]">|</span>
-            <span className="flex items-center gap-1">
-              <Icon name="users" size={14} color="var(--gold-900)" />
-              Tối đa <strong>{unit.max_guests || 4}</strong> khách
-            </span>
-          </div>
-
-          <p className="font-sans text-sm text-[var(--text-body)] line-clamp-2 leading-relaxed mt-1">
-            {unit.description}
-          </p>
-        </div>
-
-        {/* Pricing & CTA */}
-        <div className="pt-2 flex flex-col gap-3">
-          <div className="flex items-baseline justify-between gap-2">
-            <div>
-              <span className="font-sans text-[0.6875rem] uppercase tracking-[0.12em] text-[var(--text-muted)] block">
-                Thuê Tháng (Bao Phí)
-              </span>
-              {monthlyPrice ? (
-                <span className="font-display text-xl sm:text-2xl font-medium text-[var(--jade-700)]">
-                  {formatVnd(monthlyPrice)}
-                  <span className="font-sans text-xs text-[var(--text-muted)] font-normal"> / tháng</span>
-                </span>
-              ) : (
-                <span className="font-sans text-sm text-[var(--text-muted)]">Liên hệ</span>
-              )}
+      {/* Pricing Columns */}
+      <div className="px-4 sm:px-5 flex flex-wrap gap-4 sm:gap-6">
+        {monthlyRateVnd ? (
+          <div>
+            <div className="font-sans text-[0.625rem] font-semibold uppercase tracking-[0.15em] text-[var(--text-muted)]">
+              {t.month}
             </div>
-
-            {nightlyPrice && (
-              <div className="text-right">
-                <span className="font-sans text-[0.6875rem] uppercase tracking-[0.12em] text-[var(--text-muted)] block">
-                  Thuê Ngắn Hạn
-                </span>
-                <span className="font-sans text-sm font-semibold text-[var(--gold-900)]">
-                  {formatVnd(nightlyPrice)}
-                  <span className="text-xs text-[var(--text-muted)] font-normal"> / đêm</span>
-                </span>
-              </div>
-            )}
+            <div className="font-display text-[1.35rem] font-medium text-[var(--jade-700)]">
+              {formatPriceVnd(monthlyRateVnd)}
+            </div>
           </div>
+        ) : null}
 
-          {/* Action buttons */}
-          <div className="grid grid-cols-2 gap-2 pt-1">
-            <Button
-              variant="outline"
-              size="sm"
-              as="a"
-              href={`/properties/${unit.id || unit.slug}`}
-              className="text-center"
-            >
-              Xem Căn Hộ
-            </Button>
-            <Button
-              variant="gold"
-              size="sm"
-              onClick={() => onInquire?.(unit.unit_code || unit.name)}
-            >
-              Hỏi Giá / Đặt
-            </Button>
+        {nightlyRateVnd ? (
+          <div>
+            <div className="font-sans text-[0.625rem] font-semibold uppercase tracking-[0.15em] text-[var(--text-muted)]">
+              {t.night}
+            </div>
+            <div className="font-display text-[1.35rem] font-medium text-[var(--jade-700)]">
+              {formatPriceVnd(nightlyRateVnd)}
+            </div>
           </div>
-        </div>
+        ) : null}
+      </div>
+
+      {/* Action Buttons Stack */}
+      <div className="mt-auto p-4 sm:p-5 pt-5 grid gap-2">
+        <Button
+          variant="jade"
+          size="sm"
+          full
+          iconAfter="arrow-right"
+          as={Link}
+          href={`/properties/${unit.id || unit.slug || unit.unit_code}`}
+          onClick={() => onView?.(unit.unit_code || unit.name)}
+        >
+          {t.view}
+        </Button>
+        <Button
+          variant="outline"
+          size="sm"
+          full
+          onClick={() => onInquire?.(unit.unit_code || unit.name)}
+        >
+          {t.inquire}
+        </Button>
       </div>
     </article>
   );

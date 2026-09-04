@@ -38,8 +38,8 @@ export function Select({
     <label className={`flex flex-col gap-1.5 w-full ${className}`.trim()} style={style}>
       {label && (
         <span
-          className="font-sans text-[0.6875rem] font-semibold uppercase tracking-[0.15em]"
-          style={{ color: onDark ? "var(--gold-050)" : "var(--text-muted)" }}
+          className="font-sans text-[0.75rem] font-bold uppercase tracking-[0.14em]"
+          style={{ color: onDark ? "#E2C068" : "var(--text-muted)" }}
         >
           {label}
         </span>
@@ -54,10 +54,10 @@ export function Select({
             setIsFocused(false);
             onBlur?.(e);
           }}
-          className="w-full h-[48px] px-3.5 pr-9 font-sans text-[0.9375rem] leading-none rounded-none outline-none appearance-none cursor-pointer transition-colors duration-150"
+          className="w-full h-[48px] px-3.5 pr-9 font-sans text-[0.9375rem] font-medium leading-none rounded-none outline-none appearance-none cursor-pointer transition-colors duration-150"
           style={{
-            background: onDark ? "rgba(250,243,234,.06)" : "var(--surface-raised)",
-            color: onDark ? "var(--text-inverse)" : "var(--text-primary)",
+            background: onDark ? "rgba(0,0,0,0.4)" : "var(--surface-raised)",
+            color: onDark ? "#FFFFFF" : "var(--text-primary)",
             border: `1px solid ${border}`,
           }}
           {...props}

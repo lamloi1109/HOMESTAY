@@ -10,6 +10,8 @@ export interface InquiryModalProps {
   open: boolean;
   onClose: () => void;
   initialUnitCode?: string;
+  initialUnit?: string;
+  unitTypes?: string[];
   unitOptions?: { value: string; label: string }[];
 }
 
@@ -17,20 +19,15 @@ export function InquiryModal({
   open,
   onClose,
   initialUnitCode,
-  unitOptions = [
-    { value: "", label: "Tư vấn chọn căn phù hợp" },
-    { value: "L1.29.08", label: "L1.29.08 · Landmark 1 (2PN · 82 m²)" },
-    { value: "L3.44.09", label: "L3.44.09 · Landmark 3 (3PN · 108 m²)" },
-    { value: "L81.07.12", label: "L81.07.12 · Landmark 81 (1PN · 54 m²)" },
-    { value: "P1.27.10", label: "P1.27.10 · Park 1 (2PN · 85 m²)" },
-    { value: "P3.42.12", label: "P3.42.12 · Park 3 (Duplex 3PN · 140 m²)" },
-  ],
+  initialUnit,
+  unitTypes,
+  unitOptions,
 }: InquiryModalProps) {
   const [guestName, setGuestName] = useState("");
   const [phone, setPhone] = useState("");
   const [zalo, setZalo] = useState("");
   const [email, setEmail] = useState("");
-  const [unitCode, setUnitCode] = useState(initialUnitCode || "");
+  const [unitCode, setUnitCode] = useState(initialUnit || initialUnitCode || "");
   const [checkinDate, setCheckinDate] = useState("");
   const [rentalTerm, setRentalTerm] = useState("Theo Đêm");
   const [guestCount, setGuestCount] = useState(2);
@@ -39,6 +36,20 @@ export function InquiryModal({
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [successCode, setSuccessCode] = useState<string | null>(null);
+
+  // Compute options
+  const computedOptions =
+    unitOptions ||
+    (unitTypes
+      ? unitTypes.map((u) => ({ value: u, label: u }))
+      : [
+          { value: "", label: "Tư vấn chọn căn phù hợp" },
+          { value: "L1.29.08", label: "L1.29.08 · Landmark 1 (2PN · 82 m²)" },
+          { value: "L3.44.09", label: "L3.44.09 · Landmark 3 (3PN · 108 m²)" },
+          { value: "L81.07.12", label: "L81.07.12 · Landmark 81 (1PN · 54 m²)" },
+          { value: "P1.27.10", label: "P1.27.10 · Park 1 (2PN · 85 m²)" },
+          { value: "P3.42.12", label: "P3.42.12 · Park 3 (Duplex 3PN · 140 m²)" },
+        ]);
 
   if (!open) return null;
 
@@ -179,7 +190,7 @@ export function InquiryModal({
                 label="Căn Hộ Quan Tâm"
                 value={unitCode}
                 onChange={(e) => setUnitCode(e.target.value)}
-                options={unitOptions}
+                options={computedOptions}
               />
               <Select
                 label="Thời Hạn Thuê"

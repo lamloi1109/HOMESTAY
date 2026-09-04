@@ -1,14 +1,30 @@
 import type { Metadata } from "next";
-import { Barlow_Condensed, EB_Garamond, Newsreader } from "next/font/google";
+import { Cormorant_Garamond, Inter, Barlow_Condensed, EB_Garamond, Great_Vibes, Newsreader } from "next/font/google";
 import "./globals.css";
-import { Header, NAV_HEIGHT } from "@/components/Header";
+import { LanguageProvider } from "@/context/LanguageContext";
+import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
 
-// Bộ typography Design System Gaoji House v2:
-// - EB Garamond: Display/Headlines
-// - Barlow Condensed: Sans UI/Body/Caps
+// Bộ typography nghệ thuật & hiện đại:
+// - Cormorant Garamond / EB Garamond: Display / Headlines có chân nghệ thuật, thanh lịch, sang trọng
+// - Inter: Sans-serif hiện đại cho toàn bộ thông số, bảng giá, form, nút thao tác và UI
+// - Barlow Condensed: Sans-serif phụ cho các thẻ nhãn tag/eyebrow
 // - Newsreader: Editorial italic asides
+// - Great Vibes: Script wordmark
+const cormorantGaramond = Cormorant_Garamond({
+  variable: "--font-cormorant-garamond",
+  subsets: ["vietnamese", "latin"],
+  weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
+});
+
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["vietnamese", "latin"],
+  weight: ["400", "500", "600", "700"],
+});
+
 const ebGaramond = EB_Garamond({
   variable: "--font-eb-garamond",
   subsets: ["vietnamese", "latin"],
@@ -28,6 +44,12 @@ const newsreader = Newsreader({
   subsets: ["vietnamese", "latin"],
   weight: ["400", "500"],
   style: ["normal", "italic"],
+});
+
+const greatVibes = Great_Vibes({
+  variable: "--font-great-vibes",
+  subsets: ["latin"],
+  weight: ["400"],
 });
 
 export const metadata: Metadata = {
@@ -59,28 +81,27 @@ export default function RootLayout({
     <html
       lang="vi"
       data-theme="light"
-      className={`${barlowCondensed.variable} ${ebGaramond.variable} ${newsreader.variable} h-full antialiased`}
+      className={`${cormorantGaramond.variable} ${inter.variable} ${ebGaramond.variable} ${barlowCondensed.variable} ${newsreader.variable} ${greatVibes.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <head>
-        {/*
-          Đặt theme TRƯỚC khi trình duyệt vẽ, nếu không trang sẽ chớp màu sáng
-          rồi mới nhảy sang tối. Phải là script chặn render, không dùng useEffect
-          được. Chỉ đọc localStorage của chính mình, không nhận dữ liệu ngoài.
-        */}
         <script
           dangerouslySetInnerHTML={{
             __html: `try{var t=localStorage.getItem("gh-theme");if(t==="dark"||t==="light"){document.documentElement.setAttribute("data-theme",t)}}catch(e){}`,
           }}
         />
       </head>
-      <body className="flex min-h-full flex-col">
-        <Header />
-        {/* Nav ở chế độ fixed nên phải chừa đúng chiều cao của nó. */}
-        <div className="flex-1" style={{ paddingTop: NAV_HEIGHT }}>
-          {children}
-        </div>
-        <Footer />
+      <body
+        className="flex min-h-full flex-col bg-[var(--canvas,#F9F7F2)]"
+        suppressHydrationWarning
+      >
+        <LanguageProvider>
+          <Header />
+          <div className="flex-1">
+            {children}
+          </div>
+          <Footer />
+        </LanguageProvider>
       </body>
     </html>
   );

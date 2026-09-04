@@ -1,114 +1,124 @@
 "use client";
 
+import React, { useState } from "react";
 import { Icon } from "./Icon";
-import { useTactile, tactileTransform } from "./interactions";
 
-const DIA = { sm: 36, md: 44, lg: 52 } as const;
-
-type Variant = "clay" | "glass" | "soft" | "ghost" | "contrast" | "accent" | "jade" | "plain";
-
-function paint(variant: Variant, hover: boolean, active: boolean) {
-  const A = active;
-  switch (variant) {
-    case "glass":
-      return { bg: "var(--glass-bg)", glass: true, color: A ? "var(--accent)" : "var(--text-primary)", border: "1px solid var(--glass-border)", shadow: "glass" };
-    case "soft":
-      return { bg: A ? "var(--accent-soft)" : "var(--surface-sunken)", color: A ? "var(--accent)" : hover ? "var(--text-primary)" : "var(--text-secondary)", border: "none", shadow: "none" };
-    case "ghost":
-      return { bg: hover || A ? "var(--accent-soft)" : "transparent", color: hover || A ? "var(--accent)" : "var(--text-secondary)", border: "none", shadow: "none" };
-    case "contrast":
-      return { bg: "var(--surface-inverse)", color: "var(--text-inverse)", border: "none", shadow: "clay" };
-    case "accent":
-      return { bg: hover ? "var(--accent-hover)" : "var(--accent)", color: "var(--accent-on)", border: "none", shadow: "clay" };
-    case "jade":
-      return { bg: hover ? "var(--accent-2-hover)" : "var(--accent-2)", color: "var(--accent-2-on)", border: "none", shadow: "clay" };
-    case "plain":
-      return { bg: "transparent", color: A ? "var(--accent)" : "inherit", border: "none", shadow: "none" };
-    default:
-      return { bg: "var(--surface-raised)", color: A ? "var(--accent)" : hover ? "var(--text-primary)" : "var(--text-secondary)", border: "none", shadow: "clay" };
-  }
-}
-
-export interface IconButtonProps {
+export interface IconButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  icon?: string;
   name?: string;
-  children?: React.ReactNode;
-  variant?: Variant;
-  size?: "sm" | "md" | "lg" | number;
-  active?: boolean;
-  /** Bắt buộc khi không có children — nút chỉ có icon cần tên cho screen reader. */
   label: string;
-  disabled?: boolean;
-  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  style?: React.CSSProperties;
+  variant?: "outline" | "jade" | "onDark" | "channel" | "clay" | "gold";
+  shape?: "square" | "circle";
+  size?: number | "sm" | "md" | "lg";
+  tone?: string;
   className?: string;
+  style?: React.CSSProperties;
 }
 
 /**
- * IconButton — nút tròn có phản hồi xúc giác. Dùng cho tim lưu chỗ nghỉ, nút
- * điều hướng, mũi tên carousel, nút đóng. `active` chuyển glyph sang màu clay.
+ * IconButton — Square by default (toolbar, close, arrows); circular only for channel and social affordances.
  */
 export function IconButton({
+  icon,
   name,
-  children,
-  variant = "clay",
-  size = "md",
-  active = false,
   label,
-  disabled = false,
-  onClick,
-  style,
+  variant = "outline",
+  shape = "square",
+  size = 44,
+  tone,
   className = "",
+  style,
+  onClick,
+  disabled,
+  ...rest
 }: IconButtonProps) {
-  const { hover, press, bind } = useTactile();
-  const d = typeof size === "number" ? size : DIA[size] || DIA.md;
-  const iconSize = Math.round(d * 0.44);
-  const p = paint(variant, hover && !disabled, active);
+  const [hover, setHover] = useState(false);
+  const iconName = icon || name;
 
-  const boxShadow = disabled
-    ? "none"
-    : p.shadow === "clay"
-      ? press
-        ? "var(--shadow-pressed)"
-        : hover
-          ? "var(--shadow-clay)"
-          : "var(--shadow-clay-sm)"
-      : p.shadow === "glass"
-        ? "var(--shadow-sm), inset 0 1px 0 var(--glass-hi)"
-        : "none";
+  const numSize =
+    typeof size === "number"
+      ? size
+      : size === "sm"
+      ? 36
+      : size === "lg"
+      ? 52
+      : 44;
+
+  const tones: Record<
+    string,
+    { bg: string; fg: string; bd: string; hbg: string; hfg: string }
+  > = {
+    outline: {
+      bg: "transparent",
+      fg: "var(--jade-700)",
+      bd: "var(--hairline-strong)",
+      hbg: "var(--jade-700)",
+      hfg: "var(--accent-on, #FAF3EA)",
+    },
+    jade: {
+      bg: "var(--jade-700)",
+      fg: "var(--accent-on, #FAF3EA)",
+      bd: "var(--jade-700)",
+      hbg: "var(--jade-900)",
+      hfg: "var(--accent-on, #FAF3EA)",
+    },
+    gold: {
+      bg: "var(--gold-500)",
+      fg: "var(--ink-900)",
+      bd: "var(--gold-500)",
+      hbg: "var(--gold-600)",
+      hfg: "var(--ink-900)",
+    },
+    clay: {
+      bg: "var(--clay-500)",
+      fg: "#ffffff",
+      bd: "var(--clay-500)",
+      hbg: "var(--clay-700)",
+      hfg: "#ffffff",
+    },
+    onDark: {
+      bg: "rgba(250,243,234,.08)",
+      fg: "var(--gold-050)",
+      bd: "rgba(212,175,55,.5)",
+      hbg: "var(--gold-500)",
+      hfg: "var(--ink-900)",
+    },
+    channel: {
+      bg: tone || "var(--channel-zalo)",
+      fg: "#ffffff",
+      bd: "transparent",
+      hbg: tone || "var(--channel-zalo)",
+      hfg: "#ffffff",
+    },
+  };
+
+  const t = tones[variant] || tones.outline;
 
   return (
     <button
       type="button"
-      className={`gh-iconbtn ${className}`.trim()}
       aria-label={label}
-      aria-pressed={active || undefined}
+      title={label}
       disabled={disabled}
-      onClick={disabled ? undefined : onClick}
-      {...bind}
+      onClick={onClick}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      className={`inline-flex items-center justify-center p-0 transition-colors duration-150 cursor-pointer select-none ${
+        disabled ? "opacity-50 cursor-not-allowed pointer-events-none" : ""
+      } ${className}`.trim()}
       style={{
-        display: "inline-flex",
-        alignItems: "center",
-        justifyContent: "center",
-        width: d,
-        height: d,
-        flex: "none",
-        borderRadius: "var(--radius-circle)",
-        background: p.bg,
-        color: p.color,
-        border: p.border,
-        boxShadow,
-        backdropFilter: p.glass ? "blur(var(--glass-blur)) saturate(1.3)" : undefined,
-        WebkitBackdropFilter: p.glass ? "blur(var(--glass-blur)) saturate(1.3)" : undefined,
-        cursor: disabled ? "not-allowed" : "pointer",
-        opacity: disabled ? 0.5 : 1,
-        transform: disabled ? "none" : tactileTransform(press, hover, p.shadow === "clay"),
-        transition:
-          "transform var(--dur-fast) var(--ease-spring), box-shadow var(--dur-base) var(--ease-out), background var(--dur-fast) var(--ease-standard), color var(--dur-fast)",
-        WebkitTapHighlightColor: "transparent",
+        width: numSize,
+        height: numSize,
+        background: hover ? t.hbg : t.bg,
+        color: hover ? t.hfg : t.fg,
+        border: `1px solid ${t.bd}`,
+        borderRadius: shape === "circle" ? "var(--radius-circle, 50%)" : "0px",
+        filter: hover && variant === "channel" ? "brightness(1.08)" : "none",
         ...style,
       }}
+      {...rest}
     >
-      {children != null ? children : <Icon name={name} size={iconSize} />}
+      {iconName && <Icon name={iconName} size={Math.round(numSize * 0.44)} />}
     </button>
   );
 }

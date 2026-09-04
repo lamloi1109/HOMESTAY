@@ -1,97 +1,132 @@
-import { fetchProperties, fetchPropertyDetail } from "@/lib/api";
-import { PropertyCard } from "@/components/PropertyCard";
-import { SearchBar } from "@/components/SearchBar";
+"use client";
 
-export const dynamic = "force-dynamic";
+import React, { useEffect, useState } from "react";
+import {
+  Button,
+  ContactRail,
+  FilterTabs,
+  Icon,
+  InquiryModal,
+  SectionHeader,
+  UnitCard,
+} from "@/components/gaoji";
+import { fetchProperties, type Property } from "@/lib/api";
 
-export const metadata = {
-  title: "Chỗ ở",
-  description:
-    "Danh sách chỗ nghỉ của Gaoji House — xem ảnh thật, tiện ích và giá theo đêm.",
-  alternates: { canonical: "/properties" },
-};
+export default function PropertiesPage() {
+  const [units, setUnits] = useState<Property[]>([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedBedroom, setSelectedBedroom] = useState<string | number>("all");
+  const [inquiryOpen, setInquiryOpen] = useState(false);
+  const [selectedUnitCode, setSelectedUnitCode] = useState<string>("");
 
-function normalize(s: string): string {
-  return s
-    .normalize("NFD")
-    .replace(/[̀-ͯ]/g, "")
-    .replace(/đ/g, "d")
-    .replace(/Đ/g, "D")
-    .toLowerCase();
-}
+  useEffect(() => {
+    fetchProperties().then((data) => setUnits(data));
+  }, []);
 
-export default async function PropertiesPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ city?: string; in?: string; out?: string }>;
-}) {
-  const params = await searchParams;
-  const city = params.city ?? "";
-  const checkIn = params.in ?? "";
-  const checkOut = params.out ?? "";
+  const handleOpenInquiry = (code?: string) => {
+    setSelectedUnitCode(code || "");
+    setInquiryOpen(true);
+  };
 
-  let properties = null;
-  try {
-    properties = await fetchProperties();
-  } catch {
-    properties = null;
-  }
-
-  const filtered =
-    properties?.filter((p) => {
-      if (!city) return true;
-      const haystack = normalize(`${p.name} ${p.city ?? ""} ${p.address ?? ""}`);
-      return haystack.includes(normalize(city));
-    }) ?? [];
-
-  const withPrices = await Promise.all(
-    filtered.map(async (property) => {
-      try {
-        const detail = await fetchPropertyDetail(property.id);
-        const prices = detail.room_types.map((rt) => Number(rt.base_price));
-        return { property, minPrice: prices.length ? Math.min(...prices) : null };
-      } catch {
-        return { property, minPrice: null };
-      }
-    }),
-  );
-
-  const forwardQuery =
-    checkIn && checkOut ? `?in=${checkIn}&out=${checkOut}` : "";
+  const filteredUnits = units.filter((u) => {
+    const matchBed =
+      selectedBedroom === "all" ? true : u.bedrooms === Number(selectedBedroom);
+    const matchQuery =
+      searchQuery.trim() === ""
+        ? true
+        : (u.name + " " + (u.unit_code || "") + " " + (u.tower || "") + " " + (u.description || ""))
+            .toLowerCase()
+            .includes(searchQuery.toLowerCase());
+    return matchBed && matchQuery;
+  });
 
   return (
-    <main className="mx-auto max-w-6xl px-5 py-10">
-      <h1 className="text-3xl font-extrabold tracking-tight">Chỗ ở</h1>
-      <div className="mt-5">
-        <SearchBar
-          initialCity={city}
-          initialCheckIn={checkIn}
-          initialCheckOut={checkOut}
+    <main className="min-h-screen bg-[var(--canvas,#F9F7F2)] text-[var(--text-primary,#1A1A1A)] py-12 sm:py-16 px-4 sm:px-8 lg:px-12">
+      <div className="max-w-[1600px] mx-auto">
+        <SectionHeader
+          eyebrow="BẢNG GIÁ THUÊ & MẶT BẰNG CĂN HỘ · VINHOMES CENTRAL PARK"
+          title="Bộ Sưu Tập Căn Hộ Dịch Vụ"
+          aside="Cho thuê theo tháng (đã bao gồm toàn bộ phí quản lý toà nhà), theo tuần và theo đêm. Liên hệ quản lý căn hộ để xem nhà trực tiếp 24/7."
         />
-      </div>
 
-      {properties === null ? (
-        <p className="mt-8 text-muted">
-          Chưa kết nối được máy chủ — bật backend rồi tải lại trang.
-        </p>
-      ) : withPrices.length === 0 ? (
-        <p className="mt-8 text-muted">
-          {city
-            ? `Chưa có chỗ ở nào khớp “${city}”. Thử từ khóa khác nhé.`
-            : "Chưa có chỗ ở nào được đăng."}
-        </p>
-      ) : (
-        <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {withPrices.map(({ property, minPrice }) => (
-            <PropertyCard
-              key={property.id}
-              property={property}
-              minPrice={minPrice}
-              searchQuery={forwardQuery}
+        {/* Toolbar */}
+        <div className="mt-8 p-4 bg-[var(--surface-raised)] border border-[var(--hairline)] flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="flex-1 max-w-md">
+            <input
+              type="search"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Tìm theo mã căn, toà Landmark, view sông..."
+              className="w-full h-11 px-4 bg-[var(--surface-sunken)] border border-[var(--hairline-strong)] text-sm font-sans rounded-none focus:outline-2 focus:outline-[var(--gold-500)]"
+            />
+          </div>
+
+          <div className="flex flex-wrap items-center gap-3">
+            <FilterTabs
+              tabs={[
+                { label: "Tất Cả (5 Căn)", value: "all" },
+                { label: "1 Phòng Ngủ", value: 1 },
+                { label: "2 Phòng Ngủ", value: 2 },
+                { label: "3 Phòng Ngủ", value: 3 },
+              ]}
+              value={selectedBedroom}
+              onChange={(val) => setSelectedBedroom(val)}
+            />
+
+            <span className="font-sans text-xs font-semibold uppercase tracking-wider text-[var(--gold-900)] ml-auto md:ml-2">
+              {filteredUnits.length} Căn Hộ
+            </span>
+          </div>
+        </div>
+
+        {/* Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-10">
+          {filteredUnits.map((unit) => (
+            <UnitCard
+              key={unit.id}
+              unit={unit}
+              onInquire={(code) => handleOpenInquiry(code)}
             />
           ))}
         </div>
-      )}
+
+        {/* Empty state */}
+        {filteredUnits.length === 0 && (
+          <div className="mt-12 p-12 bg-[var(--surface-raised)] border border-[var(--hairline)] text-center grid gap-4 justify-items-center">
+            <Icon name="search" size={36} color="var(--gold-700)" />
+            <h3 className="font-display text-2xl text-[var(--ink-900)]">
+              Không tìm thấy căn hộ phù hợp với từ khoá
+            </h3>
+            <div className="flex gap-3 mt-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  setSearchQuery("");
+                  setSelectedBedroom("all");
+                }}
+              >
+                Xoá Bộ Lọc
+              </Button>
+              <Button
+                variant="gold"
+                size="sm"
+                onClick={() => handleOpenInquiry()}
+              >
+                Liên Hệ Quản Lý
+              </Button>
+            </div>
+          </div>
+        )}
+      </div>
+
+      <ContactRail onInquire={() => handleOpenInquiry()} />
+
+      <InquiryModal
+        open={inquiryOpen}
+        onClose={() => setInquiryOpen(false)}
+        initialUnitCode={selectedUnitCode}
+      />
     </main>
   );
 }

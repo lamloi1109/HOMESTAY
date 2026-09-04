@@ -1,96 +1,81 @@
+import React from "react";
 import { Icon } from "./Icon";
 
-type SpecKey = "bedrooms" | "beds" | "baths" | "kitchens" | "guests";
-
-const ICONS: Record<SpecKey, string> = {
-  bedrooms: "door-open",
-  beds: "bed-double",
-  baths: "bath",
-  kitchens: "cooking-pot",
-  guests: "users",
-};
-
-const LABELS: Record<SpecKey, string> = {
-  bedrooms: "phòng ngủ",
-  beds: "giường",
-  baths: "phòng tắm",
-  kitchens: "bếp",
-  guests: "khách",
-};
-
 export interface RoomSpecsProps {
-  bedrooms?: number;
-  beds?: number;
-  baths?: number;
-  kitchens?: number;
-  guests?: number;
-  items?: { icon: string; label: string }[];
-  size?: "sm" | "md";
-  separator?: boolean;
-  iconColor?: string;
-  style?: React.CSSProperties;
+  beds?: number | null;
+  baths?: number | null;
+  sqm?: number | null;
+  guests?: number | null;
+  bedrooms?: number | null;
+  kitchens?: number | null;
+  tone?: "light" | "dark";
   className?: string;
+  style?: React.CSSProperties;
 }
 
 /**
- * RoomSpecs — hàng icon+số gọn mô tả cấu trúc chỗ nghỉ (phòng ngủ · giường ·
- * phòng tắm · bếp). Truyền số theo từng loại, hoặc truyền thẳng `items`.
+ * RoomSpecs — The bed/bath/area strip under a unit headline. Hairline-separated, caps.
  */
 export function RoomSpecs({
-  bedrooms,
   beds,
   baths,
-  kitchens,
+  sqm,
   guests,
-  items,
-  size = "md",
-  separator = false,
-  iconColor = "var(--text-muted)",
-  style,
+  bedrooms,
+  kitchens,
+  tone = "light",
   className = "",
+  style,
 }: RoomSpecsProps) {
-  let list = items;
-  if (!list) {
-    const built: { icon: string; label: string }[] = [];
-    const push = (k: SpecKey, v?: number) => {
-      if (v != null) built.push({ icon: ICONS[k], label: `${v} ${LABELS[k]}` });
-    };
-    push("guests", guests);
-    push("bedrooms", bedrooms);
-    push("beds", beds);
-    push("baths", baths);
-    push("kitchens", kitchens);
-    list = built;
-  }
+  const actualBeds = beds ?? bedrooms;
 
-  const iconSize = size === "sm" ? 15 : 17;
-  const fs = size === "sm" ? "var(--fs-caption)" : "var(--fs-body-sm)";
+  const items = [
+    actualBeds != null && {
+      icon: "bed-double",
+      text: `${actualBeds} PN`,
+    },
+    baths != null && {
+      icon: "bath",
+      text: `${baths} WC`,
+    },
+    sqm != null && {
+      icon: "door-open",
+      text: `${sqm} M²`,
+    },
+    guests != null && {
+      icon: "users",
+      text: `${guests} KHÁCH`,
+    },
+    kitchens != null && {
+      icon: "cooking-pot",
+      text: `${kitchens} BẾP`,
+    },
+  ].filter(Boolean) as { icon: string; text: string }[];
+
+  const fg = tone === "dark" ? "var(--text-inverse)" : "var(--text-body)";
+  const line = tone === "dark" ? "rgba(212,175,55,.3)" : "var(--hairline)";
 
   return (
     <div
-      className={`gh-roomspecs ${className}`.trim()}
-      style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: separator ? 8 : 16, ...style }}
+      className={`flex flex-wrap items-center ${className}`.trim()}
+      style={style}
     >
-      {list.map((it, i) => (
-        <span key={i} style={{ display: "contents" }}>
-          {separator && i > 0 ? (
-            <span aria-hidden="true" style={{ color: "var(--border-strong)" }}>
-              ·
-            </span>
-          ) : null}
-          <span
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 6,
-              fontSize: fs,
-              color: "var(--text-body)",
-              whiteSpace: "nowrap",
-            }}
-          >
-            <Icon name={it.icon} size={iconSize} color={iconColor} />
-            <span>{it.label}</span>
-          </span>
+      {items.map((it, i) => (
+        <span
+          key={it.text}
+          className="inline-flex items-center gap-2 font-sans text-xs sm:text-[var(--fs-label,0.75rem)] font-medium uppercase tracking-[0.08em]"
+          style={{
+            padding: "0 14px",
+            borderLeft: i === 0 ? "none" : `1px solid ${line}`,
+            color: fg,
+          }}
+        >
+          <Icon
+            name={it.icon}
+            size={15}
+            color={tone === "dark" ? "var(--gold-500)" : "var(--gold-700)"}
+          />
+          <span>{it.text}</span>
         </span>
       ))}
     </div>

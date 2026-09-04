@@ -1,61 +1,131 @@
 import {
+  AirVent,
+  AlertTriangle,
+  ArrowLeft,
   ArrowRight,
   BadgeCheck,
   Bath,
+  Bed,
   BedDouble,
+  Building,
+  Calendar,
   CalendarCheck,
+  Car,
+  Check,
+  CheckCircle,
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+  Clock,
+  Coffee,
+  Compass,
   CookingPot,
+  Copy,
+  CreditCard,
   DoorOpen,
+  Dumbbell,
+  Eye,
+  EyeOff,
+  FileText,
+  Filter,
+  Footprints,
   Heart,
   Images,
+  Info,
+  Key,
   LoaderCircle,
+  LogOut,
+  Mail,
+  Map,
   MapPin,
+  Maximize2,
+  Menu,
+  MessageCircle,
+  MessageSquare,
   Moon,
   Phone,
+  PhoneCall,
   Search,
+  Send,
+  Share2,
   ShieldCheck,
+  SlidersHorizontal,
   Sparkles,
   Star,
   Sun,
+  Train,
+  Tv,
+  User,
   Users,
+  Wifi,
+  Wine,
+  X,
   type LucideIcon,
 } from "lucide-react";
+import React from "react";
 
-/**
- * Icon — bản chuyển của `components/core/Icon` trong design system Gaoji House.
- *
- * ĐÂY LÀ BẢN CHUYỂN, KHÔNG PHẢI BẢN SAO. Bản gốc nạp Lucide từ CDN
- * (unpkg.com/lucide) rồi bơm SVG bằng innerHTML trong useEffect. Trong Next.js
- * cách đó hỏng hai thứ: server render ra thẻ rỗng nên Google không thấy icon
- * (trang này sống bằng SEO), và thêm một request ra CDN ngoài. Bản này dùng
- * `lucide-react` đã có sẵn trong dự án nên render được cả phía server.
- *
- * Giao diện prop giữ nguyên như bản gốc (`name` dạng kebab-case) để các
- * component khác của design system dùng lại không phải sửa.
- *
- * Thêm icon mới: import ở trên rồi khai báo trong REGISTRY. Cố ý liệt kê tay
- * thay vì `import *` để bundle chỉ chứa icon thật sự dùng.
- */
 const REGISTRY: Record<string, LucideIcon> = {
+  "air-vent": AirVent,
+  "alert-triangle": AlertTriangle,
+  "arrow-left": ArrowLeft,
   "arrow-right": ArrowRight,
   "badge-check": BadgeCheck,
   bath: Bath,
+  bed: Bed,
   "bed-double": BedDouble,
+  building: Building,
+  calendar: Calendar,
   "calendar-check": CalendarCheck,
+  car: Car,
+  check: Check,
+  "check-circle": CheckCircle,
+  "chevron-down": ChevronDown,
+  "chevron-left": ChevronLeft,
+  "chevron-right": ChevronRight,
+  clock: Clock,
+  coffee: Coffee,
+  compass: Compass,
   "cooking-pot": CookingPot,
+  copy: Copy,
+  "credit-card": CreditCard,
   "door-open": DoorOpen,
+  dumbbell: Dumbbell,
+  eye: Eye,
+  "eye-off": EyeOff,
+  "file-text": FileText,
+  filter: Filter,
+  footprints: Footprints,
   heart: Heart,
   images: Images,
+  info: Info,
+  key: Key,
   "loader-circle": LoaderCircle,
+  "log-out": LogOut,
+  mail: Mail,
+  map: Map,
   "map-pin": MapPin,
+  "maximize-2": Maximize2,
+  menu: Menu,
+  "message-circle": MessageCircle,
+  "message-square": MessageSquare,
   moon: Moon,
   phone: Phone,
+  "phone-call": PhoneCall,
   search: Search,
+  send: Send,
+  "share-2": Share2,
   "shield-check": ShieldCheck,
+  "sliders-horizontal": SlidersHorizontal,
   sparkles: Sparkles,
   star: Star,
   sun: Sun,
+  train: Train,
+  tv: Tv,
+  user: User,
   users: Users,
+  wifi: Wifi,
+  wine: Wine,
+  x: X,
 };
 
 export interface IconProps {
@@ -63,7 +133,6 @@ export interface IconProps {
   size?: number;
   strokeWidth?: number;
   color?: string;
-  /** Có label thì icon mang nghĩa (role="img"); không có thì ẩn với screen reader. */
   label?: string;
   className?: string;
   style?: React.CSSProperties;
@@ -80,27 +149,23 @@ export function Icon({
 }: IconProps) {
   const Glyph = name ? REGISTRY[name] : undefined;
 
-  // Tên lạ thì không vẽ gì — thà thiếu icon còn hơn vẽ nhầm glyph khác nghĩa.
   if (!Glyph) {
     if (process.env.NODE_ENV !== "production" && name) {
-      console.warn(`[gaoji/Icon] chưa đăng ký icon "${name}" — thêm vào REGISTRY.`);
+      console.warn(`[gaoji/Icon] icon "${name}" not found in REGISTRY.`);
     }
     return null;
   }
 
   return (
     <span
-      className={`gh-icon ${className}`.trim()}
+      className={`inline-flex shrink-0 leading-none ${className}`.trim()}
       role={label ? "img" : undefined}
       aria-label={label || undefined}
       aria-hidden={label ? undefined : true}
       style={{
-        display: "inline-flex",
         width: size,
         height: size,
-        lineHeight: 0,
         color: color || "inherit",
-        flex: "none",
         ...style,
       }}
     >

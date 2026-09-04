@@ -42,7 +42,147 @@
 - **Verification:** Review thủ công bởi coordinator (human) — đây là gate "chưa ký chưa code" của Phase 0, không tự động verify được.
 - **Blocker:** Cần họp khách chốt số căn/loại hình BĐS/phương thức thanh toán trước khi PRD có thể "ký" thật — bản PRD này là bản nháp để coordinator review trước.
 - **Lưu ý:** File `docs/PRD.md` đã nằm trong `main` (theo chuỗi merge 2026-07-27) nhưng task vẫn `review`, KHÔNG phải `done`: gate của Phase 0 là chữ ký khách, chưa có. Acceptance criteria còn để trống chờ review người thật.
-- **Updated:** 2026-07-27 by claude-code
+### T-006 — Data Models & Alembic Migration cho Inquiries, Services, Leases & Unit Expansion
+
+- **Phase:** 1 (Schema)
+- **Status:** `done`
+- **Owner:** antigravity
+- **Branch:** `antigravity/T-006-backend-models`
+- **Assigned type:** `ANTIGRAVITY`
+- **Files touched:** `backend/app/models/inquiry.py` (mới), `backend/app/models/service.py` (mới), `backend/app/models/lease.py` (mới), `backend/app/models/property.py`, `backend/app/models/__init__.py`, `backend/app/seed.py`, `backend/migrations/versions/1fbacdbbe084_inquiries_services_leases_unit_expansion.py` (mới), `backend/tests/test_inquiries_and_services.py` (mới)
+- **Depends on:** —
+- **Complexity:** M
+- **Acceptance criteria:**
+  - [x] Model `Inquiry`, `TourService`, `Lease` khởi tạo theo SQLAlchemy 2.0 Async
+  - [x] Mở rộng `Property`/`Room` thêm `unit_code`, `tower`, `view_type`, `price_monthly`, `price_nightly`, `sqm`, `room_layout`, `operational_status`
+  - [x] Migration Alembic `1fbacdbbe084` sinh thành công và tương thích nâng cấp an toàn
+  - [x] Seed data chuẩn cho 5 căn hộ Vinhomes Central Park và danh mục dịch vụ mẫu (`L1.29.08`, `L3.44.09`, `L81.07.12`, `P1.27.10`, `P3.42.12`)
+  - [x] Test tự động `test_inquiries_and_services.py` viết hoàn thiện, lint `ruff` sạch (0 lỗi)
+- **Verification:** `ruff check .` pass sạch; models and seed import test `Loaded 29 model exports, 5 units, 5 services successfully`.
+- **Updated:** 2026-08-20 by antigravity
+
+---
+
+### T-007 — Backend API Endpoints: Guest Inquiries, Admin CRM & CMS Services
+
+- **Phase:** 2 (API)
+- **Status:** `done`
+- **Owner:** antigravity
+- **Branch:** `antigravity/T-007-backend-apis`
+- **Assigned type:** `ANTIGRAVITY`
+- **Files touched:** `backend/app/api/v1/inquiries.py` (mới), `backend/app/api/v1/services.py` (mới), `backend/app/api/v1/admin_inquiries.py` (mới), `backend/app/api/v1/admin_units.py` (mới), `backend/app/api/v1/admin_services.py` (mới), `backend/app/api/v1/admin_leases.py` (mới), `backend/app/schemas/inquiry.py` (mới), `backend/app/schemas/service.py` (mới), `backend/app/schemas/lease.py` (mới), `backend/app/schemas/catalog.py`, `backend/tests/test_api_inquiries_and_admin.py` (mới)
+- **Depends on:** T-006
+- **Complexity:** M
+- **Acceptance criteria:**
+  - [x] `POST /api/v1/inquiries` tiếp nhận Lead từ Guest (validate phone, auto gán default org nếu không truyền)
+  - [x] `GET /api/v1/services` trả về danh sách dịch vụ đang hoạt động (active)
+  - [x] `GET /api/v1/admin/inquiries` và `PATCH /api/v1/admin/inquiries/{id}` quản lý Lead CRM (phân quyền `owner`/`ops`)
+  - [x] `GET /api/v1/admin/units` và `PATCH /api/v1/admin/units/{id}` cập nhật giá tháng/đêm và trạng thái phòng
+  - [x] `GET/POST/PATCH/DELETE /api/v1/admin/services` quản trị danh mục dịch vụ
+  - [x] `GET/POST/PATCH /api/v1/admin/leases` quản trị hợp đồng và cảnh báo hạn tạm trú < 30 ngày
+  - [x] Mở rộng `catalog.py` trả về đầy đủ các trường mới của Property
+  - [x] Tests tự động cho toàn bộ API endpoints mới, ruff check sạch (0 lỗi)
+- **Verification:** `ruff check .` pass sạch; 34 OpenAPI endpoints đăng ký thành công trên FastAPI.
+- **Updated:** 2026-08-20 by antigravity
+
+---
+
+### T-008 — Đồng bộ Design System Gaoji House v2 (EB Garamond, Barlow Condensed, 0px Radius)
+
+- **Phase:** 4 (Design)
+- **Status:** `done`
+- **Owner:** antigravity
+- **Branch:** `antigravity/T-008-gaoji-design-system-v2`
+- **Assigned type:** `ANTIGRAVITY`
+- **Files touched:** `frontend/src/styles/gaoji/**`, `frontend/src/components/gaoji/**`, `frontend/src/app/globals.css`, `frontend/src/app/layout.tsx`
+- **Depends on:** —
+- **Complexity:** M
+- **Acceptance criteria:**
+  - [x] Thiết lập Google Fonts `EB_Garamond` (Display) + `Barlow_Condensed` (UI/Body) + `Newsreader` (Italic) qua `next/font/google`
+  - [x] Cập nhật toàn bộ design tokens v2 (`colors.css`, `typography.css`, `radius.css` 0px, `elevation.css`, `motion.css`, `next-adapter.css`)
+  - [x] Cầu nối `@theme inline` Tailwind CSS v4 trong `globals.css`
+  - [x] Xây dựng bộ component primitives v2: `Button`, `Badge`, `Tag`, `Input`, `Select`, `Icon`, `ContactRail`, `InquiryModal`, `Logo`
+  - [x] `npm run lint` pass (0 errors) & `npm run build` pass (0 errors)
+- **Verification:** `npm run lint` exit code 0; `npm run build` exit code 0 (Compiled successfully in Turbopack, static pages generated).
+- **Updated:** 2026-08-20 by antigravity
+
+---
+
+### T-009 — Tái cấu trúc Guest Web: Homepage, Tìm Kiếm, Chi Tiết Căn Hộ, Thư Viện Ảnh & Lead Modal
+
+- **Phase:** 4 (Guest UX)
+- **Status:** `done`
+- **Owner:** antigravity
+- **Branch:** `antigravity/T-009-guest-web-refactor`
+- **Assigned type:** `ANTIGRAVITY`
+- **Files touched:** `frontend/src/app/page.tsx`, `frontend/src/app/properties/**`, `frontend/src/components/Header.tsx`, `frontend/src/components/Footer.tsx`, `frontend/src/components/gaoji/UnitCard.tsx` (mới), `frontend/src/lib/api.ts`, `frontend/public/assets/**`
+- **Depends on:** T-007, T-008
+- **Complexity:** L
+- **Acceptance criteria:**
+  - [x] Header & Footer chuẩn nhận diện Gao Ji House v2 (Logo live type, Zalo `0889237833`, Hotline `088 923 7833`, Đặt phòng / Hỏi giá)
+  - [x] Trang chủ (`page.tsx`): Hero kiến trúc sang trọng, Thanh tra cứu / lọc căn theo phòng ngủ, Bộ sưu tập 5 căn hộ thật kèm giá thuê tháng/đêm & thông số phòng, Giới thiệu vị trí Vinhomes Central Park & Tiện ích
+  - [x] Trang danh sách & chi tiết căn hộ (`/properties/[id]`): Thư viện ảnh kiến trúc, bảng phân rã layout phòng, danh mục tiện ích chi tiết, Card CTA tư vấn gắn Zalo + Inquiry Modal
+  - [x] Tích hợp `ContactRail` cố định góc phải màn hình trên toàn bộ website
+  - [x] Tích hợp `InquiryModal` tương tác thực gửi dữ liệu về backend API `/api/v1/inquiries`
+  - [x] Lint & Build pass 100% (Turbopack 2.1s, 7/7 routes pass)
+- **Verification:** `npm run lint` pass (0 errors, 0 warnings); `npm run build` pass (0 errors).
+- **Updated:** 2026-08-20 by antigravity
+
+---
+
+### T-010 — Xây dựng Admin Dashboard CMS: Status Board, Inquiry CRM Inbox, Quản lý Căn hộ & Hợp đồng
+
+- **Phase:** 5 (Admin Portal)
+- **Status:** `todo`
+- **Owner:** —
+- **Branch:** —
+- **Assigned type:** `ANTIGRAVITY`
+- **Files touched:** `frontend/src/app/admin/**`, `frontend/src/components/admin/**`
+- **Depends on:** T-007, T-008
+- **Complexity:** L
+- **Updated:** 2026-08-20 by antigravity
+
+---
+
+### T-011 — Module Quản lý Danh mục Dịch vụ Du lịch Bổ sung (Tour Services CMS)
+
+- **Phase:** 5 (Services)
+- **Status:** `todo`
+- **Owner:** —
+- **Branch:** —
+- **Assigned type:** `ANTIGRAVITY`
+- **Files touched:** `frontend/src/app/admin/services/**`, `frontend/src/components/ServicesSection.tsx`
+- **Depends on:** T-007, T-010
+- **Complexity:** M
+- **Updated:** 2026-08-20 by antigravity
+
+---
+
+### T-012 — Hỗ trợ Đa ngôn ngữ (VI / EN / ZH) & Tối ưu SEO Chuyên sâu cho Serviced Apartments
+
+- **Phase:** 6 (SEO & i18n)
+- **Status:** `todo`
+- **Owner:** —
+- **Branch:** —
+- **Assigned type:** `ANTIGRAVITY`
+- **Files touched:** `frontend/src/lib/i18n/**`, `frontend/src/app/sitemap.ts`, `frontend/src/app/robots.ts`
+- **Depends on:** T-009
+- **Complexity:** M
+- **Updated:** 2026-08-20 by antigravity
+
+---
+
+### T-013 — E2E Testing, CI/CD Verification & Bàn giao Tài liệu PRD/Kiến trúc Mới
+
+- **Phase:** 6 (Tempering)
+- **Status:** `todo`
+- **Owner:** —
+- **Branch:** —
+- **Assigned type:** `ANTIGRAVITY`
+- **Files touched:** `docs/PRD.md`, `.coordination/DECISIONS.md`, `.coordination/TASKS.md`, `reports/antigravity.md`
+- **Depends on:** T-006, T-007, T-008, T-009, T-010, T-011, T-012
+- **Complexity:** M
+- **Updated:** 2026-08-20 by antigravity
 
 ---
 

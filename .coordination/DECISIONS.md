@@ -216,3 +216,26 @@ là CSS custom property thuần nên chép sang Next.js không cần chuyển đ
   phẩm trước khi dựng luồng khách mới.
 
 ---
+
+## D-008: Chuyển dịch phạm vi sang Nền tảng Quảng bá Căn hộ + Lead Generation + Admin CMS (Design System v2)
+
+- **Date:** 2026-08-20
+- **Author:** antigravity (Senior Solution Architect) + human
+- **Status:** active
+- **Supersedes:** một phần D-004 và D-007 về phạm vi nghiệp vụ và thiết kế giao diện.
+
+**Context:**
+Sau buổi làm việc mới nhất với chủ homestay Gaoji House và bổ sung gói thiết kế `design/` từ Claude Design (`gao-ji-house-design-system-87b48ff7-01f5-47f9-ac5e-b6ffc4933e75`), phạm vi nghiệp vụ được điều chỉnh chính thức:
+1. Nhu cầu thực tế của chủ nhà là quảng bá 5 căn hộ đặc quyền tại Vinhomes Central Park (`L1.29.08`, `L3.44.09`, `L81.07.12`, `P1.27.10`, `P3.42.12`) và thu nạp Lead tư vấn qua Zalo (`088 923 7833`), Hotline và Form hỏi giá nhanh (khách thuê ngắn/dài hạn cần tư vấn trước khi chốt hợp đồng).
+2. Quy trình thương mại không sử dụng checkout/thanh toán online tức thì ở giai đoạn này.
+3. Design system mới từ `design/_ds/` sử dụng font `EB Garamond` (Display) + `Barlow Condensed` (UI), bo góc `0px radius` (sang trọng, đường nét kiến trúc sắc sảo), thay thế phong cách bo góc pill và Cormorant Garamond của bản nháp trước.
+
+**Decision:**
+1. **Scope nghiệp vụ:** Đóng băng luồng checkout/payment tự động và trang đếm ngược 15 phút. Thay vào đó, tập trung xây dựng:
+   - Guest Web: Giới thiệu thương hiệu, danh sách căn hộ, tiện ích, vị trí 0.2km Landmark 81, thư viện ảnh đa chiều, ContactRail cố định (Zalo, Hotline, Email) và InquiryModal tạo Lead.
+   - Admin CMS: Bảng điều hành tình trạng 5 căn hộ, Hộp yêu cầu (Inquiry CRM - quản lý Lead & 1-click mở Chat Zalo), Quản lý giá/trạng thái căn hộ, Quản lý hợp đồng & cảnh báo hạn tạm trú, và Quản lý danh mục dịch vụ du lịch (Tour Services).
+2. **Design System v2:** Chấp nhận bộ token và thiết kế mới từ `design/_ds/` làm nguồn sự thật về UI.
+3. **Database & Backend:** Bổ sung các model `Inquiry`, `TourService`, `Lease`, mở rộng model `Property` lưu chi tiết mã căn, phân khu, layout từng phòng, giá tháng/đêm. Giữ nguyên schema cũ của `bookings`/`payments` cho Phase 7+.
+
+**Consequences:**
+- Tạo Task `T-006` đến `T-013` trên `.coordination/TASKS.md` để triển khai tuần tự theo lộ trình đã phê duyệt.

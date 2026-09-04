@@ -1,50 +1,47 @@
-/* Gaoji House — Typography tokens.
-   Two families: Cormorant Garamond (editorial display serif, ≥18px only) and
-   Be Vietnam Pro (Vietnamese-native grotesque for all UI/body). The serif is
-   the loud voice used sparingly & large; the sans is the quiet workhorse.
-
-   NOTE: --font-display / --font-sans are re-bound to next/font variables in
-   next-adapter.css (fonts are self-hosted by Next, not loaded from a CDN). */
+/* Gao Ji House — typography tokens (v2).
+   Phông chữ nghệ thuật & thanh lịch:
+   - Cormorant Garamond / EB Garamond: Headline / Display sang trọng và thanh lịch
+   - Inter / Barlow Condensed: Thông số, bảng giá, form, nút thao tác và body text
+   - Newsreader italic: Editorial asides, pull quotes, photo captions
+   - Great Vibes: Wordmark logo duy nhất */
 :root {
-  --font-display: "Cormorant Garamond", "Playfair Display", Georgia, "Times New Roman", serif;
-  --font-sans: "Be Vietnam Pro", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", sans-serif;
+  --font-display: var(--font-cormorant-garamond, "Cormorant Garamond", Georgia, "Times New Roman", serif);
+  --font-serif: var(--font-cormorant-garamond, "Cormorant Garamond", Georgia, "Times New Roman", serif);
+  --font-italic: var(--font-newsreader, "Newsreader", Georgia, serif);
+  --font-sans: var(--font-inter, "Inter", "Barlow Condensed", "Segoe UI", system-ui, sans-serif);
+  --font-ui: var(--font-inter, "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif);
   --font-body: var(--font-sans);
-  --font-mono: "Be Vietnam Pro", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --font-mono: ui-monospace, "SFMono-Regular", Menlo, monospace;
 
-  /* Weights */
   --fw-light: 300;
   --fw-regular: 400;
   --fw-medium: 500;
   --fw-semibold: 600;
   --fw-bold: 700;
 
-  /* Fluid editorial display scale — serif heroes (56 → 96) */
-  --fs-display-2xl: clamp(3.5rem, 3rem + 6vw, 6rem);
-  --fs-display-xl:  clamp(2.75rem, 2.3rem + 3.6vw, 4.25rem);
-  --fs-display-lg:  clamp(2.25rem, 2rem + 2.4vw, 3.25rem);
-  --fs-display-md:  clamp(1.9rem, 1.75rem + 1.6vw, 2.5rem);
+  /* Display — Cormorant Garamond / Serif */
+  --fs-display-xl: clamp(2.6rem, 2.2rem + 1.8vw, 4.4rem);
+  --fs-display-lg: clamp(2rem, 1.8rem + 0.8vw, 3rem);
+  --fs-headline-md: clamp(1.6rem, 1.45rem + 0.6vw, 2.3rem);
+  --fs-headline-sm: clamp(1.3rem, 1.2rem + 0.4vw, 1.7rem);
 
-  /* Fixed UI scale */
-  --fs-h1: 2.25rem;
-  --fs-h2: 1.75rem;
-  --fs-h3: 1.375rem;
-  --fs-h4: 1.125rem;
-  --fs-body-lg: 1.125rem;
-  --fs-body: 1rem;
-  --fs-body-sm: 0.875rem;
-  --fs-caption: 0.8125rem;
-  --fs-micro: 0.6875rem;
+  /* Body & UI — Inter / Barlow */
+  --fs-body-lg: 1.12rem;
+  --fs-body-md: 1rem;
+  --fs-body-sm: .875rem;
+  --fs-label: .75rem;
+  --fs-micro: .625rem;
 
-  /* Line heights */
-  --lh-tight: 1.05;
-  --lh-snug: 1.18;
-  --lh-normal: 1.5;
-  --lh-relaxed: 1.65;
+  --lh-display: 1.18;
+  --lh-headline: 1.2;
+  --lh-headline-sm: 1.25;
+  --lh-body: 1.6;
+  --lh-label: 1.2;
 
-  /* Letter spacing */
-  --tracking-tighter: -0.03em;
-  --tracking-tight: -0.015em;
+  --tracking-display: -.01em;
   --tracking-normal: 0;
-  --tracking-wide: 0.04em;
-  --tracking-caps: 0.14em;   /* uppercase eyebrows / badges */
+  --tracking-caps: .12em;
+  --tracking-caps-wide: .2em;
+
+  --label-caps-weight: var(--fw-semibold);
 }

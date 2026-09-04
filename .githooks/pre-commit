@@ -33,6 +33,9 @@ if [ -n "$BACKEND_STAGED" ]; then
   if [ -x "$REPO_ROOT/backend/.venv/bin/ruff" ]; then
     RUFF="$REPO_ROOT/backend/.venv/bin/ruff"
     PY="$REPO_ROOT/backend/.venv/bin/python"
+  elif [ -f "$REPO_ROOT/backend/.venv/Scripts/python.exe" ]; then
+    RUFF="$REPO_ROOT/backend/.venv/Scripts/ruff.exe"
+    PY="$REPO_ROOT/backend/.venv/Scripts/python.exe"
   elif command -v ruff >/dev/null 2>&1; then
     RUFF="ruff"
     PY="python3"

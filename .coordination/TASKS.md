@@ -133,7 +133,7 @@
 ### T-010 — Xây dựng Admin Dashboard CMS: Status Board, Inquiry CRM Inbox, Quản lý Căn hộ & Hợp đồng
 
 - **Phase:** 5 (Admin Portal)
-- **Status:** `in_progress`
+- **Status:** `blocked`
 - **Owner:** codex
 - **Branch:** `codex/T-010-admin-dashboard-cms`
 - **Assigned type:** `CODEX`
@@ -148,6 +148,7 @@
   - [ ] Căn hộ cập nhật được giá tháng/đêm, trạng thái vận hành và mô tả; hợp đồng tạo/sửa được với validation phía client
   - [ ] Giao diện responsive, điều khiển bàn phím được, focus rõ; `npm run lint` và `npm run build` pass
 - **Updated:** 2026-09-04 by codex
+- **Blocker:** Implementation và build đã hoàn tất; chưa thể chạy browser smoke test vì môi trường không có browser CUA/Playwright. Backend pytest cũng không khởi động do PostgreSQL/Docker local không chạy.
 
 ---
 

@@ -1,0 +1,30 @@
+.admin-root {
+  --font-display: var(--font-eb-garamond), "EB Garamond", Georgia, serif;
+  --font-sans: var(--font-barlow-condensed), "Barlow Condensed", "Segoe UI", sans-serif;
+  --font-body: var(--font-sans);
+  overflow-x: hidden;
+}
+
+.admin-field {
+  min-height: 44px;
+  width: 100%;
+  border: 1px solid var(--hairline-strong);
+  background: #fff;
+  padding: 0 12px;
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.admin-drawer-backdrop { position: fixed; inset: 0; z-index: 40; background: var(--scrim); }
+.admin-drawer { position: fixed; inset-block: 0; right: 0; z-index: 41; width: min(100%, 480px); overflow-y: auto; background: var(--canvas-warm); border-left: 1px solid var(--gold-700); box-shadow: -12px 0 30px rgba(13, 20, 15, .18); }
+@media (max-width: 899px) {
+  .admin-drawer { width: 100%; }
+}
+
+textarea.admin-field { padding-block: 10px; }
+.admin-field:focus-visible { outline: 2px solid var(--gold-500); outline-offset: 1px; }
+.admin-field:disabled { background: var(--surface-sunken); color: var(--text-muted); cursor: not-allowed; }

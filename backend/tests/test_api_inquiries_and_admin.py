@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 import httpx
 import pytest
 
@@ -100,7 +102,7 @@ async def test_admin_unit_management(client):
         headers=admin_headers,
     )
     assert r.status_code == 200
-    assert r.json()["price_monthly"] == 40000000
+    assert Decimal(r.json()["price_monthly"]) == Decimal("40000000")
     assert r.json()["operational_status"] == "held"
 
 
@@ -133,7 +135,7 @@ async def test_admin_tour_services_crud(client):
         headers=admin_headers,
     )
     assert r.status_code == 200
-    assert r.json()["price"] == 500000
+    assert Decimal(r.json()["price"]) == Decimal("500000")
 
     # 3. Delete service
     r = await client.delete(f"/api/v1/admin/services/{svc['id']}", headers=admin_headers)

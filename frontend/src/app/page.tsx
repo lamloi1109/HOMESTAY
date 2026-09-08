@@ -26,7 +26,11 @@ const DICT = {
     heroTitle: "Về Nhà · Tận Hưởng Không Gian Sống",
     heroBody: "Năm căn hộ dịch vụ cao cấp đầy đủ nội thất bên bờ sông Sài Gòn và Landmark 81. Dọn phòng định kỳ, lễ tân 24/7, hỗ trợ đăng ký tạm trú — trọn gói trong một mức giá minh bạch.",
     heroCta1: "Xem Danh Sách Căn Hộ",
-    heroCta2: "Đặt Phòng Ngay",
+    heroCta2: "Kiểm Tra Phòng Trống",
+    heroProof1: "5 căn hộ tuyển chọn",
+    heroProof2: "Giá thuê minh bạch",
+    heroProof3: "Phản hồi trong 2 giờ",
+    heroScroll: "Khám phá bộ sưu tập",
     statRate: "Giá Thuê Trọn Gói",
     statRateVal: "Từ 24 Triệu VNĐ",
     statRatePer: " / tháng",
@@ -233,7 +237,11 @@ const DICT = {
     heroTitle: "Welcome Home · Elevated Living In Saigon",
     heroBody: "Five fully furnished luxury serviced apartments adjacent to Landmark 81 and Saigon River. Regular housekeeping, 24/7 concierge, registration support — all-inclusive in one transparent rate.",
     heroCta1: "View Apartment Collection",
-    heroCta2: "Book Now",
+    heroCta2: "Check Availability",
+    heroProof1: "5 curated residences",
+    heroProof2: "Transparent rates",
+    heroProof3: "Reply within 2 hours",
+    heroScroll: "Explore the collection",
     statRate: "All-Inclusive Rent",
     statRateVal: "From 24M VNĐ",
     statRatePer: " / month",
@@ -429,7 +437,11 @@ const DICT = {
     heroTitle: "归家 · 享受静谧雅致的私享居所",
     heroBody: "地处 Landmark 81 与西贡河畔，五套高规格精装服务式公寓。定期保洁、24/7 前台、外籍暂住申报——一站式全包透明月租。",
     heroCta1: "查看所有房源",
-    heroCta2: "立即预订",
+    heroCta2: "查询可订房源",
+    heroProof1: "5 套精选公寓",
+    heroProof2: "价格透明",
+    heroProof3: "2 小时内回复",
+    heroScroll: "探索公寓系列",
     statRate: "全包月租",
     statRateVal: "2400 万越南盾起",
     statRatePer: " / 月",
@@ -624,7 +636,11 @@ const DICT = {
     heroTitle: "歸家 · 享受靜謐雅致的私享居所",
     heroBody: "地處 Landmark 81 與西貢河畔，五套高規格精裝服務式公寓。定期清潔、24/7 前台、外籍暫住申報——一站式全包透明月租。",
     heroCta1: "查看所有房源",
-    heroCta2: "立即預訂",
+    heroCta2: "查詢可訂房源",
+    heroProof1: "5 套精選公寓",
+    heroProof2: "價格透明",
+    heroProof3: "2 小時內回覆",
+    heroScroll: "探索公寓系列",
     statRate: "全包月租",
     statRateVal: "2400 萬越南盾起",
     statRatePer: " / 月",
@@ -950,14 +966,14 @@ export default function LandingPage() {
         id="top"
         className="relative min-h-[calc(100vh-68px)] min-h-[calc(100dvh-72px)] flex flex-col justify-center overflow-hidden bg-[#141F1C] py-[clamp(40px,6vh,80px)]"
       >
-        {/* Warm Natural Living Room Photography */}
+        {/* Landmark-led photography establishes the location before the product details. */}
         <Image
-          src="/assets/photos/living-open-plan.jpg"
-          alt="Không gian phòng khách căn hộ dịch vụ cao cấp Gao Ji House"
+          src="/assets/photos/towers-skyline.jpg"
+          alt="Landmark 81 và khu căn hộ Vinhomes Central Park nhìn từ Gao Ji House"
           fill
           priority
           sizes="100vw"
-          className="object-cover object-[center_35%]"
+          className="object-cover object-[58%_center] scale-[1.02]"
         />
 
         {/* Soft Golden Hour & Dark Jade Contrast Scrims */}
@@ -966,7 +982,7 @@ export default function LandingPage() {
           className="absolute inset-0 pointer-events-none"
           style={{
             background:
-              "linear-gradient(180deg, rgba(13, 26, 21, 0.72) 0%, rgba(13, 26, 21, 0.46) 38%, rgba(13, 26, 21, 0.92) 100%)",
+              "linear-gradient(90deg, rgba(8, 25, 19, 0.96) 0%, rgba(8, 25, 19, 0.82) 38%, rgba(8, 25, 19, 0.28) 70%, rgba(8, 25, 19, 0.48) 100%), linear-gradient(180deg, rgba(8, 25, 19, 0.14) 0%, rgba(8, 25, 19, 0.28) 58%, rgba(8, 25, 19, 0.88) 100%)",
           }}
         />
 
@@ -1025,7 +1041,27 @@ export default function LandingPage() {
               {t.heroCta1}
             </Button>
           </div>
+
+          <div className="mt-9 flex max-w-[760px] flex-wrap gap-x-6 gap-y-3 border-t border-white/25 pt-5">
+            {[t.heroProof1, t.heroProof2, t.heroProof3].map((proof) => (
+              <span
+                key={proof}
+                className="inline-flex items-center gap-2 font-sans text-[0.72rem] font-semibold uppercase tracking-[0.12em] text-[#FAF3EA]"
+              >
+                <Icon name="check-circle" size={16} color="#E2C068" />
+                {proof}
+              </span>
+            ))}
+          </div>
         </div>
+
+        <a
+          href="#units"
+          className="absolute bottom-5 left-1/2 z-10 hidden -translate-x-1/2 items-center gap-2 font-sans text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-white/80 no-underline transition-colors hover:text-[#E2C068] md:inline-flex"
+        >
+          {t.heroScroll}
+          <Icon name="chevron-down" size={15} color="currentColor" />
+        </a>
       </section>
 
 

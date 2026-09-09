@@ -1325,12 +1325,12 @@ export default function LandingPage() {
                 aria-expanded={filtersOpen}
                 aria-controls="unit-filter-options"
                 onClick={filtersOpen ? closeUnitFilters : openUnitFilters}
-                className="inline-flex min-h-12 shrink-0 cursor-pointer items-center justify-center gap-2 border border-[#1F3A2E] bg-[#1F3A2E] px-5 font-sans text-xs font-semibold uppercase tracking-[0.14em] text-white transition-colors hover:bg-[#2D4D3F]"
+                className="inline-flex min-h-12 shrink-0 cursor-pointer items-center justify-center gap-2 border border-[#D3D8D5] bg-white px-5 font-sans text-xs font-semibold uppercase tracking-[0.14em] text-[#17382B] transition-colors hover:border-[#1F3A2E] hover:bg-[#F4F7F5] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1F3A2E]"
               >
-                <Icon name="sliders-horizontal" size={17} />
+                <Icon name="filter" size={16} strokeWidth={1.75} />
                 {filtersOpen ? t.closeFilters : t.filterButton}
                 {activeFilterCount > 0 && (
-                  <span className="grid size-5 place-items-center bg-[#D4AF37] text-[0.65rem] font-bold text-[#14231D]">
+                  <span className="grid size-5 place-items-center bg-[#1F3A2E] text-[0.65rem] font-bold text-white">
                     {activeFilterCount}
                   </span>
                 )}

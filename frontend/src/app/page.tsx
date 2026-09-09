@@ -73,6 +73,11 @@ const DICT = {
     lblType: "Loại Căn Hộ",
     lblFloor: "Tầng",
     lblPrice: "Khoảng Giá Thuê (VNĐ / Tháng)",
+    searchPlaceholder: "Tìm theo mã căn, tên hoặc tòa nhà",
+    searchLabel: "Tìm căn hộ",
+    filterButton: "Bộ Lọc",
+    closeFilters: "Đóng Bộ Lọc",
+    resultCount: (shown: number, total: number) => `${shown} / ${total} căn hộ phù hợp`,
     lblBeds: "Số Phòng Ngủ",
     tabAll: "Tất Cả",
     tab1PN: "1 Phòng Ngủ",
@@ -291,6 +296,11 @@ const DICT = {
     lblType: "Apartment Type",
     lblFloor: "Floor Level",
     lblPrice: "Monthly Rent Range (VNĐ)",
+    searchPlaceholder: "Search by unit code, name, or tower",
+    searchLabel: "Search apartments",
+    filterButton: "Filters",
+    closeFilters: "Close Filters",
+    resultCount: (shown: number, total: number) => `${shown} of ${total} matching apartments`,
     lblBeds: "Bedrooms",
     tabAll: "All",
     tab1PN: "1 Bedroom",
@@ -499,6 +509,11 @@ const DICT = {
     lblType: "房型",
     lblFloor: "楼层",
     lblPrice: "月租范围 (越南盾/月)",
+    searchPlaceholder: "按房号、名称或楼栋搜索",
+    searchLabel: "搜索公寓",
+    filterButton: "筛选",
+    closeFilters: "关闭筛选",
+    resultCount: (shown: number, total: number) => `${total} 套中有 ${shown} 套符合条件`,
     lblBeds: "卧室数量",
     tabAll: "全部",
     tab1PN: "一室一厅",
@@ -707,6 +722,11 @@ const DICT = {
     lblType: "房型",
     lblFloor: "樓層",
     lblPrice: "月租範圍 (越南盾/月)",
+    searchPlaceholder: "按房號、名稱或樓棟搜尋",
+    searchLabel: "搜尋公寓",
+    filterButton: "篩選",
+    closeFilters: "關閉篩選",
+    resultCount: (shown: number, total: number) => `${total} 套中有 ${shown} 套符合條件`,
     lblBeds: "臥室數量",
     tabAll: "全部",
     tab1PN: "一房一廳",
@@ -961,6 +981,8 @@ export default function LandingPage() {
   const [unitFilter, setUnitFilter] = useState("all");
   const [floorFilter, setFloorFilter] = useState("all");
   const [priceRange, setPriceRange] = useState<[number, number]>([20000000, 100000000]);
+  const [unitSearch, setUnitSearch] = useState("");
+  const [filtersOpen, setFiltersOpen] = useState(false);
 
   // Location Radar State for Section 5
   const [trafficMode, setTrafficMode] = useState<"off" | "peak">("off");
@@ -977,6 +999,9 @@ export default function LandingPage() {
 
   // Filter Units Logic
   const filteredUnits = UNITS_DATA.filter((unit) => {
+    const unitMeta = t.u[unit.key as keyof typeof t.u];
+    const searchText = `${unit.key} ${unit.tower} ${unitMeta?.title ?? ""} ${unitMeta?.type ?? ""}`.toLocaleLowerCase();
+    if (unitSearch.trim() && !searchText.includes(unitSearch.trim().toLocaleLowerCase())) return false;
     if (unitFilter === "1pn" && unit.beds !== 1) return false;
     if (unitFilter === "2pn" && unit.beds !== 2) return false;
     if (unitFilter === "3pn" && unit.beds !== 3) return false;
@@ -989,6 +1014,19 @@ export default function LandingPage() {
     if (unit.month < priceRange[0] || unit.month > priceRange[1]) return false;
     return true;
   });
+
+  const activeFilterCount =
+    Number(unitFilter !== "all") +
+    Number(floorFilter !== "all") +
+    Number(priceRange[1] !== 100000000);
+  const hasActiveUnitFilters = activeFilterCount > 0 || unitSearch.trim().length > 0;
+
+  const clearUnitFilters = () => {
+    setUnitSearch("");
+    setUnitFilter("all");
+    setFloorFilter("all");
+    setPriceRange([20000000, 100000000]);
+  };
 
   const activeSpotData = SPOTS_DATA[selectedSpotIndex] || SPOTS_DATA[0];
   const activeSpotText = t.spots[selectedSpotIndex] || t.spots[0];
@@ -1161,9 +1199,44 @@ export default function LandingPage() {
             aside={t.unitsAside}
           />
 
-          {/* Multi-Filter Bar */}
+          {/* Compact search with progressively disclosed filters */}
           <div className="mt-7 border border-[#E8E4DB] bg-white shadow-xs">
-            <div className="flex flex-col lg:flex-row divide-y lg:divide-y-0 lg:divide-x divide-[#E8E4DB]">
+            <div className="flex flex-col gap-3 p-3 sm:flex-row sm:items-center sm:p-4">
+              <label className="relative flex min-h-12 flex-1 items-center" aria-label={t.searchLabel}>
+                <span className="pointer-events-none absolute left-4 text-[#6B6255]">
+                  <Icon name="search" size={19} />
+                </span>
+                <input
+                  type="search"
+                  value={unitSearch}
+                  onChange={(event) => setUnitSearch(event.target.value)}
+                  placeholder={t.searchPlaceholder}
+                  className="min-h-12 w-full border border-[#D9D2C7] bg-[#FBF9F5] py-3 pl-12 pr-4 font-sans text-sm text-[#1A1A1A] outline-none transition-colors placeholder:text-[#81786B] focus:border-[#1F3A2E] focus:ring-1 focus:ring-[#1F3A2E]"
+                />
+              </label>
+              <button
+                type="button"
+                aria-expanded={filtersOpen}
+                aria-controls="unit-filter-options"
+                onClick={() => setFiltersOpen((open) => !open)}
+                className="inline-flex min-h-12 shrink-0 cursor-pointer items-center justify-center gap-2 border border-[#1F3A2E] bg-[#1F3A2E] px-5 font-sans text-xs font-semibold uppercase tracking-[0.14em] text-white transition-colors hover:bg-[#2D4D3F]"
+              >
+                <Icon name="sliders-horizontal" size={17} />
+                {filtersOpen ? t.closeFilters : t.filterButton}
+                {activeFilterCount > 0 && (
+                  <span className="grid size-5 place-items-center bg-[#D4AF37] text-[0.65rem] font-bold text-[#14231D]">
+                    {activeFilterCount}
+                  </span>
+                )}
+              </button>
+            </div>
+
+            <div
+              id="unit-filter-options"
+              hidden={!filtersOpen}
+              className="border-t border-[#E8E4DB]"
+            >
+            <div className="grid grid-cols-1 divide-y divide-[#E8E4DB] lg:grid-cols-3 lg:divide-x lg:divide-y-0">
               {/* Col 1: Unit Type Tabs */}
               <div className="flex-1 p-4 sm:p-5 flex flex-col gap-3">
               <span className="min-w-[120px] font-sans text-xs font-semibold uppercase tracking-[0.15em] text-[#6B6255]">
@@ -1219,23 +1292,22 @@ export default function LandingPage() {
               </div>
             </div>
             </div>
+            </div>
 
             {/* Summary Row */}
             <div className="flex flex-wrap items-center justify-between gap-3 p-3.5 sm:p-4.5 bg-[#FAF8F5] border-t border-[#E8E4DB]">
-              <span className="font-sans text-xs sm:text-[0.8125rem] font-semibold uppercase tracking-[0.15em] text-[#1A1A1A]">
-                Hiển thị {filteredUnits.length} / {UNITS_DATA.length} căn hộ khả dụng
+              <span role="status" aria-live="polite" className="font-sans text-xs sm:text-[0.8125rem] font-semibold uppercase tracking-[0.15em] text-[#1A1A1A]">
+                {t.resultCount(filteredUnits.length, UNITS_DATA.length)}
               </span>
-              <button
-                type="button"
-                onClick={() => {
-                  setUnitFilter("all");
-                  setFloorFilter("all");
-                  setPriceRange([20000000, 100000000]);
-                }}
-                className="px-3.5 py-1.5 font-sans text-xs font-semibold uppercase tracking-[0.12em] text-[#8A6214] border border-[#B08D57] hover:bg-[#B08D57] hover:text-white transition-colors cursor-pointer bg-transparent"
-              >
-                {t.btnClear}
-              </button>
+              {hasActiveUnitFilters && (
+                <button
+                  type="button"
+                  onClick={clearUnitFilters}
+                  className="min-h-10 px-3.5 py-1.5 font-sans text-xs font-semibold uppercase tracking-[0.12em] text-[#8A6214] border border-[#B08D57] hover:bg-[#B08D57] hover:text-white transition-colors cursor-pointer bg-transparent"
+                >
+                  {t.btnClear}
+                </button>
+              )}
             </div>
           </div>
 

@@ -948,6 +948,7 @@ const UNITS_DATA = [
     sqm: 82,
     guests: 4,
     month: 32000000,
+    monthMax: 35000000,
     night: 1900000,
     status: "available",
   },
@@ -961,6 +962,7 @@ const UNITS_DATA = [
     sqm: 54,
     guests: 2,
     month: 24000000,
+    monthMax: 27000000,
     night: 1400000,
     status: "available",
   },
@@ -974,6 +976,7 @@ const UNITS_DATA = [
     sqm: 56,
     guests: 2,
     month: 38000000,
+    monthMax: 42000000,
     night: 2400000,
     status: "available",
   },
@@ -987,6 +990,7 @@ const UNITS_DATA = [
     sqm: 86,
     guests: 4,
     month: 35000000,
+    monthMax: null,
     night: 2100000,
     status: "held",
   },
@@ -1000,6 +1004,7 @@ const UNITS_DATA = [
     sqm: 180,
     guests: 6,
     month: 95000000,
+    monthMax: 105000000,
     night: 6500000,
     status: "available",
   },
@@ -1534,16 +1539,13 @@ export default function LandingPage() {
                     sqm: u.sqm,
                     price_monthly: u.month,
                     price_nightly: u.night,
+                    rate: u.monthMax
+                      ? { type: "range", min: u.month, max: u.monthMax }
+                      : { type: "negotiable" },
                     status: u.status,
                     view_type: uMeta ? uMeta.type : undefined,
                   }}
-                  labels={{
-                    view: t.cardView,
-                    inquire: t.cardInquire,
-                    month: "Giá Thuê Tháng",
-                    night: "Giá Theo Đêm",
-                  }}
-                  onInquire={(code) => handleOpenInquiry(code)}
+                  labels={{ rate: t.lblPrice }}
                 />
               );
             })}

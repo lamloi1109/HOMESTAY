@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import { Badge } from "./Badge";
-import { Button } from "./Button";
 import { RoomSpecs } from "./RoomSpecs";
 
 export type UnitRate =
@@ -24,6 +23,7 @@ export interface UnitCardItem {
   guests?: number | null;
   price_monthly?: number | string | null;
   price_nightly?: number | string | null;
+  rate?: UnitRate | null;
   monthly_rate?: UnitRate | null;
   nightly_rate?: UnitRate | null;
   status?: string | null;
@@ -35,13 +35,9 @@ export interface UnitCardItem {
 
 export interface UnitCardProps {
   unit: UnitCardItem;
-  onInquire?: (unitCode: string) => void;
   onView?: (unitCode: string) => void;
   labels?: {
-    view?: string;
-    inquire?: string;
-    month?: string;
-    night?: string;
+    rate?: string;
   };
   className?: string;
   style?: React.CSSProperties;
@@ -79,7 +75,6 @@ const rateText = (rate: UnitRate) => {
 
 export function UnitCard({
   unit,
-  onInquire,
   onView,
   labels = {},
   className = "",
@@ -88,16 +83,12 @@ export function UnitCard({
   const [hover, setHover] = useState(false);
 
   const t = {
-    view: "Xem Chi Tiết Căn Hộ",
-    inquire: "Đặt Phòng / Hỏi Giá",
-    month: "Giá Thuê Tháng",
-    night: "Giá Theo Đêm",
+    rate: "Khoảng Giá Thuê",
     ...labels,
   };
 
   const photo = unit.cover_image || "/assets/photos/living-open-plan.jpg";
-  const monthlyRate = unit.monthly_rate || legacyRate(unit.price_monthly);
-  const nightlyRate = unit.nightly_rate || legacyRate(unit.price_nightly);
+  const displayRate = unit.rate || unit.monthly_rate || legacyRate(unit.price_monthly);
   const isAvailable = unit.status === "available" || !unit.status;
 
   const floorText = unit.floor
@@ -106,12 +97,20 @@ export function UnitCard({
     ? `${unit.tower} · Vinhomes Central Park`
     : null;
 
+  const href = `/properties/${unit.id || unit.slug || unit.unit_code}`;
+
   return (
+    <Link
+      href={href}
+      aria-label={`${unit.name} — ${t.rate}: ${displayRate ? rateText(displayRate) : "Thương Lượng"}`}
+      onClick={() => onView?.(unit.unit_code || unit.name)}
+      className={`block h-full text-inherit no-underline ${className}`.trim()}
+      style={style}
+    >
     <article
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
-      className={`flex flex-col bg-[var(--surface-raised)] border border-[var(--hairline)] rounded-none transition-colors duration-200 ${className}`.trim()}
-      style={style}
+      className="flex h-full flex-col bg-[var(--surface-raised)] border border-[var(--hairline)] rounded-none transition-[color,border-color,box-shadow] duration-200 hover:border-[var(--gold-700)] hover:shadow-[0_12px_36px_rgba(27,46,37,0.10)] focus-within:border-[var(--gold-700)]"
     >
       {/* 4:3 Aspect Ratio Image Container */}
       <div className="relative aspect-[4/3] overflow-hidden bg-[var(--surface-sunken)]">
@@ -174,74 +173,25 @@ export function UnitCard({
         />
       </div>
 
-      {/* Pricing Columns */}
-      <div
-        className={`mx-4 grid min-h-[82px] items-stretch border-b border-[var(--hairline)] sm:mx-5 ${
-          monthlyRate && nightlyRate ? "grid-cols-2" : "grid-cols-1"
-        }`}
-      >
-        {monthlyRate ? (
-          <div className="min-w-0 py-3 pr-3 sm:pr-4">
-            <div className="font-sans text-[0.625rem] font-semibold uppercase tracking-[0.15em] text-[var(--text-muted)]">
-              {t.month}
-            </div>
-            <div
-              className={`mt-1 flex min-h-[2.75rem] items-start text-pretty font-display font-medium leading-[1.15] text-[var(--jade-700)] ${
-                monthlyRate.type === "fixed"
-                  ? "text-[1.35rem]"
-                  : monthlyRate.type === "negotiable"
-                    ? "text-[1.12rem] italic"
-                    : "text-[1.08rem] sm:text-[1.15rem]"
-              }`}
-            >
-              {rateText(monthlyRate)}
-            </div>
-          </div>
-        ) : null}
-
-        {nightlyRate ? (
-          <div className={`${monthlyRate ? "border-l border-[var(--hairline)] pl-3 sm:pl-4" : ""} min-w-0 py-3`}>
-            <div className="font-sans text-[0.625rem] font-semibold uppercase tracking-[0.15em] text-[var(--text-muted)]">
-              {t.night}
-            </div>
-            <div
-              className={`mt-1 flex min-h-[2.75rem] items-start text-pretty font-display font-medium leading-[1.15] text-[var(--jade-700)] ${
-                nightlyRate.type === "fixed"
-                  ? "text-[1.35rem]"
-                  : nightlyRate.type === "negotiable"
-                    ? "text-[1.12rem] italic"
-                    : "text-[1.08rem] sm:text-[1.15rem]"
-              }`}
-            >
-              {rateText(nightlyRate)}
-            </div>
-          </div>
-        ) : null}
-      </div>
-
-      {/* Action Buttons Stack */}
-      <div className="mt-auto p-4 sm:p-5 pt-5 grid gap-2">
-        <Button
-          variant="jade"
-          size="sm"
-          full
-          iconAfter="arrow-right"
-          as={Link}
-          href={`/properties/${unit.id || unit.slug || unit.unit_code}`}
-          onClick={() => onView?.(unit.unit_code || unit.name)}
+      {/* One calm pricing line; the entire card is the detail link. */}
+      <div className="mx-4 mt-auto grid min-h-[92px] content-center border-t border-[var(--hairline)] py-4 sm:mx-5">
+        <div className="font-sans text-[0.625rem] font-semibold uppercase tracking-[0.15em] text-[var(--text-muted)]">
+          {t.rate}
+        </div>
+        <div
+          className={`mt-1 min-h-[2rem] text-pretty font-display font-medium leading-[1.15] text-[var(--jade-700)] ${
+            !displayRate || displayRate.type === "negotiable"
+              ? "text-[1.18rem] italic"
+              : displayRate.type === "range"
+                ? "text-[1.25rem] sm:text-[1.35rem]"
+                : "text-[1.35rem]"
+          }`}
         >
-          {t.view}
-        </Button>
-        <Button
-          variant="outline"
-          size="sm"
-          full
-          onClick={() => onInquire?.(unit.unit_code || unit.name)}
-        >
-          {t.inquire}
-        </Button>
+          {displayRate ? rateText(displayRate) : "Thương Lượng"}
+        </div>
       </div>
     </article>
+    </Link>
   );
 }
 

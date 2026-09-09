@@ -77,6 +77,8 @@ const DICT = {
     searchLabel: "Tìm căn hộ",
     filterButton: "Bộ Lọc",
     closeFilters: "Đóng Bộ Lọc",
+    applyFilters: "Áp Dụng",
+    cancelFilters: "Hủy",
     resultCount: (shown: number, total: number) => `${shown} / ${total} căn hộ phù hợp`,
     lblBeds: "Số Phòng Ngủ",
     tabAll: "Tất Cả",
@@ -300,6 +302,8 @@ const DICT = {
     searchLabel: "Search apartments",
     filterButton: "Filters",
     closeFilters: "Close Filters",
+    applyFilters: "Apply Filters",
+    cancelFilters: "Cancel",
     resultCount: (shown: number, total: number) => `${shown} of ${total} matching apartments`,
     lblBeds: "Bedrooms",
     tabAll: "All",
@@ -513,6 +517,8 @@ const DICT = {
     searchLabel: "搜索公寓",
     filterButton: "筛选",
     closeFilters: "关闭筛选",
+    applyFilters: "应用筛选",
+    cancelFilters: "取消",
     resultCount: (shown: number, total: number) => `${total} 套中有 ${shown} 套符合条件`,
     lblBeds: "卧室数量",
     tabAll: "全部",
@@ -726,6 +732,8 @@ const DICT = {
     searchLabel: "搜尋公寓",
     filterButton: "篩選",
     closeFilters: "關閉篩選",
+    applyFilters: "套用篩選",
+    cancelFilters: "取消",
     resultCount: (shown: number, total: number) => `${total} 套中有 ${shown} 套符合條件`,
     lblBeds: "臥室數量",
     tabAll: "全部",
@@ -983,6 +991,9 @@ export default function LandingPage() {
   const [priceRange, setPriceRange] = useState<[number, number]>([20000000, 100000000]);
   const [unitSearch, setUnitSearch] = useState("");
   const [filtersOpen, setFiltersOpen] = useState(false);
+  const [draftUnitFilter, setDraftUnitFilter] = useState("all");
+  const [draftFloorFilter, setDraftFloorFilter] = useState("all");
+  const [draftPriceRange, setDraftPriceRange] = useState<[number, number]>([20000000, 100000000]);
 
   // Location Radar State for Section 5
   const [trafficMode, setTrafficMode] = useState<"off" | "peak">("off");
@@ -1026,6 +1037,22 @@ export default function LandingPage() {
     setUnitFilter("all");
     setFloorFilter("all");
     setPriceRange([20000000, 100000000]);
+  };
+
+  const openUnitFilters = () => {
+    setDraftUnitFilter(unitFilter);
+    setDraftFloorFilter(floorFilter);
+    setDraftPriceRange(priceRange);
+    setFiltersOpen(true);
+  };
+
+  const closeUnitFilters = () => setFiltersOpen(false);
+
+  const applyUnitFilters = () => {
+    setUnitFilter(draftUnitFilter);
+    setFloorFilter(draftFloorFilter);
+    setPriceRange(draftPriceRange);
+    setFiltersOpen(false);
   };
 
   const activeSpotData = SPOTS_DATA[selectedSpotIndex] || SPOTS_DATA[0];
@@ -1218,7 +1245,7 @@ export default function LandingPage() {
                 type="button"
                 aria-expanded={filtersOpen}
                 aria-controls="unit-filter-options"
-                onClick={() => setFiltersOpen((open) => !open)}
+                onClick={filtersOpen ? closeUnitFilters : openUnitFilters}
                 className="inline-flex min-h-12 shrink-0 cursor-pointer items-center justify-center gap-2 border border-[#1F3A2E] bg-[#1F3A2E] px-5 font-sans text-xs font-semibold uppercase tracking-[0.14em] text-white transition-colors hover:bg-[#2D4D3F]"
               >
                 <Icon name="sliders-horizontal" size={17} />
@@ -1249,8 +1276,8 @@ export default function LandingPage() {
                   { label: t.tab2PN, value: "2pn" },
                   { label: t.tab3PN, value: "3pn" },
                 ]}
-                value={unitFilter}
-                onChange={(val) => setUnitFilter(String(val))}
+                value={draftUnitFilter}
+                onChange={(val) => setDraftUnitFilter(String(val))}
               />
               </div>
 
@@ -1266,8 +1293,8 @@ export default function LandingPage() {
                   { label: t.fMid, value: "mid" },
                   { label: t.fHigh, value: "high" },
                 ]}
-                value={floorFilter}
-                onChange={(val) => setFloorFilter(String(val))}
+                value={draftFloorFilter}
+                onChange={(val) => setDraftFloorFilter(String(val))}
               />
               </div>
 
@@ -1282,16 +1309,33 @@ export default function LandingPage() {
                   min="20000000"
                   max="100000000"
                   step="5000000"
-                  value={priceRange[1]}
-                  onChange={(e) => setPriceRange([priceRange[0], Number(e.target.value)])}
+                  value={draftPriceRange[1]}
+                  onChange={(e) => setDraftPriceRange([draftPriceRange[0], Number(e.target.value)])}
                   className="w-full accent-[#1F3A2E] cursor-pointer"
                 />
                 <span className="font-display text-base font-medium text-[#1F3A2E] shrink-0 min-w-[110px]">
-                  ≤ {(priceRange[1] / 1000000).toFixed(0)} Triệu / tháng
+                  ≤ {(draftPriceRange[1] / 1000000).toFixed(0)} Triệu / tháng
                 </span>
               </div>
             </div>
             </div>
+              <div className="flex flex-col-reverse gap-3 border-t border-[#E8E4DB] bg-[#FBF9F5] p-4 sm:flex-row sm:justify-end">
+                <button
+                  type="button"
+                  onClick={closeUnitFilters}
+                  className="min-h-11 cursor-pointer border border-[#B08D57] bg-transparent px-5 font-sans text-xs font-semibold uppercase tracking-[0.14em] text-[#8A6214] transition-colors hover:bg-[#F2EBDD]"
+                >
+                  {t.cancelFilters}
+                </button>
+                <button
+                  type="button"
+                  onClick={applyUnitFilters}
+                  className="inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 border border-[#1F3A2E] bg-[#1F3A2E] px-6 font-sans text-xs font-semibold uppercase tracking-[0.14em] text-white transition-colors hover:bg-[#2D4D3F]"
+                >
+                  <Icon name="check" size={17} />
+                  {t.applyFilters}
+                </button>
+              </div>
             </div>
 
             {/* Summary Row */}

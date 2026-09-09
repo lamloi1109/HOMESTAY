@@ -966,14 +966,14 @@ export default function LandingPage() {
         id="top"
         className="relative min-h-[calc(100vh-68px)] min-h-[calc(100dvh-72px)] flex flex-col justify-center overflow-hidden bg-[#141F1C] py-[clamp(40px,6vh,80px)]"
       >
-        {/* Landmark-led photography establishes the location before the product details. */}
+        {/* A real residence combines the product, river view, and premium sense of place. */}
         <Image
-          src="/assets/photos/towers-skyline.jpg"
-          alt="Landmark 81 và khu căn hộ Vinhomes Central Park nhìn từ Gao Ji House"
+          src="/assets/photos/bedroom-platform-landmark.jpg"
+          alt="Phòng ngủ Gao Ji House với cửa sổ lớn nhìn ra Landmark 81 và sông Sài Gòn"
           fill
           priority
           sizes="100vw"
-          className="object-cover object-[58%_center] scale-[1.02]"
+          className="object-cover object-[62%_center] scale-[1.015]"
         />
 
         {/* Soft Golden Hour & Dark Jade Contrast Scrims */}
@@ -982,7 +982,7 @@ export default function LandingPage() {
           className="absolute inset-0 pointer-events-none"
           style={{
             background:
-              "linear-gradient(90deg, rgba(8, 25, 19, 0.96) 0%, rgba(8, 25, 19, 0.82) 38%, rgba(8, 25, 19, 0.28) 70%, rgba(8, 25, 19, 0.48) 100%), linear-gradient(180deg, rgba(8, 25, 19, 0.14) 0%, rgba(8, 25, 19, 0.28) 58%, rgba(8, 25, 19, 0.88) 100%)",
+              "linear-gradient(90deg, rgba(8, 25, 19, 0.94) 0%, rgba(8, 25, 19, 0.78) 36%, rgba(8, 25, 19, 0.26) 64%, rgba(8, 25, 19, 0.08) 100%), linear-gradient(180deg, rgba(8, 25, 19, 0.08) 0%, rgba(8, 25, 19, 0.12) 54%, rgba(8, 25, 19, 0.72) 100%)",
           }}
         />
 

@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import {
   Accordion,
@@ -79,6 +79,16 @@ const DICT = {
     closeFilters: "Đóng Bộ Lọc",
     applyFilters: "Áp Dụng",
     cancelFilters: "Hủy",
+    filterEyebrow: "Bảng Giá Thuê & Mặt Bằng",
+    filterTitle: "Bộ Lọc",
+    filterBuilding: "Tòa Nhà",
+    filterLandmark: "Landmark",
+    filterCentralPark: "Vinhomes Central Park",
+    filterBedrooms: "Số Phòng Ngủ",
+    filterPrice: "Giá Thuê / Tháng",
+    filterViewResults: "Xem Kết Quả",
+    filterCloseLabel: "Đóng bảng bộ lọc",
+    priceMillion: "Triệu VNĐ",
     resultCount: (shown: number, total: number) => `${shown} / ${total} căn hộ phù hợp`,
     lblBeds: "Số Phòng Ngủ",
     tabAll: "Tất Cả",
@@ -304,6 +314,16 @@ const DICT = {
     closeFilters: "Close Filters",
     applyFilters: "Apply Filters",
     cancelFilters: "Cancel",
+    filterEyebrow: "Rates & Floor Plans",
+    filterTitle: "Filters",
+    filterBuilding: "Building",
+    filterLandmark: "Landmark",
+    filterCentralPark: "Vinhomes Central Park",
+    filterBedrooms: "Bedrooms",
+    filterPrice: "Monthly Rent",
+    filterViewResults: "View Results",
+    filterCloseLabel: "Close filter dialog",
+    priceMillion: "Million VNĐ",
     resultCount: (shown: number, total: number) => `${shown} of ${total} matching apartments`,
     lblBeds: "Bedrooms",
     tabAll: "All",
@@ -519,6 +539,16 @@ const DICT = {
     closeFilters: "关闭筛选",
     applyFilters: "应用筛选",
     cancelFilters: "取消",
+    filterEyebrow: "价格与户型",
+    filterTitle: "筛选",
+    filterBuilding: "楼栋",
+    filterLandmark: "Landmark",
+    filterCentralPark: "Vinhomes Central Park",
+    filterBedrooms: "卧室数量",
+    filterPrice: "月租",
+    filterViewResults: "查看结果",
+    filterCloseLabel: "关闭筛选面板",
+    priceMillion: "百万越南盾",
     resultCount: (shown: number, total: number) => `${total} 套中有 ${shown} 套符合条件`,
     lblBeds: "卧室数量",
     tabAll: "全部",
@@ -734,6 +764,16 @@ const DICT = {
     closeFilters: "關閉篩選",
     applyFilters: "套用篩選",
     cancelFilters: "取消",
+    filterEyebrow: "價格與戶型",
+    filterTitle: "篩選",
+    filterBuilding: "樓棟",
+    filterLandmark: "Landmark",
+    filterCentralPark: "Vinhomes Central Park",
+    filterBedrooms: "臥室數量",
+    filterPrice: "月租",
+    filterViewResults: "查看結果",
+    filterCloseLabel: "關閉篩選面板",
+    priceMillion: "百萬越南盾",
     resultCount: (shown: number, total: number) => `${total} 套中有 ${shown} 套符合條件`,
     lblBeds: "臥室數量",
     tabAll: "全部",
@@ -988,12 +1028,14 @@ export default function LandingPage() {
   // Filter States for Section 4 (Units)
   const [unitFilter, setUnitFilter] = useState("all");
   const [floorFilter, setFloorFilter] = useState("all");
-  const [priceRange, setPriceRange] = useState<[number, number]>([20000000, 100000000]);
+  const [buildingFilter, setBuildingFilter] = useState("all");
+  const [priceRange, setPriceRange] = useState<[number, number]>([20000000, 120000000]);
   const [unitSearch, setUnitSearch] = useState("");
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [draftUnitFilter, setDraftUnitFilter] = useState("all");
   const [draftFloorFilter, setDraftFloorFilter] = useState("all");
-  const [draftPriceRange, setDraftPriceRange] = useState<[number, number]>([20000000, 100000000]);
+  const [draftBuildingFilter, setDraftBuildingFilter] = useState("all");
+  const [draftPriceRange, setDraftPriceRange] = useState<[number, number]>([20000000, 120000000]);
 
   // Location Radar State for Section 5
   const [trafficMode, setTrafficMode] = useState<"off" | "peak">("off");
@@ -1015,12 +1057,14 @@ export default function LandingPage() {
     if (unitSearch.trim() && !searchText.includes(unitSearch.trim().toLocaleLowerCase())) return false;
     if (unitFilter === "1pn" && unit.beds !== 1) return false;
     if (unitFilter === "2pn" && unit.beds !== 2) return false;
-    if (unitFilter === "3pn" && unit.beds !== 3) return false;
+    if (unitFilter === "3pn" && unit.beds < 3) return false;
+    if (buildingFilter === "landmark" && !unit.tower.startsWith("Landmark")) return false;
+    if (buildingFilter === "central-park" && unit.tower.startsWith("Landmark")) return false;
 
     const flrNum = parseInt(unit.flr, 10);
-    if (floorFilter === "low" && (flrNum < 1 || flrNum > 12)) return false;
-    if (floorFilter === "mid" && (flrNum < 13 || flrNum > 28)) return false;
-    if (floorFilter === "high" && flrNum < 29) return false;
+    if (floorFilter === "low" && (flrNum < 1 || flrNum > 20)) return false;
+    if (floorFilter === "mid" && (flrNum < 21 || flrNum > 40)) return false;
+    if (floorFilter === "high" && flrNum < 41) return false;
 
     if (unit.month < priceRange[0] || unit.month > priceRange[1]) return false;
     return true;
@@ -1029,19 +1073,22 @@ export default function LandingPage() {
   const activeFilterCount =
     Number(unitFilter !== "all") +
     Number(floorFilter !== "all") +
-    Number(priceRange[1] !== 100000000);
+    Number(buildingFilter !== "all") +
+    Number(priceRange[0] !== 20000000 || priceRange[1] !== 120000000);
   const hasActiveUnitFilters = activeFilterCount > 0 || unitSearch.trim().length > 0;
 
   const clearUnitFilters = () => {
     setUnitSearch("");
     setUnitFilter("all");
     setFloorFilter("all");
-    setPriceRange([20000000, 100000000]);
+    setBuildingFilter("all");
+    setPriceRange([20000000, 120000000]);
   };
 
   const openUnitFilters = () => {
     setDraftUnitFilter(unitFilter);
     setDraftFloorFilter(floorFilter);
+    setDraftBuildingFilter(buildingFilter);
     setDraftPriceRange(priceRange);
     setFiltersOpen(true);
   };
@@ -1051,9 +1098,41 @@ export default function LandingPage() {
   const applyUnitFilters = () => {
     setUnitFilter(draftUnitFilter);
     setFloorFilter(draftFloorFilter);
+    setBuildingFilter(draftBuildingFilter);
     setPriceRange(draftPriceRange);
     setFiltersOpen(false);
   };
+
+  const draftFilteredUnits = UNITS_DATA.filter((unit) => {
+    const unitMeta = t.u[unit.key as keyof typeof t.u];
+    const searchText = `${unit.key} ${unit.tower} ${unitMeta?.title ?? ""} ${unitMeta?.type ?? ""}`.toLocaleLowerCase();
+    if (unitSearch.trim() && !searchText.includes(unitSearch.trim().toLocaleLowerCase())) return false;
+    if (draftUnitFilter === "1pn" && unit.beds !== 1) return false;
+    if (draftUnitFilter === "2pn" && unit.beds !== 2) return false;
+    if (draftUnitFilter === "3pn" && unit.beds < 3) return false;
+    if (draftBuildingFilter === "landmark" && !unit.tower.startsWith("Landmark")) return false;
+    if (draftBuildingFilter === "central-park" && unit.tower.startsWith("Landmark")) return false;
+
+    const floor = Number.parseInt(unit.flr, 10);
+    if (draftFloorFilter === "low" && (floor < 1 || floor > 20)) return false;
+    if (draftFloorFilter === "mid" && (floor < 21 || floor > 40)) return false;
+    if (draftFloorFilter === "high" && floor < 41) return false;
+    return unit.month >= draftPriceRange[0] && unit.month <= draftPriceRange[1];
+  });
+
+  useEffect(() => {
+    if (!filtersOpen) return;
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setFiltersOpen(false);
+    };
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    document.addEventListener("keydown", handleEscape);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", handleEscape);
+    };
+  }, [filtersOpen]);
 
   const activeSpotData = SPOTS_DATA[selectedSpotIndex] || SPOTS_DATA[0];
   const activeSpotText = t.spots[selectedSpotIndex] || t.spots[0];
@@ -1258,85 +1337,166 @@ export default function LandingPage() {
               </button>
             </div>
 
-            <div
-              id="unit-filter-options"
-              hidden={!filtersOpen}
-              className="border-t border-[#E8E4DB]"
-            >
-            <div className="grid grid-cols-1 divide-y divide-[#E8E4DB] lg:grid-cols-3 lg:divide-x lg:divide-y-0">
-              {/* Col 1: Unit Type Tabs */}
-              <div className="flex-1 p-4 sm:p-5 flex flex-col gap-3">
-              <span className="min-w-[120px] font-sans text-xs font-semibold uppercase tracking-[0.15em] text-[#6B6255]">
-                {t.lblType}
-              </span>
-              <FilterTabs
-                tabs={[
-                  { label: t.tabAll, value: "all" },
-                  { label: t.tab1PN, value: "1pn" },
-                  { label: t.tab2PN, value: "2pn" },
-                  { label: t.tab3PN, value: "3pn" },
-                ]}
-                value={draftUnitFilter}
-                onChange={(val) => setDraftUnitFilter(String(val))}
-              />
-              </div>
-
-              {/* Col 2: Floor Level Tabs */}
-              <div className="flex-1 p-4 sm:p-5 flex flex-col gap-3">
-              <span className="min-w-[120px] font-sans text-xs font-semibold uppercase tracking-[0.15em] text-[#6B6255]">
-                {t.lblFloor}
-              </span>
-              <FilterTabs
-                tabs={[
-                  { label: t.fAll, value: "all" },
-                  { label: t.fLow, value: "low" },
-                  { label: t.fMid, value: "mid" },
-                  { label: t.fHigh, value: "high" },
-                ]}
-                value={draftFloorFilter}
-                onChange={(val) => setDraftFloorFilter(String(val))}
-              />
-              </div>
-
-              {/* Col 3: Price Dual Slider */}
-              <div className="flex-1 p-4 sm:p-5 flex flex-col gap-3">
-              <span className="min-w-[120px] font-sans text-xs font-semibold uppercase tracking-[0.15em] text-[#6B6255]">
-                {t.lblPrice}
-              </span>
-              <div className="flex-1 min-w-[240px] max-w-[520px] flex items-center gap-4">
-                <input
-                  type="range"
-                  min="20000000"
-                  max="100000000"
-                  step="5000000"
-                  value={draftPriceRange[1]}
-                  onChange={(e) => setDraftPriceRange([draftPriceRange[0], Number(e.target.value)])}
-                  className="w-full accent-[#1F3A2E] cursor-pointer"
-                />
-                <span className="font-display text-base font-medium text-[#1F3A2E] shrink-0 min-w-[110px]">
-                  ≤ {(draftPriceRange[1] / 1000000).toFixed(0)} Triệu / tháng
-                </span>
-              </div>
-            </div>
-            </div>
-              <div className="flex flex-col-reverse gap-3 border-t border-[#E8E4DB] bg-[#FBF9F5] p-4 sm:flex-row sm:justify-end">
+            {filtersOpen && (
+              <div
+                className="fixed inset-0 z-[500] grid items-center overflow-y-auto p-4 sm:p-8"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="unit-filter-title"
+              >
                 <button
                   type="button"
+                  className="absolute inset-0 cursor-default bg-[#111C18]/60 backdrop-blur-[1px]"
+                  aria-label={t.filterCloseLabel}
                   onClick={closeUnitFilters}
-                  className="min-h-11 cursor-pointer border border-[#B08D57] bg-transparent px-5 font-sans text-xs font-semibold uppercase tracking-[0.14em] text-[#8A6214] transition-colors hover:bg-[#F2EBDD]"
+                />
+
+                <div
+                  id="unit-filter-options"
+                  className="relative z-10 mx-auto my-auto w-full max-w-[760px] border border-[#DDD6CB] bg-white shadow-[0_28px_80px_rgba(12,25,20,0.24)]"
                 >
-                  {t.cancelFilters}
-                </button>
-                <button
-                  type="button"
-                  onClick={applyUnitFilters}
-                  className="inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 border border-[#1F3A2E] bg-[#1F3A2E] px-6 font-sans text-xs font-semibold uppercase tracking-[0.14em] text-white transition-colors hover:bg-[#2D4D3F]"
-                >
-                  <Icon name="check" size={17} />
-                  {t.applyFilters}
-                </button>
+                  <header className="relative border-b border-[#E8E4DB] px-5 py-5 pr-20 sm:px-7 sm:py-6 sm:pr-24">
+                    <div className="flex items-center gap-3 font-sans text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-[#8A6214]">
+                      <span className="h-px w-6 bg-[#B08D57]" />
+                      {t.filterEyebrow}
+                    </div>
+                    <div className="mt-2 flex items-center gap-3">
+                      <h2 id="unit-filter-title" className="font-display text-[clamp(1.75rem,4vw,2.35rem)] font-medium uppercase leading-none text-[#17231E]">
+                        {t.filterTitle}
+                      </h2>
+                      <span className="grid size-8 place-items-center rounded-full bg-[#3279F6] text-white shadow-[0_2px_7px_rgba(50,121,246,0.35)]" aria-hidden="true">
+                        <Icon name="sparkles" size={16} strokeWidth={2} />
+                      </span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={closeUnitFilters}
+                      aria-label={t.filterCloseLabel}
+                      className="absolute right-5 top-5 grid size-10 cursor-pointer place-items-center rounded-[2px] border border-[#D7D3CB] bg-white text-[#5F5A52] transition-colors hover:border-[#1F3A2E] hover:text-[#1F3A2E] sm:right-6 sm:top-6"
+                    >
+                      <Icon name="x" size={17} />
+                    </button>
+                  </header>
+
+                  <div className="grid gap-6 px-5 py-6 sm:gap-7 sm:px-7 sm:py-7">
+                    <fieldset className="grid gap-3">
+                      <legend className="font-sans text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[#6B6255]">
+                        {t.filterBuilding}
+                      </legend>
+                      <FilterTabs
+                        tabs={[
+                          { label: t.tabAll, value: "all", badge: UNITS_DATA.length },
+                          { label: t.filterLandmark, value: "landmark", badge: UNITS_DATA.filter((unit) => unit.tower.startsWith("Landmark")).length },
+                          { label: t.filterCentralPark, value: "central-park", badge: UNITS_DATA.filter((unit) => !unit.tower.startsWith("Landmark")).length },
+                        ]}
+                        value={draftBuildingFilter}
+                        onChange={(value) => setDraftBuildingFilter(String(value))}
+                      />
+                    </fieldset>
+
+                    <fieldset className="grid gap-3">
+                      <legend className="font-sans text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[#6B6255]">
+                        {t.filterBedrooms}
+                      </legend>
+                      <FilterTabs
+                        tabs={[
+                          { label: t.tabAll, value: "all", badge: UNITS_DATA.length },
+                          { label: "1 PN", value: "1pn", badge: UNITS_DATA.filter((unit) => unit.beds === 1).length },
+                          { label: "2 PN", value: "2pn", badge: UNITS_DATA.filter((unit) => unit.beds === 2).length },
+                          { label: "3 PN+", value: "3pn", badge: UNITS_DATA.filter((unit) => unit.beds >= 3).length },
+                        ]}
+                        value={draftUnitFilter}
+                        onChange={(value) => setDraftUnitFilter(String(value))}
+                      />
+                    </fieldset>
+
+                    <fieldset className="grid gap-3">
+                      <legend className="font-sans text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[#6B6255]">
+                        {t.lblFloor}
+                      </legend>
+                      <FilterTabs
+                        tabs={[
+                          { label: t.fAll, value: "all", badge: UNITS_DATA.length },
+                          { label: "01–20", value: "low", badge: UNITS_DATA.filter((unit) => Number.parseInt(unit.flr, 10) <= 20).length },
+                          { label: "21–40", value: "mid", badge: UNITS_DATA.filter((unit) => { const floor = Number.parseInt(unit.flr, 10); return floor >= 21 && floor <= 40; }).length },
+                          { label: "41+", value: "high", badge: UNITS_DATA.filter((unit) => Number.parseInt(unit.flr, 10) >= 41).length },
+                        ]}
+                        value={draftFloorFilter}
+                        onChange={(value) => setDraftFloorFilter(String(value))}
+                      />
+                    </fieldset>
+
+                    <fieldset className="grid gap-4 pt-1">
+                      <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
+                        <legend className="font-sans text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[#6B6255]">
+                          {t.filterPrice}
+                        </legend>
+                        <output className="font-display text-lg font-medium text-[#1F3A2E] sm:text-xl">
+                          {draftPriceRange[0] / 1000000} {t.priceMillion} – {draftPriceRange[1] / 1000000} {t.priceMillion}
+                        </output>
+                      </div>
+                      <div className="relative h-5">
+                        <div className="absolute left-0 right-0 top-2 h-px bg-[#B9C1BC]" />
+                        <div
+                          className="absolute top-2 h-[2px] bg-[#1F3A2E]"
+                          style={{
+                            left: `${((draftPriceRange[0] - 20000000) / 100000000) * 100}%`,
+                            right: `${100 - ((draftPriceRange[1] - 20000000) / 100000000) * 100}%`,
+                          }}
+                        />
+                        <input
+                          type="range"
+                          min="20000000"
+                          max="120000000"
+                          step="5000000"
+                          value={draftPriceRange[0]}
+                          aria-label={`${t.filterPrice} minimum`}
+                          onChange={(event) => setDraftPriceRange([Math.min(Number(event.target.value), draftPriceRange[1] - 5000000), draftPriceRange[1]])}
+                          className="pointer-events-none absolute inset-0 h-5 w-full appearance-none bg-transparent [&::-moz-range-thumb]:pointer-events-auto [&::-moz-range-thumb]:size-4 [&::-moz-range-thumb]:cursor-pointer [&::-moz-range-thumb]:border [&::-moz-range-thumb]:border-[#B08D57] [&::-moz-range-thumb]:bg-[#1F3A2E] [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:size-4 [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:border [&::-webkit-slider-thumb]:border-[#B08D57] [&::-webkit-slider-thumb]:bg-[#1F3A2E]"
+                        />
+                        <input
+                          type="range"
+                          min="20000000"
+                          max="120000000"
+                          step="5000000"
+                          value={draftPriceRange[1]}
+                          aria-label={`${t.filterPrice} maximum`}
+                          onChange={(event) => setDraftPriceRange([draftPriceRange[0], Math.max(Number(event.target.value), draftPriceRange[0] + 5000000)])}
+                          className="pointer-events-none absolute inset-0 h-5 w-full appearance-none bg-transparent [&::-moz-range-thumb]:pointer-events-auto [&::-moz-range-thumb]:size-4 [&::-moz-range-thumb]:cursor-pointer [&::-moz-range-thumb]:border [&::-moz-range-thumb]:border-[#B08D57] [&::-moz-range-thumb]:bg-[#1F3A2E] [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:size-4 [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:border [&::-webkit-slider-thumb]:border-[#B08D57] [&::-webkit-slider-thumb]:bg-[#1F3A2E]"
+                        />
+                      </div>
+                      <div className="flex justify-between font-sans text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-[#6B6255]">
+                        <span>20 {t.priceMillion}</span>
+                        <span>120 {t.priceMillion}</span>
+                      </div>
+                    </fieldset>
+                  </div>
+
+                  <footer className="flex flex-col-reverse gap-3 border-t border-[#E8E4DB] bg-[#F7F3EB] px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-7">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setDraftBuildingFilter("all");
+                        setDraftUnitFilter("all");
+                        setDraftFloorFilter("all");
+                        setDraftPriceRange([20000000, 120000000]);
+                      }}
+                      className="min-h-11 cursor-pointer border border-[#B08D57] bg-transparent px-5 font-sans text-xs font-semibold uppercase tracking-[0.14em] text-[#8A6214] transition-colors hover:bg-white"
+                    >
+                      {t.btnClear}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={applyUnitFilters}
+                      className="inline-flex min-h-11 cursor-pointer items-center justify-center gap-3 border border-[#142B22] bg-[#1F3A2E] px-6 font-sans text-xs font-semibold uppercase tracking-[0.14em] text-white transition-colors hover:bg-[#2D4D3F]"
+                    >
+                      {t.filterViewResults} · {draftFilteredUnits.length}
+                      <Icon name="arrow-right" size={17} />
+                    </button>
+                  </footer>
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Summary Row */}
             <div className="flex flex-wrap items-center justify-between gap-3 p-3.5 sm:p-4.5 bg-[#FAF8F5] border-t border-[#E8E4DB]">

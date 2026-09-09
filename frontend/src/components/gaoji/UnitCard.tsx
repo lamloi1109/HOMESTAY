@@ -7,6 +7,11 @@ import { Badge } from "./Badge";
 import { Button } from "./Button";
 import { RoomSpecs } from "./RoomSpecs";
 
+export type UnitRate =
+  | { type: "fixed"; amount: number | string }
+  | { type: "range"; min: number | string; max: number | string }
+  | { type: "negotiable"; label?: string };
+
 export interface UnitCardItem {
   id: string;
   name: string;
@@ -19,6 +24,8 @@ export interface UnitCardItem {
   guests?: number | null;
   price_monthly?: number | string | null;
   price_nightly?: number | string | null;
+  monthly_rate?: UnitRate | null;
+  nightly_rate?: UnitRate | null;
   status?: string | null;
   cover_image?: string | null;
   view_type?: string | null;
@@ -47,6 +54,29 @@ const formatPriceVnd = (n: number) => {
   return n.toLocaleString("vi-VN") + " VNĐ";
 };
 
+const legacyRate = (value: number | string | null | undefined): UnitRate | null => {
+  if (value === null || value === undefined || value === "") return null;
+  const amount = Number(value);
+  return Number.isFinite(amount) ? { type: "fixed", amount } : null;
+};
+
+const rateText = (rate: UnitRate) => {
+  if (rate.type === "negotiable") return rate.label || "Thương Lượng";
+  if (rate.type === "range") {
+    const min = Number(rate.min);
+    const max = Number(rate.max);
+    if (!Number.isFinite(min) || !Number.isFinite(max)) return "Thương Lượng";
+    if (min >= 1e6 && max >= 1e6) {
+      const formatMillions = (value: number) =>
+        (value / 1e6).toLocaleString("vi-VN", { maximumFractionDigits: 1 });
+      return `${formatMillions(min)} – ${formatMillions(max)} Triệu VNĐ`;
+    }
+    return `${formatPriceVnd(min)} – ${formatPriceVnd(max)}`;
+  }
+  const amount = Number(rate.amount);
+  return Number.isFinite(amount) ? formatPriceVnd(amount) : "Thương Lượng";
+};
+
 export function UnitCard({
   unit,
   onInquire,
@@ -66,8 +96,8 @@ export function UnitCard({
   };
 
   const photo = unit.cover_image || "/assets/photos/living-open-plan.jpg";
-  const monthlyRateVnd = unit.price_monthly ? Number(unit.price_monthly) : null;
-  const nightlyRateVnd = unit.price_nightly ? Number(unit.price_nightly) : null;
+  const monthlyRate = unit.monthly_rate || legacyRate(unit.price_monthly);
+  const nightlyRate = unit.nightly_rate || legacyRate(unit.price_nightly);
   const isAvailable = unit.status === "available" || !unit.status;
 
   const floorText = unit.floor
@@ -145,25 +175,45 @@ export function UnitCard({
       </div>
 
       {/* Pricing Columns */}
-      <div className="px-4 sm:px-5 flex flex-wrap gap-4 sm:gap-6">
-        {monthlyRateVnd ? (
-          <div>
+      <div
+        className={`mx-4 grid min-h-[82px] items-stretch border-b border-[var(--hairline)] sm:mx-5 ${
+          monthlyRate && nightlyRate ? "grid-cols-2" : "grid-cols-1"
+        }`}
+      >
+        {monthlyRate ? (
+          <div className="min-w-0 py-3 pr-3 sm:pr-4">
             <div className="font-sans text-[0.625rem] font-semibold uppercase tracking-[0.15em] text-[var(--text-muted)]">
               {t.month}
             </div>
-            <div className="font-display text-[1.35rem] font-medium text-[var(--jade-700)]">
-              {formatPriceVnd(monthlyRateVnd)}
+            <div
+              className={`mt-1 flex min-h-[2.75rem] items-start text-pretty font-display font-medium leading-[1.15] text-[var(--jade-700)] ${
+                monthlyRate.type === "fixed"
+                  ? "text-[1.35rem]"
+                  : monthlyRate.type === "negotiable"
+                    ? "text-[1.12rem] italic"
+                    : "text-[1.08rem] sm:text-[1.15rem]"
+              }`}
+            >
+              {rateText(monthlyRate)}
             </div>
           </div>
         ) : null}
 
-        {nightlyRateVnd ? (
-          <div>
+        {nightlyRate ? (
+          <div className={`${monthlyRate ? "border-l border-[var(--hairline)] pl-3 sm:pl-4" : ""} min-w-0 py-3`}>
             <div className="font-sans text-[0.625rem] font-semibold uppercase tracking-[0.15em] text-[var(--text-muted)]">
               {t.night}
             </div>
-            <div className="font-display text-[1.35rem] font-medium text-[var(--jade-700)]">
-              {formatPriceVnd(nightlyRateVnd)}
+            <div
+              className={`mt-1 flex min-h-[2.75rem] items-start text-pretty font-display font-medium leading-[1.15] text-[var(--jade-700)] ${
+                nightlyRate.type === "fixed"
+                  ? "text-[1.35rem]"
+                  : nightlyRate.type === "negotiable"
+                    ? "text-[1.12rem] italic"
+                    : "text-[1.08rem] sm:text-[1.15rem]"
+              }`}
+            >
+              {rateText(nightlyRate)}
             </div>
           </div>
         ) : null}

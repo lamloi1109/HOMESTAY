@@ -1529,7 +1529,7 @@ export default function LandingPage() {
                   key={u.key}
                   unit={{
                     id: u.key,
-                    unit_code: `${t.unitWord} ${u.key}`,
+                    unit_code: u.key,
                     name: uMeta ? uMeta.title : u.key,
                     cover_image: u.img,
                     floor: u.flr,
@@ -1545,7 +1545,12 @@ export default function LandingPage() {
                     status: u.status,
                     view_type: uMeta ? uMeta.type : undefined,
                   }}
-                  labels={{ rate: t.lblPrice }}
+                  labels={{
+                    rate: t.lblPrice,
+                    available: t.statusAvail,
+                    held: t.statusHeld,
+                    unitCode: t.unitWord,
+                  }}
                 />
               );
             })}

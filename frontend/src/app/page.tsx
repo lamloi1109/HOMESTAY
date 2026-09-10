@@ -104,7 +104,6 @@ const DICT = {
     emptyBody: "Gao Ji House còn căn tương tự ở tầng khác — nhắn Zalo để nhận danh sách chờ trong ngày.",
     emptyCta1: "Nhận Danh Sách Chờ",
     emptyCta2: "Xem Tất Cả 5 Căn",
-    unitsNote: "Giá thuê đã gồm phí quản lý · Internet · Dọn phòng định kỳ · Không phí dịch vụ đặt phòng",
     unitWord: "CĂN HỘ",
     statusAvail: "Còn Phòng",
     statusHeld: "Đã Giữ Chỗ · Nhận Chờ",
@@ -339,7 +338,6 @@ const DICT = {
     emptyBody: "We have similar units on other floors — message on Zalo to receive same-day waitlist updates.",
     emptyCta1: "Join Waitlist",
     emptyCta2: "View All 5 Units",
-    unitsNote: "Rent includes management fees · High-speed Wi-Fi · Bi-weekly housekeeping · No booking fee",
     unitWord: "UNIT",
     statusAvail: "Available",
     statusHeld: "Reserved · Waitlist",
@@ -564,7 +562,6 @@ const DICT = {
     emptyBody: "Gao Ji House 在其他楼层拥有同类型房源 — 欢迎联系 Zalo 获取当日候补名单。",
     emptyCta1: "加入候补名单",
     emptyCta2: "查看全部 5 套",
-    unitsNote: "租金已含物业费 · 高速宽带 · 定期保洁 · 无预订手续费",
     unitWord: "公寓",
     statusAvail: "有空房",
     statusHeld: "已预订 · 接受排队",
@@ -789,7 +786,6 @@ const DICT = {
     emptyBody: "Gao Ji House 在其他樓層擁有同類型房源 — 歡迎聯繫 Zalo 獲取當日候補名單。",
     emptyCta1: "加入候補名單",
     emptyCta2: "查看全部 5 套",
-    unitsNote: "租金已含物業費 · 高速寬頻 · 定期清潔 · 無預訂手續費",
     unitWord: "公寓",
     statusAvail: "有空房",
     statusHeld: "已預訂 · 接受排隊",
@@ -1301,7 +1297,7 @@ export default function LandingPage() {
       {/* ── 4. RESIDENCE APARTMENT COLLECTION (Danh Sách Căn Hộ) */}
       <section
         id="units"
-        className="py-[clamp(56px,7vw,112px)] px-[clamp(20px,4vw,56px)] bg-[#FAF8F5]"
+        className="pt-[clamp(48px,5vw,80px)] pb-[clamp(28px,3vw,48px)] px-[clamp(20px,4vw,56px)] bg-[#FAF8F5]"
       >
         <div className="max-w-[1600px] mx-auto">
           <SectionHeader
@@ -1579,7 +1575,7 @@ export default function LandingPage() {
                   onClick={() => {
                     setUnitFilter("all");
                     setFloorFilter("all");
-                    setPriceRange([20000000, 100000000]);
+                    setPriceRange([20000000, 120000000]);
                   }}
                 >
                   {t.emptyCta2}
@@ -1587,17 +1583,13 @@ export default function LandingPage() {
               </div>
             </div>
           )}
-
-          <p className="mt-6 font-sans text-xs sm:text-[0.8125rem] font-semibold uppercase tracking-[0.15em] text-[#6B6255]">
-            {t.unitsNote}
-          </p>
         </div>
       </section>
 
       {/* ── 5. LOCATION & TRAVEL RADAR (Vị Trí & Bán Kính Kết Nối) */}
       <section
         id="location"
-        className="py-[clamp(56px,7vw,112px)] px-[clamp(20px,4vw,56px)] bg-[#FBF9F5]"
+        className="pt-[clamp(32px,4vw,64px)] pb-[clamp(48px,5vw,80px)] px-[clamp(20px,4vw,56px)] bg-[#FBF9F5]"
       >
         <div className="max-w-[1240px] mx-auto">
           <div className="flex flex-wrap items-end justify-between gap-6 pb-2">
@@ -1830,7 +1822,7 @@ export default function LandingPage() {
       {/* ── 6. RESIDENT AMENITIES (Tiện Ích & Dịch Vụ Cư Dân) ── */}
       <section
         id="amenities"
-        className="py-[clamp(56px,7vw,112px)] px-[clamp(20px,4vw,56px)] bg-[#FAF8F5]"
+        className="py-[clamp(48px,5vw,80px)] px-[clamp(20px,4vw,56px)] bg-[#FAF8F5]"
       >
         <div className="max-w-[1600px] mx-auto">
           <SectionHeader
@@ -1884,7 +1876,7 @@ export default function LandingPage() {
 
 
       {/* ── 6.5. SOCIAL PROOF (NEW) ── */}
-      <section className="bg-[#FBF9F5] border-t border-[#E8E4DB] py-[clamp(60px,8vh,100px)]">
+      <section className="bg-[#FBF9F5] border-t border-[#E8E4DB] py-[clamp(48px,5vw,80px)]">
         <div className="max-w-[1600px] mx-auto px-[clamp(20px,4vw,56px)]">
           <SectionHeader
             eyebrow={t.spEye}
@@ -1916,7 +1908,7 @@ export default function LandingPage() {
       {/* ── 7. ABOUT US & OPERATING TEAM (Về Chúng Tôi) ─────── */}
       <section
         id="about"
-        className="py-[clamp(56px,7vw,112px)] px-[clamp(20px,4vw,56px)] bg-[#FBF9F5]"
+        className="py-[clamp(48px,5vw,80px)] px-[clamp(20px,4vw,56px)] bg-[#FBF9F5]"
       >
         <div className="max-w-[1240px] mx-auto">
           <div className="grid gap-[clamp(32px,4vw,64px)] grid-cols-1 lg:grid-cols-12 items-start">
@@ -2104,7 +2096,7 @@ export default function LandingPage() {
 
 
       {/* ── 9.5. FAQ SECTION (NEW) ── */}
-      <section className="bg-[#FAF8F5] py-[clamp(60px,8vh,100px)]">
+      <section className="bg-[#FAF8F5] py-[clamp(48px,5vw,80px)]">
         <div className="max-w-[900px] mx-auto px-[clamp(20px,4vw,56px)]">
           <div className="text-center mb-12">
             <span className="font-sans text-xs font-bold uppercase tracking-[0.15em] text-[#8A6214] block mb-3">
@@ -2136,7 +2128,7 @@ export default function LandingPage() {
 
 
       {/* ── 9.6. FINAL CTA (NEW) ── */}
-      <section className="bg-[#0D3B22] py-[clamp(60px,8vh,100px)] relative overflow-hidden">
+      <section className="bg-[#0D3B22] py-[clamp(48px,5vw,80px)] relative overflow-hidden">
         <div className="absolute inset-0 pointer-events-none opacity-10" style={{ background: "url('/assets/photos/living-open-plan.jpg') center/cover" }} />
         <div className="relative z-10 max-w-[900px] mx-auto px-[clamp(20px,4vw,56px)] text-center">
           <h2 className="font-display text-[clamp(2rem,3vw+1rem,3.5rem)] font-medium text-white mb-6 leading-tight">
@@ -2161,7 +2153,7 @@ export default function LandingPage() {
       {/* Direct Zalo Booking Box */}
       <section
         id="contact"
-        className="py-[clamp(56px,7vw,112px)] px-[clamp(20px,4vw,56px)] bg-[#FAF8F5]"
+        className="py-[clamp(48px,5vw,80px)] px-[clamp(20px,4vw,56px)] bg-[#FAF8F5]"
       >
         <div className="max-w-[1240px] mx-auto bg-[#1F3A2E] border border-[#D4AF37] p-[clamp(32px,4.5vw,64px)] grid gap-[clamp(28px,4vw,56px)] grid-cols-1 md:grid-cols-2 items-start text-white shadow-2xl">
           <div className="grid gap-4 justify-items-start">

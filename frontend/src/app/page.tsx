@@ -126,6 +126,7 @@ const DICT = {
     catAll: "Tất Cả", catFamous: "Điểm Nổi Tiếng", catTransport: "Metro & Giao Thông", catShopping: "Mua Sắm", catCulture: "Văn Hóa",
     locationSearch: "Tìm nhanh địa điểm...", nearbyBilingual: "Nearby Attractions · 周边热门景点", locations: "Locations",
     radarTitle: "Gao Ji House · Central Distance Radar & Riverfront Map", riverfrontTag: "District 1 · Saigon Riverfront",
+    towerMapLabel: "Các Tòa Gao Ji House Có Cho Thuê",
     tOff: "Giờ Thấp Điểm",
     tPeak: "Giờ Cao Điểm",
     noteOff: "Đo 10:00–15:00 các ngày trong tuần · Google Maps",
@@ -364,6 +365,7 @@ const DICT = {
     catAll: "All", catFamous: "Landmarks", catTransport: "Metro & Transit", catShopping: "Shopping", catCulture: "Culture",
     locationSearch: "Find a nearby place...", nearbyBilingual: "Nearby Attractions · 周边热门景点", locations: "Locations",
     radarTitle: "Gao Ji House · Central Distance Radar & Riverfront Map", riverfrontTag: "Binh Thanh · Saigon Riverfront",
+    towerMapLabel: "Gao Ji House Rental Towers",
     tOff: "Off-Peak Hours",
     tPeak: "Peak Hours",
     noteOff: "Measured 10:00–15:00 weekdays · Google Maps",
@@ -593,6 +595,7 @@ const DICT = {
     catAll: "全部", catFamous: "著名景点", catTransport: "地铁与交通", catShopping: "购物", catCulture: "文化",
     locationSearch: "快速搜索地点...", nearbyBilingual: "Nearby Attractions · 周边热门景点", locations: "个地点",
     radarTitle: "Gao Ji House · 中心距离雷达与滨河地图", riverfrontTag: "平盛郡 · 西贡河畔",
+    towerMapLabel: "Gao Ji House 出租楼栋",
     tOff: "平峰时段",
     tPeak: "高峰时段",
     noteOff: "工作日 10:00–15:00 实测 · Google Maps",
@@ -822,6 +825,7 @@ const DICT = {
     catAll: "全部", catFamous: "著名景點", catTransport: "捷運與交通", catShopping: "購物", catCulture: "文化",
     locationSearch: "快速搜尋地點...", nearbyBilingual: "Nearby Attractions · 周边热门景点", locations: "個地點",
     radarTitle: "Gao Ji House · 中心距離雷達與濱河地圖", riverfrontTag: "平盛郡 · 西貢河畔",
+    towerMapLabel: "Gao Ji House 出租樓棟",
     tOff: "離峰時段",
     tPeak: "尖峰時段",
     noteOff: "工作日 10:00–15:00 實測 · Google Maps",
@@ -1031,6 +1035,16 @@ const TOWER_GROUPS = {
   landmark: ["L81", "L3", "L2", "L1"],
 } as const;
 
+const TOWER_LOCATIONS = [
+  { code: "P7", group: "park", query: "Park 7 Vinhomes Central Park Ho Chi Minh City" },
+  { code: "P3", group: "park", query: "Park 3 Vinhomes Central Park Ho Chi Minh City" },
+  { code: "P1", group: "park", query: "Park 1 Vinhomes Central Park Ho Chi Minh City" },
+  { code: "L81", group: "landmark", query: "Landmark 81 Vinhomes Central Park Ho Chi Minh City" },
+  { code: "L3", group: "landmark", query: "Landmark 3 Vinhomes Central Park Ho Chi Minh City" },
+  { code: "L2", group: "landmark", query: "Landmark 2 Vinhomes Central Park Ho Chi Minh City" },
+  { code: "L1", group: "landmark", query: "Landmark 1 Vinhomes Central Park Ho Chi Minh City" },
+] as const;
+
 const unitTowerCode = (unitCode: string) => unitCode.split(".")[0].toUpperCase();
 const isLandmarkUnit = (unitCode: string) => unitTowerCode(unitCode).startsWith("L");
 
@@ -1071,6 +1085,7 @@ export default function LandingPage() {
   const [locationView, setLocationView] = useState<"map" | "radar">("map");
   const [locationCategory, setLocationCategory] = useState("all");
   const [locationSearch, setLocationSearch] = useState("");
+  const [selectedTowerCode, setSelectedTowerCode] = useState<string | null>("L81");
 
   // Inquiry Modal State
   const [inquiryModalOpen, setInquiryModalOpen] = useState(false);
@@ -1173,8 +1188,11 @@ export default function LandingPage() {
     const haystack = `${localized.name} ${localized.blurb} ${spot.addr}`.toLocaleLowerCase();
     return matchesCategory && haystack.includes(locationSearch.trim().toLocaleLowerCase());
   });
-  const mapSrc = `https://maps.google.com/maps?q=${encodeURIComponent(activeSpotData.q)}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
-  const activeDirHref = `https://maps.google.com/?daddr=${encodeURIComponent(activeSpotData.q)}`;
+  const selectedTower = TOWER_LOCATIONS.find((tower) => tower.code === selectedTowerCode);
+  const mapQuery = selectedTower?.query || activeSpotData.q;
+  const mapSrc = `https://maps.google.com/maps?q=${encodeURIComponent(mapQuery)}&t=&z=16&ie=UTF8&iwloc=&output=embed`;
+  const activeSpotDirHref = `https://maps.google.com/?daddr=${encodeURIComponent(activeSpotData.q)}`;
+  const mapDirHref = `https://maps.google.com/?daddr=${encodeURIComponent(mapQuery)}`;
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-[#FBF9F5] text-[#1A1A1A]">
@@ -1681,6 +1699,7 @@ export default function LandingPage() {
                   type="button"
                   onClick={() => {
                     setLocationCategory(value);
+                    setSelectedTowerCode(null);
                     const nextIndex = SPOTS_DATA.findIndex((spot) => value === "all" || spot.category === value);
                     if (nextIndex >= 0) setSelectedSpotIndex(nextIndex);
                   }}
@@ -1705,6 +1724,7 @@ export default function LandingPage() {
                   setLocationSearch(query);
                   const normalized = query.trim().toLocaleLowerCase();
                   if (normalized) {
+                    setSelectedTowerCode(null);
                     const nextIndex = SPOTS_DATA.findIndex((spot) => {
                       const copy = t.spots[spot.copyIndex] || t.spots[0];
                       return `${copy.name} ${copy.blurb} ${spot.addr}`.toLocaleLowerCase().includes(normalized);
@@ -1743,7 +1763,10 @@ export default function LandingPage() {
                     <button
                       key={spot.no}
                       type="button"
-                      onClick={() => setSelectedSpotIndex(index)}
+                      onClick={() => {
+                        setSelectedSpotIndex(index);
+                        setSelectedTowerCode(null);
+                      }}
                       className={`relative isolate grid min-h-[56px] w-full cursor-pointer grid-cols-[30px_minmax(0,1fr)_auto] items-center gap-2.5 border px-3 py-2 text-left transition-colors ${selected ? "!border-[#1A1A1A] !bg-[#1A1A1A] !text-white" : "border-[#DDD5C7] bg-[#FAF7F2] text-[#1A1A1A] hover:border-[#B85D36]"}`}
                     >
                       <span className={`grid size-7 place-items-center rounded-full border font-sans text-[0.6rem] font-bold ${selected ? "border-[#B85D36] bg-[#B85D36] text-white" : "border-[#D0C6B7] bg-white text-[#4C463F]"}`}>
@@ -1781,7 +1804,7 @@ export default function LandingPage() {
                 <p className="mt-2 font-sans text-[0.66rem] leading-relaxed text-[#4F4942]">{activeSpotText.blurb}</p>
                 <div className="mt-2 flex flex-wrap items-center justify-between gap-3 border-t border-[#DDD5C7] pt-2">
                   <span className="max-w-[34ch] font-sans text-[0.55rem] font-semibold uppercase tracking-[0.1em] text-[#777068]">{activeSpotData.addr}</span>
-                  <a href={activeDirHref} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 font-sans text-[0.58rem] font-bold uppercase tracking-[0.12em] text-[#B85D36] hover:underline">
+                  <a href={activeSpotDirHref} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 font-sans text-[0.58rem] font-bold uppercase tracking-[0.12em] text-[#B85D36] hover:underline">
                     {t.btnDir} Maps <Icon name="external-link" size={12} />
                   </a>
                 </div>
@@ -1799,20 +1822,53 @@ export default function LandingPage() {
                 </div>
               </div>
 
-              <div className="relative mt-4 min-h-[460px] overflow-hidden border border-[#C9BEAE] bg-[#E9E1D4] sm:min-h-[540px]">
+              <div className="mt-3 border border-[#CFC5B4] bg-[#FAF7F2] p-2.5">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="mr-1 font-sans text-[0.56rem] font-bold uppercase tracking-[0.12em] text-[#6C655D]">
+                    {t.towerMapLabel}
+                  </span>
+                  {TOWER_LOCATIONS.map((tower) => {
+                    const active = selectedTowerCode === tower.code;
+                    const landmark = tower.group === "landmark";
+                    return (
+                      <button
+                        key={tower.code}
+                        type="button"
+                        onClick={() => {
+                          setSelectedTowerCode(tower.code);
+                          setLocationView("map");
+                        }}
+                        className={`inline-flex min-h-7 cursor-pointer items-center gap-1.5 border px-2.5 font-sans text-[0.6rem] font-bold tracking-[0.08em] transition-colors ${
+                          active
+                            ? "border-[#1A1A1A] bg-[#1A1A1A] text-white"
+                            : landmark
+                              ? "border-[#B85D36]/40 bg-white text-[#9B4828] hover:border-[#B85D36]"
+                              : "border-[#3977D5]/35 bg-white text-[#2E65B5] hover:border-[#3977D5]"
+                        }`}
+                        aria-pressed={active}
+                      >
+                        <span className={`size-1.5 rounded-full ${landmark ? "bg-[#B85D36]" : "bg-[#3977D5]"}`} />
+                        {tower.code}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className="relative mt-3 min-h-[460px] overflow-hidden border border-[#C9BEAE] bg-[#E9E1D4] sm:min-h-[510px]">
                 {locationView === "map" ? (
                   <>
                     <iframe src={mapSrc} title={t.mapTitle} loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="absolute inset-0 block size-full border-0" />
-                    <div className="absolute left-3 top-3 w-[min(82%,360px)] border border-[#B85D36] bg-white shadow-lg">
+                    <div className="absolute left-3 top-3 z-30 w-[min(82%,360px)] border border-[#B85D36] bg-white shadow-lg">
                       <div className="flex items-center justify-between gap-3 bg-[#1A1A1A] p-2.5 font-sans text-[0.58rem] font-bold uppercase tracking-[0.1em] text-[#F1CCB9]">
-                        <span className="truncate">#{activeSpotData.no} · {activeSpotText.name}</span>
-                        <span className="shrink-0 bg-[#B85D36] px-2 py-1 text-white">{activeSpotData.off} min</span>
+                        <span className="truncate">{selectedTower ? `${selectedTower.code} · Gao Ji House` : `#${activeSpotData.no} · ${activeSpotText.name}`}</span>
+                        <span className="shrink-0 bg-[#B85D36] px-2 py-1 text-white">{selectedTower ? (selectedTower.group === "landmark" ? "Landmark" : "Central Park") : `${activeSpotData.off} min`}</span>
                       </div>
                       <div className="p-3">
-                        <p className="line-clamp-2 font-sans text-[0.68rem] leading-relaxed text-[#575149]">{activeSpotData.addr}</p>
+                        <p className="line-clamp-2 font-sans text-[0.68rem] leading-relaxed text-[#575149]">{selectedTower ? selectedTower.query : activeSpotData.addr}</p>
                         <div className="mt-1.5 flex items-center justify-between gap-3">
-                          <p className="font-sans text-[0.58rem] font-semibold uppercase tracking-[0.1em] text-[#B85D36]">{activeSpotData.km} · {activeSpotData.walk ? t.walk : t.drive}</p>
-                          {"rating" in activeSpotData && (
+                          <p className="font-sans text-[0.58rem] font-semibold uppercase tracking-[0.1em] text-[#B85D36]">{selectedTower ? t.towerMapLabel : `${activeSpotData.km} · ${activeSpotData.walk ? t.walk : t.drive}`}</p>
+                          {!selectedTower && "rating" in activeSpotData && (
                             <span className="inline-flex items-center gap-1 font-sans text-[0.62rem] text-[#4B4640]">
                               {activeSpotData.rating} <Icon name="star" size={11} color="#B85D36" /> ({activeSpotData.reviewCount?.toLocaleString("en-US")})
                             </span>
@@ -1820,7 +1876,7 @@ export default function LandingPage() {
                         </div>
                       </div>
                     </div>
-                    <a href={activeDirHref} target="_blank" rel="noreferrer" className="absolute bottom-4 right-4 z-40 isolate inline-flex min-h-10 items-center gap-2 !bg-[#704836] px-4 font-sans text-[0.62rem] font-bold uppercase tracking-[0.12em] !text-white opacity-100 shadow-[0_8px_24px_rgba(26,25,24,0.35)] transition-colors hover:!bg-[#553426]">
+                    <a href={mapDirHref} target="_blank" rel="noreferrer" className="absolute bottom-4 right-4 z-40 isolate inline-flex min-h-10 items-center gap-2 !bg-[#704836] px-4 font-sans text-[0.62rem] font-bold uppercase tracking-[0.12em] !text-white opacity-100 shadow-[0_8px_24px_rgba(26,25,24,0.35)] transition-colors hover:!bg-[#553426]">
                       <span className="relative z-10 text-white">{t.btnMaps}</span> <Icon name="external-link" size={13} color="#FFFFFF" className="relative z-10" />
                     </a>
                   </>
@@ -1831,7 +1887,7 @@ export default function LandingPage() {
                     {SPOTS_DATA.slice(0, 8).map((spot, index) => {
                       const angle = (index / 8) * Math.PI * 2 - Math.PI / 2;
                       const radius = 37;
-                      return <button key={spot.no} type="button" onClick={() => setSelectedSpotIndex(index)} className={`absolute z-20 grid size-8 cursor-pointer place-items-center rounded-full border-2 font-sans text-[0.58rem] font-bold shadow ${selectedSpotIndex === index ? "border-white bg-[#B85D36] text-white" : "border-[#B85D36] bg-white text-[#7B3A21]"}`} style={{ left: `${50 + Math.cos(angle) * radius}%`, top: `${50 + Math.sin(angle) * radius}%`, transform: "translate(-50%, -50%)" }} aria-label={t.spots[spot.copyIndex]?.name}>{spot.no}</button>;
+                      return <button key={spot.no} type="button" onClick={() => { setSelectedSpotIndex(index); setSelectedTowerCode(null); }} className={`absolute z-20 grid size-8 cursor-pointer place-items-center rounded-full border-2 font-sans text-[0.58rem] font-bold shadow ${selectedSpotIndex === index ? "border-white bg-[#B85D36] text-white" : "border-[#B85D36] bg-white text-[#7B3A21]"}`} style={{ left: `${50 + Math.cos(angle) * radius}%`, top: `${50 + Math.sin(angle) * radius}%`, transform: "translate(-50%, -50%)" }} aria-label={t.spots[spot.copyIndex]?.name}>{spot.no}</button>;
                     })}
                   </div>
                 )}

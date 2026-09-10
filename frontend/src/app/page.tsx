@@ -125,7 +125,7 @@ const DICT = {
     mapViewLabel: "Map View", mapGoogle: "Bản Đồ Google Maps", mapRadar: "Sơ Đồ Bức Xạ",
     catAll: "Tất Cả", catFamous: "Điểm Nổi Tiếng", catTransport: "Metro & Giao Thông", catShopping: "Mua Sắm", catCulture: "Văn Hóa",
     locationSearch: "Tìm nhanh địa điểm...", nearbyBilingual: "Nearby Attractions · 周边热门景点", locations: "Locations",
-    radarTitle: "Gao Ji House · Central Distance Radar & Riverfront Map", riverfrontTag: "Bình Thạnh · Saigon Riverfront",
+    radarTitle: "Gao Ji House · Central Distance Radar & Riverfront Map", riverfrontTag: "District 1 · Saigon Riverfront",
     tOff: "Giờ Thấp Điểm",
     tPeak: "Giờ Cao Điểm",
     noteOff: "Đo 10:00–15:00 các ngày trong tuần · Google Maps",
@@ -148,16 +148,16 @@ const DICT = {
     mapFoot: "Bán kính kết nối từ sảnh toà nhà",
     addrEye: "Địa Chỉ Nhận Phòng",
     spots: [
-      { name: "Landmark 81 & TTTM Vincom", blurb: "Trung tâm thương mại, đài quan sát cao nhất Việt Nam, ẩm thực Á-Âu và siêu thị WinMart." },
+      { name: "Landmark 81 & Công Viên Bờ Sông", blurb: "Tòa nhà cao nhất Việt Nam với TTTM Vincom, nhà hàng sang trọng và công viên ven sông 14ha." },
       { name: "Công Viên Vinhomes Central Park 14ha", blurb: "Công viên ven sông lớn nhất trung tâm Sài Gòn với vườn Nhật, hồ cá Koi và đường dạo bộ 1.2km." },
-      { name: "Chợ Bến Thành & Quận 1 CBD", blurb: "Biểu tượng văn hoá trung tâm Sài Gòn, phố thương mại, ẩm thực và mua sắm sầm uất." },
-      { name: "Nhà Hát Thành Phố & Phố Đi Bộ", blurb: "Trục đi bộ Nguyễn Huệ, công trình kiến trúc cổ điển Pháp và các khách sạn 5 sao." },
-      { name: "Nhà Thờ Đức Bà & Bưu Điện TP", blurb: "Khu vực lõi di sản trung tâm Quận 1, quảng trường đi bộ và cà phê sách." },
+      { name: "Trung Tâm Quận 1 & Phố Đi Bộ", blurb: "Trung tâm văn hóa, thương mại và phố đi bộ sôi động của Sài Gòn." },
+      { name: "Nhà Hát Thành Phố", blurb: "Công trình kiến trúc Pháp biểu tượng bên trục đi bộ Nguyễn Huệ." },
+      { name: "Nhà Thờ Đức Bà & Bưu Điện Thành Phố", blurb: "Khu vực lõi di sản trung tâm Quận 1, quảng trường đi bộ và cà phê sách." },
       { name: "Phố Nhật Bản Lê Thánh Tôn", blurb: "Khu ẩm thực Nhật Bản tinh hoa, quán rượu Izakaya và spa thư giãn cao cấp." },
       { name: "Thảo Cầm Viên Sài Gòn", blurb: "Công viên bách thảo lâu đời, không gian cây xanh cổ thụ thanh bình giữa lòng thành phố." },
-      { name: "Khu Đô Thị Mới Thủ Thiêm", blurb: "Trung tâm tài chính mới, cầu Ba Son, công viên bờ sông Thủ Thiêm ngắm hoàng hôn." },
+      { name: "Trung Tâm Tài Chính Thủ Thiêm", blurb: "Trung tâm tài chính mới, cầu Ba Son và công viên bờ sông ngắm hoàng hôn." },
       { name: "Bảo Tàng Mỹ Thuật TP.HCM", blurb: "Toà nhà kiến trúc Art Deco cổ kính trưng bày các tác phẩm hội hoạ và điêu khắc quý giá." },
-      { name: "Khu Phố Tây Thảo Điền (Quận 2)", blurb: "Cộng đồng expat quốc tế, nhà hàng fine dining, quán cafe specialty và nghệ thuật." },
+      { name: "Khu Phố Ngoại Giao Thảo Điền (Quận 2)", blurb: "Cộng đồng expat quốc tế, nhà hàng fine dining, quán cafe specialty và nghệ thuật." },
       { name: "Sân Bay Quốc Tế Tân Sơn Nhất", blurb: "Cửa ngõ hàng không quốc tế, kết nối thẳng qua tuyến Phạm Văn Đồng và Nguyễn Hữu Cảnh." },
       { name: "Bến Bạch Đằng & Waterbus", blurb: "Ga tàu buýt đường thuỷ sông Sài Gòn ngắm cảnh hoàng hôn và du thuyền đêm." },
     ],
@@ -1028,12 +1028,12 @@ const UNITS_DATA = [
 
 // 12 Location Destinations Radar Data
 const SPOTS_DATA = [
-  { no: "01", copyIndex: 0, icon: "building", category: "famous", km: "0.2 km", off: 3, peak: 4, walk: true, q: "Landmark 81 Vinhomes Central Park", addr: "208 Nguyễn Hữu Cảnh, P.22, Bình Thạnh" },
-  { no: "02", copyIndex: 2, icon: "footprints", category: "shopping", km: "3.8 km", off: 10, peak: 18, walk: false, q: "Cho Ben Thanh Quan 1", addr: "Đường Lê Lợi, Phường Bến Thành, Quận 1" },
-  { no: "03", copyIndex: 9, icon: "coffee", category: "shopping", km: "3.9 km", off: 11, peak: 18, walk: false, q: "Thao Dien Quan 2", addr: "Xuân Thủy, Quốc Hương, Thảo Điền, TP. Thủ Đức" },
-  { no: "04", copyIndex: 3, icon: "building", category: "culture", km: "3.2 km", off: 9, peak: 16, walk: false, q: "Nha Hat Thanh Pho Quan 1", addr: "07 Công Trường Lam Sơn, Bến Nghé, Quận 1" },
-  { no: "05", copyIndex: 7, icon: "map-pin", category: "transport", km: "2.5 km", off: 7, peak: 12, walk: false, q: "Cau Ba Son Thu Thiem", addr: "Cầu Ba Son nối Bình Thạnh & KĐT Thủ Thiêm" },
-  { no: "06", copyIndex: 4, icon: "building", category: "culture", km: "3.5 km", off: 10, peak: 17, walk: false, q: "Nha Tho Duc Ba Sai Gon", addr: "01 Công Xã Paris, Bến Nghé, Quận 1" },
+  { no: "01", copyIndex: 0, icon: "building", category: "famous", km: "0.2 km", off: 2, peak: 4, walk: true, q: "Landmark 81 Vinhomes Central Park", addr: "Tôn Đức Thắng, Q1 · Bến Nghé", rating: 4.6, reviewCount: 23900 },
+  { no: "02", copyIndex: 2, icon: "footprints", category: "famous", km: "3.5 km", off: 10, peak: 18, walk: false, q: "Nguyen Hue Walking Street Quan 1", addr: "Nguyễn Huệ, Bến Nghé, Quận 1" },
+  { no: "03", copyIndex: 9, icon: "coffee", category: "shopping", km: "2.5 km", off: 7, peak: 18, walk: false, q: "Thao Dien Quan 2", addr: "Xuân Thủy, Quốc Hương, Thảo Điền, TP. Thủ Đức" },
+  { no: "04", copyIndex: 3, icon: "building", category: "culture", km: "3.5 km", off: 10, peak: 16, walk: false, q: "Nha Hat Thanh Pho Quan 1", addr: "07 Công Trường Lam Sơn, Bến Nghé, Quận 1" },
+  { no: "05", copyIndex: 7, icon: "map-pin", category: "transport", km: "2.0 km", off: 5, peak: 12, walk: false, q: "Cau Ba Son Thu Thiem", addr: "Cầu Ba Son nối Bình Thạnh & KĐT Thủ Thiêm" },
+  { no: "06", copyIndex: 4, icon: "building", category: "culture", km: "4.0 km", off: 10, peak: 17, walk: false, q: "Nha Tho Duc Ba Sai Gon", addr: "01 Công Xã Paris, Bến Nghé, Quận 1" },
   { no: "07", copyIndex: 1, icon: "footprints", category: "famous", km: "0.1 km", off: 2, peak: 2, walk: true, q: "Cong vien Vinhomes Central Park", addr: "Khuôn viên ven sông Vinhomes Central Park" },
   { no: "08", copyIndex: 5, icon: "coffee", category: "shopping", km: "2.8 km", off: 8, peak: 14, walk: false, q: "Le Thanh Ton Quan 1", addr: "Khu phố Nhật Bản, Lê Thánh Tôn & Thái Văn Lung" },
   { no: "09", copyIndex: 6, icon: "building", category: "culture", km: "2.2 km", off: 6, peak: 11, walk: false, q: "Thao Cam Vien Sai Gon", addr: "02 Nguyễn Bỉnh Khiêm, Bến Nghé, Quận 1" },
@@ -1662,20 +1662,25 @@ export default function LandingPage() {
 
             <div className="flex min-w-0 items-center gap-0.5 overflow-x-auto whitespace-nowrap lg:justify-center">
               {([
-                ["all", t.catAll, SPOTS_DATA.length],
-                ["famous", t.catFamous, SPOTS_DATA.filter((spot) => spot.category === "famous").length],
-                ["transport", t.catTransport, SPOTS_DATA.filter((spot) => spot.category === "transport").length],
-                ["shopping", t.catShopping, SPOTS_DATA.filter((spot) => spot.category === "shopping").length],
-                ["culture", t.catCulture, SPOTS_DATA.filter((spot) => spot.category === "culture").length],
-              ] as const).map(([value, label, count]) => (
+                ["all", t.catAll, SPOTS_DATA.length, null],
+                ["famous", t.catFamous, SPOTS_DATA.filter((spot) => spot.category === "famous").length, "flame"],
+                ["transport", t.catTransport, SPOTS_DATA.filter((spot) => spot.category === "transport").length, "train"],
+                ["shopping", t.catShopping, SPOTS_DATA.filter((spot) => spot.category === "shopping").length, "shopping-bag"],
+                ["culture", t.catCulture, SPOTS_DATA.filter((spot) => spot.category === "culture").length, "landmark"],
+              ] as const).map(([value, label, count, icon]) => (
                 <button
                   key={value}
                   type="button"
-                  onClick={() => setLocationCategory(value)}
-                  className={`min-h-8 shrink-0 cursor-pointer px-2.5 font-sans text-[0.56rem] font-semibold uppercase tracking-[0.08em] transition-colors ${
+                  onClick={() => {
+                    setLocationCategory(value);
+                    const nextIndex = SPOTS_DATA.findIndex((spot) => value === "all" || spot.category === value);
+                    if (nextIndex >= 0) setSelectedSpotIndex(nextIndex);
+                  }}
+                  className={`inline-flex min-h-8 shrink-0 cursor-pointer items-center gap-1.5 px-2.5 font-sans text-[0.56rem] font-semibold uppercase tracking-[0.08em] transition-colors ${
                     locationCategory === value ? "bg-[#B85D36] text-white" : "bg-transparent text-[#47413B] hover:bg-white"
                   }`}
                 >
+                  {icon && <Icon name={icon} size={11} />}
                   {label}{value === "all" ? ` (${count})` : ""}
                 </button>
               ))}
@@ -1687,7 +1692,18 @@ export default function LandingPage() {
               <input
                 type="search"
                 value={locationSearch}
-                onChange={(event) => setLocationSearch(event.target.value)}
+                onChange={(event) => {
+                  const query = event.target.value;
+                  setLocationSearch(query);
+                  const normalized = query.trim().toLocaleLowerCase();
+                  if (normalized) {
+                    const nextIndex = SPOTS_DATA.findIndex((spot) => {
+                      const copy = t.spots[spot.copyIndex] || t.spots[0];
+                      return `${copy.name} ${copy.blurb} ${spot.addr}`.toLocaleLowerCase().includes(normalized);
+                    });
+                    if (nextIndex >= 0) setSelectedSpotIndex(nextIndex);
+                  }
+                }}
                 placeholder={t.locationSearch}
                 className="min-h-8 w-full border border-[#CFC7BB] bg-white py-1.5 pl-8 pr-2.5 font-sans text-[0.65rem] text-[#1A1A1A] outline-none placeholder:text-[#888178] focus:border-[#B85D36] focus:ring-1 focus:ring-[#B85D36]"
               />
@@ -1705,7 +1721,7 @@ export default function LandingPage() {
                     {t.spotHead}
                   </h3>
                 </div>
-                <span className="bg-[#1A1A1A] px-3 py-2 font-sans text-[0.58rem] font-semibold uppercase tracking-[0.12em] text-white">
+                <span className="bg-[#1A1A1A] px-3 py-2 font-sans text-[0.58rem] font-semibold uppercase tracking-[0.12em] text-[#D8B56F]">
                   {visibleSpots.length} {t.locations}
                 </span>
               </div>
@@ -1786,10 +1802,17 @@ export default function LandingPage() {
                       </div>
                       <div className="p-3">
                         <p className="line-clamp-2 font-sans text-[0.68rem] leading-relaxed text-[#575149]">{activeSpotData.addr}</p>
-                        <p className="mt-1.5 font-sans text-[0.58rem] font-semibold uppercase tracking-[0.1em] text-[#B85D36]">{activeSpotData.km} · {activeSpotData.walk ? t.walk : t.drive}</p>
+                        <div className="mt-1.5 flex items-center justify-between gap-3">
+                          <p className="font-sans text-[0.58rem] font-semibold uppercase tracking-[0.1em] text-[#B85D36]">{activeSpotData.km} · {activeSpotData.walk ? t.walk : t.drive}</p>
+                          {"rating" in activeSpotData && (
+                            <span className="inline-flex items-center gap-1 font-sans text-[0.62rem] text-[#4B4640]">
+                              {activeSpotData.rating} <Icon name="star" size={11} color="#B85D36" /> ({activeSpotData.reviewCount?.toLocaleString("en-US")})
+                            </span>
+                          )}
+                        </div>
                       </div>
                     </div>
-                    <a href={activeDirHref} target="_blank" rel="noreferrer" className="absolute bottom-4 right-4 inline-flex min-h-11 items-center gap-2 bg-[#B85D36] px-4 font-sans text-[0.62rem] font-bold uppercase tracking-[0.12em] text-white shadow-lg transition-colors hover:bg-[#964725]">
+                    <a href={activeDirHref} target="_blank" rel="noreferrer" className="absolute bottom-4 right-4 inline-flex min-h-10 items-center gap-2 bg-[#704836] px-4 font-sans text-[0.62rem] font-bold uppercase tracking-[0.12em] text-white shadow-lg transition-colors hover:bg-[#553426]">
                       {t.btnMaps} <Icon name="external-link" size={13} />
                     </a>
                   </>

@@ -1028,18 +1028,18 @@ const UNITS_DATA = [
 
 // 12 Location Destinations Radar Data
 const SPOTS_DATA = [
-  { no: "01", category: "famous", km: "0.2 km", off: 3, peak: 4, walk: true, q: "Landmark 81 Vinhomes Central Park", addr: "208 Nguyễn Hữu Cảnh, P.22, Bình Thạnh" },
-  { no: "02", category: "famous", km: "0.1 km", off: 2, peak: 2, walk: true, q: "Cong vien Vinhomes Central Park", addr: "Khuôn viên ven sông Vinhomes Central Park" },
-  { no: "03", category: "shopping", km: "3.8 km", off: 10, peak: 18, walk: false, q: "Cho Ben Thanh Quan 1", addr: "Đường Lê Lợi, Phường Bến Thành, Quận 1" },
-  { no: "04", category: "culture", km: "3.2 km", off: 9, peak: 16, walk: false, q: "Nha Hat Thanh Pho Quan 1", addr: "07 Công Trường Lam Sơn, Bến Nghé, Quận 1" },
-  { no: "05", category: "culture", km: "3.5 km", off: 10, peak: 17, walk: false, q: "Nha Tho Duc Ba Sai Gon", addr: "01 Công Xã Paris, Bến Nghé, Quận 1" },
-  { no: "06", category: "shopping", km: "2.8 km", off: 8, peak: 14, walk: false, q: "Le Thanh Ton Quan 1", addr: "Khu phố Nhật Bản, Lê Thánh Tôn & Thái Văn Lung" },
-  { no: "07", category: "culture", km: "2.2 km", off: 6, peak: 11, walk: false, q: "Thao Cam Vien Sai Gon", addr: "02 Nguyễn Bỉnh Khiêm, Bến Nghé, Quận 1" },
-  { no: "08", category: "transport", km: "2.5 km", off: 7, peak: 12, walk: false, q: "Cau Ba Son Thu Thiem", addr: "Cầu Ba Son nối Bình Thạnh & KĐT Thủ Thiêm" },
-  { no: "09", category: "culture", km: "4.2 km", off: 12, peak: 20, walk: false, q: "Bao tang My Thuat TP Ho Chi Minh", addr: "97A Phó Đức Chính, Phường Nguyễn Thái Bình, Quận 1" },
-  { no: "10", category: "shopping", km: "3.9 km", off: 11, peak: 18, walk: false, q: "Thao Dien Quan 2", addr: "Xuân Thủy, Quốc Hương, Thảo Điền, TP. Thủ Đức" },
-  { no: "11", category: "transport", km: "8.5 km", off: 22, peak: 38, walk: false, q: "San bay Tan Son Nhat", addr: "Đường Trường Sơn, Phường 2, Tân Bình" },
-  { no: "12", category: "transport", km: "3.0 km", off: 8, peak: 15, walk: false, q: "Ben Bach Dang Waterbus", addr: "02 Tôn Đức Thắng, Bến Nghé, Quận 1" },
+  { no: "01", copyIndex: 0, icon: "building", category: "famous", km: "0.2 km", off: 3, peak: 4, walk: true, q: "Landmark 81 Vinhomes Central Park", addr: "208 Nguyễn Hữu Cảnh, P.22, Bình Thạnh" },
+  { no: "02", copyIndex: 2, icon: "footprints", category: "shopping", km: "3.8 km", off: 10, peak: 18, walk: false, q: "Cho Ben Thanh Quan 1", addr: "Đường Lê Lợi, Phường Bến Thành, Quận 1" },
+  { no: "03", copyIndex: 9, icon: "coffee", category: "shopping", km: "3.9 km", off: 11, peak: 18, walk: false, q: "Thao Dien Quan 2", addr: "Xuân Thủy, Quốc Hương, Thảo Điền, TP. Thủ Đức" },
+  { no: "04", copyIndex: 3, icon: "building", category: "culture", km: "3.2 km", off: 9, peak: 16, walk: false, q: "Nha Hat Thanh Pho Quan 1", addr: "07 Công Trường Lam Sơn, Bến Nghé, Quận 1" },
+  { no: "05", copyIndex: 7, icon: "map-pin", category: "transport", km: "2.5 km", off: 7, peak: 12, walk: false, q: "Cau Ba Son Thu Thiem", addr: "Cầu Ba Son nối Bình Thạnh & KĐT Thủ Thiêm" },
+  { no: "06", copyIndex: 4, icon: "building", category: "culture", km: "3.5 km", off: 10, peak: 17, walk: false, q: "Nha Tho Duc Ba Sai Gon", addr: "01 Công Xã Paris, Bến Nghé, Quận 1" },
+  { no: "07", copyIndex: 1, icon: "footprints", category: "famous", km: "0.1 km", off: 2, peak: 2, walk: true, q: "Cong vien Vinhomes Central Park", addr: "Khuôn viên ven sông Vinhomes Central Park" },
+  { no: "08", copyIndex: 5, icon: "coffee", category: "shopping", km: "2.8 km", off: 8, peak: 14, walk: false, q: "Le Thanh Ton Quan 1", addr: "Khu phố Nhật Bản, Lê Thánh Tôn & Thái Văn Lung" },
+  { no: "09", copyIndex: 6, icon: "building", category: "culture", km: "2.2 km", off: 6, peak: 11, walk: false, q: "Thao Cam Vien Sai Gon", addr: "02 Nguyễn Bỉnh Khiêm, Bến Nghé, Quận 1" },
+  { no: "10", copyIndex: 8, icon: "building", category: "culture", km: "4.2 km", off: 12, peak: 20, walk: false, q: "Bao tang My Thuat TP Ho Chi Minh", addr: "97A Phó Đức Chính, Phường Nguyễn Thái Bình, Quận 1" },
+  { no: "11", copyIndex: 10, icon: "train", category: "transport", km: "8.5 km", off: 22, peak: 38, walk: false, q: "San bay Tan Son Nhat", addr: "Đường Trường Sơn, Phường 2, Tân Bình" },
+  { no: "12", copyIndex: 11, icon: "map-pin", category: "transport", km: "3.0 km", off: 8, peak: 15, walk: false, q: "Ben Bach Dang Waterbus", addr: "02 Tôn Đức Thắng, Bến Nghé, Quận 1" },
 ];
 
 export default function LandingPage() {
@@ -1059,7 +1059,6 @@ export default function LandingPage() {
   const [draftPriceRange, setDraftPriceRange] = useState<[number, number]>([20000000, 120000000]);
 
   // Location Radar State for Section 5
-  const [trafficMode, setTrafficMode] = useState<"off" | "peak">("off");
   const [selectedSpotIndex, setSelectedSpotIndex] = useState<number>(0);
   const [locationView, setLocationView] = useState<"map" | "radar">("map");
   const [locationCategory, setLocationCategory] = useState("all");
@@ -1159,9 +1158,9 @@ export default function LandingPage() {
   }, [filtersOpen]);
 
   const activeSpotData = SPOTS_DATA[selectedSpotIndex] || SPOTS_DATA[0];
-  const activeSpotText = t.spots[selectedSpotIndex] || t.spots[0];
-  const visibleSpots = SPOTS_DATA.map((spot, index) => ({ spot, index })).filter(({ spot, index }) => {
-    const localized = t.spots[index] || t.spots[0];
+  const activeSpotText = t.spots[activeSpotData.copyIndex] || t.spots[0];
+  const visibleSpots = SPOTS_DATA.map((spot, index) => ({ spot, index })).filter(({ spot }) => {
+    const localized = t.spots[spot.copyIndex] || t.spots[0];
     const matchesCategory = locationCategory === "all" || spot.category === locationCategory;
     const haystack = `${localized.name} ${localized.blurb} ${spot.addr}`.toLocaleLowerCase();
     return matchesCategory && haystack.includes(locationSearch.trim().toLocaleLowerCase());
@@ -1636,12 +1635,12 @@ export default function LandingPage() {
             </p>
           </header>
 
-          <div className="mt-6 grid gap-4 border border-[#DDD5C7] bg-[#F4EFEB] p-3 lg:grid-cols-[auto_1fr_minmax(220px,300px)] lg:items-center">
-            <div className="flex flex-wrap items-center gap-2">
+          <div className="mt-6 grid gap-3 border border-[#DDD5C7] bg-[#F4EFEB] p-2.5 lg:grid-cols-[auto_minmax(0,1fr)_180px] lg:items-center">
+            <div className="flex items-center gap-2 border-[#CFC5B4] lg:border-r lg:pr-3">
               <span className="font-sans text-[0.62rem] font-semibold uppercase tracking-[0.14em] text-[#6C655D]">
                 {t.mapViewLabel}:
               </span>
-              <div className="flex border border-[#D5CCBE] bg-white p-1">
+              <div className="flex shrink-0 border border-[#D5CCBE] bg-white p-0.5">
                 {([
                   ["map", t.mapGoogle, "map"],
                   ["radar", t.mapRadar, "sparkles"],
@@ -1650,7 +1649,7 @@ export default function LandingPage() {
                     key={value}
                     type="button"
                     onClick={() => setLocationView(value)}
-                    className={`inline-flex min-h-9 cursor-pointer items-center gap-2 px-3 font-sans text-[0.62rem] font-semibold uppercase tracking-[0.12em] transition-colors ${
+                    className={`inline-flex min-h-8 cursor-pointer items-center gap-1.5 px-2.5 font-sans text-[0.58rem] font-semibold uppercase tracking-[0.1em] transition-colors ${
                       locationView === value ? "bg-[#1A1A1A] text-white" : "bg-white text-[#413D37] hover:bg-[#F4EFEB]"
                     }`}
                   >
@@ -1661,7 +1660,7 @@ export default function LandingPage() {
               </div>
             </div>
 
-            <div className="flex flex-wrap items-center justify-start gap-1 lg:justify-center">
+            <div className="flex min-w-0 items-center gap-0.5 overflow-x-auto whitespace-nowrap lg:justify-center">
               {([
                 ["all", t.catAll, SPOTS_DATA.length],
                 ["famous", t.catFamous, SPOTS_DATA.filter((spot) => spot.category === "famous").length],
@@ -1673,7 +1672,7 @@ export default function LandingPage() {
                   key={value}
                   type="button"
                   onClick={() => setLocationCategory(value)}
-                  className={`min-h-8 cursor-pointer px-3 font-sans text-[0.6rem] font-semibold uppercase tracking-[0.1em] transition-colors ${
+                  className={`min-h-8 shrink-0 cursor-pointer px-2.5 font-sans text-[0.56rem] font-semibold uppercase tracking-[0.08em] transition-colors ${
                     locationCategory === value ? "bg-[#B85D36] text-white" : "bg-transparent text-[#47413B] hover:bg-white"
                   }`}
                 >
@@ -1690,13 +1689,13 @@ export default function LandingPage() {
                 value={locationSearch}
                 onChange={(event) => setLocationSearch(event.target.value)}
                 placeholder={t.locationSearch}
-                className="min-h-10 w-full border border-[#CFC7BB] bg-white py-2 pl-9 pr-3 font-sans text-xs text-[#1A1A1A] outline-none placeholder:text-[#888178] focus:border-[#B85D36] focus:ring-1 focus:ring-[#B85D36]"
+                className="min-h-8 w-full border border-[#CFC7BB] bg-white py-1.5 pl-8 pr-2.5 font-sans text-[0.65rem] text-[#1A1A1A] outline-none placeholder:text-[#888178] focus:border-[#B85D36] focus:ring-1 focus:ring-[#B85D36]"
               />
             </label>
           </div>
 
-          <div className="mt-6 grid gap-6 xl:grid-cols-[minmax(380px,.78fr)_minmax(0,1.22fr)]">
-            <div className="flex min-h-0 flex-col border border-[#DDD5C7] bg-white p-4 shadow-[0_8px_28px_rgba(52,43,34,0.06)] sm:p-5">
+          <div className="mt-5 grid gap-5 lg:grid-cols-[minmax(420px,.82fr)_minmax(0,1.18fr)]">
+            <div className="flex min-h-0 flex-col border border-[#DDD5C7] bg-white p-4 shadow-[0_8px_28px_rgba(52,43,34,0.06)]">
               <div className="flex flex-wrap items-end justify-between gap-3 border-b border-[#DDD5C7] pb-4">
                 <div>
                   <span className="font-sans text-[0.6rem] font-semibold uppercase tracking-[0.18em] text-[#B85D36]">
@@ -1711,41 +1710,23 @@ export default function LandingPage() {
                 </span>
               </div>
 
-              <div className="mt-3 flex items-center justify-between gap-3">
-                <span className="font-sans text-[0.58rem] font-semibold uppercase tracking-[0.14em] text-[#777068]">
-                  {trafficMode === "off" ? t.noteOff : t.notePeak}
-                </span>
-                <div className="flex border border-[#DDD5C7]">
-                  {(["off", "peak"] as const).map((mode) => (
-                    <button
-                      key={mode}
-                      type="button"
-                      onClick={() => setTrafficMode(mode)}
-                      className={`min-h-8 cursor-pointer px-2.5 font-sans text-[0.58rem] font-semibold uppercase tracking-[0.1em] ${trafficMode === mode ? "bg-[#1A1A1A] text-white" : "bg-white text-[#635D55]"}`}
-                    >
-                      {mode === "off" ? t.tOff : t.tPeak}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div className="mt-3 grid max-h-[388px] gap-2 overflow-y-auto pr-1">
+              <div className="mt-3 grid max-h-[342px] gap-2 overflow-y-auto pr-1">
                 {visibleSpots.map(({ spot, index }) => {
                   const selected = selectedSpotIndex === index;
-                  const copy = t.spots[index] || t.spots[0];
-                  const minutes = trafficMode === "off" ? spot.off : spot.peak;
+                  const copy = t.spots[spot.copyIndex] || t.spots[0];
+                  const minutes = spot.off;
                   return (
                     <button
                       key={spot.no}
                       type="button"
                       onClick={() => setSelectedSpotIndex(index)}
-                      className={`grid min-h-[64px] w-full cursor-pointer grid-cols-[34px_minmax(0,1fr)_auto] items-center gap-3 border px-3 py-2.5 text-left transition-colors ${selected ? "border-[#1A1A1A] bg-[#1A1A1A] text-white" : "border-[#DDD5C7] bg-[#FAF7F2] text-[#1A1A1A] hover:border-[#B85D36]"}`}
+                      className={`grid min-h-[56px] w-full cursor-pointer grid-cols-[30px_minmax(0,1fr)_auto] items-center gap-2.5 border px-3 py-2 text-left transition-colors ${selected ? "border-[#1A1A1A] bg-[#1A1A1A] text-white" : "border-[#DDD5C7] bg-[#FAF7F2] text-[#1A1A1A] hover:border-[#B85D36]"}`}
                     >
-                      <span className={`grid size-8 place-items-center rounded-full border font-sans text-[0.62rem] font-bold ${selected ? "border-[#B85D36] text-white" : "border-[#D0C6B7] bg-white text-[#4C463F]"}`}>
+                      <span className={`grid size-7 place-items-center rounded-full border font-sans text-[0.6rem] font-bold ${selected ? "border-[#B85D36] bg-[#B85D36] text-white" : "border-[#D0C6B7] bg-white text-[#4C463F]"}`}>
                         {spot.no}
                       </span>
                       <span className="min-w-0">
-                        <span className="block truncate font-display text-[1rem] italic leading-tight">{copy.name}</span>
+                        <span className="flex items-center gap-1.5 truncate font-display text-[0.95rem] italic leading-tight"><Icon name={spot.icon} size={12} color={selected ? "#E9B892" : "#B08D57"} />{copy.name}</span>
                         <span className={`mt-1 block font-sans text-[0.55rem] font-semibold uppercase tracking-[0.12em] ${selected ? "text-white/65" : "text-[#7C756D]"}`}>
                           {t.distLbl}: {spot.km}
                         </span>
@@ -1764,20 +1745,20 @@ export default function LandingPage() {
                 )}
               </div>
 
-              <div className="mt-3 border border-[#D7CEC1] bg-[#FAF7F2] p-4">
+              <div className="mt-3 border border-[#D7CEC1] bg-[#FAF7F2] p-3">
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <span className="font-sans text-[0.58rem] font-bold uppercase tracking-[0.14em] text-[#B85D36]">
                     Location #{activeSpotData.no} Info
                   </span>
                   <span className="bg-[#1A1A1A] px-2 py-1 font-sans text-[0.55rem] font-semibold uppercase tracking-[0.1em] text-white">
-                    {activeSpotData.km} · {trafficMode === "off" ? activeSpotData.off : activeSpotData.peak} min · {activeSpotData.walk ? t.walk : t.drive}
+                    {activeSpotData.km} · {activeSpotData.off} min · {activeSpotData.walk ? t.walk : t.drive}
                   </span>
                 </div>
-                <p className="mt-3 font-sans text-xs leading-relaxed text-[#4F4942]">{activeSpotText.blurb}</p>
-                <div className="mt-3 flex flex-wrap items-center justify-between gap-3 border-t border-[#DDD5C7] pt-3">
+                <p className="mt-2 font-sans text-[0.66rem] leading-relaxed text-[#4F4942]">{activeSpotText.blurb}</p>
+                <div className="mt-2 flex flex-wrap items-center justify-between gap-3 border-t border-[#DDD5C7] pt-2">
                   <span className="max-w-[34ch] font-sans text-[0.55rem] font-semibold uppercase tracking-[0.1em] text-[#777068]">{activeSpotData.addr}</span>
                   <a href={activeDirHref} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 font-sans text-[0.58rem] font-bold uppercase tracking-[0.12em] text-[#B85D36] hover:underline">
-                    {t.btnDir} Maps <Icon name="arrow-right" size={13} />
+                    {t.btnDir} Maps <Icon name="external-link" size={12} />
                   </a>
                 </div>
               </div>
@@ -1798,15 +1779,18 @@ export default function LandingPage() {
                 {locationView === "map" ? (
                   <>
                     <iframe src={mapSrc} title={t.mapTitle} loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="absolute inset-0 block size-full border-0" />
-                    <div className="absolute left-3 top-3 max-w-[min(82%,360px)] border border-[#B85D36] bg-[#1A1A1A] p-3 text-white shadow-lg">
-                      <div className="flex items-center justify-between gap-3 font-sans text-[0.58rem] font-bold uppercase tracking-[0.1em] text-[#F1CCB9]">
-                        <span>#{activeSpotData.no} · {activeSpotText.name}</span>
-                        <span className="shrink-0 bg-[#B85D36] px-2 py-1 text-white">{trafficMode === "off" ? activeSpotData.off : activeSpotData.peak} min</span>
+                    <div className="absolute left-3 top-3 w-[min(82%,360px)] border border-[#B85D36] bg-white shadow-lg">
+                      <div className="flex items-center justify-between gap-3 bg-[#1A1A1A] p-2.5 font-sans text-[0.58rem] font-bold uppercase tracking-[0.1em] text-[#F1CCB9]">
+                        <span className="truncate">#{activeSpotData.no} · {activeSpotText.name}</span>
+                        <span className="shrink-0 bg-[#B85D36] px-2 py-1 text-white">{activeSpotData.off} min</span>
                       </div>
-                      <p className="mt-2 line-clamp-2 font-sans text-xs leading-relaxed text-white/75">{activeSpotData.addr}</p>
+                      <div className="p-3">
+                        <p className="line-clamp-2 font-sans text-[0.68rem] leading-relaxed text-[#575149]">{activeSpotData.addr}</p>
+                        <p className="mt-1.5 font-sans text-[0.58rem] font-semibold uppercase tracking-[0.1em] text-[#B85D36]">{activeSpotData.km} · {activeSpotData.walk ? t.walk : t.drive}</p>
+                      </div>
                     </div>
                     <a href={activeDirHref} target="_blank" rel="noreferrer" className="absolute bottom-4 right-4 inline-flex min-h-11 items-center gap-2 bg-[#B85D36] px-4 font-sans text-[0.62rem] font-bold uppercase tracking-[0.12em] text-white shadow-lg transition-colors hover:bg-[#964725]">
-                      {t.btnMaps} <Icon name="arrow-right" size={14} />
+                      {t.btnMaps} <Icon name="external-link" size={13} />
                     </a>
                   </>
                 ) : (
@@ -1816,14 +1800,14 @@ export default function LandingPage() {
                     {SPOTS_DATA.slice(0, 8).map((spot, index) => {
                       const angle = (index / 8) * Math.PI * 2 - Math.PI / 2;
                       const radius = 37;
-                      return <button key={spot.no} type="button" onClick={() => setSelectedSpotIndex(index)} className={`absolute z-20 grid size-8 cursor-pointer place-items-center rounded-full border-2 font-sans text-[0.58rem] font-bold shadow ${selectedSpotIndex === index ? "border-white bg-[#B85D36] text-white" : "border-[#B85D36] bg-white text-[#7B3A21]"}`} style={{ left: `${50 + Math.cos(angle) * radius}%`, top: `${50 + Math.sin(angle) * radius}%`, transform: "translate(-50%, -50%)" }} aria-label={t.spots[index]?.name}>{spot.no}</button>;
+                      return <button key={spot.no} type="button" onClick={() => setSelectedSpotIndex(index)} className={`absolute z-20 grid size-8 cursor-pointer place-items-center rounded-full border-2 font-sans text-[0.58rem] font-bold shadow ${selectedSpotIndex === index ? "border-white bg-[#B85D36] text-white" : "border-[#B85D36] bg-white text-[#7B3A21]"}`} style={{ left: `${50 + Math.cos(angle) * radius}%`, top: `${50 + Math.sin(angle) * radius}%`, transform: "translate(-50%, -50%)" }} aria-label={t.spots[spot.copyIndex]?.name}>{spot.no}</button>;
                     })}
                   </div>
                 )}
               </div>
 
               <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-[#CFC5B4] pt-3 font-sans text-[0.56rem] uppercase tracking-[0.1em] text-[#686159]">
-                <span className="normal-case italic">* {trafficMode === "peak" ? t.notePeak : t.noteOff}</span>
+                <span className="normal-case italic">* {t.noteOff}</span>
                 <span className="font-semibold">{t.riverfrontTag}</span>
               </div>
             </div>

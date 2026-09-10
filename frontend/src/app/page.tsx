@@ -1649,12 +1649,12 @@ export default function LandingPage() {
                     key={value}
                     type="button"
                     onClick={() => setLocationView(value)}
-                    className={`inline-flex min-h-8 cursor-pointer items-center gap-1.5 px-2.5 font-sans text-[0.58rem] font-semibold uppercase tracking-[0.1em] transition-colors ${
-                      locationView === value ? "bg-[#1A1A1A] text-white" : "bg-white text-[#413D37] hover:bg-[#F4EFEB]"
+                    className={`relative isolate inline-flex min-h-8 cursor-pointer items-center gap-1.5 px-2.5 font-sans text-[0.58rem] font-semibold uppercase tracking-[0.1em] transition-colors ${
+                      locationView === value ? "!bg-[#1A1A1A] !text-white" : "bg-white text-[#413D37] hover:bg-[#F4EFEB]"
                     }`}
                   >
-                    <Icon name={icon} size={13} />
-                    {label}
+                    <Icon name={icon} size={13} className="relative z-10" />
+                    <span className="relative z-10 text-inherit">{label}</span>
                   </button>
                 ))}
               </div>
@@ -1736,13 +1736,13 @@ export default function LandingPage() {
                       key={spot.no}
                       type="button"
                       onClick={() => setSelectedSpotIndex(index)}
-                      className={`grid min-h-[56px] w-full cursor-pointer grid-cols-[30px_minmax(0,1fr)_auto] items-center gap-2.5 border px-3 py-2 text-left transition-colors ${selected ? "border-[#1A1A1A] bg-[#1A1A1A] text-white" : "border-[#DDD5C7] bg-[#FAF7F2] text-[#1A1A1A] hover:border-[#B85D36]"}`}
+                      className={`relative isolate grid min-h-[56px] w-full cursor-pointer grid-cols-[30px_minmax(0,1fr)_auto] items-center gap-2.5 border px-3 py-2 text-left transition-colors ${selected ? "!border-[#1A1A1A] !bg-[#1A1A1A] !text-white" : "border-[#DDD5C7] bg-[#FAF7F2] text-[#1A1A1A] hover:border-[#B85D36]"}`}
                     >
                       <span className={`grid size-7 place-items-center rounded-full border font-sans text-[0.6rem] font-bold ${selected ? "border-[#B85D36] bg-[#B85D36] text-white" : "border-[#D0C6B7] bg-white text-[#4C463F]"}`}>
                         {spot.no}
                       </span>
                       <span className="min-w-0">
-                        <span className="flex items-center gap-1.5 truncate font-display text-[0.95rem] italic leading-tight"><Icon name={spot.icon} size={12} color={selected ? "#E9B892" : "#B08D57"} />{copy.name}</span>
+                        <span className={`flex items-center gap-1.5 truncate font-display text-[0.95rem] italic leading-tight ${selected ? "!text-[#FAF7F2]" : "text-[#1A1A1A]"}`}><Icon name={spot.icon} size={12} color={selected ? "#E9B892" : "#B08D57"} />{copy.name}</span>
                         <span className={`mt-1 block font-sans text-[0.55rem] font-semibold uppercase tracking-[0.12em] ${selected ? "text-white/65" : "text-[#7C756D]"}`}>
                           {t.distLbl}: {spot.km}
                         </span>
@@ -1812,8 +1812,8 @@ export default function LandingPage() {
                         </div>
                       </div>
                     </div>
-                    <a href={activeDirHref} target="_blank" rel="noreferrer" className="absolute bottom-4 right-4 inline-flex min-h-10 items-center gap-2 bg-[#704836] px-4 font-sans text-[0.62rem] font-bold uppercase tracking-[0.12em] text-white shadow-lg transition-colors hover:bg-[#553426]">
-                      {t.btnMaps} <Icon name="external-link" size={13} />
+                    <a href={activeDirHref} target="_blank" rel="noreferrer" className="absolute bottom-4 right-4 z-40 isolate inline-flex min-h-10 items-center gap-2 !bg-[#704836] px-4 font-sans text-[0.62rem] font-bold uppercase tracking-[0.12em] !text-white opacity-100 shadow-[0_8px_24px_rgba(26,25,24,0.35)] transition-colors hover:!bg-[#553426]">
+                      <span className="relative z-10 text-white">{t.btnMaps}</span> <Icon name="external-link" size={13} color="#FFFFFF" className="relative z-10" />
                     </a>
                   </>
                 ) : (

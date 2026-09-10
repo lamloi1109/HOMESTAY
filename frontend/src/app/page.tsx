@@ -118,9 +118,14 @@ const DICT = {
     },
 
     // 5. Location Radar & Maps
+    locKicker: "Your Perfect Stay · In The Heart Of Saigon",
     locEye: "Vinhomes Central Park · Bình Thạnh",
-    locTitle: "Vị Trí & Bán Kính Kết Nối Sài Gòn",
-    locBody: "Thời gian di chuyển thực tế bằng ô tô từ sảnh toà nhà, đo trong hai khung giờ của Sài Gòn.",
+    locTitle: "Bản Đồ Vị Trí & Bán Kính Kết Nối Sài Gòn",
+    locBody: "Tọa lạc tại Vinhomes Central Park bên sông Sài Gòn, kết nối thuận tiện tới các địa điểm nổi tiếng chỉ từ 2–20 phút.",
+    mapViewLabel: "Map View", mapGoogle: "Bản Đồ Google Maps", mapRadar: "Sơ Đồ Bức Xạ",
+    catAll: "Tất Cả", catFamous: "Điểm Nổi Tiếng", catTransport: "Metro & Giao Thông", catShopping: "Mua Sắm", catCulture: "Văn Hóa",
+    locationSearch: "Tìm nhanh địa điểm...", nearbyBilingual: "Nearby Attractions · 周边热门景点", locations: "Locations",
+    radarTitle: "Gao Ji House · Central Distance Radar & Riverfront Map", riverfrontTag: "Bình Thạnh · Saigon Riverfront",
     tOff: "Giờ Thấp Điểm",
     tPeak: "Giờ Cao Điểm",
     noteOff: "Đo 10:00–15:00 các ngày trong tuần · Google Maps",
@@ -351,9 +356,14 @@ const DICT = {
       "L3.44.09": { title: "Duplex Penthouse Overlooking Landmark", type: "3 Bedrooms · Duplex" },
     },
 
+    locKicker: "Your Perfect Stay · In The Heart Of Saigon",
     locEye: "Vinhomes Central Park · Binh Thanh",
     locTitle: "Prime Location & Saigon Travel Radius",
-    locBody: "Actual driving time from the building lobby, measured during off-peak and peak Saigon traffic.",
+    locBody: "A riverfront address at Vinhomes Central Park, conveniently connected to Saigon landmarks in 2–20 minutes.",
+    mapViewLabel: "Map View", mapGoogle: "Google Maps", mapRadar: "Distance Radar",
+    catAll: "All", catFamous: "Landmarks", catTransport: "Metro & Transit", catShopping: "Shopping", catCulture: "Culture",
+    locationSearch: "Find a nearby place...", nearbyBilingual: "Nearby Attractions · 周边热门景点", locations: "Locations",
+    radarTitle: "Gao Ji House · Central Distance Radar & Riverfront Map", riverfrontTag: "Binh Thanh · Saigon Riverfront",
     tOff: "Off-Peak Hours",
     tPeak: "Peak Hours",
     noteOff: "Measured 10:00–15:00 weekdays · Google Maps",
@@ -575,9 +585,14 @@ const DICT = {
       "L3.44.09": { title: "顶层通层复式 对望地标塔", type: "三室复式 · Duplex" },
     },
 
+    locKicker: "理想旅居 · 西贡核心地段",
     locEye: "Vinhomes Central Park · 平盛郡",
     locTitle: "优越地理位置与西贡生活圈",
-    locBody: "自大堂出发的实际驾车测算时间，分别采集于西贡平峰与高峰时段。",
+    locBody: "坐落于 Vinhomes Central Park 西贡河畔，2–20 分钟便捷连接城市著名地标。",
+    mapViewLabel: "地图模式", mapGoogle: "谷歌地图", mapRadar: "距离雷达",
+    catAll: "全部", catFamous: "著名景点", catTransport: "地铁与交通", catShopping: "购物", catCulture: "文化",
+    locationSearch: "快速搜索地点...", nearbyBilingual: "Nearby Attractions · 周边热门景点", locations: "个地点",
+    radarTitle: "Gao Ji House · 中心距离雷达与滨河地图", riverfrontTag: "平盛郡 · 西贡河畔",
     tOff: "平峰时段",
     tPeak: "高峰时段",
     noteOff: "工作日 10:00–15:00 实测 · Google Maps",
@@ -799,9 +814,14 @@ const DICT = {
       "L3.44.09": { title: "頂層通層複式 對望地標塔", type: "三房複式 · Duplex" },
     },
 
+    locKicker: "理想旅居 · 西貢核心地段",
     locEye: "Vinhomes Central Park · 平盛郡",
     locTitle: "優越地理位置與西貢生活圈",
-    locBody: "自大廳出發的實際駕車測算時間，分別採集於西貢離峰與高峰時段。",
+    locBody: "坐落於 Vinhomes Central Park 西貢河畔，2–20 分鐘便捷連接城市著名地標。",
+    mapViewLabel: "地圖模式", mapGoogle: "Google 地圖", mapRadar: "距離雷達",
+    catAll: "全部", catFamous: "著名景點", catTransport: "捷運與交通", catShopping: "購物", catCulture: "文化",
+    locationSearch: "快速搜尋地點...", nearbyBilingual: "Nearby Attractions · 周边热门景点", locations: "個地點",
+    radarTitle: "Gao Ji House · 中心距離雷達與濱河地圖", riverfrontTag: "平盛郡 · 西貢河畔",
     tOff: "離峰時段",
     tPeak: "尖峰時段",
     noteOff: "工作日 10:00–15:00 實測 · Google Maps",
@@ -1008,18 +1028,18 @@ const UNITS_DATA = [
 
 // 12 Location Destinations Radar Data
 const SPOTS_DATA = [
-  { no: "01", km: "0.2 km", off: 3, peak: 4, walk: true, q: "Landmark 81 Vinhomes Central Park", addr: "208 Nguyễn Hữu Cảnh, P.22, Bình Thạnh" },
-  { no: "02", km: "0.1 km", off: 2, peak: 2, walk: true, q: "Cong vien Vinhomes Central Park", addr: "Khuôn viên ven sông Vinhomes Central Park" },
-  { no: "03", km: "3.8 km", off: 10, peak: 18, walk: false, q: "Cho Ben Thanh Quan 1", addr: "Đường Lê Lợi, Phường Bến Thành, Quận 1" },
-  { no: "04", km: "3.2 km", off: 9, peak: 16, walk: false, q: "Nha Hat Thanh Pho Quan 1", addr: "07 Công Trường Lam Sơn, Bến Nghé, Quận 1" },
-  { no: "05", km: "3.5 km", off: 10, peak: 17, walk: false, q: "Nha Tho Duc Ba Sai Gon", addr: "01 Công Xã Paris, Bến Nghé, Quận 1" },
-  { no: "06", km: "2.8 km", off: 8, peak: 14, walk: false, q: "Le Thanh Ton Quan 1", addr: "Khu phố Nhật Bản, Lê Thánh Tôn & Thái Văn Lung" },
-  { no: "07", km: "2.2 km", off: 6, peak: 11, walk: false, q: "Thao Cam Vien Sai Gon", addr: "02 Nguyễn Bỉnh Khiêm, Bến Nghé, Quận 1" },
-  { no: "08", km: "2.5 km", off: 7, peak: 12, walk: false, q: "Cau Ba Son Thu Thiem", addr: "Cầu Ba Son nối Bình Thạnh & KĐT Thủ Thiêm" },
-  { no: "09", km: "4.2 km", off: 12, peak: 20, walk: false, q: "Bao tang My Thuat TP Ho Chi Minh", addr: "97A Phó Đức Chính, Phường Nguyễn Thái Bình, Quận 1" },
-  { no: "10", km: "3.9 km", off: 11, peak: 18, walk: false, q: "Thao Dien Quan 2", addr: "Xuân Thủy, Quốc Hương, Thảo Điền, TP. Thủ Đức" },
-  { no: "11", km: "8.5 km", off: 22, peak: 38, walk: false, q: "San bay Tan Son Nhat", addr: "Đường Trường Sơn, Phường 2, Tân Bình" },
-  { no: "12", km: "3.0 km", off: 8, peak: 15, walk: false, q: "Ben Bach Dang Waterbus", addr: "02 Tôn Đức Thắng, Bến Nghé, Quận 1" },
+  { no: "01", category: "famous", km: "0.2 km", off: 3, peak: 4, walk: true, q: "Landmark 81 Vinhomes Central Park", addr: "208 Nguyễn Hữu Cảnh, P.22, Bình Thạnh" },
+  { no: "02", category: "famous", km: "0.1 km", off: 2, peak: 2, walk: true, q: "Cong vien Vinhomes Central Park", addr: "Khuôn viên ven sông Vinhomes Central Park" },
+  { no: "03", category: "shopping", km: "3.8 km", off: 10, peak: 18, walk: false, q: "Cho Ben Thanh Quan 1", addr: "Đường Lê Lợi, Phường Bến Thành, Quận 1" },
+  { no: "04", category: "culture", km: "3.2 km", off: 9, peak: 16, walk: false, q: "Nha Hat Thanh Pho Quan 1", addr: "07 Công Trường Lam Sơn, Bến Nghé, Quận 1" },
+  { no: "05", category: "culture", km: "3.5 km", off: 10, peak: 17, walk: false, q: "Nha Tho Duc Ba Sai Gon", addr: "01 Công Xã Paris, Bến Nghé, Quận 1" },
+  { no: "06", category: "shopping", km: "2.8 km", off: 8, peak: 14, walk: false, q: "Le Thanh Ton Quan 1", addr: "Khu phố Nhật Bản, Lê Thánh Tôn & Thái Văn Lung" },
+  { no: "07", category: "culture", km: "2.2 km", off: 6, peak: 11, walk: false, q: "Thao Cam Vien Sai Gon", addr: "02 Nguyễn Bỉnh Khiêm, Bến Nghé, Quận 1" },
+  { no: "08", category: "transport", km: "2.5 km", off: 7, peak: 12, walk: false, q: "Cau Ba Son Thu Thiem", addr: "Cầu Ba Son nối Bình Thạnh & KĐT Thủ Thiêm" },
+  { no: "09", category: "culture", km: "4.2 km", off: 12, peak: 20, walk: false, q: "Bao tang My Thuat TP Ho Chi Minh", addr: "97A Phó Đức Chính, Phường Nguyễn Thái Bình, Quận 1" },
+  { no: "10", category: "shopping", km: "3.9 km", off: 11, peak: 18, walk: false, q: "Thao Dien Quan 2", addr: "Xuân Thủy, Quốc Hương, Thảo Điền, TP. Thủ Đức" },
+  { no: "11", category: "transport", km: "8.5 km", off: 22, peak: 38, walk: false, q: "San bay Tan Son Nhat", addr: "Đường Trường Sơn, Phường 2, Tân Bình" },
+  { no: "12", category: "transport", km: "3.0 km", off: 8, peak: 15, walk: false, q: "Ben Bach Dang Waterbus", addr: "02 Tôn Đức Thắng, Bến Nghé, Quận 1" },
 ];
 
 export default function LandingPage() {
@@ -1041,6 +1061,9 @@ export default function LandingPage() {
   // Location Radar State for Section 5
   const [trafficMode, setTrafficMode] = useState<"off" | "peak">("off");
   const [selectedSpotIndex, setSelectedSpotIndex] = useState<number>(0);
+  const [locationView, setLocationView] = useState<"map" | "radar">("map");
+  const [locationCategory, setLocationCategory] = useState("all");
+  const [locationSearch, setLocationSearch] = useState("");
 
   // Inquiry Modal State
   const [inquiryModalOpen, setInquiryModalOpen] = useState(false);
@@ -1137,6 +1160,12 @@ export default function LandingPage() {
 
   const activeSpotData = SPOTS_DATA[selectedSpotIndex] || SPOTS_DATA[0];
   const activeSpotText = t.spots[selectedSpotIndex] || t.spots[0];
+  const visibleSpots = SPOTS_DATA.map((spot, index) => ({ spot, index })).filter(({ spot, index }) => {
+    const localized = t.spots[index] || t.spots[0];
+    const matchesCategory = locationCategory === "all" || spot.category === locationCategory;
+    const haystack = `${localized.name} ${localized.blurb} ${spot.addr}`.toLocaleLowerCase();
+    return matchesCategory && haystack.includes(locationSearch.trim().toLocaleLowerCase());
+  });
   const mapSrc = `https://maps.google.com/maps?q=${encodeURIComponent(activeSpotData.q)}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
   const activeDirHref = `https://maps.google.com/?daddr=${encodeURIComponent(activeSpotData.q)}`;
 
@@ -1586,234 +1615,217 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── 5. LOCATION & TRAVEL RADAR (Vị Trí & Bán Kính Kết Nối) */}
+      {/* ── 5. LOCATION & TRAVEL RADAR ── */}
       <section
         id="location"
-        className="pt-[clamp(32px,4vw,64px)] pb-[clamp(48px,5vw,80px)] px-[clamp(20px,4vw,56px)] bg-[#FBF9F5]"
+        className="border-y border-[#DDD5C7] bg-[#FAF7F2] px-[clamp(20px,4vw,56px)] py-[clamp(40px,4vw,64px)]"
       >
-        <div className="max-w-[1240px] mx-auto">
-          <div className="flex flex-wrap items-end justify-between gap-6 pb-2">
-            <div className="flex-1 min-w-[320px]">
-              <div className="flex items-center gap-3">
-                <span className="w-8 h-px bg-[#B08D57]" />
-                <span className="font-sans text-xs font-bold uppercase tracking-[0.15em] text-[#8A6214]">
-                  {t.locEye}
-                </span>
+        <div className="mx-auto max-w-[1600px]">
+          <header className="grid gap-6 border-b border-[#DDD5C7] pb-6 lg:grid-cols-[minmax(0,1.65fr)_minmax(300px,.65fr)] lg:items-end">
+            <div>
+              <div className="flex items-center gap-3 font-sans text-[0.65rem] font-semibold uppercase tracking-[0.26em] text-[#B85D36]">
+                <span className="size-1.5 bg-[#B85D36]" aria-hidden="true" />
+                {t.locKicker}
               </div>
-              <h2 className="mt-4 font-display text-[clamp(1.9rem,1.7rem+1vw,2.8rem)] font-medium leading-[1.2] text-[#1A1A1A]">
+              <h2 className="mt-3 max-w-[26ch] font-display text-[clamp(2rem,3.7vw,4rem)] font-normal uppercase italic leading-[0.98] tracking-[-0.02em] text-[#171715]">
                 {t.locTitle}
               </h2>
-              <p className="mt-5 max-w-[52ch] font-sans text-[1.08rem] leading-[1.7] text-[#383838]">
-                {t.locBody}
-              </p>
+            </div>
+            <p className="m-0 max-w-[48ch] font-sans text-[0.72rem] font-medium uppercase leading-[1.75] tracking-[0.1em] text-[#544F48] lg:justify-self-end">
+              {t.locBody}
+            </p>
+          </header>
+
+          <div className="mt-6 grid gap-4 border border-[#DDD5C7] bg-[#F4EFEB] p-3 lg:grid-cols-[auto_1fr_minmax(220px,300px)] lg:items-center">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="font-sans text-[0.62rem] font-semibold uppercase tracking-[0.14em] text-[#6C655D]">
+                {t.mapViewLabel}:
+              </span>
+              <div className="flex border border-[#D5CCBE] bg-white p-1">
+                {([
+                  ["map", t.mapGoogle, "map"],
+                  ["radar", t.mapRadar, "sparkles"],
+                ] as const).map(([value, label, icon]) => (
+                  <button
+                    key={value}
+                    type="button"
+                    onClick={() => setLocationView(value)}
+                    className={`inline-flex min-h-9 cursor-pointer items-center gap-2 px-3 font-sans text-[0.62rem] font-semibold uppercase tracking-[0.12em] transition-colors ${
+                      locationView === value ? "bg-[#1A1A1A] text-white" : "bg-white text-[#413D37] hover:bg-[#F4EFEB]"
+                    }`}
+                  >
+                    <Icon name={icon} size={13} />
+                    {label}
+                  </button>
+                ))}
+              </div>
             </div>
 
-            <div className="flex flex-col items-start gap-3">
-              <span className="px-3.5 py-2 bg-[#1F3A2E] text-[#FAF3EA] font-sans text-xs font-semibold uppercase tracking-[0.15em]">
-                {t.spotBadge}
-              </span>
-              <FilterTabs
-                tabs={[
-                  { label: t.tOff, value: "off" },
-                  { label: t.tPeak, value: "peak" },
-                ]}
-                value={trafficMode}
-                onChange={(val) => setTrafficMode(val as "off" | "peak")}
-              />
+            <div className="flex flex-wrap items-center justify-start gap-1 lg:justify-center">
+              {([
+                ["all", t.catAll, SPOTS_DATA.length],
+                ["famous", t.catFamous, SPOTS_DATA.filter((spot) => spot.category === "famous").length],
+                ["transport", t.catTransport, SPOTS_DATA.filter((spot) => spot.category === "transport").length],
+                ["shopping", t.catShopping, SPOTS_DATA.filter((spot) => spot.category === "shopping").length],
+                ["culture", t.catCulture, SPOTS_DATA.filter((spot) => spot.category === "culture").length],
+              ] as const).map(([value, label, count]) => (
+                <button
+                  key={value}
+                  type="button"
+                  onClick={() => setLocationCategory(value)}
+                  className={`min-h-8 cursor-pointer px-3 font-sans text-[0.6rem] font-semibold uppercase tracking-[0.1em] transition-colors ${
+                    locationCategory === value ? "bg-[#B85D36] text-white" : "bg-transparent text-[#47413B] hover:bg-white"
+                  }`}
+                >
+                  {label}{value === "all" ? ` (${count})` : ""}
+                </button>
+              ))}
             </div>
+
+            <label className="relative block">
+              <span className="sr-only">{t.locationSearch}</span>
+              <Icon name="search" size={14} color="#7A746C" className="absolute left-3 top-1/2 -translate-y-1/2" />
+              <input
+                type="search"
+                value={locationSearch}
+                onChange={(event) => setLocationSearch(event.target.value)}
+                placeholder={t.locationSearch}
+                className="min-h-10 w-full border border-[#CFC7BB] bg-white py-2 pl-9 pr-3 font-sans text-xs text-[#1A1A1A] outline-none placeholder:text-[#888178] focus:border-[#B85D36] focus:ring-1 focus:ring-[#B85D36]"
+              />
+            </label>
           </div>
 
-          <div className="mt-[clamp(28px,3.5vw,44px)] grid gap-[clamp(20px,2vw,28px)] grid-cols-1 lg:grid-cols-12 items-start">
-            {/* Left: 12 Spots List */}
-            <div className="lg:col-span-6 border border-[#E8E4DB] bg-white shadow-xs">
-              <div className="p-4 sm:p-5 border-b border-[#E8E4DB]">
-                <span className="inline-flex items-center gap-3 font-sans text-[0.6875rem] font-bold uppercase tracking-[0.15em] text-[#8A6214]">
-                  <span className="w-6 h-px bg-[#B08D57]" />
-                  {t.spotEye}
+          <div className="mt-6 grid gap-6 xl:grid-cols-[minmax(380px,.78fr)_minmax(0,1.22fr)]">
+            <div className="flex min-h-0 flex-col border border-[#DDD5C7] bg-white p-4 shadow-[0_8px_28px_rgba(52,43,34,0.06)] sm:p-5">
+              <div className="flex flex-wrap items-end justify-between gap-3 border-b border-[#DDD5C7] pb-4">
+                <div>
+                  <span className="font-sans text-[0.6rem] font-semibold uppercase tracking-[0.18em] text-[#B85D36]">
+                    {t.nearbyBilingual}
+                  </span>
+                  <h3 className="mt-1 font-display text-[1.45rem] uppercase leading-tight text-[#1A1A1A]">
+                    {t.spotHead}
+                  </h3>
+                </div>
+                <span className="bg-[#1A1A1A] px-3 py-2 font-sans text-[0.58rem] font-semibold uppercase tracking-[0.12em] text-white">
+                  {visibleSpots.length} {t.locations}
                 </span>
-                <h3 className="mt-2 font-display text-2xl font-medium leading-[1.2] text-[#1A1A1A]">
-                  {t.spotHead}
-                </h3>
               </div>
 
-              {/* Scrollable list of 12 spots */}
-              <div className="max-h-[430px] overflow-y-auto p-3 grid gap-2">
-                {SPOTS_DATA.map((p, idx) => {
-                  const on = selectedSpotIndex === idx;
-                  const spotText = t.spots[idx] || t.spots[0];
-                  const time = trafficMode === "off" ? `${p.off} phút` : `${p.peak} phút`;
+              <div className="mt-3 flex items-center justify-between gap-3">
+                <span className="font-sans text-[0.58rem] font-semibold uppercase tracking-[0.14em] text-[#777068]">
+                  {trafficMode === "off" ? t.noteOff : t.notePeak}
+                </span>
+                <div className="flex border border-[#DDD5C7]">
+                  {(["off", "peak"] as const).map((mode) => (
+                    <button
+                      key={mode}
+                      type="button"
+                      onClick={() => setTrafficMode(mode)}
+                      className={`min-h-8 cursor-pointer px-2.5 font-sans text-[0.58rem] font-semibold uppercase tracking-[0.1em] ${trafficMode === mode ? "bg-[#1A1A1A] text-white" : "bg-white text-[#635D55]"}`}
+                    >
+                      {mode === "off" ? t.tOff : t.tPeak}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="mt-3 grid max-h-[388px] gap-2 overflow-y-auto pr-1">
+                {visibleSpots.map(({ spot, index }) => {
+                  const selected = selectedSpotIndex === index;
+                  const copy = t.spots[index] || t.spots[0];
+                  const minutes = trafficMode === "off" ? spot.off : spot.peak;
                   return (
                     <button
-                      key={p.no}
+                      key={spot.no}
                       type="button"
-                      onClick={() => setSelectedSpotIndex(idx)}
-                      className={`w-full p-3 flex items-center gap-3.5 text-left transition-colors cursor-pointer rounded-none border ${
-                        on
-                          ? "bg-[#1A1A1A] text-white border-[#1A1A1A]"
-                          : "bg-white text-[#1A1A1A] border-[#E8E4DB] hover:border-[#B08D57]"
-                      }`}
+                      onClick={() => setSelectedSpotIndex(index)}
+                      className={`grid min-h-[64px] w-full cursor-pointer grid-cols-[34px_minmax(0,1fr)_auto] items-center gap-3 border px-3 py-2.5 text-left transition-colors ${selected ? "border-[#1A1A1A] bg-[#1A1A1A] text-white" : "border-[#DDD5C7] bg-[#FAF7F2] text-[#1A1A1A] hover:border-[#B85D36]"}`}
                     >
-                      <span
-                        className={`flex-none w-[34px] h-[34px] grid place-items-center font-sans text-xs font-bold tracking-wider border ${
-                          on
-                            ? "border-[#D4AF37] text-[#D4AF37]"
-                            : "border-[#E8E4DB] text-[#6B6255]"
-                        }`}
-                      >
-                        {p.no}
+                      <span className={`grid size-8 place-items-center rounded-full border font-sans text-[0.62rem] font-bold ${selected ? "border-[#B85D36] text-white" : "border-[#D0C6B7] bg-white text-[#4C463F]"}`}>
+                        {spot.no}
                       </span>
-                      <div className="grid gap-1 text-left min-w-0 flex-1">
-                        <span
-                          className={`font-display italic text-[1.08rem] leading-tight truncate ${
-                            on ? "text-[#FAF3EA]" : "text-[#1A1A1A]"
-                          }`}
-                        >
-                          {spotText.name}
+                      <span className="min-w-0">
+                        <span className="block truncate font-display text-[1rem] italic leading-tight">{copy.name}</span>
+                        <span className={`mt-1 block font-sans text-[0.55rem] font-semibold uppercase tracking-[0.12em] ${selected ? "text-white/65" : "text-[#7C756D]"}`}>
+                          {t.distLbl}: {spot.km}
                         </span>
-                        <span
-                          className={`font-sans text-[0.6875rem] font-semibold tracking-[0.15em] uppercase ${
-                            on ? "text-[rgba(250,243,234,0.72)]" : "text-[#6B6255]"
-                          }`}
-                        >
-                          {t.distLbl}: {p.km}
-                        </span>
-                      </div>
-                      <span
-                        className={`flex-none ml-auto px-2.5 py-1.5 font-sans text-[0.6875rem] font-semibold tracking-wider uppercase border ${
-                          on
-                            ? "bg-[#A6573C] text-white border-transparent"
-                            : "bg-transparent text-[#1A1A1A] border-[#E8E4DB]"
-                        }`}
-                      >
-                        {time}
+                      </span>
+                      <span className={`inline-flex min-h-7 items-center gap-1.5 border px-2 font-sans text-[0.58rem] font-bold uppercase tracking-[0.08em] ${selected ? "border-[#B85D36] bg-[#B85D36] text-white" : "border-[#D3CBC0] bg-white text-[#292622]"}`}>
+                        {minutes} min
+                        <Icon name={spot.walk ? "footprints" : "car"} size={12} />
                       </span>
                     </button>
                   );
                 })}
+                {visibleSpots.length === 0 && (
+                  <p role="status" className="border border-[#DDD5C7] bg-[#FAF7F2] p-6 text-center font-sans text-sm text-[#6B6255]">
+                    {t.emptyEye}
+                  </p>
+                )}
               </div>
 
-              {/* Selected Spot Details Box */}
-              <div className="m-3 border border-[#E8E4DB] bg-[#FAF8F5] p-4 grid gap-3">
-                <div className="flex flex-wrap items-center justify-between gap-2.5">
-                  <span className="inline-flex items-center gap-2 font-sans text-[0.6875rem] font-bold uppercase tracking-[0.15em] text-[#8A6214]">
-                    <Icon name="map-pin" size={15} color="currentColor" />
-                    <span>{t.infoWord} #{activeSpotData.no} · {t.infoTail}</span>
+              <div className="mt-3 border border-[#D7CEC1] bg-[#FAF7F2] p-4">
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <span className="font-sans text-[0.58rem] font-bold uppercase tracking-[0.14em] text-[#B85D36]">
+                    Location #{activeSpotData.no} Info
                   </span>
-                  <span className="bg-[#1A1A1A] text-[#FAF3EA] px-2.5 py-1 font-sans text-[0.6875rem] font-semibold uppercase tracking-wider">
-                    {activeSpotData.km} · {trafficMode === "off" ? activeSpotData.off : activeSpotData.peak} {t.mins(trafficMode === "off" ? activeSpotData.off : activeSpotData.peak)} {activeSpotData.walk ? t.walk : t.drive}
+                  <span className="bg-[#1A1A1A] px-2 py-1 font-sans text-[0.55rem] font-semibold uppercase tracking-[0.1em] text-white">
+                    {activeSpotData.km} · {trafficMode === "off" ? activeSpotData.off : activeSpotData.peak} min · {activeSpotData.walk ? t.walk : t.drive}
                   </span>
                 </div>
-                <p className="m-0 font-sans text-[0.9375rem] leading-relaxed text-[#383838]">
-                  {activeSpotText.blurb}
-                </p>
-                <div className="flex flex-wrap items-center justify-between gap-2.5 pt-3 border-t border-[#E8E4DB]">
-                  <span className="font-sans text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-[#6B6255]">
-                    {activeSpotData.addr}
-                  </span>
-                  <a
-                    href={activeDirHref}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-1.5 font-sans text-[0.6875rem] font-bold uppercase tracking-[0.15em] text-[#8A6214] hover:underline"
-                  >
-                    <span>{t.btnDir}</span>
-                    <Icon name="arrow-right" size={15} color="currentColor" />
+                <p className="mt-3 font-sans text-xs leading-relaxed text-[#4F4942]">{activeSpotText.blurb}</p>
+                <div className="mt-3 flex flex-wrap items-center justify-between gap-3 border-t border-[#DDD5C7] pt-3">
+                  <span className="max-w-[34ch] font-sans text-[0.55rem] font-semibold uppercase tracking-[0.1em] text-[#777068]">{activeSpotData.addr}</span>
+                  <a href={activeDirHref} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 font-sans text-[0.58rem] font-bold uppercase tracking-[0.12em] text-[#B85D36] hover:underline">
+                    {t.btnDir} Maps <Icon name="arrow-right" size={13} />
                   </a>
                 </div>
               </div>
             </div>
 
-            {/* Right: Map Box */}
-            <div className="lg:col-span-6 border border-[#1A1A1A] bg-white p-[clamp(14px,1.4vw,20px)] grid gap-3.5 shadow-xs">
-              <div className="grid gap-2">
-                <span className="inline-flex items-center gap-2.5 font-display text-[1.15rem] leading-snug text-[#1A1A1A]">
-                  <Icon name="map-pin" size={18} color="#8A6214" />
-                  <span>{t.mapTitle}</span>
-                </span>
-                <div className="flex flex-wrap gap-4">
-                  <span className="inline-flex items-center gap-2 font-sans text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-[#6B6255]">
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#A6573C]" />
-                    <span>{t.legend1}</span>
-                  </span>
-                  <span className="inline-flex items-center gap-2 font-sans text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-[#6B6255]">
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#1F3A2E]" />
-                    <span>{t.legend2}</span>
-                  </span>
+            <div className="border border-[#1A1A1A] bg-[#F1EBDD] p-4 shadow-[0_8px_28px_rgba(52,43,34,0.06)] sm:p-5">
+              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#CFC5B4] pb-4">
+                <h3 className="inline-flex items-center gap-2 font-display text-[1rem] font-semibold uppercase tracking-[0.03em] text-[#292622]">
+                  <Icon name="compass" size={16} color="#B85D36" /> {t.radarTitle}
+                </h3>
+                <div className="flex gap-3 font-sans text-[0.52rem] font-semibold uppercase tracking-[0.1em] text-[#615B54]">
+                  <span className="inline-flex items-center gap-1"><i className="size-2 rounded-full bg-[#B85D36]" /> {t.legend1}</span>
+                  <span className="inline-flex items-center gap-1"><i className="size-2 rounded-full bg-[#3977D5]" /> {t.legend2}</span>
                 </div>
               </div>
 
-              {/* Map Iframe */}
-              <div className="relative border border-[#E8E4DB] bg-[#FAF8F5] min-h-[clamp(360px,42vw,520px)]">
-                <iframe
-                  src={mapSrc}
-                  title={t.mapTitle}
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  className="absolute inset-0 w-full h-full border-0 block"
-                />
-                <a
-                  href={activeDirHref}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="absolute bottom-4 right-4 inline-flex items-center gap-2.5 bg-[#1A1A1A] hover:bg-[#0D3B22] border border-[#D4AF37] text-white px-4 py-3 min-h-[44px] no-underline font-sans text-xs font-semibold uppercase tracking-[0.15em] transition-colors shadow-lg"
-                >
-                  <span>{t.btnMaps}</span>
-                  <Icon name="arrow-right" size={15} color="currentColor" />
-                </a>
+              <div className="relative mt-4 min-h-[460px] overflow-hidden border border-[#C9BEAE] bg-[#E9E1D4] sm:min-h-[540px]">
+                {locationView === "map" ? (
+                  <>
+                    <iframe src={mapSrc} title={t.mapTitle} loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="absolute inset-0 block size-full border-0" />
+                    <div className="absolute left-3 top-3 max-w-[min(82%,360px)] border border-[#B85D36] bg-[#1A1A1A] p-3 text-white shadow-lg">
+                      <div className="flex items-center justify-between gap-3 font-sans text-[0.58rem] font-bold uppercase tracking-[0.1em] text-[#F1CCB9]">
+                        <span>#{activeSpotData.no} · {activeSpotText.name}</span>
+                        <span className="shrink-0 bg-[#B85D36] px-2 py-1 text-white">{trafficMode === "off" ? activeSpotData.off : activeSpotData.peak} min</span>
+                      </div>
+                      <p className="mt-2 line-clamp-2 font-sans text-xs leading-relaxed text-white/75">{activeSpotData.addr}</p>
+                    </div>
+                    <a href={activeDirHref} target="_blank" rel="noreferrer" className="absolute bottom-4 right-4 inline-flex min-h-11 items-center gap-2 bg-[#B85D36] px-4 font-sans text-[0.62rem] font-bold uppercase tracking-[0.12em] text-white shadow-lg transition-colors hover:bg-[#964725]">
+                      {t.btnMaps} <Icon name="arrow-right" size={14} />
+                    </a>
+                  </>
+                ) : (
+                  <div className="absolute inset-0 grid place-items-center bg-[radial-gradient(circle_at_center,rgba(184,93,54,.10)_0_1px,transparent_2px)] [background-size:24px_24px]">
+                    {[42, 64, 86].map((size) => <span key={size} className="absolute aspect-square rounded-full border border-[#B9AC99]" style={{ width: `${size}%` }} />)}
+                    <span className="relative z-10 grid size-24 place-items-center rounded-full border-4 border-[#FAF7F2] bg-[#B85D36] text-center font-sans text-[0.58rem] font-bold uppercase tracking-[0.1em] text-white shadow-xl">Gao Ji<br />House</span>
+                    {SPOTS_DATA.slice(0, 8).map((spot, index) => {
+                      const angle = (index / 8) * Math.PI * 2 - Math.PI / 2;
+                      const radius = 37;
+                      return <button key={spot.no} type="button" onClick={() => setSelectedSpotIndex(index)} className={`absolute z-20 grid size-8 cursor-pointer place-items-center rounded-full border-2 font-sans text-[0.58rem] font-bold shadow ${selectedSpotIndex === index ? "border-white bg-[#B85D36] text-white" : "border-[#B85D36] bg-white text-[#7B3A21]"}`} style={{ left: `${50 + Math.cos(angle) * radius}%`, top: `${50 + Math.sin(angle) * radius}%`, transform: "translate(-50%, -50%)" }} aria-label={t.spots[index]?.name}>{spot.no}</button>;
+                    })}
+                  </div>
+                )}
               </div>
 
-              <div className="flex flex-wrap items-baseline justify-between gap-4 font-sans text-xs text-[#6B6255]">
-                <span className="italic font-serif">{trafficMode === "peak" ? t.notePeak : t.noteOff}</span>
-                <span className="font-semibold uppercase tracking-[0.15em]">{t.mapFoot}</span>
+              <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-[#CFC5B4] pt-3 font-sans text-[0.56rem] uppercase tracking-[0.1em] text-[#686159]">
+                <span className="normal-case italic">* {trafficMode === "peak" ? t.notePeak : t.noteOff}</span>
+                <span className="font-semibold">{t.riverfrontTag}</span>
               </div>
-            </div>
-          </div>
-
-          {/* Lower Row: Skyline PhotoPlate & Address Inset Box */}
-          <div className="mt-[clamp(40px,5vw,72px)] grid gap-[clamp(28px,3.5vw,56px)] grid-cols-1 md:grid-cols-2 items-center">
-            {/* Skyline Photo */}
-            <div className="relative pr-3 pb-3">
-              <span
-                aria-hidden="true"
-                className="absolute left-3 top-3 right-0 bottom-0 border border-[#D4AF37] pointer-events-none"
-              />
-              <div className="relative bg-[#FAF8F5] border border-[#1F3A2E] p-[clamp(16px,2vw,30px)]">
-                <div className="relative border border-[#1F3A2E] aspect-[4/3] overflow-hidden">
-                  <Image
-                    src="/assets/photos/towers-skyline.jpg"
-                    alt="Tranh vẽ cụm toà tháp Vinhomes Central Park bên sông Sài Gòn"
-                    fill
-                    className="object-cover object-[50%_40%] sepia-[0.18] contrast-[1.14] saturate-[0.72] brightness-[1.04]"
-                  />
-                </div>
-                <div className="mt-3.5 flex flex-wrap items-baseline justify-between gap-3 font-sans text-xs font-semibold uppercase tracking-[0.15em]">
-                  <span className="text-[#8A6214]">{t.plate2}</span>
-                  <span className="font-display italic text-[0.9375rem] text-[#6B6255] lowercase tracking-normal">{t.mapFoot}</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Address Box in Jade-700 */}
-            <div className="bg-[#1F3A2E] border border-[#D4AF37] p-[clamp(24px,2.8vw,36px)] grid gap-3.5 justify-items-start text-white shadow-md">
-              <div className="flex items-center gap-3">
-                <span className="w-8 h-px bg-[#D4AF37]" />
-                <span className="font-sans text-xs font-bold uppercase tracking-[0.15em] text-[#E2C068]">
-                  {t.addrEye}
-                </span>
-              </div>
-              <p className="m-0 max-w-[34ch] font-display text-[clamp(1.3rem,1.1rem+0.7vw,1.75rem)] leading-[1.28] text-white">
-                208 Nguyễn Hữu Cảnh, Phường 22, Bình Thạnh, TP. Hồ Chí Minh
-              </p>
-              <Button
-                variant="onDark"
-                icon="map-pin"
-                as="a"
-                href="https://maps.google.com/?q=Vinhomes+Central+Park+208+Nguyen+Huu+Canh"
-                target="_blank"
-                rel="noreferrer"
-              >
-                {t.btnMaps}
-              </Button>
             </div>
           </div>
         </div>

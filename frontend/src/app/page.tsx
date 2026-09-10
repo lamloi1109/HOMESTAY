@@ -47,7 +47,7 @@ const DICT = {
     // 3. Editorial Showcase
     introEye: "Cho Thuê Căn Hộ · Landmark & Vinhomes Central Park",
     introTitle: "Căn Hộ Cho Thuê Trong Landmark Và Vinhomes Central Park",
-    introBody: "Gao Ji House cho thuê năm căn hộ tại các toà Landmark 1, Landmark 3, Landmark 81 và Park 1, Park 3 trong Vinhomes Central Park. Thuê theo tháng hoặc theo đêm, nội thất hoàn thiện sẵn, giá đã gồm phí quản lý, internet và dọn phòng định kỳ.",
+    introBody: "Gao Ji House hiện diện tại cụm Park P7, P3, P1 và Landmark L81, L3, L2, L1 trong Vinhomes Central Park. Các căn hộ được hoàn thiện nội thất, hỗ trợ thuê theo tháng hoặc theo đêm cùng dịch vụ vận hành trọn gói.",
     s1v: "10 Phút",
     s1l: "Tới Quận 1 CBD",
     s2v: "2 Lần / Tuần",
@@ -287,7 +287,7 @@ const DICT = {
     // 3. Editorial Showcase
     introEye: "Apartments For Rent · Landmark & Vinhomes Central Park",
     introTitle: "Apartments For Rent In Landmark And Vinhomes Central Park",
-    introBody: "Gao Ji House offers five serviced apartments across Landmark 1, Landmark 3, Landmark 81, Park 1, and Park 3 in Vinhomes Central Park. Available for monthly or nightly lease, fully furnished, with management fees, high-speed internet, and regular housekeeping included.",
+    introBody: "Gao Ji House operates across Park towers P7, P3, P1 and Landmark towers L81, L3, L2, L1 within Vinhomes Central Park, offering fully furnished residences for monthly or nightly stays.",
     s1v: "10 Mins",
     s1l: "To District 1 CBD",
     s2v: "2x / Week",
@@ -516,7 +516,7 @@ const DICT = {
 
     introEye: "公寓出租 · Landmark 与 Vinhomes Central Park",
     introTitle: "Landmark 与 Vinhomes Central Park 公寓出租",
-    introBody: "Gao Ji House 在 Vinhomes Central Park 的 Landmark 1、Landmark 3、Landmark 81 以及 Park 1、Park 3 出租五套精选公寓。支持按月或按晚租赁，全套高品质家具家电齐备，租金已包含物业费、高速网络与定期保洁服务。",
+    introBody: "Gao Ji House 覆盖 Vinhomes Central Park 的 Park P7、P3、P1 及 Landmark L81、L3、L2、L1，提供家具齐全的月租或短住服务式公寓。",
     s1v: "10 分钟",
     s1l: "至第一郡 CBD",
     s2v: "每周 2 次",
@@ -745,7 +745,7 @@ const DICT = {
 
     introEye: "公寓出租 · Landmark 與 Vinhomes Central Park",
     introTitle: "Landmark 與 Vinhomes Central Park 公寓出租",
-    introBody: "Gao Ji House 在 Vinhomes Central Park 的 Landmark 1、Landmark 3、Landmark 81 以及 Park 1、Park 3 出租五套精選公寓。支持按月或按晚租賃，全套高品質家具家電齊備，租金已包含物業費、高速網路與定期保潔服務。",
+    introBody: "Gao Ji House 覆蓋 Vinhomes Central Park 的 Park P7、P3、P1 及 Landmark L81、L3、L2、L1，提供家具齊全的月租或短住服務式公寓。",
     s1v: "10 分鐘",
     s1l: "至第一郡 CBD",
     s2v: "每週 2 次",
@@ -1026,6 +1026,14 @@ const UNITS_DATA = [
   },
 ];
 
+const TOWER_GROUPS = {
+  centralPark: ["P7", "P3", "P1"],
+  landmark: ["L81", "L3", "L2", "L1"],
+} as const;
+
+const unitTowerCode = (unitCode: string) => unitCode.split(".")[0].toUpperCase();
+const isLandmarkUnit = (unitCode: string) => unitTowerCode(unitCode).startsWith("L");
+
 // 12 Location Destinations Radar Data
 const SPOTS_DATA = [
   { no: "01", copyIndex: 0, icon: "building", category: "famous", km: "0.2 km", off: 2, peak: 4, walk: true, q: "Landmark 81 Vinhomes Central Park", addr: "Tôn Đức Thắng, Q1 · Bến Nghé", rating: 4.6, reviewCount: 23900 },
@@ -1081,8 +1089,8 @@ export default function LandingPage() {
     if (unitFilter === "1pn" && unit.beds !== 1) return false;
     if (unitFilter === "2pn" && unit.beds !== 2) return false;
     if (unitFilter === "3pn" && unit.beds < 3) return false;
-    if (buildingFilter === "landmark" && !unit.tower.startsWith("Landmark")) return false;
-    if (buildingFilter === "central-park" && unit.tower.startsWith("Landmark")) return false;
+    if (buildingFilter === "landmark" && !isLandmarkUnit(unit.key)) return false;
+    if (buildingFilter === "central-park" && isLandmarkUnit(unit.key)) return false;
 
     const flrNum = parseInt(unit.flr, 10);
     if (floorFilter === "low" && (flrNum < 1 || flrNum > 20)) return false;
@@ -1133,8 +1141,8 @@ export default function LandingPage() {
     if (draftUnitFilter === "1pn" && unit.beds !== 1) return false;
     if (draftUnitFilter === "2pn" && unit.beds !== 2) return false;
     if (draftUnitFilter === "3pn" && unit.beds < 3) return false;
-    if (draftBuildingFilter === "landmark" && !unit.tower.startsWith("Landmark")) return false;
-    if (draftBuildingFilter === "central-park" && unit.tower.startsWith("Landmark")) return false;
+    if (draftBuildingFilter === "landmark" && !isLandmarkUnit(unit.key)) return false;
+    if (draftBuildingFilter === "central-park" && isLandmarkUnit(unit.key)) return false;
 
     const floor = Number.parseInt(unit.flr, 10);
     if (draftFloorFilter === "low" && (floor < 1 || floor > 20)) return false;
@@ -1415,8 +1423,8 @@ export default function LandingPage() {
                       <FilterTabs
                         tabs={[
                           { label: t.tabAll, value: "all", badge: UNITS_DATA.length },
-                          { label: t.filterLandmark, value: "landmark", badge: UNITS_DATA.filter((unit) => unit.tower.startsWith("Landmark")).length },
-                          { label: t.filterCentralPark, value: "central-park", badge: UNITS_DATA.filter((unit) => !unit.tower.startsWith("Landmark")).length },
+                          { label: `${t.filterLandmark} · ${TOWER_GROUPS.landmark.join(", ")}`, value: "landmark", badge: UNITS_DATA.filter((unit) => isLandmarkUnit(unit.key)).length },
+                          { label: `${t.filterCentralPark} · ${TOWER_GROUPS.centralPark.join(", ")}`, value: "central-park", badge: UNITS_DATA.filter((unit) => !isLandmarkUnit(unit.key)).length },
                         ]}
                         value={draftBuildingFilter}
                         onChange={(value) => setDraftBuildingFilter(String(value))}

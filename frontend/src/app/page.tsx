@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Script from "next/script";
 import React, { useEffect, useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import {
@@ -16,7 +17,6 @@ import {
   SectionHeader,
   UnitCard,
 } from "@/components/gaoji";
-import { Quote } from "lucide-react";
 
 // Complete 4-Language Dictionary for Gao Ji House Landing Page
 const DICT = {
@@ -233,15 +233,11 @@ const DICT = {
     tbCorp: "Lựa chọn lưu trú của chuyên gia đa quốc gia",
     tbPay: "Chấp nhận thanh toán qua VNPay, MoMo, Visa",
 
-    // 11. Social Proof
-    spEye: "Khách hàng nói gì về Gao Ji House",
-    spTitle: "Trải nghiệm lưu trú thực tế",
-    sp1: "Không gian yên tĩnh, an ninh tốt, nội thất chuẩn khách sạn 5 sao. Rất phù hợp cho chuyến công tác dài ngày tại TP.HCM.",
-    sp1a: "Khách doanh nghiệp, 3 tháng lưu trú",
-    sp2: "Căn hộ rất sạch sẽ, bếp đầy đủ dụng cụ để nấu ăn. Hồ bơi và công viên ngay dưới nhà rất tiện cho trẻ nhỏ.",
-    sp2a: "Gia đình, kỳ nghỉ cuối tuần",
-    sp3: "Dịch vụ tuyệt vời và phản hồi nhanh chóng qua Zalo. Chắc chắn sẽ quay lại trong tương lai.",
-    sp3a: "Khách Expats, 1 năm lưu trú",
+    // 11. TikTok Video Experiences
+    videoEye: "Video thực tế từ Gao Ji House",
+    videoTitle: "Trải nghiệm căn hộ qua TikTok",
+    videoBody: "Xem video quay thực tế về không gian, nội thất và trải nghiệm lưu trú được đăng trực tiếp trên kênh TikTok chính thức của Gao Ji House.",
+    videoCta: "Xem kênh TikTok",
 
     // 12. FAQ
     faqEye: "Câu hỏi thường gặp",
@@ -466,14 +462,10 @@ const DICT = {
     tbCorp: "The preferred choice for multinational executives",
     tbPay: "Accepting VNPay, MoMo, Visa",
 
-    spEye: "What Our Guests Say",
-    spTitle: "Real Stay Experiences",
-    sp1: "Quiet environment, excellent security, and 5-star hotel standard interiors. Perfect for long business trips in HCMC.",
-    sp1a: "Corporate Guest, 3-month stay",
-    sp2: "Very clean apartment with a fully equipped kitchen. The pool and park downstairs are great for kids.",
-    sp2a: "Family, Weekend getaway",
-    sp3: "Excellent service and prompt support via Zalo. Will definitely return in the future.",
-    sp3a: "Expat, 1-year stay",
+    videoEye: "Real videos from Gao Ji House",
+    videoTitle: "Experience the residences on TikTok",
+    videoBody: "Explore real walkthroughs of the spaces, interiors, and guest experience published on Gao Ji House’s official TikTok channel.",
+    videoCta: "View TikTok channel",
 
     faqEye: "Frequently Asked Questions",
     faqTitle: "Good to Know Before You Book",
@@ -695,14 +687,10 @@ const DICT = {
     tbCorp: "跨国企业高管的首选住宿",
     tbPay: "支持 VNPay、MoMo、Visa 支付",
 
-    spEye: "宾客评价",
-    spTitle: "真实入住体验",
-    sp1: "环境安静，安保严密，内饰达到五星级酒店标准。非常适合在胡志明市的长途出差。",
-    sp1a: "商务宾客，入住 3 个月",
-    sp2: "公寓非常干净，厨房设施齐全。楼下的游泳池和公园非常适合孩子。",
-    sp2a: "家庭客，周末度假",
-    sp3: "服务一流，通过 Zalo 响应迅速。未来一定会再来。",
-    sp3a: "外籍人士，入住 1 年",
+    videoEye: "Gao Ji House 实拍视频",
+    videoTitle: "通过 TikTok 体验公寓",
+    videoBody: "通过 Gao Ji House 官方 TikTok 频道，查看公寓空间、室内设施与入住体验的真实视频。",
+    videoCta: "查看 TikTok 频道",
 
     faqEye: "常见问题",
     faqTitle: "预订前须知",
@@ -924,14 +912,10 @@ const DICT = {
     tbCorp: "跨國企業高管的首選住宿",
     tbPay: "支援 VNPay、MoMo、Visa 支付",
 
-    spEye: "賓客評價",
-    spTitle: "真實入住體驗",
-    sp1: "環境安靜，安保嚴密，內飾達到五星級酒店標準。非常適合在胡志明市的長途出差。",
-    sp1a: "商務賓客，入住 3 個月",
-    sp2: "公寓非常乾淨，廚房設施齊全。樓下的游泳池和公園非常適合孩子。",
-    sp2a: "家庭客，週末度假",
-    sp3: "服務一流，透過 Zalo 回應迅速。未來一定會再來。",
-    sp3a: "外籍人士，入住 1 年",
+    videoEye: "Gao Ji House 實拍影片",
+    videoTitle: "透過 TikTok 體驗公寓",
+    videoBody: "透過 Gao Ji House 官方 TikTok 頻道，觀看公寓空間、室內設施與入住體驗的真實影片。",
+    videoCta: "查看 TikTok 頻道",
 
     faqEye: "常見問題",
     faqTitle: "預訂前須知",
@@ -1392,6 +1376,37 @@ export default function LandingPage() {
             ]}
           />
         </div>
+      </section>
+
+      {/* ── 3. TIKTOK VIDEO EXPERIENCES ────────────────────── */}
+      <section className="border-y border-[#E8E4DB] bg-[#F4EFE8] px-[clamp(20px,4vw,56px)] py-[clamp(44px,5vw,72px)]">
+        <div className="mx-auto grid max-w-[1240px] items-start gap-8 lg:grid-cols-[minmax(280px,.72fr)_minmax(0,1.28fr)] lg:gap-14">
+          <div className="grid justify-items-start gap-5 lg:sticky lg:top-24">
+            <SectionHeader eyebrow={t.videoEye} title={t.videoTitle} />
+            <p className="max-w-[48ch] font-sans text-[0.95rem] leading-relaxed text-[#514A42]">{t.videoBody}</p>
+            <a href="https://www.tiktok.com/@gaojihouse" target="_blank" rel="noreferrer" className="inline-flex min-h-11 items-center gap-2 bg-[#1A1A1A] px-5 font-sans text-xs font-bold uppercase tracking-[0.13em] text-white transition-colors hover:bg-[#B85D36]">
+              <SocialLogo network="tiktok" /> {t.videoCta} <Icon name="external-link" size={14} />
+            </a>
+          </div>
+
+          <div className="min-w-0 border border-[#DDD5C7] bg-white p-3 shadow-[0_12px_36px_rgba(52,43,34,0.08)] sm:p-5">
+            <blockquote
+              className="tiktok-embed m-auto"
+              cite="https://www.tiktok.com/@gaojihouse"
+              data-unique-id="gaojihouse"
+              data-embed-type="creator"
+              style={{ maxWidth: 780, minWidth: 288 }}
+            >
+              <section className="grid min-h-56 place-items-center bg-[#FAF8F5] p-8 text-center">
+                <a href="https://www.tiktok.com/@gaojihouse" target="_blank" rel="noreferrer" className="grid justify-items-center gap-3 text-[#1A1A1A]">
+                  <span className="relative size-16 overflow-hidden rounded-full border border-[#D8CFC2] bg-white"><Image src="/assets/logo-compact.png" alt="Gao Ji House trên TikTok" fill sizes="64px" className="object-cover" /></span>
+                  <strong className="font-sans text-sm uppercase tracking-[0.12em]">@gaojihouse</strong>
+                </a>
+              </section>
+            </blockquote>
+          </div>
+        </div>
+        <Script src="https://www.tiktok.com/embed.js" strategy="lazyOnload" />
       </section>
 
       {/* ── 4. RESIDENCE APARTMENT COLLECTION (Danh Sách Căn Hộ) */}
@@ -2006,36 +2021,6 @@ export default function LandingPage() {
         </div>
       </section>
 
-
-      {/* ── 6.5. SOCIAL PROOF (NEW) ── */}
-      <section className="bg-[#FBF9F5] border-t border-[#E8E4DB] py-[clamp(48px,5vw,80px)]">
-        <div className="max-w-[1600px] mx-auto px-[clamp(20px,4vw,56px)]">
-          <SectionHeader
-            eyebrow={t.spEye}
-            title={t.spTitle}
-          />
-          <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              { q: t.sp1, a: t.sp1a },
-              { q: t.sp2, a: t.sp2a },
-              { q: t.sp3, a: t.sp3a }
-            ].map((review, i) => (
-              <div key={i} className="bg-[#FAF8F5] p-8 rounded-none border border-[#E8E4DB] flex flex-col justify-between shadow-xs">
-                <div>
-                  <Quote className="w-8 h-8 text-[#D4AF37]/50 mb-6" />
-                  <p className="font-sans text-[15px] leading-relaxed text-[#383838]">&quot;{review.q}&quot;</p>
-                </div>
-                <div className="mt-8 flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-[#E8E4DB] flex items-center justify-center text-[#0D3B22] font-semibold">
-                    {review.a.charAt(0)}
-                  </div>
-                  <span className="font-sans text-sm font-medium text-[#0D3B22]">{review.a}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* ── 7. ABOUT US & OPERATING TEAM (Về Chúng Tôi) ─────── */}
       <section

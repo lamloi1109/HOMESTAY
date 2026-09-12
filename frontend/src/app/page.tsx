@@ -129,7 +129,7 @@ const DICT = {
     towerMapLabel: "Các Tòa Gao Ji House Có Cho Thuê",
     tOff: "Giờ Thấp Điểm",
     tPeak: "Giờ Cao Điểm",
-    noteOff: "Đo 10:00–15:00 các ngày trong tuần · Google Maps",
+    noteOff: "Ước tính theo lối ra sảnh tòa đã chọn · Google Maps",
     notePeak: "Đo 17:30–19:00 các ngày trong tuần · Google Maps",
     mins: (n: number) => n + " phút",
     spotEye: "Địa Điểm Lân Cận",
@@ -368,7 +368,7 @@ const DICT = {
     towerMapLabel: "Gao Ji House Rental Towers",
     tOff: "Off-Peak Hours",
     tPeak: "Peak Hours",
-    noteOff: "Measured 10:00–15:00 weekdays · Google Maps",
+    noteOff: "Estimated from the selected tower lobby · Google Maps",
     notePeak: "Measured 17:30–19:00 weekdays · Google Maps",
     mins: (n: number) => n + " mins",
     spotEye: "Nearby Destinations",
@@ -598,7 +598,7 @@ const DICT = {
     towerMapLabel: "Gao Ji House 出租楼栋",
     tOff: "平峰时段",
     tPeak: "高峰时段",
-    noteOff: "工作日 10:00–15:00 实测 · Google Maps",
+    noteOff: "按所选楼栋大堂出口估算 · Google Maps",
     notePeak: "工作日 17:30–19:00 实测 · Google Maps",
     mins: (n: number) => n + " 分钟",
     spotEye: "周边地标",
@@ -828,7 +828,7 @@ const DICT = {
     towerMapLabel: "Gao Ji House 出租樓棟",
     tOff: "離峰時段",
     tPeak: "尖峰時段",
-    noteOff: "工作日 10:00–15:00 實測 · Google Maps",
+    noteOff: "按所選樓棟大廳出口估算 · Google Maps",
     notePeak: "工作日 17:30–19:00 實測 · Google Maps",
     mins: (n: number) => n + " 分鐘",
     spotEye: "周邊地標",
@@ -1045,6 +1045,22 @@ const TOWER_LOCATIONS = [
   { code: "L1", group: "landmark", query: "Landmark 1 Vinhomes Central Park Ho Chi Minh City" },
 ] as const;
 
+// Approximate lobby/access-road delta inside the Vinhomes Central Park campus.
+// Destination-specific base times stay in SPOTS_DATA; the selected tower adds
+// only the internal departure time so every POI reacts consistently.
+const TOWER_TRAVEL_MINUTE_ADJUSTMENTS: Record<string, number> = {
+  L81: 0,
+  L1: 1,
+  L2: 1,
+  L3: 2,
+  P1: 1,
+  P3: 2,
+  P7: 3,
+};
+
+const travelMinutesFromTower = (baseMinutes: number, towerCode: string) =>
+  baseMinutes + (TOWER_TRAVEL_MINUTE_ADJUSTMENTS[towerCode] ?? 0);
+
 const unitTowerCode = (unitCode: string) => unitCode.split(".")[0].toUpperCase();
 const isLandmarkUnit = (unitCode: string) => unitTowerCode(unitCode).startsWith("L");
 
@@ -1085,7 +1101,8 @@ export default function LandingPage() {
   const [locationView, setLocationView] = useState<"map" | "radar">("map");
   const [locationCategory, setLocationCategory] = useState("all");
   const [locationSearch, setLocationSearch] = useState("");
-  const [selectedTowerCode, setSelectedTowerCode] = useState<string | null>("L81");
+  const [selectedTowerCode, setSelectedTowerCode] = useState("L81");
+  const [mapFocus, setMapFocus] = useState<"tower" | "spot">("tower");
 
   // Inquiry Modal State
   const [inquiryModalOpen, setInquiryModalOpen] = useState(false);
@@ -1189,7 +1206,8 @@ export default function LandingPage() {
     return matchesCategory && haystack.includes(locationSearch.trim().toLocaleLowerCase());
   });
   const selectedTower = TOWER_LOCATIONS.find((tower) => tower.code === selectedTowerCode);
-  const mapQuery = selectedTower?.query || activeSpotData.q;
+  const activeTravelMinutes = travelMinutesFromTower(activeSpotData.off, selectedTowerCode);
+  const mapQuery = mapFocus === "tower" && selectedTower ? selectedTower.query : activeSpotData.q;
   const mapSrc = `https://maps.google.com/maps?q=${encodeURIComponent(mapQuery)}&t=&z=16&ie=UTF8&iwloc=&output=embed`;
   const activeSpotDirHref = `https://maps.google.com/?daddr=${encodeURIComponent(activeSpotData.q)}`;
   const mapDirHref = `https://maps.google.com/?daddr=${encodeURIComponent(mapQuery)}`;
@@ -1699,7 +1717,7 @@ export default function LandingPage() {
                   type="button"
                   onClick={() => {
                     setLocationCategory(value);
-                    setSelectedTowerCode(null);
+                    setMapFocus("spot");
                     const nextIndex = SPOTS_DATA.findIndex((spot) => value === "all" || spot.category === value);
                     if (nextIndex >= 0) setSelectedSpotIndex(nextIndex);
                   }}
@@ -1724,7 +1742,7 @@ export default function LandingPage() {
                   setLocationSearch(query);
                   const normalized = query.trim().toLocaleLowerCase();
                   if (normalized) {
-                    setSelectedTowerCode(null);
+                    setMapFocus("spot");
                     const nextIndex = SPOTS_DATA.findIndex((spot) => {
                       const copy = t.spots[spot.copyIndex] || t.spots[0];
                       return `${copy.name} ${copy.blurb} ${spot.addr}`.toLocaleLowerCase().includes(normalized);
@@ -1758,14 +1776,14 @@ export default function LandingPage() {
                 {visibleSpots.map(({ spot, index }) => {
                   const selected = selectedSpotIndex === index;
                   const copy = t.spots[spot.copyIndex] || t.spots[0];
-                  const minutes = spot.off;
+                  const minutes = travelMinutesFromTower(spot.off, selectedTowerCode);
                   return (
                     <button
                       key={spot.no}
                       type="button"
                       onClick={() => {
                         setSelectedSpotIndex(index);
-                        setSelectedTowerCode(null);
+                        setMapFocus("spot");
                       }}
                       className={`relative isolate grid min-h-[56px] w-full cursor-pointer grid-cols-[30px_minmax(0,1fr)_auto] items-center gap-2.5 border px-3 py-2 text-left transition-colors ${selected ? "!border-[#1A1A1A] !bg-[#1A1A1A] !text-white" : "border-[#DDD5C7] bg-[#FAF7F2] text-[#1A1A1A] hover:border-[#B85D36]"}`}
                     >
@@ -1798,7 +1816,7 @@ export default function LandingPage() {
                     Location #{activeSpotData.no} Info
                   </span>
                   <span className="bg-[#1A1A1A] px-2 py-1 font-sans text-[0.55rem] font-semibold uppercase tracking-[0.1em] text-white">
-                    {activeSpotData.km} · {activeSpotData.off} min · {activeSpotData.walk ? t.walk : t.drive}
+                    {activeSpotData.km} · {activeTravelMinutes} min · {activeSpotData.walk ? t.walk : t.drive} · {selectedTowerCode}
                   </span>
                 </div>
                 <p className="mt-2 font-sans text-[0.66rem] leading-relaxed text-[#4F4942]">{activeSpotText.blurb}</p>
@@ -1837,6 +1855,7 @@ export default function LandingPage() {
                         onClick={() => {
                           setSelectedTowerCode(tower.code);
                           setLocationView("map");
+                          setMapFocus("tower");
                         }}
                         className={`inline-flex min-h-7 cursor-pointer items-center gap-1.5 border px-2.5 font-sans text-[0.6rem] font-bold tracking-[0.08em] transition-colors ${
                           active
@@ -1861,14 +1880,14 @@ export default function LandingPage() {
                     <iframe src={mapSrc} title={t.mapTitle} loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="absolute inset-0 block size-full border-0" />
                     <div className="absolute left-3 top-3 z-30 w-[min(82%,360px)] border border-[#B85D36] bg-white shadow-lg">
                       <div className="flex items-center justify-between gap-3 bg-[#1A1A1A] p-2.5 font-sans text-[0.58rem] font-bold uppercase tracking-[0.1em] text-[#F1CCB9]">
-                        <span className="truncate">{selectedTower ? `${selectedTower.code} · Gao Ji House` : `#${activeSpotData.no} · ${activeSpotText.name}`}</span>
-                        <span className="shrink-0 bg-[#B85D36] px-2 py-1 text-white">{selectedTower ? (selectedTower.group === "landmark" ? "Landmark" : "Central Park") : `${activeSpotData.off} min`}</span>
+                        <span className="truncate">{mapFocus === "tower" && selectedTower ? `${selectedTower.code} · Gao Ji House` : `#${activeSpotData.no} · ${activeSpotText.name}`}</span>
+                        <span className="shrink-0 bg-[#B85D36] px-2 py-1 text-white">{mapFocus === "tower" && selectedTower ? (selectedTower.group === "landmark" ? "Landmark" : "Central Park") : `${activeTravelMinutes} min · ${selectedTowerCode}`}</span>
                       </div>
                       <div className="p-3">
-                        <p className="line-clamp-2 font-sans text-[0.68rem] leading-relaxed text-[#575149]">{selectedTower ? selectedTower.query : activeSpotData.addr}</p>
+                        <p className="line-clamp-2 font-sans text-[0.68rem] leading-relaxed text-[#575149]">{mapFocus === "tower" && selectedTower ? selectedTower.query : activeSpotData.addr}</p>
                         <div className="mt-1.5 flex items-center justify-between gap-3">
-                          <p className="font-sans text-[0.58rem] font-semibold uppercase tracking-[0.1em] text-[#B85D36]">{selectedTower ? t.towerMapLabel : `${activeSpotData.km} · ${activeSpotData.walk ? t.walk : t.drive}`}</p>
-                          {!selectedTower && "rating" in activeSpotData && (
+                          <p className="font-sans text-[0.58rem] font-semibold uppercase tracking-[0.1em] text-[#B85D36]">{mapFocus === "tower" && selectedTower ? t.towerMapLabel : `${activeSpotData.km} · ${activeSpotData.walk ? t.walk : t.drive}`}</p>
+                          {mapFocus === "spot" && "rating" in activeSpotData && (
                             <span className="inline-flex items-center gap-1 font-sans text-[0.62rem] text-[#4B4640]">
                               {activeSpotData.rating} <Icon name="star" size={11} color="#B85D36" /> ({activeSpotData.reviewCount?.toLocaleString("en-US")})
                             </span>
@@ -1887,14 +1906,14 @@ export default function LandingPage() {
                     {SPOTS_DATA.slice(0, 8).map((spot, index) => {
                       const angle = (index / 8) * Math.PI * 2 - Math.PI / 2;
                       const radius = 37;
-                      return <button key={spot.no} type="button" onClick={() => { setSelectedSpotIndex(index); setSelectedTowerCode(null); }} className={`absolute z-20 grid size-8 cursor-pointer place-items-center rounded-full border-2 font-sans text-[0.58rem] font-bold shadow ${selectedSpotIndex === index ? "border-white bg-[#B85D36] text-white" : "border-[#B85D36] bg-white text-[#7B3A21]"}`} style={{ left: `${50 + Math.cos(angle) * radius}%`, top: `${50 + Math.sin(angle) * radius}%`, transform: "translate(-50%, -50%)" }} aria-label={t.spots[spot.copyIndex]?.name}>{spot.no}</button>;
+                      return <button key={spot.no} type="button" onClick={() => { setSelectedSpotIndex(index); setMapFocus("spot"); }} className={`absolute z-20 grid size-8 cursor-pointer place-items-center rounded-full border-2 font-sans text-[0.58rem] font-bold shadow ${selectedSpotIndex === index ? "border-white bg-[#B85D36] text-white" : "border-[#B85D36] bg-white text-[#7B3A21]"}`} style={{ left: `${50 + Math.cos(angle) * radius}%`, top: `${50 + Math.sin(angle) * radius}%`, transform: "translate(-50%, -50%)" }} aria-label={t.spots[spot.copyIndex]?.name}>{spot.no}</button>;
                     })}
                   </div>
                 )}
               </div>
 
               <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-[#CFC5B4] pt-3 font-sans text-[0.56rem] uppercase tracking-[0.1em] text-[#686159]">
-                <span className="normal-case italic">* {t.noteOff}</span>
+                <span className="normal-case italic">* {t.noteOff} · {selectedTowerCode}</span>
                 <span className="font-semibold">{t.riverfrontTag}</span>
               </div>
             </div>

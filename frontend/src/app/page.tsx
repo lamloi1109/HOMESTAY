@@ -1829,7 +1829,8 @@ export default function LandingPage() {
               </div>
             </div>
 
-            <div className="border border-[#1A1A1A] bg-[#F1EBDD] p-4 shadow-[0_8px_28px_rgba(52,43,34,0.06)] sm:p-5">
+            {/* // FIX: Make the map panel a flex column so its canvas can consume the full matched grid height. */}
+            <div className="flex min-h-0 flex-col border border-[#1A1A1A] bg-[#F1EBDD] p-4 shadow-[0_8px_28px_rgba(52,43,34,0.06)] sm:p-5">
               <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#CFC5B4] pb-4">
                 <h3 className="inline-flex items-center gap-2 font-display text-[1rem] font-semibold uppercase tracking-[0.03em] text-[#292622]">
                   <Icon name="compass" size={16} color="#B85D36" /> {t.radarTitle}
@@ -1874,7 +1875,8 @@ export default function LandingPage() {
                 </div>
               </div>
 
-              <div className="relative mt-3 min-h-[460px] overflow-hidden border border-[#C9BEAE] bg-[#E9E1D4] sm:min-h-[510px]">
+              {/* // FIX: Grow the map canvas into surplus vertical space instead of leaving an empty panel footer. */}
+              <div className="relative mt-3 min-h-[460px] flex-1 overflow-hidden border border-[#C9BEAE] bg-[#E9E1D4] sm:min-h-[510px]">
                 {locationView === "map" ? (
                   <>
                     <iframe src={mapSrc} title={t.mapTitle} loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="absolute inset-0 block size-full border-0" />

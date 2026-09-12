@@ -213,25 +213,6 @@ const DICT = {
     hoursVal: "08:00 – 21:00 · T2–CN",
     rowLang: "Ngôn Ngữ Hỗ Trợ",
 
-    // 9. Trust & Legal
-    trustEye: "Đơn Vị Đồng Hành & Bảo Chứng Pháp Lý",
-    t1Label: "Kiến Trúc & Không Gian",
-    t1Title: "Architectural Design & Fit-out",
-    t1Body: "Nội thất thiết kế theo phong cách Indochine kết hợp Modern Japandi tối giản, tinh tế.",
-    t2Label: "Tiêu Chuẩn 5 Sao",
-    t2Title: "5-Star Hospitality Standard",
-    t2Body: "Quy trình buồng phòng, vệ sinh và khử khuẩn đạt tiêu chuẩn khách sạn cao cấp.",
-    t3Label: "Thiết Bị Bàn Giao",
-    t3Title: "Handover Standards & Equipment",
-    t3Body: "Trang bị đầy đủ thiết bị âm tủ cao cấp Bosch, Gaggenau, Duravit và máy giặt sấy.",
-    t4Label: "Pháp Lý Rõ Ràng",
-    t4Title: "Pháp Lý & Hợp Đồng Công Chứng",
-    t4Body: "Căn hộ chính chủ, hỗ trợ xuất hoá đơn VAT đầy đủ và đăng ký tạm trú dài hạn.",
-
-    // 10. Trust Badges
-    tbOta: "Đánh giá xuất sắc trên các nền tảng OTA",
-    tbCorp: "Lựa chọn lưu trú của chuyên gia đa quốc gia",
-    tbPay: "Chấp nhận thanh toán qua VNPay, MoMo, Visa",
 
     // 11. TikTok Video Experiences
     videoEye: "Video thực tế từ Gao Ji House",
@@ -444,23 +425,6 @@ const DICT = {
     hoursVal: "08:00 – 21:00 · Mon–Sun",
     rowLang: "Supported Languages",
 
-    trustEye: "Partners & Legal Assurance",
-    t1Label: "Interior & Architecture",
-    t1Title: "Architectural Design & Fit-out",
-    t1Body: "Indochine elegance meets Modern Japandi minimalism for serene acoustic comfort.",
-    t2Label: "5-Star Standard",
-    t2Title: "5-Star Hospitality Standard",
-    t2Body: "Hotel-grade housekeeping and sanitized linen replacement protocols.",
-    t3Label: "Turnkey Equipment",
-    t3Title: "Handover Standards & Equipment",
-    t3Body: "Fully equipped with Bosch, Gaggenau, Duravit sanitary ware, and washer-dryers.",
-    t4Label: "Compliance",
-    t4Title: "Legal Registration & VAT Invoicing",
-    t4Body: "Direct ownership, notarized leasing, monthly VAT invoices, and full residency support.",
-
-    tbOta: "Exceptional ratings on OTA platforms",
-    tbCorp: "The preferred choice for multinational executives",
-    tbPay: "Accepting VNPay, MoMo, Visa",
 
     videoEye: "Real videos from Gao Ji House",
     videoTitle: "Experience the residences on TikTok",
@@ -669,23 +633,6 @@ const DICT = {
     hoursVal: "08:00 – 21:00 · 周一至周日",
     rowLang: "支持语言",
 
-    trustEye: "合作背书与法务保障",
-    t1Label: "空间美学",
-    t1Title: "建筑设计与室内定制",
-    t1Body: "融合法式印度支那与日式静谧极简风格，兼顾隔音与生活雅趣。",
-    t2Label: "五星准则",
-    t2Title: "五星级酒店服务标准",
-    t2Body: "严格客房保洁、高温消毒洗涤及标准化验收流程。",
-    t3Label: "品牌交付",
-    t3Title: "严苛交付标准与名牌家电",
-    t3Body: "配备博世 (Bosch)、Gaggenau、杜拉维特 (Duravit) 卫浴及洗烘一体机。",
-    t4Label: "合规保障",
-    t4Title: "产权清晰与税务正规",
-    t4Body: "产权自持，支持合同公证、合法开具 VAT 发票及外籍暂住申报。",
-
-    tbOta: "在 OTA 平台上获得卓越评价",
-    tbCorp: "跨国企业高管的首选住宿",
-    tbPay: "支持 VNPay、MoMo、Visa 支付",
 
     videoEye: "Gao Ji House 实拍视频",
     videoTitle: "通过 TikTok 体验公寓",
@@ -894,23 +841,6 @@ const DICT = {
     hoursVal: "08:00 – 21:00 · 週一至週日",
     rowLang: "支援語言",
 
-    trustEye: "合作背書與法務保障",
-    t1Label: "空間美學",
-    t1Title: "建築設計與室內定制",
-    t1Body: "融合法式印度支那與日式靜謐極簡風格，兼顧隔音與生活雅趣。",
-    t2Label: "五星準則",
-    t2Title: "五星級酒店服務標準",
-    t2Body: "嚴格客房清潔、高溫消毒洗滌及標準化驗收流程。",
-    t3Label: "品牌交付",
-    t3Title: "嚴苛交付標準與名牌家電",
-    t3Body: "配備博世 (Bosch)、Gaggenau、杜拉維特 (Duravit) 衛浴及洗烘一體機。",
-    t4Label: "合規保障",
-    t4Title: "產權清晰與稅務正規",
-    t4Body: "產權自持，支援合同公證、合法開具 VAT 發票及外籍暫住申報。",
-
-    tbOta: "在 OTA 平台上獲得卓越評價",
-    tbCorp: "跨國企業高管的首選住宿",
-    tbPay: "支援 VNPay、MoMo、Visa 支付",
 
     videoEye: "Gao Ji House 實拍影片",
     videoTitle: "透過 TikTok 體驗公寓",
@@ -2130,74 +2060,6 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
-
-      {/* ── 8. TRUST, LEGAL & DIRECT ZALO CONTACT ───────────── */}
-      {/* Legal & Trust Standards (4-Column Bar) */}
-      <section className="bg-[#141F1C] py-[clamp(48px,6vw,88px)] px-[clamp(20px,4vw,56px)] text-white border-t border-[rgba(212,175,55,0.25)]">
-        <div className="max-w-[1600px] mx-auto">
-          <div className="flex items-center gap-3">
-            <span className="w-8 h-px bg-[#D4AF37]" />
-            <span className="font-sans text-xs font-bold uppercase tracking-[0.18em] text-[#E2C068]">
-              {t.trustEye}
-            </span>
-          </div>
-
-          <div className="mt-7 grid gap-px grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 bg-[rgba(250,243,234,0.12)] border border-[rgba(250,243,234,0.12)]">
-            <div className="bg-[#141F1C] p-6 sm:p-7 grid gap-2.5">
-              <Icon name="palette" size={22} color="#D4AF37" />
-              <span className="font-sans text-[0.6875rem] font-bold uppercase tracking-[0.15em] text-[#E2C068]">
-                {t.t1Label}
-              </span>
-              <h3 className="font-display text-lg text-white">
-                {t.t1Title}
-              </h3>
-              <p className="m-0 font-sans text-xs sm:text-sm leading-relaxed text-[rgba(250,243,234,0.78)]">
-                {t.t1Body}
-              </p>
-            </div>
-
-            <div className="bg-[#141F1C] p-6 sm:p-7 grid gap-2.5">
-              <Icon name="award" size={22} color="#D4AF37" />
-              <span className="font-sans text-[0.6875rem] font-bold uppercase tracking-[0.15em] text-[#E2C068]">
-                {t.t2Label}
-              </span>
-              <h3 className="font-display text-lg text-white">
-                {t.t2Title}
-              </h3>
-              <p className="m-0 font-sans text-xs sm:text-sm leading-relaxed text-[rgba(250,243,234,0.78)]">
-                {t.t2Body}
-              </p>
-            </div>
-
-            <div className="bg-[#141F1C] p-6 sm:p-7 grid gap-2.5">
-              <Icon name="check-circle" size={22} color="#D4AF37" />
-              <span className="font-sans text-[0.6875rem] font-bold uppercase tracking-[0.15em] text-[#E2C068]">
-                {t.t3Label}
-              </span>
-              <h3 className="font-display text-lg text-white">
-                {t.t3Title}
-              </h3>
-              <p className="m-0 font-sans text-xs sm:text-sm leading-relaxed text-[rgba(250,243,234,0.78)]">
-                {t.t3Body}
-              </p>
-            </div>
-
-            <div className="bg-[#141F1C] p-6 sm:p-7 grid gap-2.5">
-              <Icon name="file-text" size={22} color="#D4AF37" />
-              <span className="font-sans text-[0.6875rem] font-bold uppercase tracking-[0.15em] text-[#E2C068]">
-                {t.t4Label}
-              </span>
-              <h3 className="font-display text-lg text-white">
-                {t.t4Title}
-              </h3>
-              <p className="m-0 font-sans text-xs sm:text-sm leading-relaxed text-[rgba(250,243,234,0.78)]">
-                {t.t4Body}
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
 
       {/* ── 9.5. FAQ SECTION (NEW) ── */}
       <section className="bg-[#FAF8F5] py-[clamp(48px,5vw,80px)]">

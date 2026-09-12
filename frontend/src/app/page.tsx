@@ -1756,8 +1756,8 @@ export default function LandingPage() {
             </label>
           </div>
 
-          <div className="mt-5 grid items-start gap-5 lg:grid-cols-[minmax(420px,.82fr)_minmax(0,1.18fr)]">
-            <div className="flex min-h-0 self-start flex-col border border-[#DDD5C7] bg-white p-4 shadow-[0_8px_28px_rgba(52,43,34,0.06)]">
+          <div className="mt-5 grid items-stretch gap-5 lg:grid-cols-[minmax(420px,.82fr)_minmax(0,1.18fr)]">
+            <div className="flex min-h-0 flex-col border border-[#DDD5C7] bg-white p-4 shadow-[0_8px_28px_rgba(52,43,34,0.06)]">
               <div className="flex flex-wrap items-end justify-between gap-3 border-b border-[#DDD5C7] pb-4">
                 <div>
                   <span className="font-sans text-[0.6rem] font-semibold uppercase tracking-[0.18em] text-[#B85D36]">
@@ -1772,7 +1772,7 @@ export default function LandingPage() {
                 </span>
               </div>
 
-              <div className="mt-3 grid max-h-[342px] gap-2 overflow-y-auto pr-1">
+              <div className="mt-3 grid h-[342px] content-start gap-2 overflow-y-auto pr-1 lg:h-auto lg:min-h-0 lg:flex-1">
                 {visibleSpots.map(({ spot, index }) => {
                   const selected = selectedSpotIndex === index;
                   const copy = t.spots[spot.copyIndex] || t.spots[0];

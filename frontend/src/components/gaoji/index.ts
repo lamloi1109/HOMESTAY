@@ -14,6 +14,7 @@ export * from "./Logo";
 export * from "./PhotoPlate";
 export * from "./PropertyCard";
 export * from "./RatingStars";
+export * from "./ResidenceCarousel";
 export * from "./RoomSpecs";
 export * from "./SectionHeader";
 export * from "./Select";

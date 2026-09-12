@@ -201,7 +201,6 @@ const DICT = {
     r4b: "Hợp đồng công chứng, hoá đơn VAT và đăng ký tạm trú cho khách nước ngoài.",
     socEye: "Mạng Xã Hội & Kênh Liên Hệ",
     socBody: "Ảnh căn hộ mới, tình trạng phòng trống và video quay dọc từng căn được đăng trước tại các kênh dưới đây.",
-    ytSub: "Gao Ji House · Video Căn Hộ",
 
     // 8. Contact & Zalo First SOP
     ctEye: "Guest Relations · Phản Hồi Trong 2 Giờ",
@@ -438,7 +437,6 @@ const DICT = {
     r4b: "Notarized contracts, VAT invoicing, and foreign temporary residence registration.",
     socEye: "Social & Communication Channels",
     socBody: "Fresh unit updates, availability status, and vertical video walkthroughs are shared across our channels.",
-    ytSub: "Gao Ji House · Apartment Videos",
 
     ctEye: "Guest Relations · 2-Hour Response",
     ctTitle: "Reserve Your Residence Via Zalo",
@@ -668,7 +666,6 @@ const DICT = {
     r4b: "负责合同公证、正规增值税发票 (VAT) 开具及外籍人员暂住申报。",
     socEye: "社交媒体与沟通渠道",
     socBody: "最新房源实拍、即时房态及竖屏看房视频将优先在以下官方渠道发布。",
-    ytSub: "Gao Ji House · 公寓实景视频",
 
     ctEye: "客户关怀 · 2 小时内响应",
     ctTitle: "通过 Zalo / 微信 快速预订",
@@ -898,7 +895,6 @@ const DICT = {
     r4b: "負責合同公證、正規增值稅發票 (VAT) 開具及外籍人員暫住申報。",
     socEye: "社交媒體與溝通渠道",
     socBody: "最新房源實拍、即時房態及豎屏看房視頻將優先在以下官方渠道發布。",
-    ytSub: "Gao Ji House · 公寓實景視頻",
 
     ctEye: "客戶關懷 · 2 小時內響應",
     ctTitle: "透過 Zalo / 微信 快速預訂",
@@ -2102,17 +2098,9 @@ export default function LandingPage() {
                 <span className="font-sans text-xs font-bold uppercase tracking-[0.15em] text-[#0D3B22]">Zalo</span>
                 <span className="font-sans text-xs text-[#6B6255]">088 923 7833</span>
               </a>
-              <a href="https://facebook.com/gaojihouse" target="_blank" rel="noreferrer" className="border border-[#E8E4DB] bg-[#FAF8F5] p-3.5 grid gap-1 no-underline hover:border-[#D4AF37] hover:bg-white transition-colors">
-                <span className="font-sans text-xs font-bold uppercase tracking-[0.15em] text-[#0D3B22]">Facebook</span>
-                <span className="font-sans text-xs text-[#6B6255]">fb.com/gaojihouse</span>
-              </a>
-              <a href="https://instagram.com/gaojihouse" target="_blank" rel="noreferrer" className="border border-[#E8E4DB] bg-[#FAF8F5] p-3.5 grid gap-1 no-underline hover:border-[#D4AF37] hover:bg-white transition-colors">
-                <span className="font-sans text-xs font-bold uppercase tracking-[0.15em] text-[#0D3B22]">Instagram</span>
+              <a href="https://www.tiktok.com/@gaojihouse" target="_blank" rel="noreferrer" className="border border-[#E8E4DB] bg-[#FAF8F5] p-3.5 grid gap-1 no-underline hover:border-[#D4AF37] hover:bg-white transition-colors">
+                <span className="font-sans text-xs font-bold uppercase tracking-[0.15em] text-[#0D3B22]">TikTok</span>
                 <span className="font-sans text-xs text-[#6B6255]">@gaojihouse</span>
-              </a>
-              <a href="https://youtube.com/@gaojihouse" target="_blank" rel="noreferrer" className="border border-[#E8E4DB] bg-[#FAF8F5] p-3.5 grid gap-1 no-underline hover:border-[#D4AF37] hover:bg-white transition-colors">
-                <span className="font-sans text-xs font-bold uppercase tracking-[0.15em] text-[#0D3B22]">YouTube</span>
-                <span className="font-sans text-xs text-[#6B6255]">{t.ytSub}</span>
               </a>
               <a href="weixin://dl/chat?HZM81MS" className="border border-[#E8E4DB] bg-[#FAF8F5] p-3.5 grid gap-1 no-underline hover:border-[#D4AF37] hover:bg-white transition-colors">
                 <span className="font-sans text-xs font-bold uppercase tracking-[0.15em] text-[#0D3B22]">WeChat</span>

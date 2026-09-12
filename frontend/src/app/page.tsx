@@ -1076,6 +1076,38 @@ const SPOTS_DATA = [
   { no: "12", copyIndex: 11, icon: "map-pin", category: "transport", km: "3.0 km", off: 8, peak: 15, walk: false, q: "Ben Bach Dang Waterbus", addr: "02 Tôn Đức Thắng, Bến Nghé, Quận 1" },
 ];
 
+type SocialNetwork = "tiktok" | "zalo" | "wechat" | "telegram" | "email";
+
+function SocialLogo({ network }: { network: SocialNetwork }) {
+  if (network === "email") return <Icon name="mail" size={20} strokeWidth={1.8} />;
+  if (network === "zalo") return <span className="font-sans text-[0.6rem] font-extrabold tracking-[-0.04em]">Zalo</span>;
+
+  if (network === "wechat") {
+    return (
+      <svg viewBox="0 0 24 24" className="size-5" aria-hidden="true">
+        <circle cx="9" cy="10" r="6" fill="currentColor" />
+        <circle cx="16" cy="15" r="5" fill="currentColor" opacity="0.72" />
+        <circle cx="7" cy="9" r="0.8" fill="white" /><circle cx="11" cy="9" r="0.8" fill="white" />
+        <circle cx="14.5" cy="14" r="0.7" fill="white" /><circle cx="17.5" cy="14" r="0.7" fill="white" />
+      </svg>
+    );
+  }
+
+  if (network === "telegram") {
+    return (
+      <svg viewBox="0 0 24 24" className="size-5" aria-hidden="true">
+        <path d="M21.7 3.4 18.5 20c-.2 1.2-.9 1.5-1.9.9l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.4-5 9.1-8.2c.4-.4-.1-.6-.6-.2L5.9 13.8 1 12.3c-1.1-.3-1.1-1.1.2-1.6L20.3 3.3c.9-.3 1.7.2 1.4 1.1Z" fill="currentColor" />
+      </svg>
+    );
+  }
+
+  return (
+    <svg viewBox="0 0 24 24" className="size-5" aria-hidden="true">
+      <path d="M14.4 3c.4 2.3 1.7 3.7 4 4.1v3.2a9.1 9.1 0 0 1-4-1.1v6.1a6.2 6.2 0 1 1-5.3-6.1v3.3a3 3 0 1 0 2.1 2.8V3h3.2Z" fill="currentColor" />
+    </svg>
+  );
+}
+
 export default function LandingPage() {
   const { lang } = useLanguage();
   const t = DICT[lang] || DICT.vi;
@@ -2095,24 +2127,19 @@ export default function LandingPage() {
 
             <div className="lg:col-span-8 grid gap-3 grid-cols-2 sm:grid-cols-3 md:grid-cols-4">
               <a href="https://zalo.me/0889237833" target="_blank" rel="noreferrer" className="border border-[#E8E4DB] bg-[#FAF8F5] p-3.5 grid gap-1 no-underline hover:border-[#D4AF37] hover:bg-white transition-colors">
-                <span className="font-sans text-xs font-bold uppercase tracking-[0.15em] text-[#0D3B22]">Zalo</span>
-                <span className="font-sans text-xs text-[#6B6255]">088 923 7833</span>
+                <span className="flex items-center gap-3"><span className="grid size-10 shrink-0 place-items-center rounded-full bg-[#0878F9] text-white"><SocialLogo network="zalo" /></span><span className="grid gap-1"><span className="font-sans text-xs font-bold uppercase tracking-[0.15em] text-[#0D3B22]">Zalo</span><span className="font-sans text-xs text-[#6B6255]">088 923 7833</span></span></span>
               </a>
               <a href="https://www.tiktok.com/@gaojihouse" target="_blank" rel="noreferrer" className="border border-[#E8E4DB] bg-[#FAF8F5] p-3.5 grid gap-1 no-underline hover:border-[#D4AF37] hover:bg-white transition-colors">
-                <span className="font-sans text-xs font-bold uppercase tracking-[0.15em] text-[#0D3B22]">TikTok</span>
-                <span className="font-sans text-xs text-[#6B6255]">@gaojihouse</span>
+                <span className="flex items-center gap-3"><span className="relative size-10 shrink-0 overflow-hidden rounded-full border border-[#D8CFC2] bg-white"><Image src="/assets/logo-compact.png" alt="Avatar Gao Ji House trên TikTok" fill sizes="40px" className="object-cover" /></span><span className="grid gap-1"><span className="inline-flex items-center gap-1.5 font-sans text-xs font-bold uppercase tracking-[0.15em] text-[#0D3B22]">TikTok <SocialLogo network="tiktok" /></span><span className="font-sans text-xs text-[#6B6255]">@gaojihouse</span></span></span>
               </a>
               <a href="weixin://dl/chat?HZM81MS" className="border border-[#E8E4DB] bg-[#FAF8F5] p-3.5 grid gap-1 no-underline hover:border-[#D4AF37] hover:bg-white transition-colors">
-                <span className="font-sans text-xs font-bold uppercase tracking-[0.15em] text-[#0D3B22]">WeChat</span>
-                <span className="font-sans text-xs text-[#6B6255]">HZM81MS</span>
+                <span className="flex items-center gap-3"><span className="grid size-10 shrink-0 place-items-center rounded-full bg-[#07C160] text-white"><SocialLogo network="wechat" /></span><span className="grid gap-1"><span className="font-sans text-xs font-bold uppercase tracking-[0.15em] text-[#0D3B22]">WeChat</span><span className="font-sans text-xs text-[#6B6255]">HZM81MS</span></span></span>
               </a>
               <a href="https://t.me/HZM81MS" target="_blank" rel="noreferrer" className="border border-[#E8E4DB] bg-[#FAF8F5] p-3.5 grid gap-1 no-underline hover:border-[#D4AF37] hover:bg-white transition-colors">
-                <span className="font-sans text-xs font-bold uppercase tracking-[0.15em] text-[#0D3B22]">Telegram</span>
-                <span className="font-sans text-xs text-[#6B6255]">@HZM81MS</span>
+                <span className="flex items-center gap-3"><span className="grid size-10 shrink-0 place-items-center rounded-full bg-[#229ED9] text-white"><SocialLogo network="telegram" /></span><span className="grid gap-1"><span className="font-sans text-xs font-bold uppercase tracking-[0.15em] text-[#0D3B22]">Telegram</span><span className="font-sans text-xs text-[#6B6255]">@HZM81MS</span></span></span>
               </a>
               <a href="mailto:stay@gaojihouse.vn" className="border border-[#E8E4DB] bg-[#FAF8F5] p-3.5 grid gap-1 no-underline hover:border-[#D4AF37] hover:bg-white transition-colors col-span-2 sm:col-span-1">
-                <span className="font-sans text-xs font-bold uppercase tracking-[0.15em] text-[#0D3B22]">Email</span>
-                <span className="font-sans text-xs text-[#6B6255]">stay@gaojihouse.vn</span>
+                <span className="flex items-center gap-3"><span className="grid size-10 shrink-0 place-items-center rounded-full bg-[#0D3B22] text-white"><SocialLogo network="email" /></span><span className="min-w-0 grid gap-1"><span className="font-sans text-xs font-bold uppercase tracking-[0.15em] text-[#0D3B22]">Email</span><span className="truncate font-sans text-xs text-[#6B6255]">stay@gaojihouse.vn</span></span></span>
               </a>
             </div>
           </div>

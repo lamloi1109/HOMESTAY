@@ -13,7 +13,6 @@ import {
   FilterTabs,
   Icon,
   InquiryModal,
-  ResidenceCarousel,
   SectionHeader,
   UnitCard,
 } from "@/components/gaoji";
@@ -43,28 +42,6 @@ const DICT = {
 
     // 2. Floating Booking Bar
     queryBarSub: "Guest Relations phản hồi trong 2 giờ làm việc · Hỗ trợ Tiếng Việt · English · 中文",
-
-    // 3. Editorial Showcase
-    introEye: "Cho Thuê Căn Hộ · Landmark & Vinhomes Central Park",
-    introTitle: "Căn Hộ Cho Thuê Trong Landmark Và Vinhomes Central Park",
-    introBody: "Gao Ji House hiện diện tại cụm Park P7, P3, P1 và Landmark L81, L3, L2, L1 trong Vinhomes Central Park. Các căn hộ được hoàn thiện nội thất, hỗ trợ thuê theo tháng hoặc theo đêm cùng dịch vụ vận hành trọn gói.",
-    s1v: "10 Phút",
-    s1l: "Tới Quận 1 CBD",
-    s2v: "2 Lần / Tuần",
-    s2l: "Dọn Phòng & Thay Ga",
-    s3v: "24/7",
-    s3l: "Lễ Tân Đa Ngữ",
-    introCta: "Xem Danh Sách Căn Hộ",
-    plate1: "Hình 01 — Không Gian Khách & Bàn Ăn Liên Thông",
-    carouselLabel: "Không gian sống tại Gao Ji House",
-    carouselPrevious: "Xem ảnh trước",
-    carouselNext: "Xem ảnh tiếp theo",
-    carouselSlides: [
-      { title: "Không Gian Sống", description: "Phòng khách và bàn ăn liên thông, hoàn thiện sẵn để có thể ở ngay." },
-      { title: "Nghỉ Ngơi Trên Cao", description: "Phòng ngủ đón ánh sáng tự nhiên với tầm nhìn Landmark và sông Sài Gòn." },
-      { title: "Tiện Nghi Dài Ngày", description: "Bếp riêng đầy đủ thiết bị cho gia đình và những kỳ lưu trú dài ngày." },
-      { title: "Vị Trí Biểu Tượng", description: "Sống giữa Vinhomes Central Park, liền kề Landmark 81 và công viên ven sông." },
-    ],
 
     // 4. Units List
     unitsEye: "Danh Sách Căn Hộ",
@@ -261,28 +238,6 @@ const DICT = {
 
     queryBarSub: "Guest Relations replies within 2 working hours · English · Vietnamese · Chinese",
 
-    // 3. Editorial Showcase
-    introEye: "Apartments For Rent · Landmark & Vinhomes Central Park",
-    introTitle: "Apartments For Rent In Landmark And Vinhomes Central Park",
-    introBody: "Gao Ji House operates across Park towers P7, P3, P1 and Landmark towers L81, L3, L2, L1 within Vinhomes Central Park, offering fully furnished residences for monthly or nightly stays.",
-    s1v: "10 Mins",
-    s1l: "To District 1 CBD",
-    s2v: "2x / Week",
-    s2l: "Housekeeping & Linen",
-    s3v: "24/7",
-    s3l: "Multilingual Team",
-    introCta: "View Apartment Collection",
-    plate1: "Plate 01 — Open Plan Living & Dining Area",
-    carouselLabel: "Living spaces at Gao Ji House",
-    carouselPrevious: "View previous image",
-    carouselNext: "View next image",
-    carouselSlides: [
-      { title: "Open-Plan Living", description: "A fully furnished living and dining space, ready from the day you arrive." },
-      { title: "Elevated Rest", description: "A naturally lit bedroom overlooking Landmark and the Saigon River." },
-      { title: "Long-Stay Comfort", description: "A private, fully equipped kitchen designed for families and extended stays." },
-      { title: "An Iconic Address", description: "Live within Vinhomes Central Park, beside Landmark 81 and the riverside park." },
-    ],
-
     unitsEye: "Rates & Floor Plans",
     unitsTitle: "Serviced Apartment Collection",
     unitsAside: "",
@@ -470,27 +425,6 @@ const DICT = {
 
     queryBarSub: "客户关怀团队 2 个工作小时内回复 · 支持 中文 · 越南语 · 英语",
 
-    introEye: "公寓出租 · Landmark 与 Vinhomes Central Park",
-    introTitle: "Landmark 与 Vinhomes Central Park 公寓出租",
-    introBody: "Gao Ji House 覆盖 Vinhomes Central Park 的 Park P7、P3、P1 及 Landmark L81、L3、L2、L1，提供家具齐全的月租或短住服务式公寓。",
-    s1v: "10 分钟",
-    s1l: "至第一郡 CBD",
-    s2v: "每周 2 次",
-    s2l: "保洁与布草更换",
-    s3v: "24/7",
-    s3l: "多语前台关怀",
-    introCta: "查看公寓房源",
-    plate1: "图 01 — 客厅与餐厅通透空间",
-    carouselLabel: "Gao Ji House 居住空间",
-    carouselPrevious: "查看上一张图片",
-    carouselNext: "查看下一张图片",
-    carouselSlides: [
-      { title: "开放式生活空间", description: "客厅与餐厅家具齐全，抵达当天即可安心入住。" },
-      { title: "高层静谧休憩", description: "卧室采光充足，可眺望 Landmark 与西贡河景。" },
-      { title: "长住便利设施", description: "独立厨房设备齐全，适合家庭及长期居住。" },
-      { title: "城市地标住址", description: "置身 Vinhomes Central Park，毗邻 Landmark 81 与滨河公园。" },
-    ],
-
     unitsEye: "价格清单与户型",
     unitsTitle: "服务式公寓房源列表",
     unitsAside: "",
@@ -677,27 +611,6 @@ const DICT = {
     statReplyVal: "2 小時內",
 
     queryBarSub: "客戶關懷團隊 2 個工作小時內回覆 · 支援 中文 · 越南語 · 英語",
-
-    introEye: "公寓出租 · Landmark 與 Vinhomes Central Park",
-    introTitle: "Landmark 與 Vinhomes Central Park 公寓出租",
-    introBody: "Gao Ji House 覆蓋 Vinhomes Central Park 的 Park P7、P3、P1 及 Landmark L81、L3、L2、L1，提供家具齊全的月租或短住服務式公寓。",
-    s1v: "10 分鐘",
-    s1l: "至第一郡 CBD",
-    s2v: "每週 2 次",
-    s2l: "清潔與布草更換",
-    s3v: "24/7",
-    s3l: "多語前台關懷",
-    introCta: "查看公寓房源",
-    plate1: "圖 01 — 客廳與餐廳通透空間",
-    carouselLabel: "Gao Ji House 居住空間",
-    carouselPrevious: "查看上一張圖片",
-    carouselNext: "查看下一張圖片",
-    carouselSlides: [
-      { title: "開放式生活空間", description: "客廳與餐廳家具齊全，抵達當天即可安心入住。" },
-      { title: "高層靜謐休憩", description: "臥室採光充足，可眺望 Landmark 與西貢河景。" },
-      { title: "長住便利設施", description: "獨立廚房設備齊全，適合家庭及長期居住。" },
-      { title: "城市地標住址", description: "置身 Vinhomes Central Park，毗鄰 Landmark 81 與濱河公園。" },
-    ],
 
     unitsEye: "價格清單與戶型",
     unitsTitle: "服務式公寓房源列表",
@@ -1260,55 +1173,7 @@ export default function LandingPage() {
       </section>
 
 
-      {/* ── 2. EDITORIAL SHOWCASE (Trải Nghiệm Lưu Trú Đỉnh Cao) */}
-      <section className="py-[clamp(44px,5.5vw,88px)] px-[clamp(20px,4vw,56px)] bg-[#FBF9F5]">
-        <div className="max-w-[1240px] mx-auto grid gap-[clamp(32px,5vw,72px)] grid-cols-1 md:grid-cols-2 items-center">
-          {/* Left: Clean Luxury Gold Frame Box (No awkward red/clay box) */}
-          <div className="relative">
-            {/* Elegant 12px gold offset frame */}
-            <span
-              aria-hidden="true"
-              className="absolute inset-0 pointer-events-none"
-              style={{
-                transform: "translate(-10px, 10px)",
-                border: "1px solid #B08D57",
-              }}
-            />
-
-            <div className="relative bg-white border border-[#E8E4DB] p-[clamp(28px,4vw,44px)] shadow-xs">
-              <div className="flex items-center gap-3">
-                <span className="w-8 h-px bg-[#B08D57]" />
-                <span className="font-sans text-[0.75rem] font-bold uppercase tracking-[0.15em] text-[#8A6214]">
-                  {t.introEye}
-                </span>
-              </div>
-
-              <h2 className="mt-4 font-display text-[clamp(1.9rem,1.7rem+1vw,2.8rem)] font-medium leading-[1.2] text-[#1A1A1A]">
-                {t.introTitle}
-              </h2>
-
-              <p className="mt-5 max-w-[48ch] font-sans text-[1.08rem] leading-[1.7] text-[#383838]">
-                {t.introBody}
-              </p>
-            </div>
-          </div>
-
-          {/* Right: manually controlled editorial residence carousel */}
-          <ResidenceCarousel
-            regionLabel={t.carouselLabel}
-            previousLabel={t.carouselPrevious}
-            nextLabel={t.carouselNext}
-            slides={[
-              { src: "/assets/photos/living-dining.jpg", alt: "Khu vực khách và bàn ăn liên thông trong căn hộ Gao Ji House", ...t.carouselSlides[0] },
-              { src: "/assets/photos/bedroom-platform-landmark.jpg", alt: "Phòng ngủ Gao Ji House nhìn ra Landmark và sông Sài Gòn", ...t.carouselSlides[1] },
-              { src: "/assets/photos/kitchen-island.jpg", alt: "Bếp riêng đầy đủ thiết bị trong căn hộ Gao Ji House", ...t.carouselSlides[2] },
-              { src: "/assets/photos/towers-skyline.jpg", alt: "Landmark 81 và Vinhomes Central Park nhìn từ Gao Ji House", ...t.carouselSlides[3] },
-            ]}
-          />
-        </div>
-      </section>
-
-      {/* ── 3. TIKTOK VIDEO EXPERIENCES ────────────────────── */}
+      {/* ── 2. TIKTOK VIDEO EXPERIENCES ────────────────────── */}
       <section className="border-y border-[#E8E4DB] bg-[#F4EFE8] px-[clamp(20px,4vw,56px)] py-[clamp(44px,5vw,72px)]">
         <div className="mx-auto grid max-w-[1240px] items-start gap-8 lg:grid-cols-[minmax(280px,.72fr)_minmax(0,1.28fr)] lg:gap-14">
           <div className="grid justify-items-start gap-5 lg:sticky lg:top-24">

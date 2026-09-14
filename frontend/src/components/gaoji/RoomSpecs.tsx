@@ -9,6 +9,7 @@ export interface RoomSpecsProps {
   bedrooms?: number | null;
   kitchens?: number | null;
   tone?: "light" | "dark";
+  variant?: "strip" | "plain";
   className?: string;
   style?: React.CSSProperties;
 }
@@ -24,6 +25,7 @@ export function RoomSpecs({
   bedrooms,
   kitchens,
   tone = "light",
+  variant = "strip",
   className = "",
   style,
 }: RoomSpecsProps) {
@@ -57,7 +59,7 @@ export function RoomSpecs({
 
   return (
     <div
-      className={`flex flex-wrap items-center ${className}`.trim()}
+      className={`flex flex-wrap items-center ${variant === "plain" ? "gap-x-5 gap-y-2" : ""} ${className}`.trim()}
       style={style}
     >
       {items.map((it, i) => (
@@ -65,8 +67,8 @@ export function RoomSpecs({
           key={it.text}
           className="inline-flex items-center gap-2 font-sans text-xs sm:text-[var(--fs-label,0.75rem)] font-medium uppercase tracking-[0.08em]"
           style={{
-            padding: "0 14px",
-            borderLeft: i === 0 ? "none" : `1px solid ${line}`,
+            padding: variant === "plain" ? 0 : "0 14px",
+            borderLeft: variant === "plain" || i === 0 ? "none" : `1px solid ${line}`,
             color: fg,
           }}
         >

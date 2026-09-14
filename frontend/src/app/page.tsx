@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import React, { useState } from "react";
+import Script from "next/script";
+import React, { useEffect, useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import {
   Accordion,
@@ -12,11 +13,10 @@ import {
   FilterTabs,
   Icon,
   InquiryModal,
-  PhotoPlate,
+  ResidenceCarousel,
   SectionHeader,
   UnitCard,
 } from "@/components/gaoji";
-import { Quote } from "lucide-react";
 
 // Complete 4-Language Dictionary for Gao Ji House Landing Page
 const DICT = {
@@ -26,7 +26,11 @@ const DICT = {
     heroTitle: "Về Nhà · Tận Hưởng Không Gian Sống",
     heroBody: "Năm căn hộ dịch vụ cao cấp đầy đủ nội thất bên bờ sông Sài Gòn và Landmark 81. Dọn phòng định kỳ, lễ tân 24/7, hỗ trợ đăng ký tạm trú — trọn gói trong một mức giá minh bạch.",
     heroCta1: "Xem Danh Sách Căn Hộ",
-    heroCta2: "Đặt Phòng Ngay",
+    heroCta2: "Kiểm Tra Phòng Trống",
+    heroProof1: "5 căn hộ tuyển chọn",
+    heroProof2: "Giá thuê minh bạch",
+    heroProof3: "Phản hồi trong 2 giờ",
+    heroScroll: "Khám phá bộ sưu tập",
     statRate: "Giá Thuê Trọn Gói",
     statRateVal: "Từ 24 Triệu VNĐ",
     statRatePer: " / tháng",
@@ -43,7 +47,7 @@ const DICT = {
     // 3. Editorial Showcase
     introEye: "Cho Thuê Căn Hộ · Landmark & Vinhomes Central Park",
     introTitle: "Căn Hộ Cho Thuê Trong Landmark Và Vinhomes Central Park",
-    introBody: "Gao Ji House cho thuê năm căn hộ tại các toà Landmark 1, Landmark 3, Landmark 81 và Park 1, Park 3 trong Vinhomes Central Park. Thuê theo tháng hoặc theo đêm, nội thất hoàn thiện sẵn, giá đã gồm phí quản lý, internet và dọn phòng định kỳ.",
+    introBody: "Gao Ji House hiện diện tại cụm Park P7, P3, P1 và Landmark L81, L3, L2, L1 trong Vinhomes Central Park. Các căn hộ được hoàn thiện nội thất, hỗ trợ thuê theo tháng hoặc theo đêm cùng dịch vụ vận hành trọn gói.",
     s1v: "10 Phút",
     s1l: "Tới Quận 1 CBD",
     s2v: "2 Lần / Tuần",
@@ -52,6 +56,15 @@ const DICT = {
     s3l: "Lễ Tân Đa Ngữ",
     introCta: "Xem Danh Sách Căn Hộ",
     plate1: "Hình 01 — Không Gian Khách & Bàn Ăn Liên Thông",
+    carouselLabel: "Không gian sống tại Gao Ji House",
+    carouselPrevious: "Xem ảnh trước",
+    carouselNext: "Xem ảnh tiếp theo",
+    carouselSlides: [
+      { title: "Không Gian Sống", description: "Phòng khách và bàn ăn liên thông, hoàn thiện sẵn để có thể ở ngay." },
+      { title: "Nghỉ Ngơi Trên Cao", description: "Phòng ngủ đón ánh sáng tự nhiên với tầm nhìn Landmark và sông Sài Gòn." },
+      { title: "Tiện Nghi Dài Ngày", description: "Bếp riêng đầy đủ thiết bị cho gia đình và những kỳ lưu trú dài ngày." },
+      { title: "Vị Trí Biểu Tượng", description: "Sống giữa Vinhomes Central Park, liền kề Landmark 81 và công viên ven sông." },
+    ],
 
     // 4. Units List
     unitsEye: "Danh Sách Căn Hộ",
@@ -60,6 +73,23 @@ const DICT = {
     lblType: "Loại Căn Hộ",
     lblFloor: "Tầng",
     lblPrice: "Khoảng Giá Thuê (VNĐ / Tháng)",
+    searchPlaceholder: "Tìm theo mã căn, tên hoặc tòa nhà",
+    searchLabel: "Tìm căn hộ",
+    filterButton: "Bộ Lọc",
+    closeFilters: "Đóng Bộ Lọc",
+    applyFilters: "Áp Dụng",
+    cancelFilters: "Hủy",
+    filterEyebrow: "Bảng Giá Thuê & Mặt Bằng",
+    filterTitle: "Bộ Lọc",
+    filterBuilding: "Tòa Nhà",
+    filterLandmark: "Landmark",
+    filterCentralPark: "Vinhomes Central Park",
+    filterBedrooms: "Số Phòng Ngủ",
+    filterPrice: "Giá Thuê / Tháng",
+    filterViewResults: "Xem Kết Quả",
+    filterCloseLabel: "Đóng bảng bộ lọc",
+    priceMillion: "Triệu VNĐ",
+    resultCount: (shown: number, total: number) => `${shown} / ${total} căn hộ phù hợp`,
     lblBeds: "Số Phòng Ngủ",
     tabAll: "Tất Cả",
     tab1PN: "1 Phòng Ngủ",
@@ -74,7 +104,6 @@ const DICT = {
     emptyBody: "Gao Ji House còn căn tương tự ở tầng khác — nhắn Zalo để nhận danh sách chờ trong ngày.",
     emptyCta1: "Nhận Danh Sách Chờ",
     emptyCta2: "Xem Tất Cả 5 Căn",
-    unitsNote: "Giá thuê đã gồm phí quản lý · Internet · Dọn phòng định kỳ · Không phí dịch vụ đặt phòng",
     unitWord: "CĂN HỘ",
     statusAvail: "Còn Phòng",
     statusHeld: "Đã Giữ Chỗ · Nhận Chờ",
@@ -89,12 +118,18 @@ const DICT = {
     },
 
     // 5. Location Radar & Maps
+    locKicker: "Your Perfect Stay · In The Heart Of Saigon",
     locEye: "Vinhomes Central Park · Bình Thạnh",
-    locTitle: "Vị Trí & Bán Kính Kết Nối Sài Gòn",
-    locBody: "Thời gian di chuyển thực tế bằng ô tô từ sảnh toà nhà, đo trong hai khung giờ của Sài Gòn.",
+    locTitle: "Bản Đồ Vị Trí & Bán Kính Kết Nối Sài Gòn",
+    locBody: "Tọa lạc tại Vinhomes Central Park bên sông Sài Gòn, kết nối thuận tiện tới các địa điểm nổi tiếng chỉ từ 2–20 phút.",
+    mapViewLabel: "Map View", mapGoogle: "Bản Đồ Google Maps", mapRadar: "Sơ Đồ Bức Xạ",
+    catAll: "Tất Cả", catFamous: "Điểm Nổi Tiếng", catTransport: "Metro & Giao Thông", catShopping: "Mua Sắm", catCulture: "Văn Hóa",
+    locationSearch: "Tìm nhanh địa điểm...", nearbyBilingual: "Nearby Attractions · 周边热门景点", locations: "Locations",
+    radarTitle: "Gao Ji House · Central Distance Radar & Riverfront Map", riverfrontTag: "District 1 · Saigon Riverfront",
+    towerMapLabel: "Các Tòa Gao Ji House Có Cho Thuê",
     tOff: "Giờ Thấp Điểm",
     tPeak: "Giờ Cao Điểm",
-    noteOff: "Đo 10:00–15:00 các ngày trong tuần · Google Maps",
+    noteOff: "Ước tính theo lối ra sảnh tòa đã chọn · Google Maps",
     notePeak: "Đo 17:30–19:00 các ngày trong tuần · Google Maps",
     mins: (n: number) => n + " phút",
     spotEye: "Địa Điểm Lân Cận",
@@ -114,16 +149,16 @@ const DICT = {
     mapFoot: "Bán kính kết nối từ sảnh toà nhà",
     addrEye: "Địa Chỉ Nhận Phòng",
     spots: [
-      { name: "Landmark 81 & TTTM Vincom", blurb: "Trung tâm thương mại, đài quan sát cao nhất Việt Nam, ẩm thực Á-Âu và siêu thị WinMart." },
+      { name: "Landmark 81 & Công Viên Bờ Sông", blurb: "Tòa nhà cao nhất Việt Nam với TTTM Vincom, nhà hàng sang trọng và công viên ven sông 14ha." },
       { name: "Công Viên Vinhomes Central Park 14ha", blurb: "Công viên ven sông lớn nhất trung tâm Sài Gòn với vườn Nhật, hồ cá Koi và đường dạo bộ 1.2km." },
-      { name: "Chợ Bến Thành & Quận 1 CBD", blurb: "Biểu tượng văn hoá trung tâm Sài Gòn, phố thương mại, ẩm thực và mua sắm sầm uất." },
-      { name: "Nhà Hát Thành Phố & Phố Đi Bộ", blurb: "Trục đi bộ Nguyễn Huệ, công trình kiến trúc cổ điển Pháp và các khách sạn 5 sao." },
-      { name: "Nhà Thờ Đức Bà & Bưu Điện TP", blurb: "Khu vực lõi di sản trung tâm Quận 1, quảng trường đi bộ và cà phê sách." },
+      { name: "Trung Tâm Quận 1 & Phố Đi Bộ", blurb: "Trung tâm văn hóa, thương mại và phố đi bộ sôi động của Sài Gòn." },
+      { name: "Nhà Hát Thành Phố", blurb: "Công trình kiến trúc Pháp biểu tượng bên trục đi bộ Nguyễn Huệ." },
+      { name: "Nhà Thờ Đức Bà & Bưu Điện Thành Phố", blurb: "Khu vực lõi di sản trung tâm Quận 1, quảng trường đi bộ và cà phê sách." },
       { name: "Phố Nhật Bản Lê Thánh Tôn", blurb: "Khu ẩm thực Nhật Bản tinh hoa, quán rượu Izakaya và spa thư giãn cao cấp." },
       { name: "Thảo Cầm Viên Sài Gòn", blurb: "Công viên bách thảo lâu đời, không gian cây xanh cổ thụ thanh bình giữa lòng thành phố." },
-      { name: "Khu Đô Thị Mới Thủ Thiêm", blurb: "Trung tâm tài chính mới, cầu Ba Son, công viên bờ sông Thủ Thiêm ngắm hoàng hôn." },
+      { name: "Trung Tâm Tài Chính Thủ Thiêm", blurb: "Trung tâm tài chính mới, cầu Ba Son và công viên bờ sông ngắm hoàng hôn." },
       { name: "Bảo Tàng Mỹ Thuật TP.HCM", blurb: "Toà nhà kiến trúc Art Deco cổ kính trưng bày các tác phẩm hội hoạ và điêu khắc quý giá." },
-      { name: "Khu Phố Tây Thảo Điền (Quận 2)", blurb: "Cộng đồng expat quốc tế, nhà hàng fine dining, quán cafe specialty và nghệ thuật." },
+      { name: "Khu Phố Ngoại Giao Thảo Điền (Quận 2)", blurb: "Cộng đồng expat quốc tế, nhà hàng fine dining, quán cafe specialty và nghệ thuật." },
       { name: "Sân Bay Quốc Tế Tân Sơn Nhất", blurb: "Cửa ngõ hàng không quốc tế, kết nối thẳng qua tuyến Phạm Văn Đồng và Nguyễn Hữu Cảnh." },
       { name: "Bến Bạch Đằng & Waterbus", blurb: "Ga tàu buýt đường thuỷ sông Sài Gòn ngắm cảnh hoàng hôn và du thuyền đêm." },
     ],
@@ -166,7 +201,6 @@ const DICT = {
     r4b: "Hợp đồng công chứng, hoá đơn VAT và đăng ký tạm trú cho khách nước ngoài.",
     socEye: "Mạng Xã Hội & Kênh Liên Hệ",
     socBody: "Ảnh căn hộ mới, tình trạng phòng trống và video quay dọc từng căn được đăng trước tại các kênh dưới đây.",
-    ytSub: "Gao Ji House · Video Căn Hộ",
 
     // 8. Contact & Zalo First SOP
     ctEye: "Guest Relations · Phản Hồi Trong 2 Giờ",
@@ -179,35 +213,12 @@ const DICT = {
     hoursVal: "08:00 – 21:00 · T2–CN",
     rowLang: "Ngôn Ngữ Hỗ Trợ",
 
-    // 9. Trust & Legal
-    trustEye: "Đơn Vị Đồng Hành & Bảo Chứng Pháp Lý",
-    t1Label: "Kiến Trúc & Không Gian",
-    t1Title: "Architectural Design & Fit-out",
-    t1Body: "Nội thất thiết kế theo phong cách Indochine kết hợp Modern Japandi tối giản, tinh tế.",
-    t2Label: "Tiêu Chuẩn 5 Sao",
-    t2Title: "5-Star Hospitality Standard",
-    t2Body: "Quy trình buồng phòng, vệ sinh và khử khuẩn đạt tiêu chuẩn khách sạn cao cấp.",
-    t3Label: "Thiết Bị Bàn Giao",
-    t3Title: "Handover Standards & Equipment",
-    t3Body: "Trang bị đầy đủ thiết bị âm tủ cao cấp Bosch, Gaggenau, Duravit và máy giặt sấy.",
-    t4Label: "Pháp Lý Rõ Ràng",
-    t4Title: "Pháp Lý & Hợp Đồng Công Chứng",
-    t4Body: "Căn hộ chính chủ, hỗ trợ xuất hoá đơn VAT đầy đủ và đăng ký tạm trú dài hạn.",
 
-    // 10. Trust Badges
-    tbOta: "Đánh giá xuất sắc trên các nền tảng OTA",
-    tbCorp: "Lựa chọn lưu trú của chuyên gia đa quốc gia",
-    tbPay: "Chấp nhận thanh toán qua VNPay, MoMo, Visa",
-
-    // 11. Social Proof
-    spEye: "Khách hàng nói gì về Gao Ji House",
-    spTitle: "Trải nghiệm lưu trú thực tế",
-    sp1: "Không gian yên tĩnh, an ninh tốt, nội thất chuẩn khách sạn 5 sao. Rất phù hợp cho chuyến công tác dài ngày tại TP.HCM.",
-    sp1a: "Khách doanh nghiệp, 3 tháng lưu trú",
-    sp2: "Căn hộ rất sạch sẽ, bếp đầy đủ dụng cụ để nấu ăn. Hồ bơi và công viên ngay dưới nhà rất tiện cho trẻ nhỏ.",
-    sp2a: "Gia đình, kỳ nghỉ cuối tuần",
-    sp3: "Dịch vụ tuyệt vời và phản hồi nhanh chóng qua Zalo. Chắc chắn sẽ quay lại trong tương lai.",
-    sp3a: "Khách Expats, 1 năm lưu trú",
+    // 11. TikTok Video Experiences
+    videoEye: "Video thực tế từ Gao Ji House",
+    videoTitle: "Trải nghiệm căn hộ qua TikTok",
+    videoBody: "Xem video quay thực tế về không gian, nội thất và trải nghiệm lưu trú được đăng trực tiếp trên kênh TikTok chính thức của Gao Ji House.",
+    videoCta: "Xem kênh TikTok",
 
     // 12. FAQ
     faqEye: "Câu hỏi thường gặp",
@@ -233,7 +244,11 @@ const DICT = {
     heroTitle: "Welcome Home · Elevated Living In Saigon",
     heroBody: "Five fully furnished luxury serviced apartments adjacent to Landmark 81 and Saigon River. Regular housekeeping, 24/7 concierge, registration support — all-inclusive in one transparent rate.",
     heroCta1: "View Apartment Collection",
-    heroCta2: "Book Now",
+    heroCta2: "Check Availability",
+    heroProof1: "5 curated residences",
+    heroProof2: "Transparent rates",
+    heroProof3: "Reply within 2 hours",
+    heroScroll: "Explore the collection",
     statRate: "All-Inclusive Rent",
     statRateVal: "From 24M VNĐ",
     statRatePer: " / month",
@@ -249,7 +264,7 @@ const DICT = {
     // 3. Editorial Showcase
     introEye: "Apartments For Rent · Landmark & Vinhomes Central Park",
     introTitle: "Apartments For Rent In Landmark And Vinhomes Central Park",
-    introBody: "Gao Ji House offers five serviced apartments across Landmark 1, Landmark 3, Landmark 81, Park 1, and Park 3 in Vinhomes Central Park. Available for monthly or nightly lease, fully furnished, with management fees, high-speed internet, and regular housekeeping included.",
+    introBody: "Gao Ji House operates across Park towers P7, P3, P1 and Landmark towers L81, L3, L2, L1 within Vinhomes Central Park, offering fully furnished residences for monthly or nightly stays.",
     s1v: "10 Mins",
     s1l: "To District 1 CBD",
     s2v: "2x / Week",
@@ -258,6 +273,15 @@ const DICT = {
     s3l: "Multilingual Team",
     introCta: "View Apartment Collection",
     plate1: "Plate 01 — Open Plan Living & Dining Area",
+    carouselLabel: "Living spaces at Gao Ji House",
+    carouselPrevious: "View previous image",
+    carouselNext: "View next image",
+    carouselSlides: [
+      { title: "Open-Plan Living", description: "A fully furnished living and dining space, ready from the day you arrive." },
+      { title: "Elevated Rest", description: "A naturally lit bedroom overlooking Landmark and the Saigon River." },
+      { title: "Long-Stay Comfort", description: "A private, fully equipped kitchen designed for families and extended stays." },
+      { title: "An Iconic Address", description: "Live within Vinhomes Central Park, beside Landmark 81 and the riverside park." },
+    ],
 
     unitsEye: "Rates & Floor Plans",
     unitsTitle: "Serviced Apartment Collection",
@@ -265,6 +289,23 @@ const DICT = {
     lblType: "Apartment Type",
     lblFloor: "Floor Level",
     lblPrice: "Monthly Rent Range (VNĐ)",
+    searchPlaceholder: "Search by unit code, name, or tower",
+    searchLabel: "Search apartments",
+    filterButton: "Filters",
+    closeFilters: "Close Filters",
+    applyFilters: "Apply Filters",
+    cancelFilters: "Cancel",
+    filterEyebrow: "Rates & Floor Plans",
+    filterTitle: "Filters",
+    filterBuilding: "Building",
+    filterLandmark: "Landmark",
+    filterCentralPark: "Vinhomes Central Park",
+    filterBedrooms: "Bedrooms",
+    filterPrice: "Monthly Rent",
+    filterViewResults: "View Results",
+    filterCloseLabel: "Close filter dialog",
+    priceMillion: "Million VNĐ",
+    resultCount: (shown: number, total: number) => `${shown} of ${total} matching apartments`,
     lblBeds: "Bedrooms",
     tabAll: "All",
     tab1PN: "1 Bedroom",
@@ -279,7 +320,6 @@ const DICT = {
     emptyBody: "We have similar units on other floors — message on Zalo to receive same-day waitlist updates.",
     emptyCta1: "Join Waitlist",
     emptyCta2: "View All 5 Units",
-    unitsNote: "Rent includes management fees · High-speed Wi-Fi · Bi-weekly housekeeping · No booking fee",
     unitWord: "UNIT",
     statusAvail: "Available",
     statusHeld: "Reserved · Waitlist",
@@ -293,12 +333,18 @@ const DICT = {
       "L3.44.09": { title: "Duplex Penthouse Overlooking Landmark", type: "3 Bedrooms · Duplex" },
     },
 
+    locKicker: "Your Perfect Stay · In The Heart Of Saigon",
     locEye: "Vinhomes Central Park · Binh Thanh",
     locTitle: "Prime Location & Saigon Travel Radius",
-    locBody: "Actual driving time from the building lobby, measured during off-peak and peak Saigon traffic.",
+    locBody: "A riverfront address at Vinhomes Central Park, conveniently connected to Saigon landmarks in 2–20 minutes.",
+    mapViewLabel: "Map View", mapGoogle: "Google Maps", mapRadar: "Distance Radar",
+    catAll: "All", catFamous: "Landmarks", catTransport: "Metro & Transit", catShopping: "Shopping", catCulture: "Culture",
+    locationSearch: "Find a nearby place...", nearbyBilingual: "Nearby Attractions · 周边热门景点", locations: "Locations",
+    radarTitle: "Gao Ji House · Central Distance Radar & Riverfront Map", riverfrontTag: "Binh Thanh · Saigon Riverfront",
+    towerMapLabel: "Gao Ji House Rental Towers",
     tOff: "Off-Peak Hours",
     tPeak: "Peak Hours",
-    noteOff: "Measured 10:00–15:00 weekdays · Google Maps",
+    noteOff: "Estimated from the selected tower lobby · Google Maps",
     notePeak: "Measured 17:30–19:00 weekdays · Google Maps",
     mins: (n: number) => n + " mins",
     spotEye: "Nearby Destinations",
@@ -368,7 +414,6 @@ const DICT = {
     r4b: "Notarized contracts, VAT invoicing, and foreign temporary residence registration.",
     socEye: "Social & Communication Channels",
     socBody: "Fresh unit updates, availability status, and vertical video walkthroughs are shared across our channels.",
-    ytSub: "Gao Ji House · Apartment Videos",
 
     ctEye: "Guest Relations · 2-Hour Response",
     ctTitle: "Reserve Your Residence Via Zalo",
@@ -380,32 +425,11 @@ const DICT = {
     hoursVal: "08:00 – 21:00 · Mon–Sun",
     rowLang: "Supported Languages",
 
-    trustEye: "Partners & Legal Assurance",
-    t1Label: "Interior & Architecture",
-    t1Title: "Architectural Design & Fit-out",
-    t1Body: "Indochine elegance meets Modern Japandi minimalism for serene acoustic comfort.",
-    t2Label: "5-Star Standard",
-    t2Title: "5-Star Hospitality Standard",
-    t2Body: "Hotel-grade housekeeping and sanitized linen replacement protocols.",
-    t3Label: "Turnkey Equipment",
-    t3Title: "Handover Standards & Equipment",
-    t3Body: "Fully equipped with Bosch, Gaggenau, Duravit sanitary ware, and washer-dryers.",
-    t4Label: "Compliance",
-    t4Title: "Legal Registration & VAT Invoicing",
-    t4Body: "Direct ownership, notarized leasing, monthly VAT invoices, and full residency support.",
 
-    tbOta: "Exceptional ratings on OTA platforms",
-    tbCorp: "The preferred choice for multinational executives",
-    tbPay: "Accepting VNPay, MoMo, Visa",
-
-    spEye: "What Our Guests Say",
-    spTitle: "Real Stay Experiences",
-    sp1: "Quiet environment, excellent security, and 5-star hotel standard interiors. Perfect for long business trips in HCMC.",
-    sp1a: "Corporate Guest, 3-month stay",
-    sp2: "Very clean apartment with a fully equipped kitchen. The pool and park downstairs are great for kids.",
-    sp2a: "Family, Weekend getaway",
-    sp3: "Excellent service and prompt support via Zalo. Will definitely return in the future.",
-    sp3a: "Expat, 1-year stay",
+    videoEye: "Real videos from Gao Ji House",
+    videoTitle: "Experience the residences on TikTok",
+    videoBody: "Explore real walkthroughs of the spaces, interiors, and guest experience published on Gao Ji House’s official TikTok channel.",
+    videoCta: "View TikTok channel",
 
     faqEye: "Frequently Asked Questions",
     faqTitle: "Good to Know Before You Book",
@@ -429,7 +453,11 @@ const DICT = {
     heroTitle: "归家 · 享受静谧雅致的私享居所",
     heroBody: "地处 Landmark 81 与西贡河畔，五套高规格精装服务式公寓。定期保洁、24/7 前台、外籍暂住申报——一站式全包透明月租。",
     heroCta1: "查看所有房源",
-    heroCta2: "立即预订",
+    heroCta2: "查询可订房源",
+    heroProof1: "5 套精选公寓",
+    heroProof2: "价格透明",
+    heroProof3: "2 小时内回复",
+    heroScroll: "探索公寓系列",
     statRate: "全包月租",
     statRateVal: "2400 万越南盾起",
     statRatePer: " / 月",
@@ -444,7 +472,7 @@ const DICT = {
 
     introEye: "公寓出租 · Landmark 与 Vinhomes Central Park",
     introTitle: "Landmark 与 Vinhomes Central Park 公寓出租",
-    introBody: "Gao Ji House 在 Vinhomes Central Park 的 Landmark 1、Landmark 3、Landmark 81 以及 Park 1、Park 3 出租五套精选公寓。支持按月或按晚租赁，全套高品质家具家电齐备，租金已包含物业费、高速网络与定期保洁服务。",
+    introBody: "Gao Ji House 覆盖 Vinhomes Central Park 的 Park P7、P3、P1 及 Landmark L81、L3、L2、L1，提供家具齐全的月租或短住服务式公寓。",
     s1v: "10 分钟",
     s1l: "至第一郡 CBD",
     s2v: "每周 2 次",
@@ -453,6 +481,15 @@ const DICT = {
     s3l: "多语前台关怀",
     introCta: "查看公寓房源",
     plate1: "图 01 — 客厅与餐厅通透空间",
+    carouselLabel: "Gao Ji House 居住空间",
+    carouselPrevious: "查看上一张图片",
+    carouselNext: "查看下一张图片",
+    carouselSlides: [
+      { title: "开放式生活空间", description: "客厅与餐厅家具齐全，抵达当天即可安心入住。" },
+      { title: "高层静谧休憩", description: "卧室采光充足，可眺望 Landmark 与西贡河景。" },
+      { title: "长住便利设施", description: "独立厨房设备齐全，适合家庭及长期居住。" },
+      { title: "城市地标住址", description: "置身 Vinhomes Central Park，毗邻 Landmark 81 与滨河公园。" },
+    ],
 
     unitsEye: "价格清单与户型",
     unitsTitle: "服务式公寓房源列表",
@@ -460,6 +497,23 @@ const DICT = {
     lblType: "房型",
     lblFloor: "楼层",
     lblPrice: "月租范围 (越南盾/月)",
+    searchPlaceholder: "按房号、名称或楼栋搜索",
+    searchLabel: "搜索公寓",
+    filterButton: "筛选",
+    closeFilters: "关闭筛选",
+    applyFilters: "应用筛选",
+    cancelFilters: "取消",
+    filterEyebrow: "价格与户型",
+    filterTitle: "筛选",
+    filterBuilding: "楼栋",
+    filterLandmark: "Landmark",
+    filterCentralPark: "Vinhomes Central Park",
+    filterBedrooms: "卧室数量",
+    filterPrice: "月租",
+    filterViewResults: "查看结果",
+    filterCloseLabel: "关闭筛选面板",
+    priceMillion: "百万越南盾",
+    resultCount: (shown: number, total: number) => `${total} 套中有 ${shown} 套符合条件`,
     lblBeds: "卧室数量",
     tabAll: "全部",
     tab1PN: "一室一厅",
@@ -474,7 +528,6 @@ const DICT = {
     emptyBody: "Gao Ji House 在其他楼层拥有同类型房源 — 欢迎联系 Zalo 获取当日候补名单。",
     emptyCta1: "加入候补名单",
     emptyCta2: "查看全部 5 套",
-    unitsNote: "租金已含物业费 · 高速宽带 · 定期保洁 · 无预订手续费",
     unitWord: "公寓",
     statusAvail: "有空房",
     statusHeld: "已预订 · 接受排队",
@@ -488,12 +541,18 @@ const DICT = {
       "L3.44.09": { title: "顶层通层复式 对望地标塔", type: "三室复式 · Duplex" },
     },
 
+    locKicker: "理想旅居 · 西贡核心地段",
     locEye: "Vinhomes Central Park · 平盛郡",
     locTitle: "优越地理位置与西贡生活圈",
-    locBody: "自大堂出发的实际驾车测算时间，分别采集于西贡平峰与高峰时段。",
+    locBody: "坐落于 Vinhomes Central Park 西贡河畔，2–20 分钟便捷连接城市著名地标。",
+    mapViewLabel: "地图模式", mapGoogle: "谷歌地图", mapRadar: "距离雷达",
+    catAll: "全部", catFamous: "著名景点", catTransport: "地铁与交通", catShopping: "购物", catCulture: "文化",
+    locationSearch: "快速搜索地点...", nearbyBilingual: "Nearby Attractions · 周边热门景点", locations: "个地点",
+    radarTitle: "Gao Ji House · 中心距离雷达与滨河地图", riverfrontTag: "平盛郡 · 西贡河畔",
+    towerMapLabel: "Gao Ji House 出租楼栋",
     tOff: "平峰时段",
     tPeak: "高峰时段",
-    noteOff: "工作日 10:00–15:00 实测 · Google Maps",
+    noteOff: "按所选楼栋大堂出口估算 · Google Maps",
     notePeak: "工作日 17:30–19:00 实测 · Google Maps",
     mins: (n: number) => n + " 分钟",
     spotEye: "周边地标",
@@ -563,7 +622,6 @@ const DICT = {
     r4b: "负责合同公证、正规增值税发票 (VAT) 开具及外籍人员暂住申报。",
     socEye: "社交媒体与沟通渠道",
     socBody: "最新房源实拍、即时房态及竖屏看房视频将优先在以下官方渠道发布。",
-    ytSub: "Gao Ji House · 公寓实景视频",
 
     ctEye: "客户关怀 · 2 小时内响应",
     ctTitle: "通过 Zalo / 微信 快速预订",
@@ -575,32 +633,11 @@ const DICT = {
     hoursVal: "08:00 – 21:00 · 周一至周日",
     rowLang: "支持语言",
 
-    trustEye: "合作背书与法务保障",
-    t1Label: "空间美学",
-    t1Title: "建筑设计与室内定制",
-    t1Body: "融合法式印度支那与日式静谧极简风格，兼顾隔音与生活雅趣。",
-    t2Label: "五星准则",
-    t2Title: "五星级酒店服务标准",
-    t2Body: "严格客房保洁、高温消毒洗涤及标准化验收流程。",
-    t3Label: "品牌交付",
-    t3Title: "严苛交付标准与名牌家电",
-    t3Body: "配备博世 (Bosch)、Gaggenau、杜拉维特 (Duravit) 卫浴及洗烘一体机。",
-    t4Label: "合规保障",
-    t4Title: "产权清晰与税务正规",
-    t4Body: "产权自持，支持合同公证、合法开具 VAT 发票及外籍暂住申报。",
 
-    tbOta: "在 OTA 平台上获得卓越评价",
-    tbCorp: "跨国企业高管的首选住宿",
-    tbPay: "支持 VNPay、MoMo、Visa 支付",
-
-    spEye: "宾客评价",
-    spTitle: "真实入住体验",
-    sp1: "环境安静，安保严密，内饰达到五星级酒店标准。非常适合在胡志明市的长途出差。",
-    sp1a: "商务宾客，入住 3 个月",
-    sp2: "公寓非常干净，厨房设施齐全。楼下的游泳池和公园非常适合孩子。",
-    sp2a: "家庭客，周末度假",
-    sp3: "服务一流，通过 Zalo 响应迅速。未来一定会再来。",
-    sp3a: "外籍人士，入住 1 年",
+    videoEye: "Gao Ji House 实拍视频",
+    videoTitle: "通过 TikTok 体验公寓",
+    videoBody: "通过 Gao Ji House 官方 TikTok 频道，查看公寓空间、室内设施与入住体验的真实视频。",
+    videoCta: "查看 TikTok 频道",
 
     faqEye: "常见问题",
     faqTitle: "预订前须知",
@@ -624,7 +661,11 @@ const DICT = {
     heroTitle: "歸家 · 享受靜謐雅致的私享居所",
     heroBody: "地處 Landmark 81 與西貢河畔，五套高規格精裝服務式公寓。定期清潔、24/7 前台、外籍暫住申報——一站式全包透明月租。",
     heroCta1: "查看所有房源",
-    heroCta2: "立即預訂",
+    heroCta2: "查詢可訂房源",
+    heroProof1: "5 套精選公寓",
+    heroProof2: "價格透明",
+    heroProof3: "2 小時內回覆",
+    heroScroll: "探索公寓系列",
     statRate: "全包月租",
     statRateVal: "2400 萬越南盾起",
     statRatePer: " / 月",
@@ -639,7 +680,7 @@ const DICT = {
 
     introEye: "公寓出租 · Landmark 與 Vinhomes Central Park",
     introTitle: "Landmark 與 Vinhomes Central Park 公寓出租",
-    introBody: "Gao Ji House 在 Vinhomes Central Park 的 Landmark 1、Landmark 3、Landmark 81 以及 Park 1、Park 3 出租五套精選公寓。支持按月或按晚租賃，全套高品質家具家電齊備，租金已包含物業費、高速網路與定期保潔服務。",
+    introBody: "Gao Ji House 覆蓋 Vinhomes Central Park 的 Park P7、P3、P1 及 Landmark L81、L3、L2、L1，提供家具齊全的月租或短住服務式公寓。",
     s1v: "10 分鐘",
     s1l: "至第一郡 CBD",
     s2v: "每週 2 次",
@@ -648,6 +689,15 @@ const DICT = {
     s3l: "多語前台關懷",
     introCta: "查看公寓房源",
     plate1: "圖 01 — 客廳與餐廳通透空間",
+    carouselLabel: "Gao Ji House 居住空間",
+    carouselPrevious: "查看上一張圖片",
+    carouselNext: "查看下一張圖片",
+    carouselSlides: [
+      { title: "開放式生活空間", description: "客廳與餐廳家具齊全，抵達當天即可安心入住。" },
+      { title: "高層靜謐休憩", description: "臥室採光充足，可眺望 Landmark 與西貢河景。" },
+      { title: "長住便利設施", description: "獨立廚房設備齊全，適合家庭及長期居住。" },
+      { title: "城市地標住址", description: "置身 Vinhomes Central Park，毗鄰 Landmark 81 與濱河公園。" },
+    ],
 
     unitsEye: "價格清單與戶型",
     unitsTitle: "服務式公寓房源列表",
@@ -655,6 +705,23 @@ const DICT = {
     lblType: "房型",
     lblFloor: "樓層",
     lblPrice: "月租範圍 (越南盾/月)",
+    searchPlaceholder: "按房號、名稱或樓棟搜尋",
+    searchLabel: "搜尋公寓",
+    filterButton: "篩選",
+    closeFilters: "關閉篩選",
+    applyFilters: "套用篩選",
+    cancelFilters: "取消",
+    filterEyebrow: "價格與戶型",
+    filterTitle: "篩選",
+    filterBuilding: "樓棟",
+    filterLandmark: "Landmark",
+    filterCentralPark: "Vinhomes Central Park",
+    filterBedrooms: "臥室數量",
+    filterPrice: "月租",
+    filterViewResults: "查看結果",
+    filterCloseLabel: "關閉篩選面板",
+    priceMillion: "百萬越南盾",
+    resultCount: (shown: number, total: number) => `${total} 套中有 ${shown} 套符合條件`,
     lblBeds: "臥室數量",
     tabAll: "全部",
     tab1PN: "一房一廳",
@@ -669,7 +736,6 @@ const DICT = {
     emptyBody: "Gao Ji House 在其他樓層擁有同類型房源 — 歡迎聯繫 Zalo 獲取當日候補名單。",
     emptyCta1: "加入候補名單",
     emptyCta2: "查看全部 5 套",
-    unitsNote: "租金已含物業費 · 高速寬頻 · 定期清潔 · 無預訂手續費",
     unitWord: "公寓",
     statusAvail: "有空房",
     statusHeld: "已預訂 · 接受排隊",
@@ -683,12 +749,18 @@ const DICT = {
       "L3.44.09": { title: "頂層通層複式 對望地標塔", type: "三房複式 · Duplex" },
     },
 
+    locKicker: "理想旅居 · 西貢核心地段",
     locEye: "Vinhomes Central Park · 平盛郡",
     locTitle: "優越地理位置與西貢生活圈",
-    locBody: "自大廳出發的實際駕車測算時間，分別採集於西貢離峰與高峰時段。",
+    locBody: "坐落於 Vinhomes Central Park 西貢河畔，2–20 分鐘便捷連接城市著名地標。",
+    mapViewLabel: "地圖模式", mapGoogle: "Google 地圖", mapRadar: "距離雷達",
+    catAll: "全部", catFamous: "著名景點", catTransport: "捷運與交通", catShopping: "購物", catCulture: "文化",
+    locationSearch: "快速搜尋地點...", nearbyBilingual: "Nearby Attractions · 周边热门景点", locations: "個地點",
+    radarTitle: "Gao Ji House · 中心距離雷達與濱河地圖", riverfrontTag: "平盛郡 · 西貢河畔",
+    towerMapLabel: "Gao Ji House 出租樓棟",
     tOff: "離峰時段",
     tPeak: "尖峰時段",
-    noteOff: "工作日 10:00–15:00 實測 · Google Maps",
+    noteOff: "按所選樓棟大廳出口估算 · Google Maps",
     notePeak: "工作日 17:30–19:00 實測 · Google Maps",
     mins: (n: number) => n + " 分鐘",
     spotEye: "周邊地標",
@@ -758,7 +830,6 @@ const DICT = {
     r4b: "負責合同公證、正規增值稅發票 (VAT) 開具及外籍人員暫住申報。",
     socEye: "社交媒體與溝通渠道",
     socBody: "最新房源實拍、即時房態及豎屏看房視頻將優先在以下官方渠道發布。",
-    ytSub: "Gao Ji House · 公寓實景視頻",
 
     ctEye: "客戶關懷 · 2 小時內響應",
     ctTitle: "透過 Zalo / 微信 快速預訂",
@@ -770,32 +841,11 @@ const DICT = {
     hoursVal: "08:00 – 21:00 · 週一至週日",
     rowLang: "支援語言",
 
-    trustEye: "合作背書與法務保障",
-    t1Label: "空間美學",
-    t1Title: "建築設計與室內定制",
-    t1Body: "融合法式印度支那與日式靜謐極簡風格，兼顧隔音與生活雅趣。",
-    t2Label: "五星準則",
-    t2Title: "五星級酒店服務標準",
-    t2Body: "嚴格客房清潔、高溫消毒洗滌及標準化驗收流程。",
-    t3Label: "品牌交付",
-    t3Title: "嚴苛交付標準與名牌家電",
-    t3Body: "配備博世 (Bosch)、Gaggenau、杜拉維特 (Duravit) 衛浴及洗烘一體機。",
-    t4Label: "合規保障",
-    t4Title: "產權清晰與稅務正規",
-    t4Body: "產權自持，支援合同公證、合法開具 VAT 發票及外籍暫住申報。",
 
-    tbOta: "在 OTA 平台上獲得卓越評價",
-    tbCorp: "跨國企業高管的首選住宿",
-    tbPay: "支援 VNPay、MoMo、Visa 支付",
-
-    spEye: "賓客評價",
-    spTitle: "真實入住體驗",
-    sp1: "環境安靜，安保嚴密，內飾達到五星級酒店標準。非常適合在胡志明市的長途出差。",
-    sp1a: "商務賓客，入住 3 個月",
-    sp2: "公寓非常乾淨，廚房設施齊全。樓下的游泳池和公園非常適合孩子。",
-    sp2a: "家庭客，週末度假",
-    sp3: "服務一流，透過 Zalo 回應迅速。未來一定會再來。",
-    sp3a: "外籍人士，入住 1 年",
+    videoEye: "Gao Ji House 實拍影片",
+    videoTitle: "透過 TikTok 體驗公寓",
+    videoBody: "透過 Gao Ji House 官方 TikTok 頻道，觀看公寓空間、室內設施與入住體驗的真實影片。",
+    videoCta: "查看 TikTok 頻道",
 
     faqEye: "常見問題",
     faqTitle: "預訂前須知",
@@ -828,6 +878,7 @@ const UNITS_DATA = [
     sqm: 82,
     guests: 4,
     month: 32000000,
+    monthMax: 35000000,
     night: 1900000,
     status: "available",
   },
@@ -841,6 +892,7 @@ const UNITS_DATA = [
     sqm: 54,
     guests: 2,
     month: 24000000,
+    monthMax: 27000000,
     night: 1400000,
     status: "available",
   },
@@ -854,6 +906,7 @@ const UNITS_DATA = [
     sqm: 56,
     guests: 2,
     month: 38000000,
+    monthMax: 42000000,
     night: 2400000,
     status: "available",
   },
@@ -867,6 +920,7 @@ const UNITS_DATA = [
     sqm: 86,
     guests: 4,
     month: 35000000,
+    monthMax: null,
     night: 2100000,
     status: "held",
   },
@@ -880,26 +934,93 @@ const UNITS_DATA = [
     sqm: 180,
     guests: 6,
     month: 95000000,
+    monthMax: 105000000,
     night: 6500000,
     status: "available",
   },
 ];
 
+const TOWER_GROUPS = {
+  centralPark: ["P7", "P3", "P1"],
+  landmark: ["L81", "L3", "L2", "L1"],
+} as const;
+
+const TOWER_LOCATIONS = [
+  { code: "P7", group: "park", query: "Park 7 Vinhomes Central Park Ho Chi Minh City" },
+  { code: "P3", group: "park", query: "Park 3 Vinhomes Central Park Ho Chi Minh City" },
+  { code: "P1", group: "park", query: "Park 1 Vinhomes Central Park Ho Chi Minh City" },
+  { code: "L81", group: "landmark", query: "Landmark 81 Vinhomes Central Park Ho Chi Minh City" },
+  { code: "L3", group: "landmark", query: "Landmark 3 Vinhomes Central Park Ho Chi Minh City" },
+  { code: "L2", group: "landmark", query: "Landmark 2 Vinhomes Central Park Ho Chi Minh City" },
+  { code: "L1", group: "landmark", query: "Landmark 1 Vinhomes Central Park Ho Chi Minh City" },
+] as const;
+
+// Approximate lobby/access-road delta inside the Vinhomes Central Park campus.
+// Destination-specific base times stay in SPOTS_DATA; the selected tower adds
+// only the internal departure time so every POI reacts consistently.
+const TOWER_TRAVEL_MINUTE_ADJUSTMENTS: Record<string, number> = {
+  L81: 0,
+  L1: 1,
+  L2: 1,
+  L3: 2,
+  P1: 1,
+  P3: 2,
+  P7: 3,
+};
+
+const travelMinutesFromTower = (baseMinutes: number, towerCode: string) =>
+  baseMinutes + (TOWER_TRAVEL_MINUTE_ADJUSTMENTS[towerCode] ?? 0);
+
+const unitTowerCode = (unitCode: string) => unitCode.split(".")[0].toUpperCase();
+const isLandmarkUnit = (unitCode: string) => unitTowerCode(unitCode).startsWith("L");
+
 // 12 Location Destinations Radar Data
 const SPOTS_DATA = [
-  { no: "01", km: "0.2 km", off: 3, peak: 4, walk: true, q: "Landmark 81 Vinhomes Central Park", addr: "208 Nguyễn Hữu Cảnh, P.22, Bình Thạnh" },
-  { no: "02", km: "0.1 km", off: 2, peak: 2, walk: true, q: "Cong vien Vinhomes Central Park", addr: "Khuôn viên ven sông Vinhomes Central Park" },
-  { no: "03", km: "3.8 km", off: 10, peak: 18, walk: false, q: "Cho Ben Thanh Quan 1", addr: "Đường Lê Lợi, Phường Bến Thành, Quận 1" },
-  { no: "04", km: "3.2 km", off: 9, peak: 16, walk: false, q: "Nha Hat Thanh Pho Quan 1", addr: "07 Công Trường Lam Sơn, Bến Nghé, Quận 1" },
-  { no: "05", km: "3.5 km", off: 10, peak: 17, walk: false, q: "Nha Tho Duc Ba Sai Gon", addr: "01 Công Xã Paris, Bến Nghé, Quận 1" },
-  { no: "06", km: "2.8 km", off: 8, peak: 14, walk: false, q: "Le Thanh Ton Quan 1", addr: "Khu phố Nhật Bản, Lê Thánh Tôn & Thái Văn Lung" },
-  { no: "07", km: "2.2 km", off: 6, peak: 11, walk: false, q: "Thao Cam Vien Sai Gon", addr: "02 Nguyễn Bỉnh Khiêm, Bến Nghé, Quận 1" },
-  { no: "08", km: "2.5 km", off: 7, peak: 12, walk: false, q: "Cau Ba Son Thu Thiem", addr: "Cầu Ba Son nối Bình Thạnh & KĐT Thủ Thiêm" },
-  { no: "09", km: "4.2 km", off: 12, peak: 20, walk: false, q: "Bao tang My Thuat TP Ho Chi Minh", addr: "97A Phó Đức Chính, Phường Nguyễn Thái Bình, Quận 1" },
-  { no: "10", km: "3.9 km", off: 11, peak: 18, walk: false, q: "Thao Dien Quan 2", addr: "Xuân Thủy, Quốc Hương, Thảo Điền, TP. Thủ Đức" },
-  { no: "11", km: "8.5 km", off: 22, peak: 38, walk: false, q: "San bay Tan Son Nhat", addr: "Đường Trường Sơn, Phường 2, Tân Bình" },
-  { no: "12", km: "3.0 km", off: 8, peak: 15, walk: false, q: "Ben Bach Dang Waterbus", addr: "02 Tôn Đức Thắng, Bến Nghé, Quận 1" },
+  { no: "01", copyIndex: 0, icon: "building", category: "famous", km: "0.2 km", off: 2, peak: 4, walk: true, q: "Landmark 81 Vinhomes Central Park", addr: "Tôn Đức Thắng, Q1 · Bến Nghé", rating: 4.6, reviewCount: 23900 },
+  { no: "02", copyIndex: 2, icon: "footprints", category: "famous", km: "3.5 km", off: 10, peak: 18, walk: false, q: "Nguyen Hue Walking Street Quan 1", addr: "Nguyễn Huệ, Bến Nghé, Quận 1" },
+  { no: "03", copyIndex: 9, icon: "coffee", category: "shopping", km: "2.5 km", off: 7, peak: 18, walk: false, q: "Thao Dien Quan 2", addr: "Xuân Thủy, Quốc Hương, Thảo Điền, TP. Thủ Đức" },
+  { no: "04", copyIndex: 3, icon: "building", category: "culture", km: "3.5 km", off: 10, peak: 16, walk: false, q: "Nha Hat Thanh Pho Quan 1", addr: "07 Công Trường Lam Sơn, Bến Nghé, Quận 1" },
+  { no: "05", copyIndex: 7, icon: "map-pin", category: "transport", km: "2.0 km", off: 5, peak: 12, walk: false, q: "Cau Ba Son Thu Thiem", addr: "Cầu Ba Son nối Bình Thạnh & KĐT Thủ Thiêm" },
+  { no: "06", copyIndex: 4, icon: "building", category: "culture", km: "4.0 km", off: 10, peak: 17, walk: false, q: "Nha Tho Duc Ba Sai Gon", addr: "01 Công Xã Paris, Bến Nghé, Quận 1" },
+  { no: "07", copyIndex: 1, icon: "footprints", category: "famous", km: "0.1 km", off: 2, peak: 2, walk: true, q: "Cong vien Vinhomes Central Park", addr: "Khuôn viên ven sông Vinhomes Central Park" },
+  { no: "08", copyIndex: 5, icon: "coffee", category: "shopping", km: "2.8 km", off: 8, peak: 14, walk: false, q: "Le Thanh Ton Quan 1", addr: "Khu phố Nhật Bản, Lê Thánh Tôn & Thái Văn Lung" },
+  { no: "09", copyIndex: 6, icon: "building", category: "culture", km: "2.2 km", off: 6, peak: 11, walk: false, q: "Thao Cam Vien Sai Gon", addr: "02 Nguyễn Bỉnh Khiêm, Bến Nghé, Quận 1" },
+  { no: "10", copyIndex: 8, icon: "building", category: "culture", km: "4.2 km", off: 12, peak: 20, walk: false, q: "Bao tang My Thuat TP Ho Chi Minh", addr: "97A Phó Đức Chính, Phường Nguyễn Thái Bình, Quận 1" },
+  { no: "11", copyIndex: 10, icon: "train", category: "transport", km: "8.5 km", off: 22, peak: 38, walk: false, q: "San bay Tan Son Nhat", addr: "Đường Trường Sơn, Phường 2, Tân Bình" },
+  { no: "12", copyIndex: 11, icon: "map-pin", category: "transport", km: "3.0 km", off: 8, peak: 15, walk: false, q: "Ben Bach Dang Waterbus", addr: "02 Tôn Đức Thắng, Bến Nghé, Quận 1" },
 ];
+
+type SocialNetwork = "tiktok" | "zalo" | "wechat" | "telegram" | "email";
+
+function SocialLogo({ network }: { network: SocialNetwork }) {
+  if (network === "email") return <Icon name="mail" size={20} strokeWidth={1.8} />;
+  if (network === "zalo") return <span className="font-sans text-[0.6rem] font-extrabold tracking-[-0.04em]">Zalo</span>;
+
+  if (network === "wechat") {
+    return (
+      <svg viewBox="0 0 24 24" className="size-5" aria-hidden="true">
+        <circle cx="9" cy="10" r="6" fill="currentColor" />
+        <circle cx="16" cy="15" r="5" fill="currentColor" opacity="0.72" />
+        <circle cx="7" cy="9" r="0.8" fill="white" /><circle cx="11" cy="9" r="0.8" fill="white" />
+        <circle cx="14.5" cy="14" r="0.7" fill="white" /><circle cx="17.5" cy="14" r="0.7" fill="white" />
+      </svg>
+    );
+  }
+
+  if (network === "telegram") {
+    return (
+      <svg viewBox="0 0 24 24" className="size-5" aria-hidden="true">
+        <path d="M21.7 3.4 18.5 20c-.2 1.2-.9 1.5-1.9.9l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.4-5 9.1-8.2c.4-.4-.1-.6-.6-.2L5.9 13.8 1 12.3c-1.1-.3-1.1-1.1.2-1.6L20.3 3.3c.9-.3 1.7.2 1.4 1.1Z" fill="currentColor" />
+      </svg>
+    );
+  }
+
+  return (
+    <svg viewBox="0 0 24 24" className="size-5" aria-hidden="true">
+      <path d="M14.4 3c.4 2.3 1.7 3.7 4 4.1v3.2a9.1 9.1 0 0 1-4-1.1v6.1a6.2 6.2 0 1 1-5.3-6.1v3.3a3 3 0 1 0 2.1 2.8V3h3.2Z" fill="currentColor" />
+    </svg>
+  );
+}
 
 export default function LandingPage() {
   const { lang } = useLanguage();
@@ -908,11 +1029,22 @@ export default function LandingPage() {
   // Filter States for Section 4 (Units)
   const [unitFilter, setUnitFilter] = useState("all");
   const [floorFilter, setFloorFilter] = useState("all");
-  const [priceRange, setPriceRange] = useState<[number, number]>([20000000, 100000000]);
+  const [buildingFilter, setBuildingFilter] = useState("all");
+  const [priceRange, setPriceRange] = useState<[number, number]>([20000000, 120000000]);
+  const [unitSearch, setUnitSearch] = useState("");
+  const [filtersOpen, setFiltersOpen] = useState(false);
+  const [draftUnitFilter, setDraftUnitFilter] = useState("all");
+  const [draftFloorFilter, setDraftFloorFilter] = useState("all");
+  const [draftBuildingFilter, setDraftBuildingFilter] = useState("all");
+  const [draftPriceRange, setDraftPriceRange] = useState<[number, number]>([20000000, 120000000]);
 
   // Location Radar State for Section 5
-  const [trafficMode, setTrafficMode] = useState<"off" | "peak">("off");
   const [selectedSpotIndex, setSelectedSpotIndex] = useState<number>(0);
+  const [locationView, setLocationView] = useState<"map" | "radar">("map");
+  const [locationCategory, setLocationCategory] = useState("all");
+  const [locationSearch, setLocationSearch] = useState("");
+  const [selectedTowerCode, setSelectedTowerCode] = useState("L81");
+  const [mapFocus, setMapFocus] = useState<"tower" | "spot">("tower");
 
   // Inquiry Modal State
   const [inquiryModalOpen, setInquiryModalOpen] = useState(false);
@@ -925,23 +1057,102 @@ export default function LandingPage() {
 
   // Filter Units Logic
   const filteredUnits = UNITS_DATA.filter((unit) => {
+    const unitMeta = t.u[unit.key as keyof typeof t.u];
+    const searchText = `${unit.key} ${unit.tower} ${unitMeta?.title ?? ""} ${unitMeta?.type ?? ""}`.toLocaleLowerCase();
+    if (unitSearch.trim() && !searchText.includes(unitSearch.trim().toLocaleLowerCase())) return false;
     if (unitFilter === "1pn" && unit.beds !== 1) return false;
     if (unitFilter === "2pn" && unit.beds !== 2) return false;
-    if (unitFilter === "3pn" && unit.beds !== 3) return false;
+    if (unitFilter === "3pn" && unit.beds < 3) return false;
+    if (buildingFilter === "landmark" && !isLandmarkUnit(unit.key)) return false;
+    if (buildingFilter === "central-park" && isLandmarkUnit(unit.key)) return false;
 
     const flrNum = parseInt(unit.flr, 10);
-    if (floorFilter === "low" && (flrNum < 1 || flrNum > 12)) return false;
-    if (floorFilter === "mid" && (flrNum < 13 || flrNum > 28)) return false;
-    if (floorFilter === "high" && flrNum < 29) return false;
+    if (floorFilter === "low" && (flrNum < 1 || flrNum > 20)) return false;
+    if (floorFilter === "mid" && (flrNum < 21 || flrNum > 40)) return false;
+    if (floorFilter === "high" && flrNum < 41) return false;
 
     if (unit.month < priceRange[0] || unit.month > priceRange[1]) return false;
     return true;
   });
 
+  const activeFilterCount =
+    Number(unitFilter !== "all") +
+    Number(floorFilter !== "all") +
+    Number(buildingFilter !== "all") +
+    Number(priceRange[0] !== 20000000 || priceRange[1] !== 120000000);
+  const hasActiveUnitFilters = activeFilterCount > 0 || unitSearch.trim().length > 0;
+
+  const clearUnitFilters = () => {
+    setUnitSearch("");
+    setUnitFilter("all");
+    setFloorFilter("all");
+    setBuildingFilter("all");
+    setPriceRange([20000000, 120000000]);
+  };
+
+  const openUnitFilters = () => {
+    setDraftUnitFilter(unitFilter);
+    setDraftFloorFilter(floorFilter);
+    setDraftBuildingFilter(buildingFilter);
+    setDraftPriceRange(priceRange);
+    setFiltersOpen(true);
+  };
+
+  const closeUnitFilters = () => setFiltersOpen(false);
+
+  const applyUnitFilters = () => {
+    setUnitFilter(draftUnitFilter);
+    setFloorFilter(draftFloorFilter);
+    setBuildingFilter(draftBuildingFilter);
+    setPriceRange(draftPriceRange);
+    setFiltersOpen(false);
+  };
+
+  const draftFilteredUnits = UNITS_DATA.filter((unit) => {
+    const unitMeta = t.u[unit.key as keyof typeof t.u];
+    const searchText = `${unit.key} ${unit.tower} ${unitMeta?.title ?? ""} ${unitMeta?.type ?? ""}`.toLocaleLowerCase();
+    if (unitSearch.trim() && !searchText.includes(unitSearch.trim().toLocaleLowerCase())) return false;
+    if (draftUnitFilter === "1pn" && unit.beds !== 1) return false;
+    if (draftUnitFilter === "2pn" && unit.beds !== 2) return false;
+    if (draftUnitFilter === "3pn" && unit.beds < 3) return false;
+    if (draftBuildingFilter === "landmark" && !isLandmarkUnit(unit.key)) return false;
+    if (draftBuildingFilter === "central-park" && isLandmarkUnit(unit.key)) return false;
+
+    const floor = Number.parseInt(unit.flr, 10);
+    if (draftFloorFilter === "low" && (floor < 1 || floor > 20)) return false;
+    if (draftFloorFilter === "mid" && (floor < 21 || floor > 40)) return false;
+    if (draftFloorFilter === "high" && floor < 41) return false;
+    return unit.month >= draftPriceRange[0] && unit.month <= draftPriceRange[1];
+  });
+
+  useEffect(() => {
+    if (!filtersOpen) return;
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setFiltersOpen(false);
+    };
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    document.addEventListener("keydown", handleEscape);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", handleEscape);
+    };
+  }, [filtersOpen]);
+
   const activeSpotData = SPOTS_DATA[selectedSpotIndex] || SPOTS_DATA[0];
-  const activeSpotText = t.spots[selectedSpotIndex] || t.spots[0];
-  const mapSrc = `https://maps.google.com/maps?q=${encodeURIComponent(activeSpotData.q)}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
-  const activeDirHref = `https://maps.google.com/?daddr=${encodeURIComponent(activeSpotData.q)}`;
+  const activeSpotText = t.spots[activeSpotData.copyIndex] || t.spots[0];
+  const visibleSpots = SPOTS_DATA.map((spot, index) => ({ spot, index })).filter(({ spot }) => {
+    const localized = t.spots[spot.copyIndex] || t.spots[0];
+    const matchesCategory = locationCategory === "all" || spot.category === locationCategory;
+    const haystack = `${localized.name} ${localized.blurb} ${spot.addr}`.toLocaleLowerCase();
+    return matchesCategory && haystack.includes(locationSearch.trim().toLocaleLowerCase());
+  });
+  const selectedTower = TOWER_LOCATIONS.find((tower) => tower.code === selectedTowerCode);
+  const activeTravelMinutes = travelMinutesFromTower(activeSpotData.off, selectedTowerCode);
+  const mapQuery = mapFocus === "tower" && selectedTower ? selectedTower.query : activeSpotData.q;
+  const mapSrc = `https://maps.google.com/maps?q=${encodeURIComponent(mapQuery)}&t=&z=16&ie=UTF8&iwloc=&output=embed`;
+  const activeSpotDirHref = `https://maps.google.com/?daddr=${encodeURIComponent(activeSpotData.q)}`;
+  const mapDirHref = `https://maps.google.com/?daddr=${encodeURIComponent(mapQuery)}`;
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-[#FBF9F5] text-[#1A1A1A]">
@@ -950,14 +1161,14 @@ export default function LandingPage() {
         id="top"
         className="relative min-h-[calc(100vh-68px)] min-h-[calc(100dvh-72px)] flex flex-col justify-center overflow-hidden bg-[#141F1C] py-[clamp(40px,6vh,80px)]"
       >
-        {/* Warm Natural Living Room Photography */}
+        {/* A real residence combines the product, river view, and premium sense of place. */}
         <Image
-          src="/assets/photos/living-open-plan.jpg"
-          alt="Không gian phòng khách căn hộ dịch vụ cao cấp Gao Ji House"
+          src="/assets/photos/bedroom-platform-landmark.jpg"
+          alt="Phòng ngủ Gao Ji House với cửa sổ lớn nhìn ra Landmark 81 và sông Sài Gòn"
           fill
           priority
           sizes="100vw"
-          className="object-cover object-[center_35%]"
+          className="object-cover object-[62%_center] scale-[1.015]"
         />
 
         {/* Soft Golden Hour & Dark Jade Contrast Scrims */}
@@ -966,7 +1177,7 @@ export default function LandingPage() {
           className="absolute inset-0 pointer-events-none"
           style={{
             background:
-              "linear-gradient(180deg, rgba(13, 26, 21, 0.72) 0%, rgba(13, 26, 21, 0.46) 38%, rgba(13, 26, 21, 0.92) 100%)",
+              "linear-gradient(90deg, rgba(8, 25, 19, 0.94) 0%, rgba(8, 25, 19, 0.78) 36%, rgba(8, 25, 19, 0.26) 64%, rgba(8, 25, 19, 0.08) 100%), linear-gradient(180deg, rgba(8, 25, 19, 0.08) 0%, rgba(8, 25, 19, 0.12) 54%, rgba(8, 25, 19, 0.72) 100%)",
           }}
         />
 
@@ -1025,7 +1236,27 @@ export default function LandingPage() {
               {t.heroCta1}
             </Button>
           </div>
+
+          <div className="mt-9 flex max-w-[760px] flex-wrap gap-x-6 gap-y-3 border-t border-white/25 pt-5">
+            {[t.heroProof1, t.heroProof2, t.heroProof3].map((proof) => (
+              <span
+                key={proof}
+                className="inline-flex items-center gap-2 font-sans text-[0.72rem] font-semibold uppercase tracking-[0.12em] text-[#FAF3EA]"
+              >
+                <Icon name="check-circle" size={16} color="#E2C068" />
+                {proof}
+              </span>
+            ))}
+          </div>
         </div>
+
+        <a
+          href="#units"
+          className="absolute bottom-5 left-1/2 z-10 hidden -translate-x-1/2 items-center gap-2 font-sans text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-white/80 no-underline transition-colors hover:text-[#E2C068] md:inline-flex"
+        >
+          {t.heroScroll}
+          <Icon name="chevron-down" size={15} color="currentColor" />
+        </a>
       </section>
 
 
@@ -1062,21 +1293,56 @@ export default function LandingPage() {
             </div>
           </div>
 
-          {/* Right: Signature Vertical PhotoPlate */}
-          <PhotoPlate
-            src="/assets/photos/living-dining.jpg"
-            alt="Khu vực khách và bàn ăn liên thông trong căn hộ Gao Ji House"
-            ratio="4 / 5"
-            offset="right"
-
+          {/* Right: manually controlled editorial residence carousel */}
+          <ResidenceCarousel
+            regionLabel={t.carouselLabel}
+            previousLabel={t.carouselPrevious}
+            nextLabel={t.carouselNext}
+            slides={[
+              { src: "/assets/photos/living-dining.jpg", alt: "Khu vực khách và bàn ăn liên thông trong căn hộ Gao Ji House", ...t.carouselSlides[0] },
+              { src: "/assets/photos/bedroom-platform-landmark.jpg", alt: "Phòng ngủ Gao Ji House nhìn ra Landmark và sông Sài Gòn", ...t.carouselSlides[1] },
+              { src: "/assets/photos/kitchen-island.jpg", alt: "Bếp riêng đầy đủ thiết bị trong căn hộ Gao Ji House", ...t.carouselSlides[2] },
+              { src: "/assets/photos/towers-skyline.jpg", alt: "Landmark 81 và Vinhomes Central Park nhìn từ Gao Ji House", ...t.carouselSlides[3] },
+            ]}
           />
         </div>
+      </section>
+
+      {/* ── 3. TIKTOK VIDEO EXPERIENCES ────────────────────── */}
+      <section className="border-y border-[#E8E4DB] bg-[#F4EFE8] px-[clamp(20px,4vw,56px)] py-[clamp(44px,5vw,72px)]">
+        <div className="mx-auto grid max-w-[1240px] items-start gap-8 lg:grid-cols-[minmax(280px,.72fr)_minmax(0,1.28fr)] lg:gap-14">
+          <div className="grid justify-items-start gap-5 lg:sticky lg:top-24">
+            <SectionHeader eyebrow={t.videoEye} title={t.videoTitle} />
+            <p className="max-w-[48ch] font-sans text-[0.95rem] leading-relaxed text-[#514A42]">{t.videoBody}</p>
+            <a href="https://www.tiktok.com/@gaojihouse" target="_blank" rel="noreferrer" className="inline-flex min-h-11 items-center gap-2 bg-[#1A1A1A] px-5 font-sans text-xs font-bold uppercase tracking-[0.13em] text-white transition-colors hover:bg-[#B85D36]">
+              <SocialLogo network="tiktok" /> {t.videoCta} <Icon name="external-link" size={14} />
+            </a>
+          </div>
+
+          <div className="min-w-0 border border-[#DDD5C7] bg-white p-3 shadow-[0_12px_36px_rgba(52,43,34,0.08)] sm:p-5">
+            <blockquote
+              className="tiktok-embed m-auto"
+              cite="https://www.tiktok.com/@gaojihouse"
+              data-unique-id="gaojihouse"
+              data-embed-type="creator"
+              style={{ maxWidth: 780, minWidth: 288 }}
+            >
+              <section className="grid min-h-56 place-items-center bg-[#FAF8F5] p-8 text-center">
+                <a href="https://www.tiktok.com/@gaojihouse" target="_blank" rel="noreferrer" className="grid justify-items-center gap-3 text-[#1A1A1A]">
+                  <span className="relative size-16 overflow-hidden rounded-full border border-[#D8CFC2] bg-white"><Image src="/assets/logo-compact.png" alt="Gao Ji House trên TikTok" fill sizes="64px" className="object-cover" /></span>
+                  <strong className="font-sans text-sm uppercase tracking-[0.12em]">@gaojihouse</strong>
+                </a>
+              </section>
+            </blockquote>
+          </div>
+        </div>
+        <Script src="https://www.tiktok.com/embed.js" strategy="lazyOnload" />
       </section>
 
       {/* ── 4. RESIDENCE APARTMENT COLLECTION (Danh Sách Căn Hộ) */}
       <section
         id="units"
-        className="py-[clamp(56px,7vw,112px)] px-[clamp(20px,4vw,56px)] bg-[#FAF8F5]"
+        className="pt-[clamp(48px,5vw,80px)] pb-[clamp(28px,3vw,48px)] px-[clamp(20px,4vw,56px)] bg-[#FAF8F5]"
       >
         <div className="max-w-[1600px] mx-auto">
           <SectionHeader
@@ -1085,81 +1351,213 @@ export default function LandingPage() {
             aside={t.unitsAside}
           />
 
-          {/* Multi-Filter Bar */}
+          {/* Compact search with progressively disclosed filters */}
           <div className="mt-7 border border-[#E8E4DB] bg-white shadow-xs">
-            <div className="flex flex-col lg:flex-row divide-y lg:divide-y-0 lg:divide-x divide-[#E8E4DB]">
-              {/* Col 1: Unit Type Tabs */}
-              <div className="flex-1 p-4 sm:p-5 flex flex-col gap-3">
-              <span className="min-w-[120px] font-sans text-xs font-semibold uppercase tracking-[0.15em] text-[#6B6255]">
-                {t.lblType}
-              </span>
-              <FilterTabs
-                tabs={[
-                  { label: t.tabAll, value: "all" },
-                  { label: t.tab1PN, value: "1pn" },
-                  { label: t.tab2PN, value: "2pn" },
-                  { label: t.tab3PN, value: "3pn" },
-                ]}
-                value={unitFilter}
-                onChange={(val) => setUnitFilter(String(val))}
-              />
-              </div>
-
-              {/* Col 2: Floor Level Tabs */}
-              <div className="flex-1 p-4 sm:p-5 flex flex-col gap-3">
-              <span className="min-w-[120px] font-sans text-xs font-semibold uppercase tracking-[0.15em] text-[#6B6255]">
-                {t.lblFloor}
-              </span>
-              <FilterTabs
-                tabs={[
-                  { label: t.fAll, value: "all" },
-                  { label: t.fLow, value: "low" },
-                  { label: t.fMid, value: "mid" },
-                  { label: t.fHigh, value: "high" },
-                ]}
-                value={floorFilter}
-                onChange={(val) => setFloorFilter(String(val))}
-              />
-              </div>
-
-              {/* Col 3: Price Dual Slider */}
-              <div className="flex-1 p-4 sm:p-5 flex flex-col gap-3">
-              <span className="min-w-[120px] font-sans text-xs font-semibold uppercase tracking-[0.15em] text-[#6B6255]">
-                {t.lblPrice}
-              </span>
-              <div className="flex-1 min-w-[240px] max-w-[520px] flex items-center gap-4">
-                <input
-                  type="range"
-                  min="20000000"
-                  max="100000000"
-                  step="5000000"
-                  value={priceRange[1]}
-                  onChange={(e) => setPriceRange([priceRange[0], Number(e.target.value)])}
-                  className="w-full accent-[#1F3A2E] cursor-pointer"
-                />
-                <span className="font-display text-base font-medium text-[#1F3A2E] shrink-0 min-w-[110px]">
-                  ≤ {(priceRange[1] / 1000000).toFixed(0)} Triệu / tháng
+            <div className="flex flex-col gap-3 p-3 sm:flex-row sm:items-center sm:p-4">
+              <label className="relative flex min-h-12 flex-1 items-center" aria-label={t.searchLabel}>
+                <span className="pointer-events-none absolute left-4 text-[#6B6255]">
+                  <Icon name="search" size={19} />
                 </span>
+                <input
+                  type="search"
+                  value={unitSearch}
+                  onChange={(event) => setUnitSearch(event.target.value)}
+                  placeholder={t.searchPlaceholder}
+                  className="min-h-12 w-full border border-[#D9D2C7] bg-[#FBF9F5] py-3 pl-12 pr-4 font-sans text-sm text-[#1A1A1A] outline-none transition-colors placeholder:text-[#81786B] focus:border-[#1F3A2E] focus:ring-1 focus:ring-[#1F3A2E]"
+                />
+              </label>
+              <button
+                type="button"
+                aria-expanded={filtersOpen}
+                aria-controls="unit-filter-options"
+                onClick={filtersOpen ? closeUnitFilters : openUnitFilters}
+                className="inline-flex min-h-12 shrink-0 cursor-pointer items-center justify-center gap-2 border border-[#D3D8D5] bg-white px-5 font-sans text-xs font-semibold uppercase tracking-[0.14em] text-[#17382B] transition-colors hover:border-[#1F3A2E] hover:bg-[#F4F7F5] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1F3A2E]"
+              >
+                <Icon name="filter" size={16} strokeWidth={1.75} />
+                {filtersOpen ? t.closeFilters : t.filterButton}
+                {activeFilterCount > 0 && (
+                  <span className="grid size-5 place-items-center bg-[#1F3A2E] text-[0.65rem] font-bold text-white">
+                    {activeFilterCount}
+                  </span>
+                )}
+              </button>
+            </div>
+
+            {filtersOpen && (
+              <div
+                className="fixed inset-0 z-[500] grid items-center overflow-y-auto p-4 sm:p-8"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="unit-filter-title"
+              >
+                <button
+                  type="button"
+                  className="absolute inset-0 cursor-default bg-[#111C18]/60 backdrop-blur-[1px]"
+                  aria-label={t.filterCloseLabel}
+                  onClick={closeUnitFilters}
+                />
+
+                <div
+                  id="unit-filter-options"
+                  className="relative z-10 mx-auto my-auto w-full max-w-[760px] border border-[#DDD6CB] bg-white shadow-[0_28px_80px_rgba(12,25,20,0.24)]"
+                >
+                  <header className="relative border-b border-[#E8E4DB] px-5 py-5 pr-20 sm:px-7 sm:py-6 sm:pr-24">
+                    <div className="flex items-center gap-3 font-sans text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-[#8A6214]">
+                      <span className="h-px w-6 bg-[#B08D57]" />
+                      {t.filterEyebrow}
+                    </div>
+                    <div className="mt-2 flex items-center gap-3">
+                      <h2 id="unit-filter-title" className="font-display text-[clamp(1.75rem,4vw,2.35rem)] font-medium uppercase leading-none text-[#17231E]">
+                        {t.filterTitle}
+                      </h2>
+                      <span className="grid size-8 place-items-center rounded-full bg-[#3279F6] text-white shadow-[0_2px_7px_rgba(50,121,246,0.35)]" aria-hidden="true">
+                        <Icon name="sparkles" size={16} strokeWidth={2} />
+                      </span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={closeUnitFilters}
+                      aria-label={t.filterCloseLabel}
+                      className="absolute right-5 top-5 grid size-10 cursor-pointer place-items-center rounded-[2px] border border-[#D7D3CB] bg-white text-[#5F5A52] transition-colors hover:border-[#1F3A2E] hover:text-[#1F3A2E] sm:right-6 sm:top-6"
+                    >
+                      <Icon name="x" size={17} />
+                    </button>
+                  </header>
+
+                  <div className="grid gap-6 px-5 py-6 sm:gap-7 sm:px-7 sm:py-7">
+                    <fieldset className="grid gap-3">
+                      <legend className="font-sans text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[#6B6255]">
+                        {t.filterBuilding}
+                      </legend>
+                      <FilterTabs
+                        tabs={[
+                          { label: t.tabAll, value: "all", badge: UNITS_DATA.length },
+                          { label: `${t.filterLandmark} · ${TOWER_GROUPS.landmark.join(", ")}`, value: "landmark", badge: UNITS_DATA.filter((unit) => isLandmarkUnit(unit.key)).length },
+                          { label: `${t.filterCentralPark} · ${TOWER_GROUPS.centralPark.join(", ")}`, value: "central-park", badge: UNITS_DATA.filter((unit) => !isLandmarkUnit(unit.key)).length },
+                        ]}
+                        value={draftBuildingFilter}
+                        onChange={(value) => setDraftBuildingFilter(String(value))}
+                      />
+                    </fieldset>
+
+                    <fieldset className="grid gap-3">
+                      <legend className="font-sans text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[#6B6255]">
+                        {t.filterBedrooms}
+                      </legend>
+                      <FilterTabs
+                        tabs={[
+                          { label: t.tabAll, value: "all", badge: UNITS_DATA.length },
+                          { label: "1 PN", value: "1pn", badge: UNITS_DATA.filter((unit) => unit.beds === 1).length },
+                          { label: "2 PN", value: "2pn", badge: UNITS_DATA.filter((unit) => unit.beds === 2).length },
+                          { label: "3 PN+", value: "3pn", badge: UNITS_DATA.filter((unit) => unit.beds >= 3).length },
+                        ]}
+                        value={draftUnitFilter}
+                        onChange={(value) => setDraftUnitFilter(String(value))}
+                      />
+                    </fieldset>
+
+                    <fieldset className="grid gap-3">
+                      <legend className="font-sans text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[#6B6255]">
+                        {t.lblFloor}
+                      </legend>
+                      <FilterTabs
+                        tabs={[
+                          { label: t.fAll, value: "all", badge: UNITS_DATA.length },
+                          { label: "01–20", value: "low", badge: UNITS_DATA.filter((unit) => Number.parseInt(unit.flr, 10) <= 20).length },
+                          { label: "21–40", value: "mid", badge: UNITS_DATA.filter((unit) => { const floor = Number.parseInt(unit.flr, 10); return floor >= 21 && floor <= 40; }).length },
+                          { label: "41+", value: "high", badge: UNITS_DATA.filter((unit) => Number.parseInt(unit.flr, 10) >= 41).length },
+                        ]}
+                        value={draftFloorFilter}
+                        onChange={(value) => setDraftFloorFilter(String(value))}
+                      />
+                    </fieldset>
+
+                    <fieldset className="grid gap-4 pt-1">
+                      <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
+                        <legend className="font-sans text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[#6B6255]">
+                          {t.filterPrice}
+                        </legend>
+                        <output className="font-display text-lg font-medium text-[#1F3A2E] sm:text-xl">
+                          {draftPriceRange[0] / 1000000} {t.priceMillion} – {draftPriceRange[1] / 1000000} {t.priceMillion}
+                        </output>
+                      </div>
+                      <div className="relative h-5">
+                        <div className="absolute left-0 right-0 top-2 h-px bg-[#B9C1BC]" />
+                        <div
+                          className="absolute top-2 h-[2px] bg-[#1F3A2E]"
+                          style={{
+                            left: `${((draftPriceRange[0] - 20000000) / 100000000) * 100}%`,
+                            right: `${100 - ((draftPriceRange[1] - 20000000) / 100000000) * 100}%`,
+                          }}
+                        />
+                        <input
+                          type="range"
+                          min="20000000"
+                          max="120000000"
+                          step="5000000"
+                          value={draftPriceRange[0]}
+                          aria-label={`${t.filterPrice} minimum`}
+                          onChange={(event) => setDraftPriceRange([Math.min(Number(event.target.value), draftPriceRange[1] - 5000000), draftPriceRange[1]])}
+                          className="pointer-events-none absolute inset-0 h-5 w-full appearance-none bg-transparent [&::-moz-range-thumb]:pointer-events-auto [&::-moz-range-thumb]:size-4 [&::-moz-range-thumb]:cursor-pointer [&::-moz-range-thumb]:border [&::-moz-range-thumb]:border-[#B08D57] [&::-moz-range-thumb]:bg-[#1F3A2E] [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:size-4 [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:border [&::-webkit-slider-thumb]:border-[#B08D57] [&::-webkit-slider-thumb]:bg-[#1F3A2E]"
+                        />
+                        <input
+                          type="range"
+                          min="20000000"
+                          max="120000000"
+                          step="5000000"
+                          value={draftPriceRange[1]}
+                          aria-label={`${t.filterPrice} maximum`}
+                          onChange={(event) => setDraftPriceRange([draftPriceRange[0], Math.max(Number(event.target.value), draftPriceRange[0] + 5000000)])}
+                          className="pointer-events-none absolute inset-0 h-5 w-full appearance-none bg-transparent [&::-moz-range-thumb]:pointer-events-auto [&::-moz-range-thumb]:size-4 [&::-moz-range-thumb]:cursor-pointer [&::-moz-range-thumb]:border [&::-moz-range-thumb]:border-[#B08D57] [&::-moz-range-thumb]:bg-[#1F3A2E] [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:size-4 [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:border [&::-webkit-slider-thumb]:border-[#B08D57] [&::-webkit-slider-thumb]:bg-[#1F3A2E]"
+                        />
+                      </div>
+                      <div className="flex justify-between font-sans text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-[#6B6255]">
+                        <span>20 {t.priceMillion}</span>
+                        <span>120 {t.priceMillion}</span>
+                      </div>
+                    </fieldset>
+                  </div>
+
+                  <footer className="flex flex-col-reverse gap-3 border-t border-[#E8E4DB] bg-[#F7F3EB] px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-7">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setDraftBuildingFilter("all");
+                        setDraftUnitFilter("all");
+                        setDraftFloorFilter("all");
+                        setDraftPriceRange([20000000, 120000000]);
+                      }}
+                      className="min-h-11 cursor-pointer border border-[#B08D57] bg-transparent px-5 font-sans text-xs font-semibold uppercase tracking-[0.14em] text-[#8A6214] transition-colors hover:bg-white"
+                    >
+                      {t.btnClear}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={applyUnitFilters}
+                      className="inline-flex min-h-11 cursor-pointer items-center justify-center gap-3 border border-[#142B22] bg-[#1F3A2E] px-6 font-sans text-xs font-semibold uppercase tracking-[0.14em] text-white transition-colors hover:bg-[#2D4D3F]"
+                    >
+                      {t.filterViewResults} · {draftFilteredUnits.length}
+                      <Icon name="arrow-right" size={17} />
+                    </button>
+                  </footer>
+                </div>
               </div>
-            </div>
-            </div>
+            )}
 
             {/* Summary Row */}
             <div className="flex flex-wrap items-center justify-between gap-3 p-3.5 sm:p-4.5 bg-[#FAF8F5] border-t border-[#E8E4DB]">
-              <span className="font-sans text-xs sm:text-[0.8125rem] font-semibold uppercase tracking-[0.15em] text-[#1A1A1A]">
-                Hiển thị {filteredUnits.length} / {UNITS_DATA.length} căn hộ khả dụng
+              <span role="status" aria-live="polite" className="font-sans text-xs sm:text-[0.8125rem] font-semibold uppercase tracking-[0.15em] text-[#1A1A1A]">
+                {t.resultCount(filteredUnits.length, UNITS_DATA.length)}
               </span>
-              <button
-                type="button"
-                onClick={() => {
-                  setUnitFilter("all");
-                  setFloorFilter("all");
-                  setPriceRange([20000000, 100000000]);
-                }}
-                className="px-3.5 py-1.5 font-sans text-xs font-semibold uppercase tracking-[0.12em] text-[#8A6214] border border-[#B08D57] hover:bg-[#B08D57] hover:text-white transition-colors cursor-pointer bg-transparent"
-              >
-                {t.btnClear}
-              </button>
+              {hasActiveUnitFilters && (
+                <button
+                  type="button"
+                  onClick={clearUnitFilters}
+                  className="min-h-10 px-3.5 py-1.5 font-sans text-xs font-semibold uppercase tracking-[0.12em] text-[#8A6214] border border-[#B08D57] hover:bg-[#B08D57] hover:text-white transition-colors cursor-pointer bg-transparent"
+                >
+                  {t.btnClear}
+                </button>
+              )}
             </div>
           </div>
 
@@ -1172,7 +1570,7 @@ export default function LandingPage() {
                   key={u.key}
                   unit={{
                     id: u.key,
-                    unit_code: `${t.unitWord} ${u.key}`,
+                    unit_code: u.key,
                     name: uMeta ? uMeta.title : u.key,
                     cover_image: u.img,
                     floor: u.flr,
@@ -1182,16 +1580,18 @@ export default function LandingPage() {
                     sqm: u.sqm,
                     price_monthly: u.month,
                     price_nightly: u.night,
+                    rate: u.monthMax
+                      ? { type: "range", min: u.month, max: u.monthMax }
+                      : { type: "negotiable" },
                     status: u.status,
                     view_type: uMeta ? uMeta.type : undefined,
                   }}
                   labels={{
-                    view: t.cardView,
-                    inquire: t.cardInquire,
-                    month: "Giá Thuê Tháng",
-                    night: "Giá Theo Đêm",
+                    rate: t.lblPrice,
+                    available: t.statusAvail,
+                    held: t.statusHeld,
+                    unitCode: t.unitWord,
                   }}
-                  onInquire={(code) => handleOpenInquiry(code)}
                 />
               );
             })}
@@ -1220,7 +1620,7 @@ export default function LandingPage() {
                   onClick={() => {
                     setUnitFilter("all");
                     setFloorFilter("all");
-                    setPriceRange([20000000, 100000000]);
+                    setPriceRange([20000000, 120000000]);
                   }}
                 >
                   {t.emptyCta2}
@@ -1228,241 +1628,269 @@ export default function LandingPage() {
               </div>
             </div>
           )}
-
-          <p className="mt-6 font-sans text-xs sm:text-[0.8125rem] font-semibold uppercase tracking-[0.15em] text-[#6B6255]">
-            {t.unitsNote}
-          </p>
         </div>
       </section>
 
-      {/* ── 5. LOCATION & TRAVEL RADAR (Vị Trí & Bán Kính Kết Nối) */}
+      {/* ── 5. LOCATION & TRAVEL RADAR ── */}
       <section
         id="location"
-        className="py-[clamp(56px,7vw,112px)] px-[clamp(20px,4vw,56px)] bg-[#FBF9F5]"
+        className="border-y border-[#DDD5C7] bg-[#FAF7F2] px-[clamp(20px,4vw,56px)] py-[clamp(40px,4vw,64px)]"
       >
-        <div className="max-w-[1240px] mx-auto">
-          <div className="flex flex-wrap items-end justify-between gap-6 pb-2">
-            <div className="flex-1 min-w-[320px]">
-              <div className="flex items-center gap-3">
-                <span className="w-8 h-px bg-[#B08D57]" />
-                <span className="font-sans text-xs font-bold uppercase tracking-[0.15em] text-[#8A6214]">
-                  {t.locEye}
-                </span>
+        <div className="mx-auto max-w-[1600px]">
+          <header className="grid gap-6 border-b border-[#DDD5C7] pb-6 lg:grid-cols-[minmax(0,1.65fr)_minmax(300px,.65fr)] lg:items-end">
+            <div>
+              <div className="flex items-center gap-3 font-sans text-[0.65rem] font-semibold uppercase tracking-[0.26em] text-[#B85D36]">
+                <span className="size-1.5 bg-[#B85D36]" aria-hidden="true" />
+                {t.locKicker}
               </div>
-              <h2 className="mt-4 font-display text-[clamp(1.9rem,1.7rem+1vw,2.8rem)] font-medium leading-[1.2] text-[#1A1A1A]">
+              <h2 className="mt-3 max-w-[26ch] font-display text-[clamp(2rem,3.7vw,4rem)] font-normal uppercase italic leading-[0.98] tracking-[-0.02em] text-[#171715]">
                 {t.locTitle}
               </h2>
-              <p className="mt-5 max-w-[52ch] font-sans text-[1.08rem] leading-[1.7] text-[#383838]">
-                {t.locBody}
-              </p>
+            </div>
+            <p className="m-0 max-w-[48ch] font-sans text-[0.72rem] font-medium uppercase leading-[1.75] tracking-[0.1em] text-[#544F48] lg:justify-self-end">
+              {t.locBody}
+            </p>
+          </header>
+
+          <div className="mt-6 grid gap-3 border border-[#DDD5C7] bg-[#F4EFEB] p-2.5 lg:grid-cols-[auto_minmax(0,1fr)_180px] lg:items-center">
+            <div className="flex items-center gap-2 border-[#CFC5B4] lg:border-r lg:pr-3">
+              <span className="font-sans text-[0.62rem] font-semibold uppercase tracking-[0.14em] text-[#6C655D]">
+                {t.mapViewLabel}:
+              </span>
+              <div className="flex shrink-0 border border-[#D5CCBE] bg-white p-0.5">
+                {([
+                  ["map", t.mapGoogle, "map"],
+                  ["radar", t.mapRadar, "sparkles"],
+                ] as const).map(([value, label, icon]) => (
+                  <button
+                    key={value}
+                    type="button"
+                    onClick={() => setLocationView(value)}
+                    className={`relative isolate inline-flex min-h-8 cursor-pointer items-center gap-1.5 px-2.5 font-sans text-[0.58rem] font-semibold uppercase tracking-[0.1em] transition-colors ${
+                      locationView === value ? "!bg-[#1A1A1A] !text-white" : "bg-white text-[#413D37] hover:bg-[#F4EFEB]"
+                    }`}
+                  >
+                    <Icon name={icon} size={13} className="relative z-10" />
+                    <span className="relative z-10 text-inherit">{label}</span>
+                  </button>
+                ))}
+              </div>
             </div>
 
-            <div className="flex flex-col items-start gap-3">
-              <span className="px-3.5 py-2 bg-[#1F3A2E] text-[#FAF3EA] font-sans text-xs font-semibold uppercase tracking-[0.15em]">
-                {t.spotBadge}
-              </span>
-              <FilterTabs
-                tabs={[
-                  { label: t.tOff, value: "off" },
-                  { label: t.tPeak, value: "peak" },
-                ]}
-                value={trafficMode}
-                onChange={(val) => setTrafficMode(val as "off" | "peak")}
-              />
+            <div className="flex min-w-0 items-center gap-0.5 overflow-x-auto whitespace-nowrap lg:justify-center">
+              {([
+                ["all", t.catAll, SPOTS_DATA.length, null],
+                ["famous", t.catFamous, SPOTS_DATA.filter((spot) => spot.category === "famous").length, "flame"],
+                ["transport", t.catTransport, SPOTS_DATA.filter((spot) => spot.category === "transport").length, "train"],
+                ["shopping", t.catShopping, SPOTS_DATA.filter((spot) => spot.category === "shopping").length, "shopping-bag"],
+                ["culture", t.catCulture, SPOTS_DATA.filter((spot) => spot.category === "culture").length, "landmark"],
+              ] as const).map(([value, label, count, icon]) => (
+                <button
+                  key={value}
+                  type="button"
+                  onClick={() => {
+                    setLocationCategory(value);
+                    setMapFocus("spot");
+                    const nextIndex = SPOTS_DATA.findIndex((spot) => value === "all" || spot.category === value);
+                    if (nextIndex >= 0) setSelectedSpotIndex(nextIndex);
+                  }}
+                  className={`inline-flex min-h-8 shrink-0 cursor-pointer items-center gap-1.5 px-2.5 font-sans text-[0.56rem] font-semibold uppercase tracking-[0.08em] transition-colors ${
+                    locationCategory === value ? "bg-[#B85D36] text-white" : "bg-transparent text-[#47413B] hover:bg-white"
+                  }`}
+                >
+                  {icon && <Icon name={icon} size={11} />}
+                  {label}{value === "all" ? ` (${count})` : ""}
+                </button>
+              ))}
             </div>
+
+            <label className="relative block">
+              <span className="sr-only">{t.locationSearch}</span>
+              <Icon name="search" size={14} color="#7A746C" className="absolute left-3 top-1/2 -translate-y-1/2" />
+              <input
+                type="search"
+                value={locationSearch}
+                onChange={(event) => {
+                  const query = event.target.value;
+                  setLocationSearch(query);
+                  const normalized = query.trim().toLocaleLowerCase();
+                  if (normalized) {
+                    setMapFocus("spot");
+                    const nextIndex = SPOTS_DATA.findIndex((spot) => {
+                      const copy = t.spots[spot.copyIndex] || t.spots[0];
+                      return `${copy.name} ${copy.blurb} ${spot.addr}`.toLocaleLowerCase().includes(normalized);
+                    });
+                    if (nextIndex >= 0) setSelectedSpotIndex(nextIndex);
+                  }
+                }}
+                placeholder={t.locationSearch}
+                className="min-h-8 w-full border border-[#CFC7BB] bg-white py-1.5 pl-8 pr-2.5 font-sans text-[0.65rem] text-[#1A1A1A] outline-none placeholder:text-[#888178] focus:border-[#B85D36] focus:ring-1 focus:ring-[#B85D36]"
+              />
+            </label>
           </div>
 
-          <div className="mt-[clamp(28px,3.5vw,44px)] grid gap-[clamp(20px,2vw,28px)] grid-cols-1 lg:grid-cols-12 items-start">
-            {/* Left: 12 Spots List */}
-            <div className="lg:col-span-6 border border-[#E8E4DB] bg-white shadow-xs">
-              <div className="p-4 sm:p-5 border-b border-[#E8E4DB]">
-                <span className="inline-flex items-center gap-3 font-sans text-[0.6875rem] font-bold uppercase tracking-[0.15em] text-[#8A6214]">
-                  <span className="w-6 h-px bg-[#B08D57]" />
-                  {t.spotEye}
+          <div className="mt-5 grid items-stretch gap-5 lg:grid-cols-[minmax(420px,.82fr)_minmax(0,1.18fr)]">
+            <div className="flex min-h-0 flex-col border border-[#DDD5C7] bg-white p-4 shadow-[0_8px_28px_rgba(52,43,34,0.06)]">
+              <div className="flex flex-wrap items-end justify-between gap-3 border-b border-[#DDD5C7] pb-4">
+                <div>
+                  <span className="font-sans text-[0.6rem] font-semibold uppercase tracking-[0.18em] text-[#B85D36]">
+                    {t.nearbyBilingual}
+                  </span>
+                  <h3 className="mt-1 font-display text-[1.45rem] uppercase leading-tight text-[#1A1A1A]">
+                    {t.spotHead}
+                  </h3>
+                </div>
+                <span className="bg-[#1A1A1A] px-3 py-2 font-sans text-[0.58rem] font-semibold uppercase tracking-[0.12em] text-[#D8B56F]">
+                  {visibleSpots.length} {t.locations}
                 </span>
-                <h3 className="mt-2 font-display text-2xl font-medium leading-[1.2] text-[#1A1A1A]">
-                  {t.spotHead}
-                </h3>
               </div>
 
-              {/* Scrollable list of 12 spots */}
-              <div className="max-h-[430px] overflow-y-auto p-3 grid gap-2">
-                {SPOTS_DATA.map((p, idx) => {
-                  const on = selectedSpotIndex === idx;
-                  const spotText = t.spots[idx] || t.spots[0];
-                  const time = trafficMode === "off" ? `${p.off} phút` : `${p.peak} phút`;
+              <div className="mt-3 grid h-[342px] content-start gap-2 overflow-y-auto pr-1 lg:h-auto lg:min-h-0 lg:flex-1">
+                {visibleSpots.map(({ spot, index }) => {
+                  const selected = selectedSpotIndex === index;
+                  const copy = t.spots[spot.copyIndex] || t.spots[0];
+                  const minutes = travelMinutesFromTower(spot.off, selectedTowerCode);
                   return (
                     <button
-                      key={p.no}
+                      key={spot.no}
                       type="button"
-                      onClick={() => setSelectedSpotIndex(idx)}
-                      className={`w-full p-3 flex items-center gap-3.5 text-left transition-colors cursor-pointer rounded-none border ${
-                        on
-                          ? "bg-[#1A1A1A] text-white border-[#1A1A1A]"
-                          : "bg-white text-[#1A1A1A] border-[#E8E4DB] hover:border-[#B08D57]"
-                      }`}
+                      onClick={() => {
+                        setSelectedSpotIndex(index);
+                        setMapFocus("spot");
+                      }}
+                      className={`relative isolate grid min-h-[56px] w-full cursor-pointer grid-cols-[30px_minmax(0,1fr)_auto] items-center gap-2.5 border px-3 py-2 text-left transition-colors ${selected ? "!border-[#1A1A1A] !bg-[#1A1A1A] !text-white" : "border-[#DDD5C7] bg-[#FAF7F2] text-[#1A1A1A] hover:border-[#B85D36]"}`}
                     >
-                      <span
-                        className={`flex-none w-[34px] h-[34px] grid place-items-center font-sans text-xs font-bold tracking-wider border ${
-                          on
-                            ? "border-[#D4AF37] text-[#D4AF37]"
-                            : "border-[#E8E4DB] text-[#6B6255]"
-                        }`}
-                      >
-                        {p.no}
+                      <span className={`grid size-7 place-items-center rounded-full border font-sans text-[0.6rem] font-bold ${selected ? "border-[#B85D36] bg-[#B85D36] text-white" : "border-[#D0C6B7] bg-white text-[#4C463F]"}`}>
+                        {spot.no}
                       </span>
-                      <div className="grid gap-1 text-left min-w-0 flex-1">
-                        <span
-                          className={`font-display italic text-[1.08rem] leading-tight truncate ${
-                            on ? "text-[#FAF3EA]" : "text-[#1A1A1A]"
-                          }`}
-                        >
-                          {spotText.name}
+                      <span className="min-w-0">
+                        <span className={`flex items-center gap-1.5 truncate font-display text-[0.95rem] italic leading-tight ${selected ? "!text-[#FAF7F2]" : "text-[#1A1A1A]"}`}><Icon name={spot.icon} size={12} color={selected ? "#E9B892" : "#B08D57"} />{copy.name}</span>
+                        <span className={`mt-1 block font-sans text-[0.55rem] font-semibold uppercase tracking-[0.12em] ${selected ? "text-white/65" : "text-[#7C756D]"}`}>
+                          {t.distLbl}: {spot.km}
                         </span>
-                        <span
-                          className={`font-sans text-[0.6875rem] font-semibold tracking-[0.15em] uppercase ${
-                            on ? "text-[rgba(250,243,234,0.72)]" : "text-[#6B6255]"
-                          }`}
-                        >
-                          {t.distLbl}: {p.km}
-                        </span>
-                      </div>
-                      <span
-                        className={`flex-none ml-auto px-2.5 py-1.5 font-sans text-[0.6875rem] font-semibold tracking-wider uppercase border ${
-                          on
-                            ? "bg-[#A6573C] text-white border-transparent"
-                            : "bg-transparent text-[#1A1A1A] border-[#E8E4DB]"
-                        }`}
-                      >
-                        {time}
+                      </span>
+                      <span className={`inline-flex min-h-7 items-center gap-1.5 border px-2 font-sans text-[0.58rem] font-bold uppercase tracking-[0.08em] ${selected ? "border-[#B85D36] bg-[#B85D36] text-white" : "border-[#D3CBC0] bg-white text-[#292622]"}`}>
+                        {minutes} min
+                        <Icon name={spot.walk ? "footprints" : "car"} size={12} />
                       </span>
                     </button>
                   );
                 })}
+                {visibleSpots.length === 0 && (
+                  <p role="status" className="border border-[#DDD5C7] bg-[#FAF7F2] p-6 text-center font-sans text-sm text-[#6B6255]">
+                    {t.emptyEye}
+                  </p>
+                )}
               </div>
 
-              {/* Selected Spot Details Box */}
-              <div className="m-3 border border-[#E8E4DB] bg-[#FAF8F5] p-4 grid gap-3">
-                <div className="flex flex-wrap items-center justify-between gap-2.5">
-                  <span className="inline-flex items-center gap-2 font-sans text-[0.6875rem] font-bold uppercase tracking-[0.15em] text-[#8A6214]">
-                    <Icon name="map-pin" size={15} color="currentColor" />
-                    <span>{t.infoWord} #{activeSpotData.no} · {t.infoTail}</span>
+              <div className="mt-3 border border-[#D7CEC1] bg-[#FAF7F2] p-3">
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <span className="font-sans text-[0.58rem] font-bold uppercase tracking-[0.14em] text-[#B85D36]">
+                    Location #{activeSpotData.no} Info
                   </span>
-                  <span className="bg-[#1A1A1A] text-[#FAF3EA] px-2.5 py-1 font-sans text-[0.6875rem] font-semibold uppercase tracking-wider">
-                    {activeSpotData.km} · {trafficMode === "off" ? activeSpotData.off : activeSpotData.peak} {t.mins(trafficMode === "off" ? activeSpotData.off : activeSpotData.peak)} {activeSpotData.walk ? t.walk : t.drive}
+                  <span className="bg-[#1A1A1A] px-2 py-1 font-sans text-[0.55rem] font-semibold uppercase tracking-[0.1em] text-white">
+                    {activeSpotData.km} · {activeTravelMinutes} min · {activeSpotData.walk ? t.walk : t.drive} · {selectedTowerCode}
                   </span>
                 </div>
-                <p className="m-0 font-sans text-[0.9375rem] leading-relaxed text-[#383838]">
-                  {activeSpotText.blurb}
-                </p>
-                <div className="flex flex-wrap items-center justify-between gap-2.5 pt-3 border-t border-[#E8E4DB]">
-                  <span className="font-sans text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-[#6B6255]">
-                    {activeSpotData.addr}
-                  </span>
-                  <a
-                    href={activeDirHref}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-1.5 font-sans text-[0.6875rem] font-bold uppercase tracking-[0.15em] text-[#8A6214] hover:underline"
-                  >
-                    <span>{t.btnDir}</span>
-                    <Icon name="arrow-right" size={15} color="currentColor" />
+                <p className="mt-2 font-sans text-[0.66rem] leading-relaxed text-[#4F4942]">{activeSpotText.blurb}</p>
+                <div className="mt-2 flex flex-wrap items-center justify-between gap-3 border-t border-[#DDD5C7] pt-2">
+                  <span className="max-w-[34ch] font-sans text-[0.55rem] font-semibold uppercase tracking-[0.1em] text-[#777068]">{activeSpotData.addr}</span>
+                  <a href={activeSpotDirHref} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 font-sans text-[0.58rem] font-bold uppercase tracking-[0.12em] text-[#B85D36] hover:underline">
+                    {t.btnDir} Maps <Icon name="external-link" size={12} />
                   </a>
                 </div>
               </div>
             </div>
 
-            {/* Right: Map Box */}
-            <div className="lg:col-span-6 border border-[#1A1A1A] bg-white p-[clamp(14px,1.4vw,20px)] grid gap-3.5 shadow-xs">
-              <div className="grid gap-2">
-                <span className="inline-flex items-center gap-2.5 font-display text-[1.15rem] leading-snug text-[#1A1A1A]">
-                  <Icon name="map-pin" size={18} color="#8A6214" />
-                  <span>{t.mapTitle}</span>
-                </span>
-                <div className="flex flex-wrap gap-4">
-                  <span className="inline-flex items-center gap-2 font-sans text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-[#6B6255]">
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#A6573C]" />
-                    <span>{t.legend1}</span>
+            {/* // FIX: Make the map panel a flex column so its canvas can consume the full matched grid height. */}
+            <div className="flex min-h-0 flex-col border border-[#1A1A1A] bg-[#F1EBDD] p-4 shadow-[0_8px_28px_rgba(52,43,34,0.06)] sm:p-5">
+              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#CFC5B4] pb-4">
+                <h3 className="inline-flex items-center gap-2 font-display text-[1rem] font-semibold uppercase tracking-[0.03em] text-[#292622]">
+                  <Icon name="compass" size={16} color="#B85D36" /> {t.radarTitle}
+                </h3>
+                <div className="flex gap-3 font-sans text-[0.52rem] font-semibold uppercase tracking-[0.1em] text-[#615B54]">
+                  <span className="inline-flex items-center gap-1"><i className="size-2 rounded-full bg-[#B85D36]" /> {t.legend1}</span>
+                  <span className="inline-flex items-center gap-1"><i className="size-2 rounded-full bg-[#3977D5]" /> {t.legend2}</span>
+                </div>
+              </div>
+
+              <div className="mt-3 border border-[#CFC5B4] bg-[#FAF7F2] p-2.5">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="mr-1 font-sans text-[0.56rem] font-bold uppercase tracking-[0.12em] text-[#6C655D]">
+                    {t.towerMapLabel}
                   </span>
-                  <span className="inline-flex items-center gap-2 font-sans text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-[#6B6255]">
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#1F3A2E]" />
-                    <span>{t.legend2}</span>
-                  </span>
+                  {TOWER_LOCATIONS.map((tower) => {
+                    const active = selectedTowerCode === tower.code;
+                    const landmark = tower.group === "landmark";
+                    return (
+                      <button
+                        key={tower.code}
+                        type="button"
+                        onClick={() => {
+                          setSelectedTowerCode(tower.code);
+                          setLocationView("map");
+                          setMapFocus("tower");
+                        }}
+                        className={`inline-flex min-h-7 cursor-pointer items-center gap-1.5 border px-2.5 font-sans text-[0.6rem] font-bold tracking-[0.08em] transition-colors ${
+                          active
+                            ? "border-[#1A1A1A] bg-[#1A1A1A] text-white"
+                            : landmark
+                              ? "border-[#B85D36]/40 bg-white text-[#9B4828] hover:border-[#B85D36]"
+                              : "border-[#3977D5]/35 bg-white text-[#2E65B5] hover:border-[#3977D5]"
+                        }`}
+                        aria-pressed={active}
+                      >
+                        <span className={`size-1.5 rounded-full ${landmark ? "bg-[#B85D36]" : "bg-[#3977D5]"}`} />
+                        {tower.code}
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
 
-              {/* Map Iframe */}
-              <div className="relative border border-[#E8E4DB] bg-[#FAF8F5] min-h-[clamp(360px,42vw,520px)]">
-                <iframe
-                  src={mapSrc}
-                  title={t.mapTitle}
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  className="absolute inset-0 w-full h-full border-0 block"
-                />
-                <a
-                  href={activeDirHref}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="absolute bottom-4 right-4 inline-flex items-center gap-2.5 bg-[#1A1A1A] hover:bg-[#0D3B22] border border-[#D4AF37] text-white px-4 py-3 min-h-[44px] no-underline font-sans text-xs font-semibold uppercase tracking-[0.15em] transition-colors shadow-lg"
-                >
-                  <span>{t.btnMaps}</span>
-                  <Icon name="arrow-right" size={15} color="currentColor" />
-                </a>
+              {/* // FIX: Grow the map canvas into surplus vertical space instead of leaving an empty panel footer. */}
+              <div className="relative mt-3 min-h-[460px] flex-1 overflow-hidden border border-[#C9BEAE] bg-[#E9E1D4] sm:min-h-[510px]">
+                {locationView === "map" ? (
+                  <>
+                    <iframe src={mapSrc} title={t.mapTitle} loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="absolute inset-0 block size-full border-0" />
+                    <div className="absolute left-3 top-3 z-30 w-[min(82%,360px)] border border-[#B85D36] bg-white shadow-lg">
+                      <div className="flex items-center justify-between gap-3 bg-[#1A1A1A] p-2.5 font-sans text-[0.58rem] font-bold uppercase tracking-[0.1em] text-[#F1CCB9]">
+                        <span className="truncate">{mapFocus === "tower" && selectedTower ? `${selectedTower.code} · Gao Ji House` : `#${activeSpotData.no} · ${activeSpotText.name}`}</span>
+                        <span className="shrink-0 bg-[#B85D36] px-2 py-1 text-white">{mapFocus === "tower" && selectedTower ? (selectedTower.group === "landmark" ? "Landmark" : "Central Park") : `${activeTravelMinutes} min · ${selectedTowerCode}`}</span>
+                      </div>
+                      <div className="p-3">
+                        <p className="line-clamp-2 font-sans text-[0.68rem] leading-relaxed text-[#575149]">{mapFocus === "tower" && selectedTower ? selectedTower.query : activeSpotData.addr}</p>
+                        <div className="mt-1.5 flex items-center justify-between gap-3">
+                          <p className="font-sans text-[0.58rem] font-semibold uppercase tracking-[0.1em] text-[#B85D36]">{mapFocus === "tower" && selectedTower ? t.towerMapLabel : `${activeSpotData.km} · ${activeSpotData.walk ? t.walk : t.drive}`}</p>
+                          {mapFocus === "spot" && "rating" in activeSpotData && (
+                            <span className="inline-flex items-center gap-1 font-sans text-[0.62rem] text-[#4B4640]">
+                              {activeSpotData.rating} <Icon name="star" size={11} color="#B85D36" /> ({activeSpotData.reviewCount?.toLocaleString("en-US")})
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                    <a href={mapDirHref} target="_blank" rel="noreferrer" className="absolute bottom-4 right-4 z-40 isolate inline-flex min-h-10 items-center gap-2 !bg-[#704836] px-4 font-sans text-[0.62rem] font-bold uppercase tracking-[0.12em] !text-white opacity-100 shadow-[0_8px_24px_rgba(26,25,24,0.35)] transition-colors hover:!bg-[#553426]">
+                      <span className="relative z-10 text-white">{t.btnMaps}</span> <Icon name="external-link" size={13} color="#FFFFFF" className="relative z-10" />
+                    </a>
+                  </>
+                ) : (
+                  <div className="absolute inset-0 grid place-items-center bg-[radial-gradient(circle_at_center,rgba(184,93,54,.10)_0_1px,transparent_2px)] [background-size:24px_24px]">
+                    {[42, 64, 86].map((size) => <span key={size} className="absolute aspect-square rounded-full border border-[#B9AC99]" style={{ width: `${size}%` }} />)}
+                    <span className="relative z-10 grid size-24 place-items-center rounded-full border-4 border-[#FAF7F2] bg-[#B85D36] text-center font-sans text-[0.58rem] font-bold uppercase tracking-[0.1em] text-white shadow-xl">Gao Ji<br />House</span>
+                    {SPOTS_DATA.slice(0, 8).map((spot, index) => {
+                      const angle = (index / 8) * Math.PI * 2 - Math.PI / 2;
+                      const radius = 37;
+                      return <button key={spot.no} type="button" onClick={() => { setSelectedSpotIndex(index); setMapFocus("spot"); }} className={`absolute z-20 grid size-8 cursor-pointer place-items-center rounded-full border-2 font-sans text-[0.58rem] font-bold shadow ${selectedSpotIndex === index ? "border-white bg-[#B85D36] text-white" : "border-[#B85D36] bg-white text-[#7B3A21]"}`} style={{ left: `${50 + Math.cos(angle) * radius}%`, top: `${50 + Math.sin(angle) * radius}%`, transform: "translate(-50%, -50%)" }} aria-label={t.spots[spot.copyIndex]?.name}>{spot.no}</button>;
+                    })}
+                  </div>
+                )}
               </div>
 
-              <div className="flex flex-wrap items-baseline justify-between gap-4 font-sans text-xs text-[#6B6255]">
-                <span className="italic font-serif">{trafficMode === "peak" ? t.notePeak : t.noteOff}</span>
-                <span className="font-semibold uppercase tracking-[0.15em]">{t.mapFoot}</span>
+              <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-[#CFC5B4] pt-3 font-sans text-[0.56rem] uppercase tracking-[0.1em] text-[#686159]">
+                <span className="normal-case italic">* {t.noteOff} · {selectedTowerCode}</span>
+                <span className="font-semibold">{t.riverfrontTag}</span>
               </div>
-            </div>
-          </div>
-
-          {/* Lower Row: Skyline PhotoPlate & Address Inset Box */}
-          <div className="mt-[clamp(40px,5vw,72px)] grid gap-[clamp(28px,3.5vw,56px)] grid-cols-1 md:grid-cols-2 items-center">
-            {/* Skyline Photo */}
-            <div className="relative pr-3 pb-3">
-              <span
-                aria-hidden="true"
-                className="absolute left-3 top-3 right-0 bottom-0 border border-[#D4AF37] pointer-events-none"
-              />
-              <div className="relative bg-[#FAF8F5] border border-[#1F3A2E] p-[clamp(16px,2vw,30px)]">
-                <div className="relative border border-[#1F3A2E] aspect-[4/3] overflow-hidden">
-                  <Image
-                    src="/assets/photos/towers-skyline.jpg"
-                    alt="Tranh vẽ cụm toà tháp Vinhomes Central Park bên sông Sài Gòn"
-                    fill
-                    className="object-cover object-[50%_40%] sepia-[0.18] contrast-[1.14] saturate-[0.72] brightness-[1.04]"
-                  />
-                </div>
-                <div className="mt-3.5 flex flex-wrap items-baseline justify-between gap-3 font-sans text-xs font-semibold uppercase tracking-[0.15em]">
-                  <span className="text-[#8A6214]">{t.plate2}</span>
-                  <span className="font-display italic text-[0.9375rem] text-[#6B6255] lowercase tracking-normal">{t.mapFoot}</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Address Box in Jade-700 */}
-            <div className="bg-[#1F3A2E] border border-[#D4AF37] p-[clamp(24px,2.8vw,36px)] grid gap-3.5 justify-items-start text-white shadow-md">
-              <div className="flex items-center gap-3">
-                <span className="w-8 h-px bg-[#D4AF37]" />
-                <span className="font-sans text-xs font-bold uppercase tracking-[0.15em] text-[#E2C068]">
-                  {t.addrEye}
-                </span>
-              </div>
-              <p className="m-0 max-w-[34ch] font-display text-[clamp(1.3rem,1.1rem+0.7vw,1.75rem)] leading-[1.28] text-white">
-                208 Nguyễn Hữu Cảnh, Phường 22, Bình Thạnh, TP. Hồ Chí Minh
-              </p>
-              <Button
-                variant="onDark"
-                icon="map-pin"
-                as="a"
-                href="https://maps.google.com/?q=Vinhomes+Central+Park+208+Nguyen+Huu+Canh"
-                target="_blank"
-                rel="noreferrer"
-              >
-                {t.btnMaps}
-              </Button>
             </div>
           </div>
         </div>
@@ -1471,7 +1899,7 @@ export default function LandingPage() {
       {/* ── 6. RESIDENT AMENITIES (Tiện Ích & Dịch Vụ Cư Dân) ── */}
       <section
         id="amenities"
-        className="py-[clamp(56px,7vw,112px)] px-[clamp(20px,4vw,56px)] bg-[#FAF8F5]"
+        className="py-[clamp(48px,5vw,80px)] px-[clamp(20px,4vw,56px)] bg-[#FAF8F5]"
       >
         <div className="max-w-[1600px] mx-auto">
           <SectionHeader
@@ -1524,40 +1952,10 @@ export default function LandingPage() {
       </section>
 
 
-      {/* ── 6.5. SOCIAL PROOF (NEW) ── */}
-      <section className="bg-[#FBF9F5] border-t border-[#E8E4DB] py-[clamp(60px,8vh,100px)]">
-        <div className="max-w-[1600px] mx-auto px-[clamp(20px,4vw,56px)]">
-          <SectionHeader
-            eyebrow={t.spEye}
-            title={t.spTitle}
-          />
-          <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              { q: t.sp1, a: t.sp1a },
-              { q: t.sp2, a: t.sp2a },
-              { q: t.sp3, a: t.sp3a }
-            ].map((review, i) => (
-              <div key={i} className="bg-[#FAF8F5] p-8 rounded-none border border-[#E8E4DB] flex flex-col justify-between shadow-xs">
-                <div>
-                  <Quote className="w-8 h-8 text-[#D4AF37]/50 mb-6" />
-                  <p className="font-sans text-[15px] leading-relaxed text-[#383838]">&quot;{review.q}&quot;</p>
-                </div>
-                <div className="mt-8 flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-[#E8E4DB] flex items-center justify-center text-[#0D3B22] font-semibold">
-                    {review.a.charAt(0)}
-                  </div>
-                  <span className="font-sans text-sm font-medium text-[#0D3B22]">{review.a}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ── 7. ABOUT US & OPERATING TEAM (Về Chúng Tôi) ─────── */}
       <section
         id="about"
-        className="py-[clamp(56px,7vw,112px)] px-[clamp(20px,4vw,56px)] bg-[#FBF9F5]"
+        className="py-[clamp(48px,5vw,80px)] px-[clamp(20px,4vw,56px)] bg-[#FBF9F5]"
       >
         <div className="max-w-[1240px] mx-auto">
           <div className="grid gap-[clamp(32px,4vw,64px)] grid-cols-1 lg:grid-cols-12 items-start">
@@ -1644,108 +2042,27 @@ export default function LandingPage() {
 
             <div className="lg:col-span-8 grid gap-3 grid-cols-2 sm:grid-cols-3 md:grid-cols-4">
               <a href="https://zalo.me/0889237833" target="_blank" rel="noreferrer" className="border border-[#E8E4DB] bg-[#FAF8F5] p-3.5 grid gap-1 no-underline hover:border-[#D4AF37] hover:bg-white transition-colors">
-                <span className="font-sans text-xs font-bold uppercase tracking-[0.15em] text-[#0D3B22]">Zalo</span>
-                <span className="font-sans text-xs text-[#6B6255]">088 923 7833</span>
+                <span className="flex items-center gap-3"><span className="grid size-10 shrink-0 place-items-center rounded-full bg-[#0878F9] text-white"><SocialLogo network="zalo" /></span><span className="grid gap-1"><span className="font-sans text-xs font-bold uppercase tracking-[0.15em] text-[#0D3B22]">Zalo</span><span className="font-sans text-xs text-[#6B6255]">088 923 7833</span></span></span>
               </a>
-              <a href="https://facebook.com/gaojihouse" target="_blank" rel="noreferrer" className="border border-[#E8E4DB] bg-[#FAF8F5] p-3.5 grid gap-1 no-underline hover:border-[#D4AF37] hover:bg-white transition-colors">
-                <span className="font-sans text-xs font-bold uppercase tracking-[0.15em] text-[#0D3B22]">Facebook</span>
-                <span className="font-sans text-xs text-[#6B6255]">fb.com/gaojihouse</span>
-              </a>
-              <a href="https://instagram.com/gaojihouse" target="_blank" rel="noreferrer" className="border border-[#E8E4DB] bg-[#FAF8F5] p-3.5 grid gap-1 no-underline hover:border-[#D4AF37] hover:bg-white transition-colors">
-                <span className="font-sans text-xs font-bold uppercase tracking-[0.15em] text-[#0D3B22]">Instagram</span>
-                <span className="font-sans text-xs text-[#6B6255]">@gaojihouse</span>
-              </a>
-              <a href="https://youtube.com/@gaojihouse" target="_blank" rel="noreferrer" className="border border-[#E8E4DB] bg-[#FAF8F5] p-3.5 grid gap-1 no-underline hover:border-[#D4AF37] hover:bg-white transition-colors">
-                <span className="font-sans text-xs font-bold uppercase tracking-[0.15em] text-[#0D3B22]">YouTube</span>
-                <span className="font-sans text-xs text-[#6B6255]">{t.ytSub}</span>
+              <a href="https://www.tiktok.com/@gaojihouse" target="_blank" rel="noreferrer" className="border border-[#E8E4DB] bg-[#FAF8F5] p-3.5 grid gap-1 no-underline hover:border-[#D4AF37] hover:bg-white transition-colors">
+                <span className="flex items-center gap-3"><span className="relative size-10 shrink-0 overflow-hidden rounded-full border border-[#D8CFC2] bg-white"><Image src="/assets/logo-compact.png" alt="Avatar Gao Ji House trên TikTok" fill sizes="40px" className="object-cover" /></span><span className="grid gap-1"><span className="inline-flex items-center gap-1.5 font-sans text-xs font-bold uppercase tracking-[0.15em] text-[#0D3B22]">TikTok <SocialLogo network="tiktok" /></span><span className="font-sans text-xs text-[#6B6255]">@gaojihouse</span></span></span>
               </a>
               <a href="weixin://dl/chat?HZM81MS" className="border border-[#E8E4DB] bg-[#FAF8F5] p-3.5 grid gap-1 no-underline hover:border-[#D4AF37] hover:bg-white transition-colors">
-                <span className="font-sans text-xs font-bold uppercase tracking-[0.15em] text-[#0D3B22]">WeChat</span>
-                <span className="font-sans text-xs text-[#6B6255]">HZM81MS</span>
+                <span className="flex items-center gap-3"><span className="grid size-10 shrink-0 place-items-center rounded-full bg-[#07C160] text-white"><SocialLogo network="wechat" /></span><span className="grid gap-1"><span className="font-sans text-xs font-bold uppercase tracking-[0.15em] text-[#0D3B22]">WeChat</span><span className="font-sans text-xs text-[#6B6255]">HZM81MS</span></span></span>
               </a>
               <a href="https://t.me/HZM81MS" target="_blank" rel="noreferrer" className="border border-[#E8E4DB] bg-[#FAF8F5] p-3.5 grid gap-1 no-underline hover:border-[#D4AF37] hover:bg-white transition-colors">
-                <span className="font-sans text-xs font-bold uppercase tracking-[0.15em] text-[#0D3B22]">Telegram</span>
-                <span className="font-sans text-xs text-[#6B6255]">@HZM81MS</span>
+                <span className="flex items-center gap-3"><span className="grid size-10 shrink-0 place-items-center rounded-full bg-[#229ED9] text-white"><SocialLogo network="telegram" /></span><span className="grid gap-1"><span className="font-sans text-xs font-bold uppercase tracking-[0.15em] text-[#0D3B22]">Telegram</span><span className="font-sans text-xs text-[#6B6255]">@HZM81MS</span></span></span>
               </a>
               <a href="mailto:stay@gaojihouse.vn" className="border border-[#E8E4DB] bg-[#FAF8F5] p-3.5 grid gap-1 no-underline hover:border-[#D4AF37] hover:bg-white transition-colors col-span-2 sm:col-span-1">
-                <span className="font-sans text-xs font-bold uppercase tracking-[0.15em] text-[#0D3B22]">Email</span>
-                <span className="font-sans text-xs text-[#6B6255]">stay@gaojihouse.vn</span>
+                <span className="flex items-center gap-3"><span className="grid size-10 shrink-0 place-items-center rounded-full bg-[#0D3B22] text-white"><SocialLogo network="email" /></span><span className="min-w-0 grid gap-1"><span className="font-sans text-xs font-bold uppercase tracking-[0.15em] text-[#0D3B22]">Email</span><span className="truncate font-sans text-xs text-[#6B6255]">stay@gaojihouse.vn</span></span></span>
               </a>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── 8. TRUST, LEGAL & DIRECT ZALO CONTACT ───────────── */}
-      {/* Legal & Trust Standards (4-Column Bar) */}
-      <section className="bg-[#141F1C] py-[clamp(48px,6vw,88px)] px-[clamp(20px,4vw,56px)] text-white border-t border-[rgba(212,175,55,0.25)]">
-        <div className="max-w-[1600px] mx-auto">
-          <div className="flex items-center gap-3">
-            <span className="w-8 h-px bg-[#D4AF37]" />
-            <span className="font-sans text-xs font-bold uppercase tracking-[0.18em] text-[#E2C068]">
-              {t.trustEye}
-            </span>
-          </div>
-
-          <div className="mt-7 grid gap-px grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 bg-[rgba(250,243,234,0.12)] border border-[rgba(250,243,234,0.12)]">
-            <div className="bg-[#141F1C] p-6 sm:p-7 grid gap-2.5">
-              <Icon name="palette" size={22} color="#D4AF37" />
-              <span className="font-sans text-[0.6875rem] font-bold uppercase tracking-[0.15em] text-[#E2C068]">
-                {t.t1Label}
-              </span>
-              <h3 className="font-display text-lg text-white">
-                {t.t1Title}
-              </h3>
-              <p className="m-0 font-sans text-xs sm:text-sm leading-relaxed text-[rgba(250,243,234,0.78)]">
-                {t.t1Body}
-              </p>
-            </div>
-
-            <div className="bg-[#141F1C] p-6 sm:p-7 grid gap-2.5">
-              <Icon name="award" size={22} color="#D4AF37" />
-              <span className="font-sans text-[0.6875rem] font-bold uppercase tracking-[0.15em] text-[#E2C068]">
-                {t.t2Label}
-              </span>
-              <h3 className="font-display text-lg text-white">
-                {t.t2Title}
-              </h3>
-              <p className="m-0 font-sans text-xs sm:text-sm leading-relaxed text-[rgba(250,243,234,0.78)]">
-                {t.t2Body}
-              </p>
-            </div>
-
-            <div className="bg-[#141F1C] p-6 sm:p-7 grid gap-2.5">
-              <Icon name="check-circle" size={22} color="#D4AF37" />
-              <span className="font-sans text-[0.6875rem] font-bold uppercase tracking-[0.15em] text-[#E2C068]">
-                {t.t3Label}
-              </span>
-              <h3 className="font-display text-lg text-white">
-                {t.t3Title}
-              </h3>
-              <p className="m-0 font-sans text-xs sm:text-sm leading-relaxed text-[rgba(250,243,234,0.78)]">
-                {t.t3Body}
-              </p>
-            </div>
-
-            <div className="bg-[#141F1C] p-6 sm:p-7 grid gap-2.5">
-              <Icon name="file-text" size={22} color="#D4AF37" />
-              <span className="font-sans text-[0.6875rem] font-bold uppercase tracking-[0.15em] text-[#E2C068]">
-                {t.t4Label}
-              </span>
-              <h3 className="font-display text-lg text-white">
-                {t.t4Title}
-              </h3>
-              <p className="m-0 font-sans text-xs sm:text-sm leading-relaxed text-[rgba(250,243,234,0.78)]">
-                {t.t4Body}
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-
       {/* ── 9.5. FAQ SECTION (NEW) ── */}
-      <section className="bg-[#FAF8F5] py-[clamp(60px,8vh,100px)]">
+      <section className="bg-[#FAF8F5] py-[clamp(48px,5vw,80px)]">
         <div className="max-w-[900px] mx-auto px-[clamp(20px,4vw,56px)]">
           <div className="text-center mb-12">
             <span className="font-sans text-xs font-bold uppercase tracking-[0.15em] text-[#8A6214] block mb-3">
@@ -1777,7 +2094,7 @@ export default function LandingPage() {
 
 
       {/* ── 9.6. FINAL CTA (NEW) ── */}
-      <section className="bg-[#0D3B22] py-[clamp(60px,8vh,100px)] relative overflow-hidden">
+      <section className="bg-[#0D3B22] py-[clamp(48px,5vw,80px)] relative overflow-hidden">
         <div className="absolute inset-0 pointer-events-none opacity-10" style={{ background: "url('/assets/photos/living-open-plan.jpg') center/cover" }} />
         <div className="relative z-10 max-w-[900px] mx-auto px-[clamp(20px,4vw,56px)] text-center">
           <h2 className="font-display text-[clamp(2rem,3vw+1rem,3.5rem)] font-medium text-white mb-6 leading-tight">
@@ -1802,7 +2119,7 @@ export default function LandingPage() {
       {/* Direct Zalo Booking Box */}
       <section
         id="contact"
-        className="py-[clamp(56px,7vw,112px)] px-[clamp(20px,4vw,56px)] bg-[#FAF8F5]"
+        className="py-[clamp(48px,5vw,80px)] px-[clamp(20px,4vw,56px)] bg-[#FAF8F5]"
       >
         <div className="max-w-[1240px] mx-auto bg-[#1F3A2E] border border-[#D4AF37] p-[clamp(32px,4.5vw,64px)] grid gap-[clamp(28px,4vw,56px)] grid-cols-1 md:grid-cols-2 items-start text-white shadow-2xl">
           <div className="grid gap-4 justify-items-start">

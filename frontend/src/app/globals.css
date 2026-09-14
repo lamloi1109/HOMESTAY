@@ -46,6 +46,7 @@
 }
 
 /* ── Global Styles & Sliders verbatim from Landing Page.dc.html ── */
+@layer base {
 body {
   margin: 0;
   background: var(--canvas, #F9F7F2);
@@ -78,6 +79,7 @@ a:hover {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
   }
+}
 }
 
 /* Dual Range Slider styling from Landing Page.dc.html */

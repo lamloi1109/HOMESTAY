@@ -1,0 +1,3 @@
+# Source photography is too large to keep in Git. Store originals externally and
+# commit only web-optimized assets under frontend/public/.
+/source-images/

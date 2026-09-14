@@ -157,28 +157,6 @@ const DICT = {
     a3b: "Sân thượng ngắm Landmark 81 và hầm rượu do sommelier tuyển chọn, đặt chỗ qua lễ tân trước 18:00.",
     a3l: ["Đặt chỗ qua lễ tân trước 18:00", "Sommelier tuyển chọn theo mùa", "Tầm nhìn Landmark 81 & sông"],
 
-    // 7. About Us & Operating Team
-    abEye: "Về Chúng Tôi · Vận Hành Từ 2019",
-    abTitle: "Gao Ji House · Chủ Căn Hộ Cũng Là Người Vận Hành",
-    abP1: "Gao Ji House bắt đầu năm 2019 với một căn hộ cho thuê trong Park 1. Đến nay đội ngũ tự vận hành năm căn hộ trong Vinhomes Central Park — không qua đơn vị trung gian, không nhận uỷ thác từ chủ nhà khác. Mỗi căn đều do Gao Ji House sở hữu, tự thiết kế nội thất và tự chịu trách nhiệm bảo trì.",
-    abP2: "Khách thuê chủ yếu là chuyên gia nước ngoài công tác dài hạn, gia đình chờ nhận nhà và khách doanh nghiệp lưu trú theo tháng. Quy trình buồng phòng, đổi ga khăn và bảo trì thiết bị dựng theo chuẩn khách sạn, do chính người trong đội kiểm tra định kỳ.",
-    ab1l: "Năm Bắt Đầu",
-    ab2l: "Căn Hộ Tự Vận Hành",
-    ab3l: "Người Trong Đội",
-    ab4v: "3 Ngữ",
-    teamHead: "Đội Ngũ Vận Hành",
-    teamSub: "Liên Hệ Trực Tiếp",
-    r1l: "Chủ Đầu Tư & Quản Lý Căn Hộ",
-    r1b: "Chốt hợp đồng thuê, giá dài hạn và mọi yêu cầu đặc biệt của khách doanh nghiệp.",
-    r2b: "Trả lời tin nhắn trong 2 giờ, gửi video thực tế, xếp lịch xem căn và đưa đón sân bay.",
-    r3l: "Buồng Phòng & Bảo Trì",
-    r3n: "Tổ 3 Người · Nội Bộ",
-    r3b: "Dọn phòng 2 lần / tuần, đổi ga khăn, kiểm tra thiết bị bếp và điều hoà mỗi 6 tháng.",
-    r4l: "Thủ Tục & Pháp Lý",
-    r4b: "Hợp đồng công chứng, hoá đơn VAT và đăng ký tạm trú cho khách nước ngoài.",
-    socEye: "Mạng Xã Hội & Kênh Liên Hệ",
-    socBody: "Ảnh căn hộ mới, tình trạng phòng trống và video quay dọc từng căn được đăng trước tại các kênh dưới đây.",
-
     // 8. Contact & Zalo First SOP
     ctEye: "Guest Relations · Phản Hồi Trong 2 Giờ",
     ctTitle: "Giữ Chỗ Căn Hộ Qua Zalo",
@@ -349,27 +327,6 @@ const DICT = {
     a3b: "Sky terrace overlooking Landmark 81 with curated wine cellar, reserve via reception before 18:00.",
     a3l: ["Reserve via front desk by 18:00", "Seasonal sommelier curation", "Landmark 81 & river panorama"],
 
-    abEye: "About Us · Operating Since 2019",
-    abTitle: "Gao Ji House · Owners & Direct Operators",
-    abP1: "Gao Ji House began in 2019 with a single residence in Park 1. Today our team directly manages five apartments in Vinhomes Central Park without intermediaries or third-party consignments.",
-    abP2: "Our tenants are primarily multinational corporate executives, families in transition, and monthly corporate clients.",
-    ab1l: "Founded Year",
-    ab2l: "Direct Managed Units",
-    ab3l: "Core Team",
-    ab4v: "3 Languages",
-    teamHead: "Operations Team",
-    teamSub: "Direct Contact",
-    r1l: "Owner & General Manager",
-    r1b: "Handles lease agreements, corporate terms, and bespoke executive requirements.",
-    r2b: "Replies within 2 hours, provides video walkthroughs, viewing schedules, and airport transfers.",
-    r3l: "Housekeeping & Maintenance",
-    r3n: "In-House 3-Person Team",
-    r3b: "Bi-weekly cleaning, linen replacement, and bi-annual appliance & AC servicing.",
-    r4l: "Legal & Corporate Compliance",
-    r4b: "Notarized contracts, VAT invoicing, and foreign temporary residence registration.",
-    socEye: "Social & Communication Channels",
-    socBody: "Fresh unit updates, availability status, and vertical video walkthroughs are shared across our channels.",
-
     ctEye: "Guest Relations · 2-Hour Response",
     ctTitle: "Reserve Your Residence Via Zalo",
     ctBody: "Message on Zalo for full rate sheets, genuine video walkthroughs, and real-time calendar availability. Direct owner response.",
@@ -536,27 +493,6 @@ const DICT = {
     a3b: "对望 Landmark 81 的空中露台与侍酒师甄选酒窖，需提前联系前台预约。",
     a3l: ["每日 18:00 前联系前台预约", "品酒师按季精选", "俯瞰 Landmark 81 与河景"],
 
-    abEye: "关于我们 · 始于 2019",
-    abTitle: "Gao Ji House · 房屋业主亦是直营团队",
-    abP1: "Gao Ji House 于 2019 年始于 Park 1 的一套自持公寓。时至今日，团队在 Vinhomes Central Park 自持并直营五套高品质公寓——绝无中介赚取差价，不接第三方托管。每套均由我们自行设计与维护。",
-    abP2: "客群主要为长期外派高管、跨国企业商务人士与外籍家庭。保洁与养护流程严格执行五星级酒店标准。",
-    ab1l: "创立年份",
-    ab2l: "直营公寓",
-    ab3l: "核心团队",
-    ab4v: "3 种语言",
-    teamHead: "运营管理团队",
-    teamSub: "直接沟通",
-    r1l: "投资人与运营总监",
-    r1b: "负责租赁合同敲定、企业长租优惠及专属定制需求。",
-    r2b: "2 小时内回复消息，提供真实漫游视频、预约实地看房及接机安排。",
-    r3l: "客房清洁与设施维护",
-    r3n: "3 人专属自营团队",
-    r3b: "每周 2 次客房保洁、布草换洗，每半年深度检测厨房电器与中央空调。",
-    r4l: "合规事务与法务支持",
-    r4b: "负责合同公证、正规增值税发票 (VAT) 开具及外籍人员暂住申报。",
-    socEye: "社交媒体与沟通渠道",
-    socBody: "最新房源实拍、即时房态及竖屏看房视频将优先在以下官方渠道发布。",
-
     ctEye: "客户关怀 · 2 小时内响应",
     ctTitle: "通过 Zalo / 微信 快速预订",
     ctBody: "微信或 Zalo 沟通即可获取完整价目单、真实视频与实时房态。业主团队直接对接，无客服机器人转接。",
@@ -722,27 +658,6 @@ const DICT = {
     a3t: "品酒師精選酒窖與空中露台",
     a3b: "對望 Landmark 81 的空中露台與侍酒師甄選酒窖，需提前聯繫前台預約。",
     a3l: ["每日 18:00 前聯繫前台預約", "品酒師按季精選", "俯瞰 Landmark 81 與河景"],
-
-    abEye: "關於我們 · 始於 2019",
-    abTitle: "Gao Ji House · 房屋業主亦是直營團隊",
-    abP1: "Gao Ji House 於 2019 年始於 Park 1 的一套自持公寓。時至今日，團隊在 Vinhomes Central Park 自持並直營五套高品質公寓——絕無中介賺取差價，不接第三方託管。每套均由我們自行設計與維護。",
-    abP2: "客群主要為長期外派高管、跨國企業商務人士與外籍家庭。清潔與養護流程嚴格執行五星級酒店標準。",
-    ab1l: "創立年份",
-    ab2l: "直營公寓",
-    ab3l: "核心團隊",
-    ab4v: "3 種語言",
-    teamHead: "營運管理團隊",
-    teamSub: "直接溝通",
-    r1l: "投資人與營運總監",
-    r1b: "負責租賃合同敲定、企業長租優惠及專屬定制需求。",
-    r2b: "2 小時內回覆消息，提供真實漫遊視頻、預約實地看房及接機安排。",
-    r3l: "客房清潔與設施維護",
-    r3n: "3 人專屬自營團隊",
-    r3b: "每週 2 次客房清潔、布草換洗，每半年深度檢測廚房電器與中央空調。",
-    r4l: "合規事務與法務支援",
-    r4b: "負責合同公證、正規增值稅發票 (VAT) 開具及外籍人員暫住申報。",
-    socEye: "社交媒體與溝通渠道",
-    socBody: "最新房源實拍、即時房態及豎屏看房視頻將優先在以下官方渠道發布。",
 
     ctEye: "客戶關懷 · 2 小時內響應",
     ctTitle: "透過 Zalo / 微信 快速預訂",
@@ -1817,116 +1732,7 @@ export default function LandingPage() {
       </section>
 
 
-      {/* ── 7. ABOUT US & OPERATING TEAM (Về Chúng Tôi) ─────── */}
-      <section
-        id="about"
-        className="py-[clamp(48px,5vw,80px)] px-[clamp(20px,4vw,56px)] bg-[#FBF9F5]"
-      >
-        <div className="max-w-[1240px] mx-auto">
-          <div className="grid gap-[clamp(32px,4vw,64px)] grid-cols-1 lg:grid-cols-12 items-start">
-            {/* Left Story & Stats */}
-            <div className="lg:col-span-7 grid gap-5 justify-items-start">
-              <div className="flex items-center gap-3">
-                <span className="w-8 h-px bg-[#B08D57]" />
-                <span className="font-sans text-xs font-bold uppercase tracking-[0.15em] text-[#8A6214]">
-                  {t.abEye}
-                </span>
-              </div>
-
-              <h2 className="m-0 max-w-[24ch] font-display text-[clamp(1.6rem,1.4rem+0.8vw,2.3rem)] font-medium leading-[1.25] text-[#1A1A1A]">
-                {t.abTitle}
-              </h2>
-
-              <p className="m-0 max-w-[56ch] font-sans text-[1.08rem] leading-[1.7] text-[#383838]">
-                {t.abP1}
-              </p>
-
-              <p className="m-0 max-w-[56ch] font-sans text-[1.08rem] leading-[1.7] text-[#383838]">
-                {t.abP2}
-              </p>
-
-              {/* 4 Stats Grid */}
-              <div className="mt-2 grid grid-cols-2 sm:grid-cols-4 gap-px bg-[#E8E4DB] border border-[#E8E4DB] w-full">
-                <div className="bg-[#FAF8F5] p-4 sm:p-5 grid gap-1.5">
-                  <span className="font-display text-[1.75rem] font-medium leading-none text-[#0D3B22]">2019</span>
-                  <span className="font-sans text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-[#6B6255]">{t.ab1l}</span>
-                </div>
-                <div className="bg-[#FAF8F5] p-4 sm:p-5 grid gap-1.5">
-                  <span className="font-display text-[1.75rem] font-medium leading-none text-[#0D3B22]">05</span>
-                  <span className="font-sans text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-[#6B6255]">{t.ab2l}</span>
-                </div>
-                <div className="bg-[#FAF8F5] p-4 sm:p-5 grid gap-1.5">
-                  <span className="font-display text-[1.75rem] font-medium leading-none text-[#0D3B22]">06</span>
-                  <span className="font-sans text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-[#6B6255]">{t.ab3l}</span>
-                </div>
-                <div className="bg-[#FAF8F5] p-4 sm:p-5 grid gap-1.5">
-                  <span className="font-display text-[1.75rem] font-medium leading-none text-[#0D3B22]">{t.ab4v}</span>
-                  <span className="font-sans text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-[#6B6255]">Việt · English · 中文</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Right Team Table */}
-            <div className="lg:col-span-5 border border-[#E8E4DB] bg-white shadow-xs">
-              <div className="p-4 sm:p-5 border-b border-[#E8E4DB] bg-[#FAF8F5] flex items-baseline justify-between gap-4">
-                <span className="font-sans text-xs font-bold uppercase tracking-[0.15em] text-[#0D3B22]">{t.teamHead}</span>
-                <span className="font-sans text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-[#6B6255]">{t.teamSub}</span>
-              </div>
-              <div className="p-5 border-b border-[#E8E4DB] grid gap-2">
-                <span className="font-sans text-[0.6875rem] font-bold uppercase tracking-[0.15em] text-[#8A6214]">{t.r1l}</span>
-                <span className="font-display text-[1.35rem] font-medium leading-none text-[#1A1A1A]">Lâm Lợi</span>
-                <p className="m-0 font-sans text-sm leading-[1.6] text-[#383838]">{t.r1b}</p>
-              </div>
-              <div className="p-5 border-b border-[#E8E4DB] grid gap-2">
-                <span className="font-sans text-[0.6875rem] font-bold uppercase tracking-[0.15em] text-[#8A6214]">Guest Relations · Zalo & WeChat</span>
-                <span className="font-display text-[1.35rem] font-medium leading-none text-[#1A1A1A]">Trần Mỹ Duyên</span>
-                <p className="m-0 font-sans text-sm leading-[1.6] text-[#383838]">{t.r2b}</p>
-              </div>
-              <div className="p-5 border-b border-[#E8E4DB] grid gap-2">
-                <span className="font-sans text-[0.6875rem] font-bold uppercase tracking-[0.15em] text-[#8A6214]">{t.r3l}</span>
-                <span className="font-display text-[1.35rem] font-medium leading-none text-[#1A1A1A]">{t.r3n}</span>
-                <p className="m-0 font-sans text-sm leading-[1.6] text-[#383838]">{t.r3b}</p>
-              </div>
-              <div className="p-5 grid gap-2">
-                <span className="font-sans text-[0.6875rem] font-bold uppercase tracking-[0.15em] text-[#8A6214]">{t.r4l}</span>
-                <span className="font-display text-[1.35rem] font-medium leading-none text-[#1A1A1A]">Nguyễn Thanh Hà</span>
-                <p className="m-0 font-sans text-sm leading-[1.6] text-[#383838]">{t.r4b}</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Social Channels Strip */}
-          <div className="mt-[clamp(28px,3.4vw,48px)] bg-white border border-[#E8E4DB] p-[clamp(24px,2.8vw,36px)] grid gap-[clamp(20px,2.4vw,32px)] grid-cols-1 lg:grid-cols-12 items-center shadow-xs">
-            <div className="lg:col-span-4 grid gap-2.5 justify-items-start">
-              <div className="flex items-center gap-3">
-                <span className="w-8 h-px bg-[#B08D57]" />
-                <span className="font-sans text-xs font-bold uppercase tracking-[0.15em] text-[#8A6214]">{t.socEye}</span>
-              </div>
-              <p className="m-0 font-sans text-sm leading-relaxed text-[#383838]">{t.socBody}</p>
-            </div>
-
-            <div className="lg:col-span-8 grid gap-3 grid-cols-2 sm:grid-cols-3 md:grid-cols-4">
-              <a href="https://zalo.me/0889237833" target="_blank" rel="noreferrer" className="border border-[#E8E4DB] bg-[#FAF8F5] p-3.5 grid gap-1 no-underline hover:border-[#D4AF37] hover:bg-white transition-colors">
-                <span className="flex items-center gap-3"><span className="grid size-10 shrink-0 place-items-center rounded-full bg-[#0878F9] text-white"><SocialLogo network="zalo" /></span><span className="grid gap-1"><span className="font-sans text-xs font-bold uppercase tracking-[0.15em] text-[#0D3B22]">Zalo</span><span className="font-sans text-xs text-[#6B6255]">088 923 7833</span></span></span>
-              </a>
-              <a href="https://www.tiktok.com/@gaojihouse" target="_blank" rel="noreferrer" className="border border-[#E8E4DB] bg-[#FAF8F5] p-3.5 grid gap-1 no-underline hover:border-[#D4AF37] hover:bg-white transition-colors">
-                <span className="flex items-center gap-3"><span className="relative size-10 shrink-0 overflow-hidden rounded-full border border-[#D8CFC2] bg-white"><Image src="/assets/logo-compact.png" alt="Avatar Gao Ji House trên TikTok" fill sizes="40px" className="object-cover" /></span><span className="grid gap-1"><span className="inline-flex items-center gap-1.5 font-sans text-xs font-bold uppercase tracking-[0.15em] text-[#0D3B22]">TikTok <SocialLogo network="tiktok" /></span><span className="font-sans text-xs text-[#6B6255]">@gaojihouse</span></span></span>
-              </a>
-              <a href="weixin://dl/chat?HZM81MS" className="border border-[#E8E4DB] bg-[#FAF8F5] p-3.5 grid gap-1 no-underline hover:border-[#D4AF37] hover:bg-white transition-colors">
-                <span className="flex items-center gap-3"><span className="grid size-10 shrink-0 place-items-center rounded-full bg-[#07C160] text-white"><SocialLogo network="wechat" /></span><span className="grid gap-1"><span className="font-sans text-xs font-bold uppercase tracking-[0.15em] text-[#0D3B22]">WeChat</span><span className="font-sans text-xs text-[#6B6255]">HZM81MS</span></span></span>
-              </a>
-              <a href="https://t.me/HZM81MS" target="_blank" rel="noreferrer" className="border border-[#E8E4DB] bg-[#FAF8F5] p-3.5 grid gap-1 no-underline hover:border-[#D4AF37] hover:bg-white transition-colors">
-                <span className="flex items-center gap-3"><span className="grid size-10 shrink-0 place-items-center rounded-full bg-[#229ED9] text-white"><SocialLogo network="telegram" /></span><span className="grid gap-1"><span className="font-sans text-xs font-bold uppercase tracking-[0.15em] text-[#0D3B22]">Telegram</span><span className="font-sans text-xs text-[#6B6255]">@HZM81MS</span></span></span>
-              </a>
-              <a href="mailto:stay@gaojihouse.vn" className="border border-[#E8E4DB] bg-[#FAF8F5] p-3.5 grid gap-1 no-underline hover:border-[#D4AF37] hover:bg-white transition-colors col-span-2 sm:col-span-1">
-                <span className="flex items-center gap-3"><span className="grid size-10 shrink-0 place-items-center rounded-full bg-[#0D3B22] text-white"><SocialLogo network="email" /></span><span className="min-w-0 grid gap-1"><span className="font-sans text-xs font-bold uppercase tracking-[0.15em] text-[#0D3B22]">Email</span><span className="truncate font-sans text-xs text-[#6B6255]">stay@gaojihouse.vn</span></span></span>
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── 9.5. FAQ SECTION (NEW) ── */}
+      {/* ── 7. FAQ SECTION ── */}
       <section className="bg-[#FAF8F5] py-[clamp(48px,5vw,80px)]">
         <div className="max-w-[900px] mx-auto px-[clamp(20px,4vw,56px)]">
           <div className="text-center mb-12">

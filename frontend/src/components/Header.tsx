@@ -17,7 +17,6 @@ const HEADER_LABELS: Record<
     navUnits: string;
     navLoc: string;
     navAmen: string;
-    navAbout: string;
     btnBook: string;
     navCall: string;
     authOpen: string;
@@ -58,7 +57,6 @@ const HEADER_LABELS: Record<
     navUnits: "Căn Hộ & Giá Thuê",
     navLoc: "Vị Trí",
     navAmen: "Tiện Ích",
-    navAbout: "Về Chúng Tôi",
     btnBook: "Đặt Phòng Ngay",
     navCall: "Gọi 088 923 7833",
     authOpen: "Đăng Nhập",
@@ -98,7 +96,6 @@ const HEADER_LABELS: Record<
     navUnits: "Apartments & Rates",
     navLoc: "Location",
     navAmen: "Amenities",
-    navAbout: "About Us",
     btnBook: "Book Now",
     navCall: "Call 088 923 7833",
     authOpen: "Sign In",
@@ -138,7 +135,6 @@ const HEADER_LABELS: Record<
     navUnits: "公寓与房价",
     navLoc: "地理位置",
     navAmen: "配套设施",
-    navAbout: "关于我们",
     btnBook: "立即预订",
     navCall: "致电 088 923 7833",
     authOpen: "登录",
@@ -178,7 +174,6 @@ const HEADER_LABELS: Record<
     navUnits: "公寓與房價",
     navLoc: "地理位置",
     navAmen: "配套設施",
-    navAbout: "關於我們",
     btnBook: "立即預訂",
     navCall: "致電 088 923 7833",
     authOpen: "登入",
@@ -252,7 +247,6 @@ export function Header() {
     { label: t.navUnits, href: "/#units" },
     { label: t.navLoc, href: "/#location" },
     { label: t.navAmen, href: "/#amenities" },
-    { label: t.navAbout, href: "/#about" },
   ];
 
   const handleAuthSubmit = (e: React.FormEvent) => {

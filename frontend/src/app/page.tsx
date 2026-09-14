@@ -1088,37 +1088,6 @@ export default function LandingPage() {
       </section>
 
 
-      {/* ── 2. TIKTOK VIDEO EXPERIENCES ────────────────────── */}
-      <section className="border-y border-[#E8E4DB] bg-[#F4EFE8] px-[clamp(20px,4vw,56px)] py-[clamp(44px,5vw,72px)]">
-        <div className="mx-auto grid max-w-[1240px] items-start gap-8 lg:grid-cols-[minmax(280px,.72fr)_minmax(0,1.28fr)] lg:gap-14">
-          <div className="grid justify-items-start gap-5 lg:sticky lg:top-24">
-            <SectionHeader eyebrow={t.videoEye} title={t.videoTitle} />
-            <p className="max-w-[48ch] font-sans text-[0.95rem] leading-relaxed text-[#514A42]">{t.videoBody}</p>
-            <a href="https://www.tiktok.com/@gaojihouse" target="_blank" rel="noreferrer" className="inline-flex min-h-11 items-center gap-2 bg-[#1A1A1A] px-5 font-sans text-xs font-bold uppercase tracking-[0.13em] text-white transition-colors hover:bg-[#B85D36]">
-              <SocialLogo network="tiktok" /> {t.videoCta} <Icon name="external-link" size={14} />
-            </a>
-          </div>
-
-          <div className="min-w-0 border border-[#DDD5C7] bg-white p-3 shadow-[0_12px_36px_rgba(52,43,34,0.08)] sm:p-5">
-            <blockquote
-              className="tiktok-embed m-auto"
-              cite="https://www.tiktok.com/@gaojihouse"
-              data-unique-id="gaojihouse"
-              data-embed-type="creator"
-              style={{ maxWidth: 780, minWidth: 288 }}
-            >
-              <section className="grid min-h-56 place-items-center bg-[#FAF8F5] p-8 text-center">
-                <a href="https://www.tiktok.com/@gaojihouse" target="_blank" rel="noreferrer" className="grid justify-items-center gap-3 text-[#1A1A1A]">
-                  <span className="relative size-16 overflow-hidden rounded-full border border-[#D8CFC2] bg-white"><Image src="/assets/logo-compact.png" alt="Gao Ji House trên TikTok" fill sizes="64px" className="object-cover" /></span>
-                  <strong className="font-sans text-sm uppercase tracking-[0.12em]">@gaojihouse</strong>
-                </a>
-              </section>
-            </blockquote>
-          </div>
-        </div>
-        <Script src="https://www.tiktok.com/embed.js" strategy="lazyOnload" />
-      </section>
-
       {/* ── 4. RESIDENCE APARTMENT COLLECTION (Danh Sách Căn Hộ) */}
       <section
         id="units"
@@ -1897,6 +1866,37 @@ export default function LandingPage() {
             </div>
           </div>
         </div>
+      </section>
+
+      {/* ── FINAL TIKTOK VIDEO EXPERIENCES ────────────────────── */}
+      <section className="border-y border-[#E8E4DB] bg-[#F4EFE8] px-[clamp(20px,4vw,56px)] py-[clamp(44px,5vw,72px)]">
+        <div className="mx-auto grid max-w-[1240px] items-start gap-8 lg:grid-cols-[minmax(280px,.72fr)_minmax(0,1.28fr)] lg:gap-14">
+          <div className="grid justify-items-start gap-5 lg:sticky lg:top-24">
+            <SectionHeader eyebrow={t.videoEye} title={t.videoTitle} />
+            <p className="max-w-[48ch] font-sans text-[0.95rem] leading-relaxed text-[#514A42]">{t.videoBody}</p>
+            <a href="https://www.tiktok.com/@gaojihouse" target="_blank" rel="noreferrer" className="inline-flex min-h-11 items-center gap-2 bg-[#1A1A1A] px-5 font-sans text-xs font-bold uppercase tracking-[0.13em] text-white transition-colors hover:bg-[#B85D36]">
+              <SocialLogo network="tiktok" /> {t.videoCta} <Icon name="external-link" size={14} />
+            </a>
+          </div>
+
+          <div className="min-w-0 border border-[#DDD5C7] bg-white p-3 shadow-[0_12px_36px_rgba(52,43,34,0.08)] sm:p-5">
+            <blockquote
+              className="tiktok-embed m-auto"
+              cite="https://www.tiktok.com/@gaojihouse"
+              data-unique-id="gaojihouse"
+              data-embed-type="creator"
+              style={{ maxWidth: 780, minWidth: 288 }}
+            >
+              <section className="grid min-h-56 place-items-center bg-[#FAF8F5] p-8 text-center">
+                <a href="https://www.tiktok.com/@gaojihouse" target="_blank" rel="noreferrer" className="grid justify-items-center gap-3 text-[#1A1A1A]">
+                  <span className="relative size-16 overflow-hidden rounded-full border border-[#D8CFC2] bg-white"><Image src="/assets/logo-compact.png" alt="Gao Ji House trên TikTok" fill sizes="64px" className="object-cover" /></span>
+                  <strong className="font-sans text-sm uppercase tracking-[0.12em]">@gaojihouse</strong>
+                </a>
+              </section>
+            </blockquote>
+          </div>
+        </div>
+        <Script src="https://www.tiktok.com/embed.js" strategy="lazyOnload" />
       </section>
 
       {/* ── Fixed Contact Rail ── */}

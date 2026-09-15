@@ -176,6 +176,20 @@ export function HouseRulesFaq() {
   const dialogRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const openFromHeader = () => setOpen(true);
+    const openFromHash = () => {
+      if (window.location.hash === "#faq") setOpen(true);
+    };
+    window.addEventListener("gaoji:open-faq", openFromHeader);
+    window.addEventListener("hashchange", openFromHash);
+    openFromHash();
+    return () => {
+      window.removeEventListener("gaoji:open-faq", openFromHeader);
+      window.removeEventListener("hashchange", openFromHash);
+    };
+  }, []);
+
+  useEffect(() => {
     if (!open) return;
     const trigger = triggerRef.current;
     const previousOverflow = document.body.style.overflow;
@@ -207,7 +221,7 @@ export function HouseRulesFaq() {
   }, [open]);
 
   return (
-    <section className="border-y border-[#E8E4DB] bg-[#FAF8F5] px-[clamp(20px,4vw,56px)] py-[clamp(48px,5vw,80px)]">
+    <section id="faq" className="scroll-mt-20 border-y border-[#E8E4DB] bg-[#FAF8F5] px-[clamp(20px,4vw,56px)] py-[clamp(48px,5vw,80px)]">
       <div className="mx-auto grid max-w-[900px] justify-items-center gap-5 text-center">
         <span className="font-sans text-xs font-bold uppercase tracking-[0.15em] text-[#8A6214]">{copy.eyebrow}</span>
         <h2 className="max-w-[24ch] font-display text-[clamp(1.75rem,2vw+1rem,2.5rem)] font-medium text-[#0D3B22]">{copy.title}</h2>

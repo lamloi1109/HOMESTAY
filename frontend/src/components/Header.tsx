@@ -17,6 +17,7 @@ const HEADER_LABELS: Record<
     navUnits: string;
     navLoc: string;
     navAmen: string;
+    navFaq: string;
     btnBook: string;
     navCall: string;
     authOpen: string;
@@ -57,6 +58,7 @@ const HEADER_LABELS: Record<
     navUnits: "Căn Hộ & Giá Thuê",
     navLoc: "Vị Trí",
     navAmen: "Tiện Ích",
+    navFaq: "FAQ",
     btnBook: "Đặt Phòng Ngay",
     navCall: "Gọi 088 923 7833",
     authOpen: "Đăng Nhập",
@@ -96,6 +98,7 @@ const HEADER_LABELS: Record<
     navUnits: "Apartments & Rates",
     navLoc: "Location",
     navAmen: "Amenities",
+    navFaq: "FAQ",
     btnBook: "Book Now",
     navCall: "Call 088 923 7833",
     authOpen: "Sign In",
@@ -135,6 +138,7 @@ const HEADER_LABELS: Record<
     navUnits: "公寓与房价",
     navLoc: "地理位置",
     navAmen: "配套设施",
+    navFaq: "常见问题",
     btnBook: "立即预订",
     navCall: "致电 088 923 7833",
     authOpen: "登录",
@@ -174,6 +178,7 @@ const HEADER_LABELS: Record<
     navUnits: "公寓與房價",
     navLoc: "地理位置",
     navAmen: "配套設施",
+    navFaq: "常見問題",
     btnBook: "立即預訂",
     navCall: "致電 088 923 7833",
     authOpen: "登入",
@@ -247,6 +252,7 @@ export function Header() {
     { label: t.navUnits, href: "/#units" },
     { label: t.navLoc, href: "/#location" },
     { label: t.navAmen, href: "/#amenities" },
+    { label: t.navFaq, href: "/#faq" },
   ];
 
   const handleAuthSubmit = (e: React.FormEvent) => {
@@ -300,6 +306,12 @@ export function Header() {
               <a
                 key={link.href}
                 href={link.href}
+                onClick={(event) => {
+                  if (link.href === "/#faq" && window.location.pathname === "/") {
+                    event.preventDefault();
+                    window.dispatchEvent(new Event("gaoji:open-faq"));
+                  }
+                }}
                 className="font-sans text-[0.8125rem] font-semibold tracking-[0.08em] uppercase text-[#1A1A1A] hover:text-[#9C721D] transition-colors py-2 border-b-2 border-transparent hover:border-[#D4AF37] no-underline"
               >
                 {link.label}
@@ -349,7 +361,13 @@ export function Header() {
               <a
                 key={link.href}
                 href={link.href}
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={(event) => {
+                  setMobileMenuOpen(false);
+                  if (link.href === "/#faq" && window.location.pathname === "/") {
+                    event.preventDefault();
+                    window.dispatchEvent(new Event("gaoji:open-faq"));
+                  }
+                }}
                 className="px-6 py-3.5 font-sans text-[0.875rem] font-semibold tracking-[0.08em] uppercase text-[#1A1A1A] hover:bg-white no-underline"
               >
                 {link.label}

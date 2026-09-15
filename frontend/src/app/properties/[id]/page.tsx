@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -10,11 +9,14 @@ import {
   ContactRail,
   Icon,
   InquiryModal,
+  MosaicGallery,
+  PropertyLocationMap,
   RoomSpecs,
   Tag,
 } from "@/components/gaoji";
 import {
   FALLBACK_GAOJI_UNITS,
+  assetUrl,
   fetchProperties,
   fetchPropertyDetail,
   type PropertyDetail,
@@ -28,7 +30,6 @@ export default function PropertyDetailPage() {
 
   const [unit, setUnit] = useState<PropertyDetail | null>(null);
   const [allUnits, setAllUnits] = useState<PropertyDetail[]>([]);
-  const [activePhoto, setActivePhoto] = useState<string>("");
   const [inquiryOpen, setInquiryOpen] = useState(false);
 
   // Booking widget form state
@@ -47,11 +48,6 @@ export default function PropertyDetailPage() {
       fetchPropertyDetail(idOrSlug)
         .then((data) => {
           setUnit(data);
-          if (data.images && data.images.length > 0) {
-            setActivePhoto(data.images[0].url);
-          } else if (data.cover_image) {
-            setActivePhoto(data.cover_image);
-          }
         })
         .catch(() => {
           // Find fallback unit
@@ -60,11 +56,6 @@ export default function PropertyDetailPage() {
               (u) => u.id === idOrSlug || u.slug === idOrSlug || u.unit_code === idOrSlug
             ) || FALLBACK_GAOJI_UNITS[0];
           setUnit(fallback);
-          if (fallback.images && fallback.images.length > 0) {
-            setActivePhoto(fallback.images[0].url);
-          } else if (fallback.cover_image) {
-            setActivePhoto(fallback.cover_image);
-          }
         });
     }
   }, [idOrSlug]);
@@ -86,16 +77,31 @@ export default function PropertyDetailPage() {
 
   const displayUnits = allUnits.length > 0 ? allUnits : FALLBACK_GAOJI_UNITS;
 
-  const imagesList =
-    unit.images && unit.images.length > 0
-      ? unit.images.map((img) => img.url)
-      : [
-          unit.cover_image || "/assets/photos/living-open-plan.jpg",
-          "/assets/photos/master-bedroom.jpg",
-          "/assets/photos/kitchen-island.jpg",
-          "/assets/photos/bathroom-vanity.jpg",
-          "/assets/photos/landmark-81-balcony.jpg",
-        ];
+  const galleryFallbacks = [
+    {
+      id: `${unit.id}-living-room`,
+      src: unit.cover_image || "/assets/photos/living-open-plan.jpg",
+      alt: `Phòng khách ngập ánh sáng của ${unit.name}`,
+      width: 1600,
+      height: 1067,
+      category: "living-room" as const,
+      caption: "Không gian sinh hoạt chung của căn hộ",
+    },
+    { id: `${unit.id}-kitchen`, src: "/assets/photos/kitchen-island.jpg", alt: "Khu bếp đảo hiện đại", width: 1600, height: 1067, category: "kitchen" as const },
+    { id: `${unit.id}-bedroom`, src: "/assets/photos/master-bedroom.jpg", alt: "Phòng ngủ chính với giường lớn", width: 1600, height: 1067, category: "bedroom" as const },
+    { id: `${unit.id}-bathroom`, src: "/assets/photos/bathroom-vanity.jpg", alt: "Phòng tắm của căn hộ", width: 1067, height: 1600, category: "bathroom" as const },
+    { id: `${unit.id}-balcony`, src: "/assets/photos/landmark-81-balcony.jpg", alt: "Không gian ban công", width: 1600, height: 900, category: "balcony" as const },
+  ];
+  // API hiện chưa trả kích thước/category; giữ ảnh ở nhóm "Khác" thay vì suy đoán từ tên file.
+  const galleryImages = unit.images.length > 0
+    ? unit.images.map((image) => ({
+        id: image.id,
+        src: assetUrl(image.url),
+        alt: image.alt || unit.name,
+        width: 1600,
+        height: 1200,
+      }))
+    : galleryFallbacks;
 
   return (
     <div className="bg-[var(--canvas,#F9F7F2)] min-h-screen text-[var(--text-primary,#1A1A1A)] pb-24">
@@ -186,44 +192,7 @@ export default function PropertyDetailPage() {
 
       {/* ── 3. GALLERY SHOWCASE GRID ────────────────────────── */}
       <section className="max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-12 mt-6">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
-          {/* Main Large Photo */}
-          <div className="lg:col-span-8 relative aspect-[16/10] overflow-hidden bg-[var(--surface-sunken)] border border-[var(--hairline)]">
-            <Image
-              src={activePhoto || imagesList[0]}
-              alt={unit.name}
-              fill
-              priority
-              className="object-cover transition-transform duration-500"
-            />
-            <span className="absolute bottom-4 left-4 px-3 py-1.5 bg-black/70 backdrop-blur-xs text-[var(--paper-150)] font-sans text-xs font-semibold uppercase tracking-wider">
-              HÌNH ẢNH THỰC TẾ CĂN HỘ
-            </span>
-          </div>
-
-          {/* Thumbnail Grid */}
-          <div className="lg:col-span-4 grid grid-cols-2 gap-4">
-            {imagesList.slice(0, 4).map((img, idx) => (
-              <button
-                key={img + idx}
-                type="button"
-                onClick={() => setActivePhoto(img)}
-                className={`relative aspect-[4/3] overflow-hidden bg-[var(--surface-sunken)] border cursor-pointer transition-all ${
-                  activePhoto === img
-                    ? "border-[var(--gold-700)] ring-2 ring-[var(--gold-500)]"
-                    : "border-[var(--hairline)] hover:opacity-90"
-                }`}
-              >
-                <Image
-                  src={img}
-                  alt={`Góc chụp ${idx + 1}`}
-                  fill
-                  className="object-cover"
-                />
-              </button>
-            ))}
-          </div>
-        </div>
+        <MosaicGallery images={galleryImages} propertyName={unit.name} />
       </section>
 
       {/* ── 4. TWO-COLUMN SPLIT: DETAILS & STICKY BOOKING CARD ─ */}
@@ -535,6 +504,13 @@ export default function PropertyDetailPage() {
           </div>
         </div>
       </section>
+
+      <PropertyLocationMap
+        propertyName={unit.name}
+        tower={unit.tower}
+        address={unit.address}
+        city={unit.city}
+      />
 
       <ContactRail onInquire={() => setInquiryOpen(true)} />
 

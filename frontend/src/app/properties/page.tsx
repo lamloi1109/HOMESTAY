@@ -85,7 +85,6 @@ export default function PropertiesPage() {
             <UnitCard
               key={unit.id}
               unit={unit}
-              onInquire={(code) => handleOpenInquiry(code)}
             />
           ))}
         </div>

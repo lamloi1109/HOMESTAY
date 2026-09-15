@@ -1,10 +1,9 @@
-@import url("https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Great+Vibes&family=Inter:wght@300;400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&display=swap");
 @import "tailwindcss";
 
 /* Gaoji House design system — token nguồn từ claude.ai/design.
    Thứ tự nhập đúng như styles.css của design system: màu → chữ → khoảng cách
    → bo góc → đổ bóng → hiệu ứng → base,
-   next-adapter trỏ token font sang next/font nên ở sau typography. */
+   next-adapter thống nhất mọi token font về font mặc định của website. */
 @import "../styles/gaoji/colors.css";
 @import "../styles/gaoji/typography.css";
 @import "../styles/gaoji/spacing.css";
@@ -39,13 +38,14 @@
   --color-wechat: var(--channel-wechat);
   --color-whatsapp: var(--channel-whatsapp);
 
-  --font-sans: var(--font-inter), var(--font-barlow-condensed), sans-serif;
-  --font-serif: var(--font-cormorant-garamond), var(--font-eb-garamond), serif;
-  --font-display: var(--font-cormorant-garamond), var(--font-eb-garamond), serif;
-  --font-italic: var(--font-newsreader), serif;
+  --font-sans: var(--font-default);
+  --font-serif: var(--font-default);
+  --font-display: var(--font-default);
+  --font-italic: var(--font-default);
 }
 
 /* ── Global Styles & Sliders verbatim from Landing Page.dc.html ── */
+@layer base {
 body {
   margin: 0;
   background: var(--canvas, #F9F7F2);
@@ -78,6 +78,7 @@ a:hover {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
   }
+}
 }
 
 /* Dual Range Slider styling from Landing Page.dc.html */

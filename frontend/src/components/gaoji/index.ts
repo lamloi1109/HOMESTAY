@@ -12,6 +12,7 @@ export * from "./HouseRulesFaq";
 export * from "./InquiryModal";
 export * from "./Input";
 export * from "./Logo";
+export * from "./MosaicGallery";
 export * from "./PhotoPlate";
 export * from "./PropertyCard";
 export * from "./RatingStars";

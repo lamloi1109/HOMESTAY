@@ -8,6 +8,7 @@ export * from "./FeatureCard";
 export * from "./FilterTabs";
 export * from "./Icon";
 export * from "./IconButton";
+export * from "./HouseRulesFaq";
 export * from "./InquiryModal";
 export * from "./Input";
 export * from "./Logo";

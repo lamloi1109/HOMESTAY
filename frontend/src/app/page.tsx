@@ -5,13 +5,12 @@ import Script from "next/script";
 import React, { useEffect, useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import {
-  Accordion,
-  AccordionItem,
   Button,
   ContactRail,
   FeatureCard,
   FilterTabs,
   Icon,
+  HouseRulesFaq,
   InquiryModal,
   SectionHeader,
   UnitCard,
@@ -175,20 +174,6 @@ const DICT = {
     videoBody: "Xem video quay thực tế về không gian, nội thất và trải nghiệm lưu trú được đăng trực tiếp trên kênh TikTok chính thức của Gao Ji House.",
     videoCta: "Xem kênh TikTok",
 
-    // 12. FAQ
-    faqEye: "Câu hỏi thường gặp",
-    faqTitle: "Thông tin cần biết trước khi đặt phòng",
-    faq1q: "Giờ nhận và trả phòng là mấy giờ?",
-    faq1a: "Giờ nhận phòng tiêu chuẩn là từ 14:00, và trả phòng trước 12:00 trưa. Chúng tôi hỗ trợ nhận phòng sớm hoặc trả trễ tuỳ thuộc vào tình trạng phòng trống.",
-    faq2q: "Giá thuê đã bao gồm những chi phí gì?",
-    faq2a: "Giá đã bao gồm phí quản lý toà nhà, internet tốc độ cao, và dịch vụ dọn dẹp buồng phòng 2 lần/tuần. Chưa bao gồm điện nước sinh hoạt (đối với khách thuê tháng).",
-    faq3q: "Có chỗ đậu xe ô tô không?",
-    faq3a: "Có, Vinhomes Central Park có hệ thống hầm đậu xe rộng rãi. Phí giữ xe theo quy định của ban quản lý toà nhà.",
-    faq4q: "Có được mang theo thú cưng không?",
-    faq4a: "Rất tiếc, để đảm bảo vệ sinh và tránh dị ứng cho các khách lưu trú sau, chúng tôi không hỗ trợ mang theo thú cưng.",
-    faq5q: "Chính sách hoàn huỷ như thế nào?",
-    faq5a: "Miễn phí huỷ trước 7 ngày đối với khách thuê ngắn hạn. Tiền cọc sẽ được hoàn trả đầy đủ vào tài khoản của bạn.",
-
     // 13. Final CTA
     ctaTitle: "Sẵn sàng trải nghiệm không gian sống đẳng cấp tại Vinhomes Central Park?",
     ctaBody: "Giữ căn hộ của bạn ngay hôm nay.",
@@ -343,19 +328,6 @@ const DICT = {
     videoBody: "Explore real walkthroughs of the spaces, interiors, and guest experience published on Gao Ji House’s official TikTok channel.",
     videoCta: "View TikTok channel",
 
-    faqEye: "Frequently Asked Questions",
-    faqTitle: "Good to Know Before You Book",
-    faq1q: "What are the check-in and check-out times?",
-    faq1a: "Standard check-in is from 14:00, and check-out is before 12:00. We support early check-in or late check-out subject to availability.",
-    faq2q: "What is included in the rent?",
-    faq2a: "Rent includes building management fees, high-speed internet, and bi-weekly housekeeping. Utility bills (electricity/water) are excluded for monthly stays.",
-    faq3q: "Is there parking available?",
-    faq3a: "Yes, Vinhomes Central Park has spacious underground parking. Fees apply according to building management regulations.",
-    faq4q: "Are pets allowed?",
-    faq4a: "Unfortunately, to maintain hygiene and prevent allergies for future guests, we do not accommodate pets.",
-    faq5q: "What is the cancellation policy?",
-    faq5a: "Free cancellation up to 7 days before arrival for short-term stays. Your deposit will be fully refunded.",
-
     ctaTitle: "Ready to experience premium living at Vinhomes Central Park?",
     ctaBody: "Reserve your apartment today.",
     ctaBtn: "Check Availability & Inquire",
@@ -509,19 +481,6 @@ const DICT = {
     videoBody: "通过 Gao Ji House 官方 TikTok 频道，查看公寓空间、室内设施与入住体验的真实视频。",
     videoCta: "查看 TikTok 频道",
 
-    faqEye: "常见问题",
-    faqTitle: "预订前须知",
-    faq1q: "入住和退房时间是几点？",
-    faq1a: "标准入住时间为 14:00 起，退房时间为 12:00 前。视房态情况，我们可提供提前入住或延迟退房服务。",
-    faq2q: "租金包含哪些费用？",
-    faq2a: "租金包含物业管理费、高速宽带以及每周两次的客房保洁。按月租赁不含水电费。",
-    faq3q: "有停车位吗？",
-    faq3a: "有的，Vinhomes Central Park 拥有宽敞的地下停车场。收费标准按物业管理规定执行。",
-    faq4q: "可以携带宠物吗？",
-    faq4a: "很遗憾，为了保持卫生并避免影响对宠物过敏的后续宾客，我们不允许携带宠物。",
-    faq5q: "取消政策是什么？",
-    faq5a: "短期租赁在入住前 7 天可免费取消，您的押金将全额退还。",
-
     ctaTitle: "准备好体验 Vinhomes Central Park 的高端生活了吗？",
     ctaBody: "立即预留您的公寓。",
     ctaBtn: "查看空房 & 询价",
@@ -674,19 +633,6 @@ const DICT = {
     videoTitle: "透過 TikTok 體驗公寓",
     videoBody: "透過 Gao Ji House 官方 TikTok 頻道，觀看公寓空間、室內設施與入住體驗的真實影片。",
     videoCta: "查看 TikTok 頻道",
-
-    faqEye: "常見問題",
-    faqTitle: "預訂前須知",
-    faq1q: "入住和退房時間是幾點？",
-    faq1a: "標準入住時間為 14:00 起，退房時間為 12:00 前。視房態情況，我們可提供提前入住或延遲退房服務。",
-    faq2q: "租金包含哪些費用？",
-    faq2a: "租金包含物業管理費、高速寬頻以及每週兩次的客房清潔。按月租賃不含水電費。",
-    faq3q: "有停車位嗎？",
-    faq3a: "有的，Vinhomes Central Park 擁有寬敞的地下停車場。收費標準按物業管理規定執行。",
-    faq4q: "可以攜帶寵物嗎？",
-    faq4a: "很遺憾，為了保持衛生並避免影響對寵物過敏的後續賓客，我們不允許攜帶寵物。",
-    faq5q: "取消政策是什麼？",
-    faq5a: "短期租賃在入住前 7 天可免費取消，您的押金將全額退還。",
 
     ctaTitle: "準備好體驗 Vinhomes Central Park 的高端生活了嗎？",
     ctaBody: "立即預留您的公寓。",
@@ -1732,37 +1678,7 @@ export default function LandingPage() {
         <Script src="https://www.tiktok.com/embed.js" strategy="lazyOnload" />
       </section>
 
-      {/* ── 8. FAQ SECTION ── */}
-      <section className="bg-[#FAF8F5] py-[clamp(48px,5vw,80px)]">
-        <div className="max-w-[900px] mx-auto px-[clamp(20px,4vw,56px)]">
-          <div className="text-center mb-12">
-            <span className="font-sans text-xs font-bold uppercase tracking-[0.15em] text-[#8A6214] block mb-3">
-              {t.faqEye}
-            </span>
-            <h2 className="font-display text-[clamp(1.75rem,2vw+1rem,2.5rem)] font-medium text-[#0D3B22]">
-              {t.faqTitle}
-            </h2>
-          </div>
-          <Accordion>
-            <AccordionItem title={t.faq1q} defaultOpen={true}>
-              {t.faq1a}
-            </AccordionItem>
-            <AccordionItem title={t.faq2q}>
-              {t.faq2a}
-            </AccordionItem>
-            <AccordionItem title={t.faq3q}>
-              {t.faq3a}
-            </AccordionItem>
-            <AccordionItem title={t.faq4q}>
-              {t.faq4a}
-            </AccordionItem>
-            <AccordionItem title={t.faq5q}>
-              {t.faq5a}
-            </AccordionItem>
-          </Accordion>
-        </div>
-      </section>
-
+      <HouseRulesFaq />
 
       {/* ── 9.6. FINAL CTA (NEW) ── */}
       <section className="bg-[#0D3B22] py-[clamp(48px,5vw,80px)] relative overflow-hidden">

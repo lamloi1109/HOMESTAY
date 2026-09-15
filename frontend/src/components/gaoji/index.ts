@@ -1,4 +1,5 @@
 export * from "./Accordion";
+export * from "./AllPhotosGallery";
 export * from "./Badge";
 export * from "./Button";
 export * from "./Card";
@@ -13,6 +14,7 @@ export * from "./InquiryModal";
 export * from "./Input";
 export * from "./Logo";
 export * from "./MosaicGallery";
+export * from "./galleryTypes";
 export * from "./PhotoPlate";
 export * from "./PropertyCard";
 export * from "./RatingStars";

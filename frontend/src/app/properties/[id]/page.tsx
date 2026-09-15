@@ -78,21 +78,29 @@ export default function PropertyDetailPage() {
 
   const galleryFallbacks = [
     {
+      id: `${unit.id}-living-room`,
       src: unit.cover_image || "/assets/photos/living-open-plan.jpg",
       alt: `Phòng khách ngập ánh sáng của ${unit.name}`,
+      width: 1600,
+      height: 1067,
+      category: "living-room" as const,
+      caption: "Không gian sinh hoạt chung của căn hộ",
     },
-    { src: "/assets/photos/kitchen-island.jpg", alt: "Khu bếp đảo hiện đại và đầy đủ tiện nghi" },
-    { src: "/assets/photos/master-bedroom.jpg", alt: "Phòng ngủ chính với giường lớn" },
-    { src: "/assets/photos/bathroom-vanity.jpg", alt: "Phòng tắm sáng và sạch sẽ" },
-    { src: "/assets/photos/landmark-81-balcony.jpg", alt: "Tầm nhìn Landmark 81 từ ban công" },
+    { id: `${unit.id}-kitchen`, src: "/assets/photos/kitchen-island.jpg", alt: "Khu bếp đảo hiện đại", width: 1600, height: 1067, category: "kitchen" as const },
+    { id: `${unit.id}-bedroom`, src: "/assets/photos/master-bedroom.jpg", alt: "Phòng ngủ chính với giường lớn", width: 1600, height: 1067, category: "bedroom" as const },
+    { id: `${unit.id}-bathroom`, src: "/assets/photos/bathroom-vanity.jpg", alt: "Phòng tắm của căn hộ", width: 1067, height: 1600, category: "bathroom" as const },
+    { id: `${unit.id}-balcony`, src: "/assets/photos/landmark-81-balcony.jpg", alt: "Không gian ban công", width: 1600, height: 900, category: "balcony" as const },
   ];
-  const galleryImages = [
-    ...unit.images.map((image) => ({ src: assetUrl(image.url), alt: image.alt || unit.name })),
-    ...galleryFallbacks,
-  ].filter(
-    (image, index, collection) =>
-      collection.findIndex((candidate) => candidate.src === image.src) === index,
-  );
+  // API hiện chưa trả kích thước/category; giữ ảnh ở nhóm "Khác" thay vì suy đoán từ tên file.
+  const galleryImages = unit.images.length > 0
+    ? unit.images.map((image) => ({
+        id: image.id,
+        src: assetUrl(image.url),
+        alt: image.alt || unit.name,
+        width: 1600,
+        height: 1200,
+      }))
+    : galleryFallbacks;
 
   return (
     <div className="bg-[var(--canvas,#F9F7F2)] min-h-screen text-[var(--text-primary,#1A1A1A)] pb-24">

@@ -186,7 +186,6 @@ export default function SearchPage() {
             <UnitCard
               key={unit.id}
               unit={unit}
-              onInquire={(code) => handleOpenInquiry(code)}
             />
           ))}
         </div>

@@ -1,5 +1,7 @@
 /* Gaoji House — Base element styles & global utilities
-   Minimal reset + brand defaults. Loaded last so it can reference every token. */
+   Minimal reset + brand defaults. Keep these rules in Tailwind's base layer so
+   component utilities (bg-*, text-*, etc.) always win the cascade. */
+@layer base {
 *, *::before, *::after { box-sizing: border-box }
 html { -webkit-text-size-adjust: 100%; text-size-adjust: 100% }
 body {
@@ -41,4 +43,5 @@ a:hover { color: var(--clay-700) }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important }
+}
 }

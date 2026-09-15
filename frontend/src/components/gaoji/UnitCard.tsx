@@ -3,9 +3,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
-import { Badge } from "./Badge";
-import { Button } from "./Button";
+import { Icon } from "./Icon";
 import { RoomSpecs } from "./RoomSpecs";
+
+export type UnitRate =
+  | { type: "fixed"; amount: number | string }
+  | { type: "range"; min: number | string; max: number | string }
+  | { type: "negotiable"; label?: string };
 
 export interface UnitCardItem {
   id: string;
@@ -19,6 +23,9 @@ export interface UnitCardItem {
   guests?: number | null;
   price_monthly?: number | string | null;
   price_nightly?: number | string | null;
+  rate?: UnitRate | null;
+  monthly_rate?: UnitRate | null;
+  nightly_rate?: UnitRate | null;
   status?: string | null;
   cover_image?: string | null;
   view_type?: string | null;
@@ -28,13 +35,12 @@ export interface UnitCardItem {
 
 export interface UnitCardProps {
   unit: UnitCardItem;
-  onInquire?: (unitCode: string) => void;
   onView?: (unitCode: string) => void;
   labels?: {
-    view?: string;
-    inquire?: string;
-    month?: string;
-    night?: string;
+    rate?: string;
+    available?: string;
+    held?: string;
+    unitCode?: string;
   };
   className?: string;
   style?: React.CSSProperties;
@@ -47,9 +53,31 @@ const formatPriceVnd = (n: number) => {
   return n.toLocaleString("vi-VN") + " VNĐ";
 };
 
+const legacyRate = (value: number | string | null | undefined): UnitRate | null => {
+  if (value === null || value === undefined || value === "") return null;
+  const amount = Number(value);
+  return Number.isFinite(amount) ? { type: "fixed", amount } : null;
+};
+
+const rateText = (rate: UnitRate) => {
+  if (rate.type === "negotiable") return rate.label || "Thương Lượng";
+  if (rate.type === "range") {
+    const min = Number(rate.min);
+    const max = Number(rate.max);
+    if (!Number.isFinite(min) || !Number.isFinite(max)) return "Thương Lượng";
+    if (min >= 1e6 && max >= 1e6) {
+      const formatMillions = (value: number) =>
+        (value / 1e6).toLocaleString("vi-VN", { maximumFractionDigits: 1 });
+      return `${formatMillions(min)} – ${formatMillions(max)} Triệu VNĐ`;
+    }
+    return `${formatPriceVnd(min)} – ${formatPriceVnd(max)}`;
+  }
+  const amount = Number(rate.amount);
+  return Number.isFinite(amount) ? formatPriceVnd(amount) : "Thương Lượng";
+};
+
 export function UnitCard({
   unit,
-  onInquire,
   onView,
   labels = {},
   className = "",
@@ -58,16 +86,15 @@ export function UnitCard({
   const [hover, setHover] = useState(false);
 
   const t = {
-    view: "Xem Chi Tiết Căn Hộ",
-    inquire: "Đặt Phòng / Hỏi Giá",
-    month: "Giá Thuê Tháng",
-    night: "Giá Theo Đêm",
+    rate: "Khoảng Giá Thuê",
+    available: "Còn Phòng",
+    held: "Nhận Chờ",
+    unitCode: "Mã căn",
     ...labels,
   };
 
   const photo = unit.cover_image || "/assets/photos/living-open-plan.jpg";
-  const monthlyRateVnd = unit.price_monthly ? Number(unit.price_monthly) : null;
-  const nightlyRateVnd = unit.price_nightly ? Number(unit.price_nightly) : null;
+  const displayRate = unit.rate || unit.monthly_rate || legacyRate(unit.price_monthly);
   const isAvailable = unit.status === "available" || !unit.status;
 
   const floorText = unit.floor
@@ -76,15 +103,23 @@ export function UnitCard({
     ? `${unit.tower} · Vinhomes Central Park`
     : null;
 
+  const href = `/properties/${unit.id || unit.slug || unit.unit_code}`;
+
   return (
-    <article
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
-      className={`flex flex-col bg-[var(--surface-raised)] border border-[var(--hairline)] rounded-none transition-colors duration-200 ${className}`.trim()}
+    <Link
+      href={href}
+      aria-label={`${unit.name} — ${t.rate}: ${displayRate ? rateText(displayRate) : "Thương Lượng"}`}
+      onClick={() => onView?.(unit.unit_code || unit.name)}
+      className={`block h-full rounded-[14px] text-inherit no-underline outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold-700)] focus-visible:ring-offset-2 ${className}`.trim()}
       style={style}
     >
-      {/* 4:3 Aspect Ratio Image Container */}
-      <div className="relative aspect-[4/3] overflow-hidden bg-[var(--surface-sunken)]">
+      <article
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
+        className="flex h-full flex-col overflow-hidden rounded-[14px] border border-[var(--hairline)] bg-[var(--surface-raised)] transition-[color,border-color,box-shadow] duration-200 hover:border-[var(--gold-700)] hover:shadow-[0_16px_42px_rgba(27,46,37,0.12)]"
+      >
+      {/* Photography remains the card's strongest sales signal. */}
+      <div className="relative aspect-[5/4] overflow-hidden bg-[var(--surface-sunken)]">
         <Image
           src={photo}
           alt={unit.name}
@@ -96,102 +131,74 @@ export function UnitCard({
           }}
         />
 
-        {/* Top-Left Code Badge */}
-        <span className="absolute top-3 left-3 z-10">
-          <Badge tone="paper">
-            {unit.unit_code || unit.name}
-          </Badge>
-        </span>
-
-        {/* Top-Right Status Badge */}
-        <span className="absolute top-3 right-3 z-10">
-          <Badge
-            tone={isAvailable ? "available" : "held"}
-            icon={isAvailable ? "badge-check" : "calendar-check"}
-          >
-            {isAvailable ? "Còn Phòng" : "Đã Giữ Chỗ · Nhận Chờ"}
-          </Badge>
+        {/* Status is intentionally quiet; the photo stays dominant. */}
+        <span
+          className={`absolute right-3 top-3 z-10 inline-flex min-h-7 items-center gap-1.5 rounded-full border px-2.5 font-sans text-[0.65rem] font-semibold ${
+            isAvailable
+              ? "border-[#A7D4AF] bg-[#DDF3DF] text-[#165B2B]"
+              : "border-[var(--gold-700)] bg-[var(--gold-100)] text-[var(--gold-900)]"
+          }`}
+        >
+          <span className="size-1.5 rounded-full bg-current" aria-hidden="true" />
+          {isAvailable ? t.available : t.held}
         </span>
       </div>
 
       {/* Details Header */}
-      <div className="p-4 sm:p-5 pb-0">
+      <div className="px-4 pt-4 sm:px-5 sm:pt-5">
         {unit.view_type && (
           <span className="font-sans text-[0.625rem] font-semibold tracking-[0.15em] uppercase text-[var(--gold-900)] block">
             {unit.view_type}
           </span>
         )}
         <h3
-          className="mt-1.5 font-display text-[1.33rem] sm:text-[1.45rem] font-medium leading-[1.25] transition-colors"
+          className="mt-2 min-h-[2.7em] text-balance font-display text-[1.45rem] font-medium leading-[1.16] transition-colors sm:text-[1.6rem]"
           style={{ color: hover ? "var(--gold-900)" : "var(--text-primary)" }}
         >
           {unit.name}
         </h3>
         {floorText && (
-          <p className="mt-1.5 font-serif italic text-[0.875rem] text-[var(--text-muted)]">
-            {floorText}
+          <div className="mt-3 flex items-start gap-1.5 font-sans text-[0.78rem] leading-[1.35] text-[var(--text-body)]">
+            <Icon name="map-pin" size={14} color="var(--gold-900)" className="mt-0.5 shrink-0" />
+            <span>{floorText}</span>
+          </div>
+        )}
+        {unit.unit_code && (
+          <p className="mt-1 font-sans text-[0.68rem] text-[var(--text-muted)]">
+            {t.unitCode} {unit.unit_code}
           </p>
         )}
       </div>
 
       {/* Room Specs Strip */}
-      <div className="my-4 py-2 border-y border-[var(--hairline)]">
+      <div className="mx-4 mt-4 border-t border-[var(--hairline)] py-3 sm:mx-5">
         <RoomSpecs
           beds={unit.bedrooms}
           baths={unit.bathrooms}
           sqm={unit.sqm}
-          guests={unit.guests}
+          variant="plain"
         />
       </div>
 
-      {/* Pricing Columns */}
-      <div className="px-4 sm:px-5 flex flex-wrap gap-4 sm:gap-6">
-        {monthlyRateVnd ? (
-          <div>
-            <div className="font-sans text-[0.625rem] font-semibold uppercase tracking-[0.15em] text-[var(--text-muted)]">
-              {t.month}
-            </div>
-            <div className="font-display text-[1.35rem] font-medium text-[var(--jade-700)]">
-              {formatPriceVnd(monthlyRateVnd)}
-            </div>
-          </div>
-        ) : null}
-
-        {nightlyRateVnd ? (
-          <div>
-            <div className="font-sans text-[0.625rem] font-semibold uppercase tracking-[0.15em] text-[var(--text-muted)]">
-              {t.night}
-            </div>
-            <div className="font-display text-[1.35rem] font-medium text-[var(--jade-700)]">
-              {formatPriceVnd(nightlyRateVnd)}
-            </div>
-          </div>
-        ) : null}
-      </div>
-
-      {/* Action Buttons Stack */}
-      <div className="mt-auto p-4 sm:p-5 pt-5 grid gap-2">
-        <Button
-          variant="jade"
-          size="sm"
-          full
-          iconAfter="arrow-right"
-          as={Link}
-          href={`/properties/${unit.id || unit.slug || unit.unit_code}`}
-          onClick={() => onView?.(unit.unit_code || unit.name)}
+      {/* Price is the final visual anchor; the entire card is the detail link. */}
+      <div className="mx-4 mb-4 mt-auto grid min-h-[88px] content-center rounded-[9px] bg-[var(--jade-100)] px-4 py-3 sm:mx-5 sm:mb-5">
+        <div className="font-sans text-[0.625rem] font-semibold uppercase tracking-[0.15em] text-[var(--text-muted)]">
+          {t.rate}
+        </div>
+        <div
+          className={`mt-1 min-h-[2rem] text-pretty font-display font-medium leading-[1.15] text-[var(--jade-700)] ${
+            !displayRate || displayRate.type === "negotiable"
+              ? "text-[1.3rem] italic"
+              : displayRate.type === "range"
+                ? "text-[1.45rem] sm:text-[1.6rem]"
+                : "text-[1.5rem]"
+          }`}
         >
-          {t.view}
-        </Button>
-        <Button
-          variant="outline"
-          size="sm"
-          full
-          onClick={() => onInquire?.(unit.unit_code || unit.name)}
-        >
-          {t.inquire}
-        </Button>
+          {displayRate ? rateText(displayRate) : "Thương Lượng"}
+        </div>
       </div>
-    </article>
+      </article>
+    </Link>
   );
 }
 

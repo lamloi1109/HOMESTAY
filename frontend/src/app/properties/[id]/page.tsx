@@ -10,6 +10,7 @@ import {
   Icon,
   InquiryModal,
   MosaicGallery,
+  PropertyLocationMap,
   RoomSpecs,
   Tag,
 } from "@/components/gaoji";
@@ -503,6 +504,13 @@ export default function PropertyDetailPage() {
           </div>
         </div>
       </section>
+
+      <PropertyLocationMap
+        propertyName={unit.name}
+        tower={unit.tower}
+        address={unit.address}
+        city={unit.city}
+      />
 
       <ContactRail onInquire={() => setInquiryOpen(true)} />
 

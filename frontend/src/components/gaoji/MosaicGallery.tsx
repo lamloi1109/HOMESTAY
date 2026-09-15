@@ -31,6 +31,18 @@ export function MosaicGallery({ images, propertyName }: MosaicGalleryProps) {
   const [initialImageId, setInitialImageId] = useState<string>();
   const openerRef = useRef<HTMLButtonElement | null>(null);
   const visibleImages = images.slice(0, 5);
+  const secondaryCount = Math.max(0, visibleImages.length - 1);
+
+  const desktopColumns = visibleImages.length === 1
+    ? "grid-cols-1"
+    : visibleImages.length === 2
+      ? "grid-cols-[2fr_1fr]"
+      : "grid-cols-2";
+  const secondaryGrid = secondaryCount === 1
+    ? "grid-cols-1 grid-rows-1"
+    : secondaryCount === 2
+      ? "grid-cols-1 grid-rows-2"
+      : "grid-cols-2 grid-rows-2";
 
   const openGrid = (trigger: HTMLButtonElement) => {
     openerRef.current = trigger;
@@ -62,22 +74,27 @@ export function MosaicGallery({ images, propertyName }: MosaicGalleryProps) {
         </button>
       </div>
 
-      <div className="hidden h-[clamp(480px,36vw,520px)] grid-cols-2 gap-2 sm:grid">
+      <div className={`hidden h-[clamp(480px,36vw,520px)] gap-2 sm:grid ${desktopColumns}`}>
         <button
           type="button"
           onClick={(event) => openImage(visibleImages[0].id, event.currentTarget)}
           className="group relative h-full overflow-hidden border border-[var(--hairline)] bg-[var(--surface-sunken)] focus-visible:z-20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--focus-ring)]"
           aria-label={`Mở ảnh 1: ${visibleImages[0].alt}`}
         >
-          <GalleryImage image={visibleImages[0]} priority sizes="50vw" />
+          <GalleryImage
+            image={visibleImages[0]}
+            priority
+            sizes={visibleImages.length === 1 ? "100vw" : visibleImages.length === 2 ? "67vw" : "50vw"}
+          />
           <span className="absolute bottom-4 left-4 z-10 border border-white/20 bg-black/65 px-3 py-1.5 font-sans text-xs font-semibold uppercase tracking-wider text-white backdrop-blur-sm">
             Hình ảnh thực tế căn hộ
           </span>
         </button>
 
-        <div className="grid min-h-0 grid-cols-2 grid-rows-2 gap-2">
+        {secondaryCount > 0 && <div className={`grid min-h-0 gap-2 ${secondaryGrid}`}>
           {visibleImages.slice(1).map((image, index) => {
             const isLast = index === visibleImages.length - 2;
+            const fillsSparseRow = secondaryCount === 3 && index === 0;
             return (
               <button
                 key={image.id}
@@ -85,7 +102,7 @@ export function MosaicGallery({ images, propertyName }: MosaicGalleryProps) {
                 onClick={(event) => isLast
                   ? openGrid(event.currentTarget)
                   : openImage(image.id, event.currentTarget)}
-                className="group relative min-h-0 overflow-hidden border border-[var(--hairline)] bg-[var(--surface-sunken)] focus-visible:z-20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--focus-ring)]"
+                className={`group relative min-h-0 overflow-hidden border border-[var(--hairline)] bg-[var(--surface-sunken)] focus-visible:z-20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--focus-ring)] ${fillsSparseRow ? "col-span-2" : ""}`}
                 aria-label={isLast ? `Xem tất cả ${images.length} ảnh` : `Mở ảnh ${index + 2}: ${image.alt}`}
               >
                 <GalleryImage image={image} sizes="25vw" />
@@ -98,7 +115,7 @@ export function MosaicGallery({ images, propertyName }: MosaicGalleryProps) {
               </button>
             );
           })}
-        </div>
+        </div>}
       </div>
 
       {galleryOpen && (

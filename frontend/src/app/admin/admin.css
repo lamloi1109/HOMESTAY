@@ -1,6 +1,6 @@
 .admin-root {
-  --font-display: var(--font-eb-garamond), "EB Garamond", Georgia, serif;
-  --font-sans: var(--font-barlow-condensed), "Barlow Condensed", "Segoe UI", sans-serif;
+  --font-display: var(--font-default);
+  --font-sans: var(--font-default);
   --font-body: var(--font-sans);
   overflow-x: hidden;
 }

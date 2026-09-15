@@ -5,15 +5,13 @@ import Script from "next/script";
 import React, { useEffect, useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import {
-  Accordion,
-  AccordionItem,
   Button,
   ContactRail,
   FeatureCard,
   FilterTabs,
   Icon,
+  HouseRulesFaq,
   InquiryModal,
-  ResidenceCarousel,
   SectionHeader,
   UnitCard,
 } from "@/components/gaoji";
@@ -43,28 +41,6 @@ const DICT = {
 
     // 2. Floating Booking Bar
     queryBarSub: "Guest Relations phản hồi trong 2 giờ làm việc · Hỗ trợ Tiếng Việt · English · 中文",
-
-    // 3. Editorial Showcase
-    introEye: "Cho Thuê Căn Hộ · Landmark & Vinhomes Central Park",
-    introTitle: "Căn Hộ Cho Thuê Trong Landmark Và Vinhomes Central Park",
-    introBody: "Gao Ji House hiện diện tại cụm Park P7, P3, P1 và Landmark L81, L3, L2, L1 trong Vinhomes Central Park. Các căn hộ được hoàn thiện nội thất, hỗ trợ thuê theo tháng hoặc theo đêm cùng dịch vụ vận hành trọn gói.",
-    s1v: "10 Phút",
-    s1l: "Tới Quận 1 CBD",
-    s2v: "2 Lần / Tuần",
-    s2l: "Dọn Phòng & Thay Ga",
-    s3v: "24/7",
-    s3l: "Lễ Tân Đa Ngữ",
-    introCta: "Xem Danh Sách Căn Hộ",
-    plate1: "Hình 01 — Không Gian Khách & Bàn Ăn Liên Thông",
-    carouselLabel: "Không gian sống tại Gao Ji House",
-    carouselPrevious: "Xem ảnh trước",
-    carouselNext: "Xem ảnh tiếp theo",
-    carouselSlides: [
-      { title: "Không Gian Sống", description: "Phòng khách và bàn ăn liên thông, hoàn thiện sẵn để có thể ở ngay." },
-      { title: "Nghỉ Ngơi Trên Cao", description: "Phòng ngủ đón ánh sáng tự nhiên với tầm nhìn Landmark và sông Sài Gòn." },
-      { title: "Tiện Nghi Dài Ngày", description: "Bếp riêng đầy đủ thiết bị cho gia đình và những kỳ lưu trú dài ngày." },
-      { title: "Vị Trí Biểu Tượng", description: "Sống giữa Vinhomes Central Park, liền kề Landmark 81 và công viên ven sông." },
-    ],
 
     // 4. Units List
     unitsEye: "Danh Sách Căn Hộ",
@@ -180,28 +156,6 @@ const DICT = {
     a3b: "Sân thượng ngắm Landmark 81 và hầm rượu do sommelier tuyển chọn, đặt chỗ qua lễ tân trước 18:00.",
     a3l: ["Đặt chỗ qua lễ tân trước 18:00", "Sommelier tuyển chọn theo mùa", "Tầm nhìn Landmark 81 & sông"],
 
-    // 7. About Us & Operating Team
-    abEye: "Về Chúng Tôi · Vận Hành Từ 2019",
-    abTitle: "Gao Ji House · Chủ Căn Hộ Cũng Là Người Vận Hành",
-    abP1: "Gao Ji House bắt đầu năm 2019 với một căn hộ cho thuê trong Park 1. Đến nay đội ngũ tự vận hành năm căn hộ trong Vinhomes Central Park — không qua đơn vị trung gian, không nhận uỷ thác từ chủ nhà khác. Mỗi căn đều do Gao Ji House sở hữu, tự thiết kế nội thất và tự chịu trách nhiệm bảo trì.",
-    abP2: "Khách thuê chủ yếu là chuyên gia nước ngoài công tác dài hạn, gia đình chờ nhận nhà và khách doanh nghiệp lưu trú theo tháng. Quy trình buồng phòng, đổi ga khăn và bảo trì thiết bị dựng theo chuẩn khách sạn, do chính người trong đội kiểm tra định kỳ.",
-    ab1l: "Năm Bắt Đầu",
-    ab2l: "Căn Hộ Tự Vận Hành",
-    ab3l: "Người Trong Đội",
-    ab4v: "3 Ngữ",
-    teamHead: "Đội Ngũ Vận Hành",
-    teamSub: "Liên Hệ Trực Tiếp",
-    r1l: "Chủ Đầu Tư & Quản Lý Căn Hộ",
-    r1b: "Chốt hợp đồng thuê, giá dài hạn và mọi yêu cầu đặc biệt của khách doanh nghiệp.",
-    r2b: "Trả lời tin nhắn trong 2 giờ, gửi video thực tế, xếp lịch xem căn và đưa đón sân bay.",
-    r3l: "Buồng Phòng & Bảo Trì",
-    r3n: "Tổ 3 Người · Nội Bộ",
-    r3b: "Dọn phòng 2 lần / tuần, đổi ga khăn, kiểm tra thiết bị bếp và điều hoà mỗi 6 tháng.",
-    r4l: "Thủ Tục & Pháp Lý",
-    r4b: "Hợp đồng công chứng, hoá đơn VAT và đăng ký tạm trú cho khách nước ngoài.",
-    socEye: "Mạng Xã Hội & Kênh Liên Hệ",
-    socBody: "Ảnh căn hộ mới, tình trạng phòng trống và video quay dọc từng căn được đăng trước tại các kênh dưới đây.",
-
     // 8. Contact & Zalo First SOP
     ctEye: "Guest Relations · Phản Hồi Trong 2 Giờ",
     ctTitle: "Giữ Chỗ Căn Hộ Qua Zalo",
@@ -219,20 +173,6 @@ const DICT = {
     videoTitle: "Trải nghiệm căn hộ qua TikTok",
     videoBody: "Xem video quay thực tế về không gian, nội thất và trải nghiệm lưu trú được đăng trực tiếp trên kênh TikTok chính thức của Gao Ji House.",
     videoCta: "Xem kênh TikTok",
-
-    // 12. FAQ
-    faqEye: "Câu hỏi thường gặp",
-    faqTitle: "Thông tin cần biết trước khi đặt phòng",
-    faq1q: "Giờ nhận và trả phòng là mấy giờ?",
-    faq1a: "Giờ nhận phòng tiêu chuẩn là từ 14:00, và trả phòng trước 12:00 trưa. Chúng tôi hỗ trợ nhận phòng sớm hoặc trả trễ tuỳ thuộc vào tình trạng phòng trống.",
-    faq2q: "Giá thuê đã bao gồm những chi phí gì?",
-    faq2a: "Giá đã bao gồm phí quản lý toà nhà, internet tốc độ cao, và dịch vụ dọn dẹp buồng phòng 2 lần/tuần. Chưa bao gồm điện nước sinh hoạt (đối với khách thuê tháng).",
-    faq3q: "Có chỗ đậu xe ô tô không?",
-    faq3a: "Có, Vinhomes Central Park có hệ thống hầm đậu xe rộng rãi. Phí giữ xe theo quy định của ban quản lý toà nhà.",
-    faq4q: "Có được mang theo thú cưng không?",
-    faq4a: "Rất tiếc, để đảm bảo vệ sinh và tránh dị ứng cho các khách lưu trú sau, chúng tôi không hỗ trợ mang theo thú cưng.",
-    faq5q: "Chính sách hoàn huỷ như thế nào?",
-    faq5a: "Miễn phí huỷ trước 7 ngày đối với khách thuê ngắn hạn. Tiền cọc sẽ được hoàn trả đầy đủ vào tài khoản của bạn.",
 
     // 13. Final CTA
     ctaTitle: "Sẵn sàng trải nghiệm không gian sống đẳng cấp tại Vinhomes Central Park?",
@@ -260,28 +200,6 @@ const DICT = {
     statReplyVal: "Within 2 Hours",
 
     queryBarSub: "Guest Relations replies within 2 working hours · English · Vietnamese · Chinese",
-
-    // 3. Editorial Showcase
-    introEye: "Apartments For Rent · Landmark & Vinhomes Central Park",
-    introTitle: "Apartments For Rent In Landmark And Vinhomes Central Park",
-    introBody: "Gao Ji House operates across Park towers P7, P3, P1 and Landmark towers L81, L3, L2, L1 within Vinhomes Central Park, offering fully furnished residences for monthly or nightly stays.",
-    s1v: "10 Mins",
-    s1l: "To District 1 CBD",
-    s2v: "2x / Week",
-    s2l: "Housekeeping & Linen",
-    s3v: "24/7",
-    s3l: "Multilingual Team",
-    introCta: "View Apartment Collection",
-    plate1: "Plate 01 — Open Plan Living & Dining Area",
-    carouselLabel: "Living spaces at Gao Ji House",
-    carouselPrevious: "View previous image",
-    carouselNext: "View next image",
-    carouselSlides: [
-      { title: "Open-Plan Living", description: "A fully furnished living and dining space, ready from the day you arrive." },
-      { title: "Elevated Rest", description: "A naturally lit bedroom overlooking Landmark and the Saigon River." },
-      { title: "Long-Stay Comfort", description: "A private, fully equipped kitchen designed for families and extended stays." },
-      { title: "An Iconic Address", description: "Live within Vinhomes Central Park, beside Landmark 81 and the riverside park." },
-    ],
 
     unitsEye: "Rates & Floor Plans",
     unitsTitle: "Serviced Apartment Collection",
@@ -394,27 +312,6 @@ const DICT = {
     a3b: "Sky terrace overlooking Landmark 81 with curated wine cellar, reserve via reception before 18:00.",
     a3l: ["Reserve via front desk by 18:00", "Seasonal sommelier curation", "Landmark 81 & river panorama"],
 
-    abEye: "About Us · Operating Since 2019",
-    abTitle: "Gao Ji House · Owners & Direct Operators",
-    abP1: "Gao Ji House began in 2019 with a single residence in Park 1. Today our team directly manages five apartments in Vinhomes Central Park without intermediaries or third-party consignments.",
-    abP2: "Our tenants are primarily multinational corporate executives, families in transition, and monthly corporate clients.",
-    ab1l: "Founded Year",
-    ab2l: "Direct Managed Units",
-    ab3l: "Core Team",
-    ab4v: "3 Languages",
-    teamHead: "Operations Team",
-    teamSub: "Direct Contact",
-    r1l: "Owner & General Manager",
-    r1b: "Handles lease agreements, corporate terms, and bespoke executive requirements.",
-    r2b: "Replies within 2 hours, provides video walkthroughs, viewing schedules, and airport transfers.",
-    r3l: "Housekeeping & Maintenance",
-    r3n: "In-House 3-Person Team",
-    r3b: "Bi-weekly cleaning, linen replacement, and bi-annual appliance & AC servicing.",
-    r4l: "Legal & Corporate Compliance",
-    r4b: "Notarized contracts, VAT invoicing, and foreign temporary residence registration.",
-    socEye: "Social & Communication Channels",
-    socBody: "Fresh unit updates, availability status, and vertical video walkthroughs are shared across our channels.",
-
     ctEye: "Guest Relations · 2-Hour Response",
     ctTitle: "Reserve Your Residence Via Zalo",
     ctBody: "Message on Zalo for full rate sheets, genuine video walkthroughs, and real-time calendar availability. Direct owner response.",
@@ -430,19 +327,6 @@ const DICT = {
     videoTitle: "Experience the residences on TikTok",
     videoBody: "Explore real walkthroughs of the spaces, interiors, and guest experience published on Gao Ji House’s official TikTok channel.",
     videoCta: "View TikTok channel",
-
-    faqEye: "Frequently Asked Questions",
-    faqTitle: "Good to Know Before You Book",
-    faq1q: "What are the check-in and check-out times?",
-    faq1a: "Standard check-in is from 14:00, and check-out is before 12:00. We support early check-in or late check-out subject to availability.",
-    faq2q: "What is included in the rent?",
-    faq2a: "Rent includes building management fees, high-speed internet, and bi-weekly housekeeping. Utility bills (electricity/water) are excluded for monthly stays.",
-    faq3q: "Is there parking available?",
-    faq3a: "Yes, Vinhomes Central Park has spacious underground parking. Fees apply according to building management regulations.",
-    faq4q: "Are pets allowed?",
-    faq4a: "Unfortunately, to maintain hygiene and prevent allergies for future guests, we do not accommodate pets.",
-    faq5q: "What is the cancellation policy?",
-    faq5a: "Free cancellation up to 7 days before arrival for short-term stays. Your deposit will be fully refunded.",
 
     ctaTitle: "Ready to experience premium living at Vinhomes Central Park?",
     ctaBody: "Reserve your apartment today.",
@@ -469,27 +353,6 @@ const DICT = {
     statReplyVal: "2 小时内",
 
     queryBarSub: "客户关怀团队 2 个工作小时内回复 · 支持 中文 · 越南语 · 英语",
-
-    introEye: "公寓出租 · Landmark 与 Vinhomes Central Park",
-    introTitle: "Landmark 与 Vinhomes Central Park 公寓出租",
-    introBody: "Gao Ji House 覆盖 Vinhomes Central Park 的 Park P7、P3、P1 及 Landmark L81、L3、L2、L1，提供家具齐全的月租或短住服务式公寓。",
-    s1v: "10 分钟",
-    s1l: "至第一郡 CBD",
-    s2v: "每周 2 次",
-    s2l: "保洁与布草更换",
-    s3v: "24/7",
-    s3l: "多语前台关怀",
-    introCta: "查看公寓房源",
-    plate1: "图 01 — 客厅与餐厅通透空间",
-    carouselLabel: "Gao Ji House 居住空间",
-    carouselPrevious: "查看上一张图片",
-    carouselNext: "查看下一张图片",
-    carouselSlides: [
-      { title: "开放式生活空间", description: "客厅与餐厅家具齐全，抵达当天即可安心入住。" },
-      { title: "高层静谧休憩", description: "卧室采光充足，可眺望 Landmark 与西贡河景。" },
-      { title: "长住便利设施", description: "独立厨房设备齐全，适合家庭及长期居住。" },
-      { title: "城市地标住址", description: "置身 Vinhomes Central Park，毗邻 Landmark 81 与滨河公园。" },
-    ],
 
     unitsEye: "价格清单与户型",
     unitsTitle: "服务式公寓房源列表",
@@ -602,27 +465,6 @@ const DICT = {
     a3b: "对望 Landmark 81 的空中露台与侍酒师甄选酒窖，需提前联系前台预约。",
     a3l: ["每日 18:00 前联系前台预约", "品酒师按季精选", "俯瞰 Landmark 81 与河景"],
 
-    abEye: "关于我们 · 始于 2019",
-    abTitle: "Gao Ji House · 房屋业主亦是直营团队",
-    abP1: "Gao Ji House 于 2019 年始于 Park 1 的一套自持公寓。时至今日，团队在 Vinhomes Central Park 自持并直营五套高品质公寓——绝无中介赚取差价，不接第三方托管。每套均由我们自行设计与维护。",
-    abP2: "客群主要为长期外派高管、跨国企业商务人士与外籍家庭。保洁与养护流程严格执行五星级酒店标准。",
-    ab1l: "创立年份",
-    ab2l: "直营公寓",
-    ab3l: "核心团队",
-    ab4v: "3 种语言",
-    teamHead: "运营管理团队",
-    teamSub: "直接沟通",
-    r1l: "投资人与运营总监",
-    r1b: "负责租赁合同敲定、企业长租优惠及专属定制需求。",
-    r2b: "2 小时内回复消息，提供真实漫游视频、预约实地看房及接机安排。",
-    r3l: "客房清洁与设施维护",
-    r3n: "3 人专属自营团队",
-    r3b: "每周 2 次客房保洁、布草换洗，每半年深度检测厨房电器与中央空调。",
-    r4l: "合规事务与法务支持",
-    r4b: "负责合同公证、正规增值税发票 (VAT) 开具及外籍人员暂住申报。",
-    socEye: "社交媒体与沟通渠道",
-    socBody: "最新房源实拍、即时房态及竖屏看房视频将优先在以下官方渠道发布。",
-
     ctEye: "客户关怀 · 2 小时内响应",
     ctTitle: "通过 Zalo / 微信 快速预订",
     ctBody: "微信或 Zalo 沟通即可获取完整价目单、真实视频与实时房态。业主团队直接对接，无客服机器人转接。",
@@ -638,19 +480,6 @@ const DICT = {
     videoTitle: "通过 TikTok 体验公寓",
     videoBody: "通过 Gao Ji House 官方 TikTok 频道，查看公寓空间、室内设施与入住体验的真实视频。",
     videoCta: "查看 TikTok 频道",
-
-    faqEye: "常见问题",
-    faqTitle: "预订前须知",
-    faq1q: "入住和退房时间是几点？",
-    faq1a: "标准入住时间为 14:00 起，退房时间为 12:00 前。视房态情况，我们可提供提前入住或延迟退房服务。",
-    faq2q: "租金包含哪些费用？",
-    faq2a: "租金包含物业管理费、高速宽带以及每周两次的客房保洁。按月租赁不含水电费。",
-    faq3q: "有停车位吗？",
-    faq3a: "有的，Vinhomes Central Park 拥有宽敞的地下停车场。收费标准按物业管理规定执行。",
-    faq4q: "可以携带宠物吗？",
-    faq4a: "很遗憾，为了保持卫生并避免影响对宠物过敏的后续宾客，我们不允许携带宠物。",
-    faq5q: "取消政策是什么？",
-    faq5a: "短期租赁在入住前 7 天可免费取消，您的押金将全额退还。",
 
     ctaTitle: "准备好体验 Vinhomes Central Park 的高端生活了吗？",
     ctaBody: "立即预留您的公寓。",
@@ -677,27 +506,6 @@ const DICT = {
     statReplyVal: "2 小時內",
 
     queryBarSub: "客戶關懷團隊 2 個工作小時內回覆 · 支援 中文 · 越南語 · 英語",
-
-    introEye: "公寓出租 · Landmark 與 Vinhomes Central Park",
-    introTitle: "Landmark 與 Vinhomes Central Park 公寓出租",
-    introBody: "Gao Ji House 覆蓋 Vinhomes Central Park 的 Park P7、P3、P1 及 Landmark L81、L3、L2、L1，提供家具齊全的月租或短住服務式公寓。",
-    s1v: "10 分鐘",
-    s1l: "至第一郡 CBD",
-    s2v: "每週 2 次",
-    s2l: "清潔與布草更換",
-    s3v: "24/7",
-    s3l: "多語前台關懷",
-    introCta: "查看公寓房源",
-    plate1: "圖 01 — 客廳與餐廳通透空間",
-    carouselLabel: "Gao Ji House 居住空間",
-    carouselPrevious: "查看上一張圖片",
-    carouselNext: "查看下一張圖片",
-    carouselSlides: [
-      { title: "開放式生活空間", description: "客廳與餐廳家具齊全，抵達當天即可安心入住。" },
-      { title: "高層靜謐休憩", description: "臥室採光充足，可眺望 Landmark 與西貢河景。" },
-      { title: "長住便利設施", description: "獨立廚房設備齊全，適合家庭及長期居住。" },
-      { title: "城市地標住址", description: "置身 Vinhomes Central Park，毗鄰 Landmark 81 與濱河公園。" },
-    ],
 
     unitsEye: "價格清單與戶型",
     unitsTitle: "服務式公寓房源列表",
@@ -810,27 +618,6 @@ const DICT = {
     a3b: "對望 Landmark 81 的空中露台與侍酒師甄選酒窖，需提前聯繫前台預約。",
     a3l: ["每日 18:00 前聯繫前台預約", "品酒師按季精選", "俯瞰 Landmark 81 與河景"],
 
-    abEye: "關於我們 · 始於 2019",
-    abTitle: "Gao Ji House · 房屋業主亦是直營團隊",
-    abP1: "Gao Ji House 於 2019 年始於 Park 1 的一套自持公寓。時至今日，團隊在 Vinhomes Central Park 自持並直營五套高品質公寓——絕無中介賺取差價，不接第三方託管。每套均由我們自行設計與維護。",
-    abP2: "客群主要為長期外派高管、跨國企業商務人士與外籍家庭。清潔與養護流程嚴格執行五星級酒店標準。",
-    ab1l: "創立年份",
-    ab2l: "直營公寓",
-    ab3l: "核心團隊",
-    ab4v: "3 種語言",
-    teamHead: "營運管理團隊",
-    teamSub: "直接溝通",
-    r1l: "投資人與營運總監",
-    r1b: "負責租賃合同敲定、企業長租優惠及專屬定制需求。",
-    r2b: "2 小時內回覆消息，提供真實漫遊視頻、預約實地看房及接機安排。",
-    r3l: "客房清潔與設施維護",
-    r3n: "3 人專屬自營團隊",
-    r3b: "每週 2 次客房清潔、布草換洗，每半年深度檢測廚房電器與中央空調。",
-    r4l: "合規事務與法務支援",
-    r4b: "負責合同公證、正規增值稅發票 (VAT) 開具及外籍人員暫住申報。",
-    socEye: "社交媒體與溝通渠道",
-    socBody: "最新房源實拍、即時房態及豎屏看房視頻將優先在以下官方渠道發布。",
-
     ctEye: "客戶關懷 · 2 小時內響應",
     ctTitle: "透過 Zalo / 微信 快速預訂",
     ctBody: "微信或 Zalo 溝通即可獲取完整價目單、真實視頻與即時房態。業主團隊直接對接，無客服機器人轉接。",
@@ -846,19 +633,6 @@ const DICT = {
     videoTitle: "透過 TikTok 體驗公寓",
     videoBody: "透過 Gao Ji House 官方 TikTok 頻道，觀看公寓空間、室內設施與入住體驗的真實影片。",
     videoCta: "查看 TikTok 頻道",
-
-    faqEye: "常見問題",
-    faqTitle: "預訂前須知",
-    faq1q: "入住和退房時間是幾點？",
-    faq1a: "標準入住時間為 14:00 起，退房時間為 12:00 前。視房態情況，我們可提供提前入住或延遲退房服務。",
-    faq2q: "租金包含哪些費用？",
-    faq2a: "租金包含物業管理費、高速寬頻以及每週兩次的客房清潔。按月租賃不含水電費。",
-    faq3q: "有停車位嗎？",
-    faq3a: "有的，Vinhomes Central Park 擁有寬敞的地下停車場。收費標準按物業管理規定執行。",
-    faq4q: "可以攜帶寵物嗎？",
-    faq4a: "很遺憾，為了保持衛生並避免影響對寵物過敏的後續賓客，我們不允許攜帶寵物。",
-    faq5q: "取消政策是什麼？",
-    faq5a: "短期租賃在入住前 7 天可免費取消，您的押金將全額退還。",
 
     ctaTitle: "準備好體驗 Vinhomes Central Park 的高端生活了嗎？",
     ctaBody: "立即預留您的公寓。",
@@ -1259,85 +1033,6 @@ export default function LandingPage() {
         </a>
       </section>
 
-
-      {/* ── 2. EDITORIAL SHOWCASE (Trải Nghiệm Lưu Trú Đỉnh Cao) */}
-      <section className="py-[clamp(44px,5.5vw,88px)] px-[clamp(20px,4vw,56px)] bg-[#FBF9F5]">
-        <div className="max-w-[1240px] mx-auto grid gap-[clamp(32px,5vw,72px)] grid-cols-1 md:grid-cols-2 items-center">
-          {/* Left: Clean Luxury Gold Frame Box (No awkward red/clay box) */}
-          <div className="relative">
-            {/* Elegant 12px gold offset frame */}
-            <span
-              aria-hidden="true"
-              className="absolute inset-0 pointer-events-none"
-              style={{
-                transform: "translate(-10px, 10px)",
-                border: "1px solid #B08D57",
-              }}
-            />
-
-            <div className="relative bg-white border border-[#E8E4DB] p-[clamp(28px,4vw,44px)] shadow-xs">
-              <div className="flex items-center gap-3">
-                <span className="w-8 h-px bg-[#B08D57]" />
-                <span className="font-sans text-[0.75rem] font-bold uppercase tracking-[0.15em] text-[#8A6214]">
-                  {t.introEye}
-                </span>
-              </div>
-
-              <h2 className="mt-4 font-display text-[clamp(1.9rem,1.7rem+1vw,2.8rem)] font-medium leading-[1.2] text-[#1A1A1A]">
-                {t.introTitle}
-              </h2>
-
-              <p className="mt-5 max-w-[48ch] font-sans text-[1.08rem] leading-[1.7] text-[#383838]">
-                {t.introBody}
-              </p>
-            </div>
-          </div>
-
-          {/* Right: manually controlled editorial residence carousel */}
-          <ResidenceCarousel
-            regionLabel={t.carouselLabel}
-            previousLabel={t.carouselPrevious}
-            nextLabel={t.carouselNext}
-            slides={[
-              { src: "/assets/photos/living-dining.jpg", alt: "Khu vực khách và bàn ăn liên thông trong căn hộ Gao Ji House", ...t.carouselSlides[0] },
-              { src: "/assets/photos/bedroom-platform-landmark.jpg", alt: "Phòng ngủ Gao Ji House nhìn ra Landmark và sông Sài Gòn", ...t.carouselSlides[1] },
-              { src: "/assets/photos/kitchen-island.jpg", alt: "Bếp riêng đầy đủ thiết bị trong căn hộ Gao Ji House", ...t.carouselSlides[2] },
-              { src: "/assets/photos/towers-skyline.jpg", alt: "Landmark 81 và Vinhomes Central Park nhìn từ Gao Ji House", ...t.carouselSlides[3] },
-            ]}
-          />
-        </div>
-      </section>
-
-      {/* ── 3. TIKTOK VIDEO EXPERIENCES ────────────────────── */}
-      <section className="border-y border-[#E8E4DB] bg-[#F4EFE8] px-[clamp(20px,4vw,56px)] py-[clamp(44px,5vw,72px)]">
-        <div className="mx-auto grid max-w-[1240px] items-start gap-8 lg:grid-cols-[minmax(280px,.72fr)_minmax(0,1.28fr)] lg:gap-14">
-          <div className="grid justify-items-start gap-5 lg:sticky lg:top-24">
-            <SectionHeader eyebrow={t.videoEye} title={t.videoTitle} />
-            <p className="max-w-[48ch] font-sans text-[0.95rem] leading-relaxed text-[#514A42]">{t.videoBody}</p>
-            <a href="https://www.tiktok.com/@gaojihouse" target="_blank" rel="noreferrer" className="inline-flex min-h-11 items-center gap-2 bg-[#1A1A1A] px-5 font-sans text-xs font-bold uppercase tracking-[0.13em] text-white transition-colors hover:bg-[#B85D36]">
-              <SocialLogo network="tiktok" /> {t.videoCta} <Icon name="external-link" size={14} />
-            </a>
-          </div>
-
-          <div className="min-w-0 border border-[#DDD5C7] bg-white p-3 shadow-[0_12px_36px_rgba(52,43,34,0.08)] sm:p-5">
-            <blockquote
-              className="tiktok-embed m-auto"
-              cite="https://www.tiktok.com/@gaojihouse"
-              data-unique-id="gaojihouse"
-              data-embed-type="creator"
-              style={{ maxWidth: 780, minWidth: 288 }}
-            >
-              <section className="grid min-h-56 place-items-center bg-[#FAF8F5] p-8 text-center">
-                <a href="https://www.tiktok.com/@gaojihouse" target="_blank" rel="noreferrer" className="grid justify-items-center gap-3 text-[#1A1A1A]">
-                  <span className="relative size-16 overflow-hidden rounded-full border border-[#D8CFC2] bg-white"><Image src="/assets/logo-compact.png" alt="Gao Ji House trên TikTok" fill sizes="64px" className="object-cover" /></span>
-                  <strong className="font-sans text-sm uppercase tracking-[0.12em]">@gaojihouse</strong>
-                </a>
-              </section>
-            </blockquote>
-          </div>
-        </div>
-        <Script src="https://www.tiktok.com/embed.js" strategy="lazyOnload" />
-      </section>
 
       {/* ── 4. RESIDENCE APARTMENT COLLECTION (Danh Sách Căn Hộ) */}
       <section
@@ -1952,146 +1647,38 @@ export default function LandingPage() {
       </section>
 
 
-      {/* ── 7. ABOUT US & OPERATING TEAM (Về Chúng Tôi) ─────── */}
-      <section
-        id="about"
-        className="py-[clamp(48px,5vw,80px)] px-[clamp(20px,4vw,56px)] bg-[#FBF9F5]"
-      >
-        <div className="max-w-[1240px] mx-auto">
-          <div className="grid gap-[clamp(32px,4vw,64px)] grid-cols-1 lg:grid-cols-12 items-start">
-            {/* Left Story & Stats */}
-            <div className="lg:col-span-7 grid gap-5 justify-items-start">
-              <div className="flex items-center gap-3">
-                <span className="w-8 h-px bg-[#B08D57]" />
-                <span className="font-sans text-xs font-bold uppercase tracking-[0.15em] text-[#8A6214]">
-                  {t.abEye}
-                </span>
-              </div>
-
-              <h2 className="m-0 max-w-[24ch] font-display text-[clamp(1.6rem,1.4rem+0.8vw,2.3rem)] font-medium leading-[1.25] text-[#1A1A1A]">
-                {t.abTitle}
-              </h2>
-
-              <p className="m-0 max-w-[56ch] font-sans text-[1.08rem] leading-[1.7] text-[#383838]">
-                {t.abP1}
-              </p>
-
-              <p className="m-0 max-w-[56ch] font-sans text-[1.08rem] leading-[1.7] text-[#383838]">
-                {t.abP2}
-              </p>
-
-              {/* 4 Stats Grid */}
-              <div className="mt-2 grid grid-cols-2 sm:grid-cols-4 gap-px bg-[#E8E4DB] border border-[#E8E4DB] w-full">
-                <div className="bg-[#FAF8F5] p-4 sm:p-5 grid gap-1.5">
-                  <span className="font-display text-[1.75rem] font-medium leading-none text-[#0D3B22]">2019</span>
-                  <span className="font-sans text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-[#6B6255]">{t.ab1l}</span>
-                </div>
-                <div className="bg-[#FAF8F5] p-4 sm:p-5 grid gap-1.5">
-                  <span className="font-display text-[1.75rem] font-medium leading-none text-[#0D3B22]">05</span>
-                  <span className="font-sans text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-[#6B6255]">{t.ab2l}</span>
-                </div>
-                <div className="bg-[#FAF8F5] p-4 sm:p-5 grid gap-1.5">
-                  <span className="font-display text-[1.75rem] font-medium leading-none text-[#0D3B22]">06</span>
-                  <span className="font-sans text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-[#6B6255]">{t.ab3l}</span>
-                </div>
-                <div className="bg-[#FAF8F5] p-4 sm:p-5 grid gap-1.5">
-                  <span className="font-display text-[1.75rem] font-medium leading-none text-[#0D3B22]">{t.ab4v}</span>
-                  <span className="font-sans text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-[#6B6255]">Việt · English · 中文</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Right Team Table */}
-            <div className="lg:col-span-5 border border-[#E8E4DB] bg-white shadow-xs">
-              <div className="p-4 sm:p-5 border-b border-[#E8E4DB] bg-[#FAF8F5] flex items-baseline justify-between gap-4">
-                <span className="font-sans text-xs font-bold uppercase tracking-[0.15em] text-[#0D3B22]">{t.teamHead}</span>
-                <span className="font-sans text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-[#6B6255]">{t.teamSub}</span>
-              </div>
-              <div className="p-5 border-b border-[#E8E4DB] grid gap-2">
-                <span className="font-sans text-[0.6875rem] font-bold uppercase tracking-[0.15em] text-[#8A6214]">{t.r1l}</span>
-                <span className="font-display text-[1.35rem] font-medium leading-none text-[#1A1A1A]">Lâm Lợi</span>
-                <p className="m-0 font-sans text-sm leading-[1.6] text-[#383838]">{t.r1b}</p>
-              </div>
-              <div className="p-5 border-b border-[#E8E4DB] grid gap-2">
-                <span className="font-sans text-[0.6875rem] font-bold uppercase tracking-[0.15em] text-[#8A6214]">Guest Relations · Zalo & WeChat</span>
-                <span className="font-display text-[1.35rem] font-medium leading-none text-[#1A1A1A]">Trần Mỹ Duyên</span>
-                <p className="m-0 font-sans text-sm leading-[1.6] text-[#383838]">{t.r2b}</p>
-              </div>
-              <div className="p-5 border-b border-[#E8E4DB] grid gap-2">
-                <span className="font-sans text-[0.6875rem] font-bold uppercase tracking-[0.15em] text-[#8A6214]">{t.r3l}</span>
-                <span className="font-display text-[1.35rem] font-medium leading-none text-[#1A1A1A]">{t.r3n}</span>
-                <p className="m-0 font-sans text-sm leading-[1.6] text-[#383838]">{t.r3b}</p>
-              </div>
-              <div className="p-5 grid gap-2">
-                <span className="font-sans text-[0.6875rem] font-bold uppercase tracking-[0.15em] text-[#8A6214]">{t.r4l}</span>
-                <span className="font-display text-[1.35rem] font-medium leading-none text-[#1A1A1A]">Nguyễn Thanh Hà</span>
-                <p className="m-0 font-sans text-sm leading-[1.6] text-[#383838]">{t.r4b}</p>
-              </div>
-            </div>
+      {/* ── 7. TIKTOK VIDEO EXPERIENCES ────────────────────── */}
+      <section className="border-y border-[#E8E4DB] bg-[#F4EFE8] px-[clamp(20px,4vw,56px)] py-[clamp(44px,5vw,72px)]">
+        <div className="mx-auto grid max-w-[1240px] items-start gap-8 lg:grid-cols-[minmax(280px,.72fr)_minmax(0,1.28fr)] lg:gap-14">
+          <div className="grid justify-items-start gap-5 lg:sticky lg:top-24">
+            <SectionHeader eyebrow={t.videoEye} title={t.videoTitle} />
+            <p className="max-w-[48ch] font-sans text-[0.95rem] leading-relaxed text-[#514A42]">{t.videoBody}</p>
+            <a href="https://www.tiktok.com/@gaojihouse" target="_blank" rel="noreferrer" className="inline-flex min-h-11 items-center gap-2 bg-[#1A1A1A] px-5 font-sans text-xs font-bold uppercase tracking-[0.13em] text-white transition-colors hover:bg-[#B85D36]">
+              <SocialLogo network="tiktok" /> {t.videoCta} <Icon name="external-link" size={14} />
+            </a>
           </div>
 
-          {/* Social Channels Strip */}
-          <div className="mt-[clamp(28px,3.4vw,48px)] bg-white border border-[#E8E4DB] p-[clamp(24px,2.8vw,36px)] grid gap-[clamp(20px,2.4vw,32px)] grid-cols-1 lg:grid-cols-12 items-center shadow-xs">
-            <div className="lg:col-span-4 grid gap-2.5 justify-items-start">
-              <div className="flex items-center gap-3">
-                <span className="w-8 h-px bg-[#B08D57]" />
-                <span className="font-sans text-xs font-bold uppercase tracking-[0.15em] text-[#8A6214]">{t.socEye}</span>
-              </div>
-              <p className="m-0 font-sans text-sm leading-relaxed text-[#383838]">{t.socBody}</p>
-            </div>
-
-            <div className="lg:col-span-8 grid gap-3 grid-cols-2 sm:grid-cols-3 md:grid-cols-4">
-              <a href="https://zalo.me/0889237833" target="_blank" rel="noreferrer" className="border border-[#E8E4DB] bg-[#FAF8F5] p-3.5 grid gap-1 no-underline hover:border-[#D4AF37] hover:bg-white transition-colors">
-                <span className="flex items-center gap-3"><span className="grid size-10 shrink-0 place-items-center rounded-full bg-[#0878F9] text-white"><SocialLogo network="zalo" /></span><span className="grid gap-1"><span className="font-sans text-xs font-bold uppercase tracking-[0.15em] text-[#0D3B22]">Zalo</span><span className="font-sans text-xs text-[#6B6255]">088 923 7833</span></span></span>
-              </a>
-              <a href="https://www.tiktok.com/@gaojihouse" target="_blank" rel="noreferrer" className="border border-[#E8E4DB] bg-[#FAF8F5] p-3.5 grid gap-1 no-underline hover:border-[#D4AF37] hover:bg-white transition-colors">
-                <span className="flex items-center gap-3"><span className="relative size-10 shrink-0 overflow-hidden rounded-full border border-[#D8CFC2] bg-white"><Image src="/assets/logo-compact.png" alt="Avatar Gao Ji House trên TikTok" fill sizes="40px" className="object-cover" /></span><span className="grid gap-1"><span className="inline-flex items-center gap-1.5 font-sans text-xs font-bold uppercase tracking-[0.15em] text-[#0D3B22]">TikTok <SocialLogo network="tiktok" /></span><span className="font-sans text-xs text-[#6B6255]">@gaojihouse</span></span></span>
-              </a>
-              <a href="weixin://dl/chat?HZM81MS" className="border border-[#E8E4DB] bg-[#FAF8F5] p-3.5 grid gap-1 no-underline hover:border-[#D4AF37] hover:bg-white transition-colors">
-                <span className="flex items-center gap-3"><span className="grid size-10 shrink-0 place-items-center rounded-full bg-[#07C160] text-white"><SocialLogo network="wechat" /></span><span className="grid gap-1"><span className="font-sans text-xs font-bold uppercase tracking-[0.15em] text-[#0D3B22]">WeChat</span><span className="font-sans text-xs text-[#6B6255]">HZM81MS</span></span></span>
-              </a>
-              <a href="https://t.me/HZM81MS" target="_blank" rel="noreferrer" className="border border-[#E8E4DB] bg-[#FAF8F5] p-3.5 grid gap-1 no-underline hover:border-[#D4AF37] hover:bg-white transition-colors">
-                <span className="flex items-center gap-3"><span className="grid size-10 shrink-0 place-items-center rounded-full bg-[#229ED9] text-white"><SocialLogo network="telegram" /></span><span className="grid gap-1"><span className="font-sans text-xs font-bold uppercase tracking-[0.15em] text-[#0D3B22]">Telegram</span><span className="font-sans text-xs text-[#6B6255]">@HZM81MS</span></span></span>
-              </a>
-              <a href="mailto:stay@gaojihouse.vn" className="border border-[#E8E4DB] bg-[#FAF8F5] p-3.5 grid gap-1 no-underline hover:border-[#D4AF37] hover:bg-white transition-colors col-span-2 sm:col-span-1">
-                <span className="flex items-center gap-3"><span className="grid size-10 shrink-0 place-items-center rounded-full bg-[#0D3B22] text-white"><SocialLogo network="email" /></span><span className="min-w-0 grid gap-1"><span className="font-sans text-xs font-bold uppercase tracking-[0.15em] text-[#0D3B22]">Email</span><span className="truncate font-sans text-xs text-[#6B6255]">stay@gaojihouse.vn</span></span></span>
-              </a>
-            </div>
+          <div className="min-w-0 border border-[#DDD5C7] bg-white p-3 shadow-[0_12px_36px_rgba(52,43,34,0.08)] sm:p-5">
+            <blockquote
+              className="tiktok-embed m-auto"
+              cite="https://www.tiktok.com/@gaojihouse"
+              data-unique-id="gaojihouse"
+              data-embed-type="creator"
+              style={{ maxWidth: 780, minWidth: 288 }}
+            >
+              <section className="grid min-h-56 place-items-center bg-[#FAF8F5] p-8 text-center">
+                <a href="https://www.tiktok.com/@gaojihouse" target="_blank" rel="noreferrer" className="grid justify-items-center gap-3 text-[#1A1A1A]">
+                  <span className="relative size-16 overflow-hidden rounded-full border border-[#D8CFC2] bg-white"><Image src="/assets/logo-compact.png" alt="Gao Ji House trên TikTok" fill sizes="64px" className="object-cover" /></span>
+                  <strong className="font-sans text-sm uppercase tracking-[0.12em]">@gaojihouse</strong>
+                </a>
+              </section>
+            </blockquote>
           </div>
         </div>
+        <Script src="https://www.tiktok.com/embed.js" strategy="lazyOnload" />
       </section>
 
-      {/* ── 9.5. FAQ SECTION (NEW) ── */}
-      <section className="bg-[#FAF8F5] py-[clamp(48px,5vw,80px)]">
-        <div className="max-w-[900px] mx-auto px-[clamp(20px,4vw,56px)]">
-          <div className="text-center mb-12">
-            <span className="font-sans text-xs font-bold uppercase tracking-[0.15em] text-[#8A6214] block mb-3">
-              {t.faqEye}
-            </span>
-            <h2 className="font-display text-[clamp(1.75rem,2vw+1rem,2.5rem)] font-medium text-[#0D3B22]">
-              {t.faqTitle}
-            </h2>
-          </div>
-          <Accordion>
-            <AccordionItem title={t.faq1q} defaultOpen={true}>
-              {t.faq1a}
-            </AccordionItem>
-            <AccordionItem title={t.faq2q}>
-              {t.faq2a}
-            </AccordionItem>
-            <AccordionItem title={t.faq3q}>
-              {t.faq3a}
-            </AccordionItem>
-            <AccordionItem title={t.faq4q}>
-              {t.faq4a}
-            </AccordionItem>
-            <AccordionItem title={t.faq5q}>
-              {t.faq5a}
-            </AccordionItem>
-          </Accordion>
-        </div>
-      </section>
-
+      <HouseRulesFaq />
 
       {/* ── 9.6. FINAL CTA (NEW) ── */}
       <section className="bg-[#0D3B22] py-[clamp(48px,5vw,80px)] relative overflow-hidden">

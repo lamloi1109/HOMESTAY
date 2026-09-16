@@ -1,7 +1,6 @@
 "use client";
 
-import Link from "next/link";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import {
   Badge,
@@ -17,7 +16,6 @@ import {
 import {
   FALLBACK_GAOJI_UNITS,
   assetUrl,
-  fetchProperties,
   fetchPropertyDetail,
   type PropertyDetail,
 } from "@/lib/api";
@@ -25,11 +23,9 @@ import { formatVnd } from "@/lib/format";
 
 export default function PropertyDetailPage() {
   const params = useParams();
-  const router = useRouter();
   const idOrSlug = typeof params.id === "string" ? params.id : "";
 
   const [unit, setUnit] = useState<PropertyDetail | null>(null);
-  const [allUnits, setAllUnits] = useState<PropertyDetail[]>([]);
   const [inquiryOpen, setInquiryOpen] = useState(false);
 
   // Booking widget form state
@@ -39,11 +35,6 @@ export default function PropertyDetailPage() {
   const [guestCount, setGuestCount] = useState("2 Khách");
 
   useEffect(() => {
-    fetchProperties().then((data) => {
-      // Cast or fallback
-      setAllUnits(data as PropertyDetail[]);
-    });
-
     if (idOrSlug) {
       fetchPropertyDetail(idOrSlug)
         .then((data) => {
@@ -75,8 +66,6 @@ export default function PropertyDetailPage() {
   const nightlyPrice = unit.price_nightly ? Number(unit.price_nightly) : null;
   const layoutItems = Array.isArray(unit.room_layout) ? unit.room_layout : [];
 
-  const displayUnits = allUnits.length > 0 ? allUnits : FALLBACK_GAOJI_UNITS;
-
   const galleryFallbacks = [
     {
       id: `${unit.id}-living-room`,
@@ -105,49 +94,7 @@ export default function PropertyDetailPage() {
 
   return (
     <div className="bg-[var(--canvas,#F9F7F2)] min-h-screen text-[var(--text-primary,#1A1A1A)] pb-24">
-      {/* ── 1. APARTMENT QUICK SWITCHER BAR ─────────────────── */}
-      <nav
-        aria-label="Chọn căn hộ"
-        className="bg-[var(--canvas-warm)] border-b border-[var(--hairline)] sticky top-[68px] z-30"
-      >
-        <div className="max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-12 py-3 flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-2">
-            <Link
-              href="/#units"
-              className="inline-flex items-center gap-1.5 font-sans text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)] hover:text-[var(--gold-900)] transition-colors mr-3"
-            >
-              <Icon name="arrow-left" size={14} />
-              <span>Tất Cả Căn</span>
-            </Link>
-            <span className="font-sans text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-[var(--gold-900)] hidden sm:inline">
-              Đang Xem:
-            </span>
-          </div>
-
-          <div className="flex flex-wrap items-center gap-1.5 overflow-x-auto py-1">
-            {displayUnits.map((u) => {
-              const active = u.id === unit.id || u.slug === unit.slug || u.unit_code === unit.unit_code;
-              return (
-                <button
-                  key={u.id || u.slug}
-                  type="button"
-                  onClick={() => router.push(`/properties/${u.id || u.slug}`)}
-                  className={`px-3 py-1.5 font-sans text-xs font-semibold uppercase tracking-wider transition-colors cursor-pointer rounded-none border ${
-                    active
-                      ? "bg-[var(--jade-700)] text-[var(--accent-on)] border-[var(--jade-700)]"
-                      : "bg-[var(--surface-raised)] text-[var(--text-body)] border-[var(--hairline-strong)] hover:border-[var(--gold-700)]"
-                  }`}
-                >
-                  {u.unit_code || u.name}
-                  {u.bedrooms ? ` (${u.bedrooms}PN)` : ""}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      </nav>
-
-      {/* ── 2. HEADER DETAILS & SPECS ───────────────────────── */}
+      {/* ── 1. HEADER DETAILS & SPECS ───────────────────────── */}
       <section className="max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-12 pt-8 sm:pt-10">
         <div className="flex items-center gap-3 mb-3">
           <span className="w-8 h-px bg-[var(--gold-700)]" />
@@ -190,12 +137,12 @@ export default function PropertyDetailPage() {
         </div>
       </section>
 
-      {/* ── 3. GALLERY SHOWCASE GRID ────────────────────────── */}
+      {/* ── 2. GALLERY SHOWCASE GRID ────────────────────────── */}
       <section className="max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-12 mt-6">
         <MosaicGallery images={galleryImages} propertyName={unit.name} />
       </section>
 
-      {/* ── 4. TWO-COLUMN SPLIT: DETAILS & STICKY BOOKING CARD ─ */}
+      {/* ── 3. TWO-COLUMN SPLIT: DETAILS & STICKY BOOKING CARD ─ */}
       <section className="max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-12 mt-12 grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
         {/* Left Column: Details, Layout, Amenities, Rules */}
         <div className="lg:col-span-7 flex flex-col gap-12">

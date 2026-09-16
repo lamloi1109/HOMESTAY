@@ -41,9 +41,81 @@ const VIEW_LABELS: Record<string, Record<Exclude<LanguageCode, "vi">, string>> =
   "Panorama 360° Toàn Cảnh Sông & Thành Phố": { en: "360° Panoramic River & City View", cn: "360° 河景与城市全景", tw: "360° 河景與城市全景" },
 };
 
+const SECTION_LABELS: Record<LanguageCode, {
+  overview: string; layout: string; amenities: string; apartmentAmenities: string;
+  kitchenBath: string; rules: string; amenityItems: string[];
+  ruleItems: { title: string; body: string }[];
+}> = {
+  vi: {
+    overview: "Tổng Quan Không Gian & Thiết Kế", layout: "Bố Trí Từng Phòng Trong Căn Hộ",
+    amenities: "Tiện Nghi & Trang Thiết Bị Đi Kèm", apartmentAmenities: "Tiện Nghi Căn Hộ",
+    kitchenBath: "Bếp & Phòng Tắm", rules: "Nội Quy Cư Trú & Chính Sách",
+    amenityItems: ["Wifi Cáp Quang 300Mbps", "Smart TV Truyền Hình K+", "Điều Hoà Trung Tâm", "Máy Giặt & Máy Sấy Riêng", "Bếp Từ & Lò Vi Sóng", "Ấm Siêu Tốc & Bộ Tách Trà", "Bồn Tắm Nằm & Máy Sấy Tóc", "Bộ Dầu Gội & Sữa Tắm Hữu Cơ"],
+    ruleItems: [
+      { title: "Nhận & Trả Phòng", body: "Nhận phòng từ 14:00 · Trả phòng trước 12:00 trưa (Hỗ trợ linh hoạt nếu phòng trống)." },
+      { title: "Đăng Ký Khách Cư Trú", body: "Cung cấp CCCD / Hộ chiếu trước khi check-in để làm thủ tục khai báo tạm trú C06." },
+      { title: "Không Hút Thuốc", body: "Nghiêm cấm hút thuốc trong căn hộ (Có thể sử dụng ban công mở)." },
+      { title: "Vệ Sinh Định Kỳ", body: "Dọn phòng và thay ga gối định kỳ 2 lần/tuần cho khách thuê dài hạn." },
+    ],
+  },
+  en: {
+    overview: "Space & Design Overview", layout: "Apartment Room Layout",
+    amenities: "Amenities & Included Equipment", apartmentAmenities: "Apartment Amenities",
+    kitchenBath: "Kitchen & Bathroom", rules: "House Rules & Policies",
+    amenityItems: ["300Mbps Fibre Wi-Fi", "Smart TV With K+", "Central Air Conditioning", "Private Washer & Dryer", "Induction Hob & Microwave", "Electric Kettle & Tea Set", "Bathtub & Hair Dryer", "Organic Shampoo & Body Wash"],
+    ruleItems: [
+      { title: "Check-in & Check-out", body: "Check in from 14:00 · Check out before 12:00 noon (Flexible when the apartment is available)." },
+      { title: "Guest Registration", body: "Provide an ID card or passport before check-in for the required temporary-residence registration." },
+      { title: "No Smoking", body: "Smoking is prohibited inside the apartment (the open balcony may be used)." },
+      { title: "Scheduled Housekeeping", body: "Cleaning and linen replacement twice a week for long-term tenants." },
+    ],
+  },
+  cn: {
+    overview: "空间与设计概览", layout: "公寓房间布局", amenities: "配套设施与设备",
+    apartmentAmenities: "公寓设施", kitchenBath: "厨房与浴室", rules: "入住须知与政策",
+    amenityItems: ["300Mbps 光纤 Wi-Fi", "K+ 智能电视", "中央空调", "独立洗衣机与烘干机", "电磁炉与微波炉", "电热水壶与茶具", "浴缸与吹风机", "有机洗发水与沐浴露"],
+    ruleItems: [
+      { title: "入住与退房", body: "14:00 起入住 · 中午 12:00 前退房（房源空闲时可灵活安排）。" },
+      { title: "住客登记", body: "入住前请提供身份证或护照，以办理临时住宿登记。" },
+      { title: "禁止吸烟", body: "公寓内严禁吸烟（可使用开放式阳台）。" },
+      { title: "定期保洁", body: "长租住客每周享受两次清洁与床品更换服务。" },
+    ],
+  },
+  tw: {
+    overview: "空間與設計概覽", layout: "公寓房間配置", amenities: "配套設施與設備",
+    apartmentAmenities: "公寓設施", kitchenBath: "廚房與浴室", rules: "入住須知與政策",
+    amenityItems: ["300Mbps 光纖 Wi-Fi", "K+ 智慧電視", "中央空調", "獨立洗衣機與乾衣機", "電磁爐與微波爐", "電熱水壺與茶具", "浴缸與吹風機", "有機洗髮精與沐浴乳"],
+    ruleItems: [
+      { title: "入住與退房", body: "14:00 起入住 · 中午 12:00 前退房（房源空閒時可彈性安排）。" },
+      { title: "房客登記", body: "入住前請提供身分證或護照，以辦理臨時住宿登記。" },
+      { title: "禁止吸煙", body: "公寓內嚴禁吸煙（可使用開放式陽台）。" },
+      { title: "定期清潔", body: "長租房客每週享有兩次清潔與寢具更換服務。" },
+    ],
+  },
+};
+
+const CONTENT_TRANSLATIONS: Record<Exclude<LanguageCode, "vi">, Record<string, string>> = {
+  en: {
+    "Căn hộ 1 phòng ngủ cao cấp ngay trong tòa tháp biểu tượng Landmark 81. Bước chân xuống sảnh là trung tâm thương mại Vincom Center, rạp chiếu phim, sân băng và chuỗi nhà hàng 5 sao.": "A premium one-bedroom apartment inside the iconic Landmark 81 tower. Vincom Center, a cinema, ice rink and a collection of five-star restaurants are just downstairs.",
+    "Phòng Khách Liền Bếp": "Open-plan Living Room & Kitchen", "Sofa Bed êm ái": "Comfortable sofa bed", "Smart TV 55-inch, Bếp từ, Tủ lạnh side-by-side": "55-inch Smart TV, induction hob and side-by-side refrigerator",
+    "Phòng Ngủ Master": "Master Bedroom", "1 Giường King (1.8m x 2m)": "1 King bed (1.8m × 2m)", "View kính tràn sàn trực diện trung tâm thương mại & Vincom": "Floor-to-ceiling windows overlooking the shopping centre and Vincom",
+  },
+  cn: {
+    "Căn hộ 1 phòng ngủ cao cấp ngay trong tòa tháp biểu tượng Landmark 81. Bước chân xuống sảnh là trung tâm thương mại Vincom Center, rạp chiếu phim, sân băng và chuỗi nhà hàng 5 sao.": "位于地标性 Landmark 81 大厦内的高端一居室公寓。下楼即可到达 Vincom Center、电影院、溜冰场及多家五星级餐厅。",
+    "Phòng Khách Liền Bếp": "开放式客厅与厨房", "Sofa Bed êm ái": "舒适沙发床", "Smart TV 55-inch, Bếp từ, Tủ lạnh side-by-side": "55 英寸智能电视、电磁炉与双开门冰箱",
+    "Phòng Ngủ Master": "主卧", "1 Giường King (1.8m x 2m)": "1 张特大床（1.8m × 2m）", "View kính tràn sàn trực diện trung tâm thương mại & Vincom": "落地窗正对购物中心与 Vincom",
+  },
+  tw: {
+    "Căn hộ 1 phòng ngủ cao cấp ngay trong tòa tháp biểu tượng Landmark 81. Bước chân xuống sảnh là trung tâm thương mại Vincom Center, rạp chiếu phim, sân băng và chuỗi nhà hàng 5 sao.": "位於地標性 Landmark 81 大樓內的高端一房公寓。下樓即可抵達 Vincom Center、電影院、溜冰場及多家五星級餐廳。",
+    "Phòng Khách Liền Bếp": "開放式客廳與廚房", "Sofa Bed êm ái": "舒適沙發床", "Smart TV 55-inch, Bếp từ, Tủ lạnh side-by-side": "55 吋智慧電視、電磁爐與對開門冰箱",
+    "Phòng Ngủ Master": "主臥", "1 Giường King (1.8m x 2m)": "1 張特大床（1.8m × 2m）", "View kính tràn sàn trực diện trung tâm thương mại & Vincom": "落地窗正對購物中心與 Vincom",
+  },
+};
+
 export default function PropertyDetailPage() {
   const { lang } = useLanguage();
   const labels = DETAIL_LABELS[lang];
+  const sections = SECTION_LABELS[lang];
   const params = useParams();
   const idOrSlug = typeof params.id === "string" ? params.id : "";
 
@@ -92,6 +164,8 @@ export default function PropertyDetailPage() {
   const localizedView = unit.view_type && lang !== "vi"
     ? VIEW_LABELS[unit.view_type]?.[lang] || unit.view_type
     : unit.view_type;
+  const localizeContent = (value: string) =>
+    lang === "vi" ? value : CONTENT_TRANSLATIONS[lang][value] || value;
   const layoutItems = Array.isArray(unit.room_layout) ? unit.room_layout : [];
 
   const galleryFallbacks = [
@@ -177,11 +251,11 @@ export default function PropertyDetailPage() {
           {/* Overview */}
           <div className="bg-[var(--surface-raised)] p-6 sm:p-8 border border-[var(--hairline)]">
             <h2 className="font-display text-2xl font-normal text-[var(--ink-900)] uppercase mb-4">
-              Tổng Quan Không Gian & Thiết Kế
+              {sections.overview}
             </h2>
             <p className="font-sans text-base leading-relaxed text-[var(--text-body)]">
-              {unit.description ||
-                "Không gian căn hộ dịch vụ cao cấp được hoàn thiện với tiêu chuẩn khắt khe. Toàn bộ sàn gỗ tự nhiên kết hợp đá marble, hệ thống kính Low-E 3 lớp chống ồn tuyệt đối mang lại giấc ngủ trọn vẹn và không gian làm việc tĩnh lặng cho quý khách."}
+              {localizeContent(unit.description ||
+                "Không gian căn hộ dịch vụ cao cấp được hoàn thiện với tiêu chuẩn khắt khe. Toàn bộ sàn gỗ tự nhiên kết hợp đá marble, hệ thống kính Low-E 3 lớp chống ồn tuyệt đối mang lại giấc ngủ trọn vẹn và không gian làm việc tĩnh lặng cho quý khách.")}
             </p>
           </div>
 
@@ -190,7 +264,7 @@ export default function PropertyDetailPage() {
             <div className="flex items-center gap-3 mb-6">
               <span className="w-6 h-px bg-[var(--gold-700)]" />
               <h2 className="font-display text-2xl font-normal text-[var(--ink-900)] uppercase">
-                Bố Trí Từng Phòng Trong Căn Hộ
+                {sections.layout}
               </h2>
             </div>
 
@@ -200,14 +274,14 @@ export default function PropertyDetailPage() {
                   <div key={i} className="py-4 flex flex-col sm:flex-row sm:items-start justify-between gap-2">
                     <div className="sm:w-1/3">
                       <span className="font-sans text-sm font-semibold uppercase tracking-wider text-[var(--jade-900)]">
-                        {item.room}
+                        {localizeContent(item.room)}
                       </span>
                       <span className="block font-sans text-xs text-[var(--gold-900)] mt-0.5">
-                        {item.bed}
+                        {localizeContent(item.bed)}
                       </span>
                     </div>
                     <div className="sm:w-2/3 font-sans text-sm text-[var(--text-body)]">
-                      {item.specs}
+                      {localizeContent(item.specs)}
                     </div>
                   </div>
                 ))
@@ -262,32 +336,32 @@ export default function PropertyDetailPage() {
             <div className="flex items-center gap-3 mb-6">
               <span className="w-6 h-px bg-[var(--gold-700)]" />
               <h2 className="font-display text-2xl font-normal text-[var(--ink-900)] uppercase">
-                Tiện Nghi & Trang Thiết Bị Đi Kèm
+                {sections.amenities}
               </h2>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div className="flex flex-col gap-3">
                 <span className="font-sans text-xs font-semibold uppercase tracking-wider text-[var(--gold-900)]">
-                  Tiện Nghi Căn Hộ
+                  {sections.apartmentAmenities}
                 </span>
                 <div className="flex flex-wrap gap-2">
-                  <Tag icon="wifi">Wifi Cáp Quang 300Mbps</Tag>
-                  <Tag icon="tv">Smart TV Truyền Hình K+</Tag>
-                  <Tag icon="air-vent">Điều Hoà Trung Tâm</Tag>
-                  <Tag icon="sparkles">Máy Giặt & Máy Sấy Riêng</Tag>
+                  <Tag icon="wifi">{sections.amenityItems[0]}</Tag>
+                  <Tag icon="tv">{sections.amenityItems[1]}</Tag>
+                  <Tag icon="air-vent">{sections.amenityItems[2]}</Tag>
+                  <Tag icon="sparkles">{sections.amenityItems[3]}</Tag>
                 </div>
               </div>
 
               <div className="flex flex-col gap-3">
                 <span className="font-sans text-xs font-semibold uppercase tracking-wider text-[var(--gold-900)]">
-                  Bếp & Phòng Tắm
+                  {sections.kitchenBath}
                 </span>
                 <div className="flex flex-wrap gap-2">
-                  <Tag icon="cooking-pot">Bếp Từ & Lò Vi Sóng</Tag>
-                  <Tag icon="coffee">Ấm Siêu Tốc & Bộ Tách Trà</Tag>
-                  <Tag icon="bath">Bồn Tắm Nằm & Máy Sấy Tóc</Tag>
-                  <Tag icon="sparkles">Bộ Dầu Gội & Sữa Tắm Hữu Cơ</Tag>
+                  <Tag icon="cooking-pot">{sections.amenityItems[4]}</Tag>
+                  <Tag icon="coffee">{sections.amenityItems[5]}</Tag>
+                  <Tag icon="bath">{sections.amenityItems[6]}</Tag>
+                  <Tag icon="sparkles">{sections.amenityItems[7]}</Tag>
                 </div>
               </div>
             </div>
@@ -298,7 +372,7 @@ export default function PropertyDetailPage() {
             <div className="flex items-center gap-3 mb-4">
               <span className="w-6 h-px bg-[var(--gold-700)]" />
               <h2 className="font-display text-2xl font-normal text-[var(--ink-900)] uppercase">
-                Nội Quy Cư Trú & Chính Sách
+                {sections.rules}
               </h2>
             </div>
 
@@ -306,36 +380,36 @@ export default function PropertyDetailPage() {
               <div className="flex items-start gap-3">
                 <Icon name="clock" size={16} color="var(--gold-900)" className="mt-1 shrink-0" />
                 <div>
-                  <strong>Nhận & Trả Phòng:</strong>
+                  <strong>{sections.ruleItems[0].title}:</strong>
                   <br />
-                  Nhận phòng từ 14:00 · Trả phòng trước 12:00 trưa (Hỗ trợ linh hoạt nếu phòng trống).
+                  {sections.ruleItems[0].body}
                 </div>
               </div>
 
               <div className="flex items-start gap-3">
                 <Icon name="shield-check" size={16} color="var(--gold-900)" className="mt-1 shrink-0" />
                 <div>
-                  <strong>Đăng Ký Khách Cư Trú:</strong>
+                  <strong>{sections.ruleItems[1].title}:</strong>
                   <br />
-                  Cung cấp CCCD / Hộ chiếu trước khi check-in để làm thủ tục khai báo tạm trú C06.
+                  {sections.ruleItems[1].body}
                 </div>
               </div>
 
               <div className="flex items-start gap-3">
                 <Icon name="alert-triangle" size={16} color="var(--gold-900)" className="mt-1 shrink-0" />
                 <div>
-                  <strong>Không Hút Thuốc:</strong>
+                  <strong>{sections.ruleItems[2].title}:</strong>
                   <br />
-                  Nghiêm cấm hút thuốc trong căn hộ (Có thể sử dụng ban công mở).
+                  {sections.ruleItems[2].body}
                 </div>
               </div>
 
               <div className="flex items-start gap-3">
                 <Icon name="sparkles" size={16} color="var(--gold-900)" className="mt-1 shrink-0" />
                 <div>
-                  <strong>Vệ Sinh Định Kỳ:</strong>
+                  <strong>{sections.ruleItems[3].title}:</strong>
                   <br />
-                  Dọn phòng và thay ga gối định kỳ 2 lần/tuần cho khách thuê dài hạn.
+                  {sections.ruleItems[3].body}
                 </div>
               </div>
             </div>

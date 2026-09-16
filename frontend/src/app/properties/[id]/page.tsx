@@ -28,12 +28,6 @@ export default function PropertyDetailPage() {
   const [unit, setUnit] = useState<PropertyDetail | null>(null);
   const [inquiryOpen, setInquiryOpen] = useState(false);
 
-  // Booking widget form state
-  const [checkinDate, setCheckinDate] = useState("");
-  const [checkoutDate, setCheckoutDate] = useState("");
-  const [rentalTerm, setRentalTerm] = useState<"monthly" | "nightly">("monthly");
-  const [guestCount, setGuestCount] = useState("2 Khách");
-
   useEffect(() => {
     if (idOrSlug) {
       fetchPropertyDetail(idOrSlug)
@@ -64,6 +58,12 @@ export default function PropertyDetailPage() {
 
   const monthlyPrice = unit.price_monthly ? Number(unit.price_monthly) : null;
   const nightlyPrice = unit.price_nightly ? Number(unit.price_nightly) : null;
+  const availablePrices = [nightlyPrice, monthlyPrice].filter(
+    (price): price is number => price !== null,
+  );
+  const priceRange = availablePrices.length > 0
+    ? `${formatVnd(Math.min(...availablePrices))} – ${formatVnd(Math.max(...availablePrices))}`
+    : "Liên hệ để nhận báo giá";
   const layoutItems = Array.isArray(unit.room_layout) ? unit.room_layout : [];
 
   const galleryFallbacks = [
@@ -314,107 +314,28 @@ export default function PropertyDetailPage() {
           </div>
         </div>
 
-        {/* Right Column: Sticky Booking & Stay Request Card */}
+        {/* Right Column: Sticky Price & Contact Card */}
         <div className="lg:col-span-5 sticky top-24">
-          <div className="bg-[var(--canvas-warm)] border border-[var(--gold-700)] p-6 sm:p-8 shadow-xl">
+          <div className="bg-[var(--canvas-warm)] border border-[var(--gold-700)] p-6 sm:p-8">
             <span className="font-sans text-xs font-semibold uppercase tracking-[0.18em] text-[var(--gold-900)]">
               Bảng Giá Thuê Trực Tiếp Từ Chủ Nhà
             </span>
 
-            {/* Price display */}
+            {/* Compact price range */}
             <div className="mt-4 pb-6 border-b border-[var(--hairline)]">
-              <div className="flex items-baseline justify-between">
-                <div>
-                  <span className="font-sans text-xs uppercase tracking-wider text-[var(--text-muted)] block">
-                    Giá Thuê Tháng (Bao Phí)
-                  </span>
-                  <span className="font-display text-3xl sm:text-4xl text-[var(--jade-700)] font-medium">
-                    {monthlyPrice ? formatVnd(monthlyPrice) : "Liên hệ"}
-                  </span>
-                  <span className="font-sans text-xs text-[var(--text-muted)]"> / tháng</span>
-                </div>
-
-                {nightlyPrice && (
-                  <div className="text-right">
-                    <span className="font-sans text-xs uppercase tracking-wider text-[var(--text-muted)] block">
-                      Thuê Ngắn Hạn
-                    </span>
-                    <span className="font-display text-xl text-[var(--gold-900)] font-medium">
-                      {formatVnd(nightlyPrice)}
-                    </span>
-                    <span className="font-sans text-xs text-[var(--text-muted)]"> / đêm</span>
-                  </div>
-                )}
-              </div>
+              <span className="font-sans text-xs uppercase tracking-wider text-[var(--text-muted)] block">
+                Khoảng Giá Tham Khảo
+              </span>
+              <strong className="mt-1 block font-display text-3xl font-medium text-[var(--jade-700)] sm:text-4xl">
+                {priceRange}
+              </strong>
+              <p className="mt-2 font-sans text-xs leading-5 text-[var(--text-muted)]">
+                Giá chính xác phụ thuộc thời hạn thuê và tình trạng căn hộ tại thời điểm tư vấn.
+              </p>
             </div>
 
-            {/* Quick Stay Query Widget */}
-            <div className="mt-6 flex flex-col gap-4">
-              {/* Term switcher */}
-              <div className="grid grid-cols-2 gap-2">
-                <button
-                  type="button"
-                  onClick={() => setRentalTerm("monthly")}
-                  className={`py-2 text-xs font-sans font-semibold uppercase tracking-wider rounded-none border transition-colors ${
-                    rentalTerm === "monthly"
-                      ? "bg-[var(--jade-700)] text-white border-[var(--jade-700)]"
-                      : "bg-[var(--surface-raised)] text-[var(--text-muted)] border-[var(--hairline)]"
-                  }`}
-                >
-                  Thuê Dài Hạn (Tháng)
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setRentalTerm("nightly")}
-                  className={`py-2 text-xs font-sans font-semibold uppercase tracking-wider rounded-none border transition-colors ${
-                    rentalTerm === "nightly"
-                      ? "bg-[var(--jade-700)] text-white border-[var(--jade-700)]"
-                      : "bg-[var(--surface-raised)] text-[var(--text-muted)] border-[var(--hairline)]"
-                  }`}
-                >
-                  Thuê Ngắn Hạn (Đêm)
-                </button>
-              </div>
-
-              {/* Date Inputs */}
-              <div className="grid grid-cols-2 gap-2">
-                <label className="flex flex-col gap-1 font-sans text-xs text-[var(--text-muted)] uppercase">
-                  <span>Ngày Nhận Phòng</span>
-                  <input
-                    type="date"
-                    value={checkinDate}
-                    onChange={(e) => setCheckinDate(e.target.value)}
-                    className="h-10 px-3 bg-[var(--surface-raised)] border border-[var(--hairline-strong)] text-xs font-sans rounded-none focus:outline-1 focus:outline-[var(--gold-500)]"
-                  />
-                </label>
-                <label className="flex flex-col gap-1 font-sans text-xs text-[var(--text-muted)] uppercase">
-                  <span>Ngày Trả Phòng</span>
-                  <input
-                    type="date"
-                    value={checkoutDate}
-                    onChange={(e) => setCheckoutDate(e.target.value)}
-                    className="h-10 px-3 bg-[var(--surface-raised)] border border-[var(--hairline-strong)] text-xs font-sans rounded-none focus:outline-1 focus:outline-[var(--gold-500)]"
-                  />
-                </label>
-              </div>
-
-              {/* Guests selection */}
-              <label className="flex flex-col gap-1 font-sans text-xs text-[var(--text-muted)] uppercase">
-                <span>Số Lượng Khách</span>
-                <select
-                  value={guestCount}
-                  onChange={(e) => setGuestCount(e.target.value)}
-                  className="h-10 px-3 bg-[var(--surface-raised)] border border-[var(--hairline-strong)] text-xs font-sans rounded-none focus:outline-1 focus:outline-[var(--gold-500)]"
-                >
-                  <option value="1 Khách">1 Khách</option>
-                  <option value="2 Khách">2 Khách</option>
-                  <option value="3 Khách">3 Khách</option>
-                  <option value="4 Khách">4 Khách (Tối đa)</option>
-                </select>
-              </label>
-
-              {/* Action Buttons */}
-              <div className="mt-2 flex flex-col gap-2.5">
+            <div className="mt-6 flex flex-col gap-5">
+              <div className="flex flex-col gap-2.5">
                 <Button
                   variant="gold"
                   size="md"

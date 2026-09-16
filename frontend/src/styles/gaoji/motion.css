@@ -19,6 +19,16 @@
   100% { transform: translateX(110%); }
 }
 
+@keyframes gh-content-enter {
+  from { opacity: 0; transform: scale(.985) translateY(8px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.gh-content-enter {
+  transform-origin: top center;
+  animation: gh-content-enter var(--dur-slow) var(--ease-out) both;
+}
+
 .gh-image-skeleton {
   position: relative;
   display: block;
@@ -41,4 +51,5 @@
 
 @media (prefers-reduced-motion: reduce) {
   .gh-image-skeleton::after { animation: none; }
+  .gh-content-enter { animation: none; }
 }

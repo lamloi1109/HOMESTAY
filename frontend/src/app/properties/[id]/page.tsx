@@ -11,6 +11,7 @@ import {
   InquiryModal,
   MosaicGallery,
   PropertyLocationMap,
+  PropertyDetailSkeleton,
   RoomSpecs,
   Tag,
 } from "@/components/gaoji";
@@ -140,14 +141,7 @@ export default function PropertyDetailPage() {
   }, [idOrSlug]);
 
   if (!unit) {
-    return (
-      <main className="min-h-[60vh] flex items-center justify-center bg-[var(--canvas)]">
-        <div className="flex items-center gap-3 font-sans text-lg text-[var(--text-muted)]">
-          <Icon name="loader-circle" size={24} className="animate-spin" />
-          <span>{labels.loading}</span>
-        </div>
-      </main>
-    );
+    return <PropertyDetailSkeleton label={labels.loading} />;
   }
 
   const monthlyPrice = unit.price_monthly ? Number(unit.price_monthly) : null;
@@ -195,7 +189,7 @@ export default function PropertyDetailPage() {
     : galleryFallbacks;
 
   return (
-    <div className="bg-[var(--canvas,#F9F7F2)] min-h-screen text-[var(--text-primary,#1A1A1A)] pb-24">
+    <div className="gh-content-enter bg-[var(--canvas,#F9F7F2)] min-h-screen text-[var(--text-primary,#1A1A1A)] pb-24">
       {/* ── 1. HEADER DETAILS & SPECS ───────────────────────── */}
       <section className="max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-12 pt-8 sm:pt-10">
         <div className="flex items-center gap-3 mb-3">

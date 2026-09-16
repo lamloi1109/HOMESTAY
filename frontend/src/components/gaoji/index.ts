@@ -19,6 +19,7 @@ export * from "./galleryTypes";
 export * from "./PhotoPlate";
 export * from "./PropertyCard";
 export * from "./PropertyLocationMap";
+export * from "./PropertyDetailSkeleton";
 export * from "./RatingStars";
 export * from "./ResidenceCarousel";
 export * from "./RoomSpecs";

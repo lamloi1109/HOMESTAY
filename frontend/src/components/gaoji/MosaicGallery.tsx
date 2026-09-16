@@ -1,9 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import { Grid3X3 } from "lucide-react";
 import { useRef, useState } from "react";
 import { AllPhotosGallery } from "./AllPhotosGallery";
+import { LazyImage } from "./LazyImage";
 import type { GalleryImage } from "./galleryTypes";
 
 interface MosaicGalleryProps {
@@ -14,14 +14,12 @@ interface MosaicGalleryProps {
 function GalleryImage({ image, priority = false, sizes }: { image: GalleryImage; priority?: boolean; sizes: string }) {
   const source = image.thumbnailSrc ?? image.src;
   return (
-    <Image
+    <LazyImage
       src={source}
       alt={image.alt}
-      fill
       priority={priority}
       sizes={sizes}
-      unoptimized={source.startsWith("http")}
-      className="object-cover transition-[transform,filter] duration-300 ease-out group-hover:scale-[1.02] group-hover:brightness-95 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+      imageClassName="object-cover group-hover:scale-[1.02] group-hover:brightness-95 motion-reduce:group-hover:scale-100"
     />
   );
 }

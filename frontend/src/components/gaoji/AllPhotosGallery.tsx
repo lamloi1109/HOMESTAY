@@ -12,6 +12,7 @@ import {
   type GalleryImage,
 } from "./galleryTypes";
 import { calculateJustifiedRows, useContainerWidth } from "./useJustifiedLayout";
+import { LazyImage } from "./LazyImage";
 
 interface AllPhotosGalleryProps {
   open: boolean;
@@ -37,7 +38,6 @@ function GalleryPhoto({
   onOpen: () => void;
   buttonRef: (node: HTMLButtonElement | null) => void;
 }) {
-  const [failed, setFailed] = useState(false);
   const source = image.thumbnailSrc ?? image.src;
 
   return (
@@ -49,23 +49,14 @@ function GalleryPhoto({
       aria-label={`Xem ảnh lớn: ${image.alt}`}
     >
       <span className="relative block min-h-0 flex-1 overflow-hidden rounded-[10px] bg-stone-100">
-        {!failed ? (
-          <Image
-            src={source}
-            alt={image.alt}
-            fill
-            sizes="(max-width: 639px) 50vw, (max-width: 1023px) 40vw, 32vw"
-            loading={priority ? "eager" : "lazy"}
-            unoptimized={source.startsWith("http")}
-            onError={() => setFailed(true)}
-            className="object-cover transition-[transform,filter] duration-200 ease-out group-hover:scale-[1.02] group-hover:brightness-95 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
-          />
-        ) : (
-          <span className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-stone-500" role="img" aria-label={`Không tải được ${image.alt}`}>
-            <ImageOff aria-hidden="true" size={28} strokeWidth={1.5} />
-            <span className="px-3 text-center font-sans text-xs">Không tải được ảnh</span>
-          </span>
-        )}
+        <LazyImage
+          src={source}
+          alt={image.alt}
+          sizes="(max-width: 639px) 50vw, (max-width: 1023px) 40vw, 32vw"
+          priority={priority}
+          errorLabel="Không tải được ảnh"
+          imageClassName="object-cover group-hover:scale-[1.02] group-hover:brightness-95 motion-reduce:group-hover:scale-100"
+        />
       </span>
       {image.caption && (
         <span className="block w-full bg-white pt-2 font-sans text-sm leading-5 text-stone-600">
@@ -123,7 +114,7 @@ function JustifiedSection({
 
       <div className="hidden space-y-2.5 sm:block">
         {width === 0 ? (
-          <div className="h-52 animate-pulse rounded-[10px] bg-stone-100" aria-label="Đang chuẩn bị bố cục ảnh" />
+          <div className="gh-image-skeleton h-52 rounded-[10px] bg-stone-100" aria-label="Đang chuẩn bị bố cục ảnh" />
         ) : (
           rows.map((row, rowIndex) => (
             <div key={`${row.items[0]?.image.id}-${rowIndex}`} className="flex items-start gap-2.5">

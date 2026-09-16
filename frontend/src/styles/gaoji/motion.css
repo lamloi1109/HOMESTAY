@@ -13,3 +13,32 @@
   --press-scale: 1;
   --reveal-y: 24px;
 }
+
+@keyframes gh-shimmer {
+  0% { transform: translateX(-110%); }
+  100% { transform: translateX(110%); }
+}
+
+.gh-image-skeleton {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  background: var(--surface-sunken);
+}
+
+.gh-image-skeleton::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background: linear-gradient(
+    105deg,
+    transparent 20%,
+    color-mix(in srgb, var(--surface-raised) 72%, transparent) 45%,
+    transparent 70%
+  );
+  animation: gh-shimmer 1.6s var(--ease-standard) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gh-image-skeleton::after { animation: none; }
+}

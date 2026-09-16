@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useSyncExternalStore } from "react";
 
 export type LanguageCode = "vi" | "en" | "cn" | "tw";
 
@@ -14,32 +14,55 @@ const LanguageContext = createContext<LanguageContextType>({
   setLang: () => {},
 });
 
+const LANGUAGE_STORAGE_KEY = "gaoji-lang";
+const LANGUAGE_CHANGE_EVENT = "gaoji-language-change";
+const SUPPORTED_LANGUAGES: LanguageCode[] = ["vi", "en", "cn", "tw"];
+let memoryLanguage: LanguageCode = "vi";
+
+const getServerLanguage = (): LanguageCode => "vi";
+
+const getStoredLanguage = (): LanguageCode => {
+  try {
+    const saved = localStorage.getItem(LANGUAGE_STORAGE_KEY) as LanguageCode | null;
+    return saved && SUPPORTED_LANGUAGES.includes(saved) ? saved : memoryLanguage;
+  } catch {
+    return memoryLanguage;
+  }
+};
+
+const subscribeToLanguage = (onStoreChange: () => void) => {
+  const handleStorage = (event: StorageEvent) => {
+    if (event.key === LANGUAGE_STORAGE_KEY) onStoreChange();
+  };
+  window.addEventListener("storage", handleStorage);
+  window.addEventListener(LANGUAGE_CHANGE_EVENT, onStoreChange);
+  return () => {
+    window.removeEventListener("storage", handleStorage);
+    window.removeEventListener(LANGUAGE_CHANGE_EVENT, onStoreChange);
+  };
+};
+
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [lang, setLangState] = useState<LanguageCode>(() => {
-    if (typeof window !== "undefined") {
-      try {
-        const saved = localStorage.getItem("gaoji-lang") as LanguageCode;
-        if (saved && ["vi", "en", "cn", "tw"].includes(saved)) {
-          return saved;
-        }
-      } catch {
-        // Ignore localStorage error
-      }
-    }
-    return "vi";
-  });
+  // The server snapshot stays Vietnamese during hydration; React reads localStorage
+  // immediately after hydration without rendering different server/client text.
+  const lang = useSyncExternalStore(
+    subscribeToLanguage,
+    getStoredLanguage,
+    getServerLanguage,
+  );
+
+  useEffect(() => {
+    document.documentElement.lang = lang === "cn" ? "zh-CN" : lang === "tw" ? "zh-TW" : lang;
+  }, [lang]);
 
   const setLang = (newLang: LanguageCode) => {
-    setLangState(newLang);
+    memoryLanguage = newLang;
     try {
-      localStorage.setItem("gaoji-lang", newLang);
-      const htmlLang = newLang === "cn" ? "zh-CN" : newLang === "tw" ? "zh-TW" : newLang;
-      if (typeof document !== "undefined") {
-        document.documentElement.lang = htmlLang;
-      }
+      localStorage.setItem(LANGUAGE_STORAGE_KEY, newLang);
     } catch {
       // Ignore localStorage error
     }
+    window.dispatchEvent(new Event(LANGUAGE_CHANGE_EVENT));
   };
 
   return (

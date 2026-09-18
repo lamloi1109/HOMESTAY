@@ -1,4 +1,5 @@
 from functools import lru_cache
+from typing import Literal
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -23,8 +24,15 @@ class Settings(BaseSettings):
 
     cors_origins: list[str] = ["http://localhost:3000"]
 
-    # Thư mục lưu ảnh upload (LocalDiskStorage — swap S3 ở phase sau).
+    # Local remains available for development/tests; production can use Cloudflare R2.
+    storage_backend: Literal["local", "r2"] = "local"
     upload_dir: str = "uploads"
+    r2_endpoint_url: str | None = None
+    r2_access_key_id: str | None = None
+    r2_secret_access_key: str | None = None
+    r2_bucket_name: str | None = None
+    r2_public_url: str | None = None
+    r2_key_prefix: str = "property-images"
 
 
 @lru_cache

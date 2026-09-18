@@ -37,6 +37,27 @@ Tài khoản demo: `owner@example.com` / `demo12345`.
 > Lưu ý Windows: dùng `127.0.0.1` thay vì `localhost` khi trỏ Postgres —
 > `localhost` có thể resolve sang `::1` (IPv6) và treo với docker port-mapping.
 
+## Lưu ảnh trên Cloudflare R2
+
+Backend mặc định tiếp tục dùng thư mục local để phát triển. Để lưu ảnh mới trên
+R2, tạo bucket, bật public access bằng custom domain (khuyến nghị) hoặc `r2.dev`,
+tạo S3 API token có quyền đọc/ghi bucket, rồi cấu hình các biến trong
+`backend/.env.example`:
+
+```env
+HOMESTAY_STORAGE_BACKEND=r2
+HOMESTAY_R2_ENDPOINT_URL=https://<account-id>.r2.cloudflarestorage.com
+HOMESTAY_R2_ACCESS_KEY_ID=<access-key-id>
+HOMESTAY_R2_SECRET_ACCESS_KEY=<secret-access-key>
+HOMESTAY_R2_BUCKET_NAME=homestay-images
+HOMESTAY_R2_PUBLIC_URL=https://images.example.com
+HOMESTAY_R2_KEY_PREFIX=property-images
+```
+
+Không commit access key vào Git. Chuyển storage backend chỉ áp dụng cho upload
+mới; cần sao chép các file đang có trong `backend/uploads/` vào đúng key prefix
+trên R2 trước khi đổi cấu hình ở môi trường đã có dữ liệu.
+
 ## Test (Tempering Phase 2 — bắt buộc trước khi commit code booking)
 
 ```bash

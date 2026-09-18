@@ -24,7 +24,6 @@ const DICT = {
     heroTitle: "Về Nhà · Tận Hưởng Không Gian Sống",
     heroBody: "Năm căn hộ dịch vụ cao cấp đầy đủ nội thất bên bờ sông Sài Gòn và Landmark 81. Dọn phòng định kỳ, lễ tân 24/7, hỗ trợ đăng ký tạm trú — trọn gói trong một mức giá minh bạch.",
     heroCta1: "Xem Danh Sách Căn Hộ",
-    heroCta2: "Kiểm Tra Phòng Trống",
     heroProof1: "5 căn hộ tuyển chọn",
     heroProof2: "Giá thuê minh bạch",
     heroProof3: "Phản hồi trong 2 giờ",
@@ -183,7 +182,6 @@ const DICT = {
     heroTitle: "Welcome Home · Elevated Living In Saigon",
     heroBody: "Five fully furnished luxury serviced apartments adjacent to Landmark 81 and Saigon River. Regular housekeeping, 24/7 concierge, registration support — all-inclusive in one transparent rate.",
     heroCta1: "View Apartment Collection",
-    heroCta2: "Check Availability",
     heroProof1: "5 curated residences",
     heroProof2: "Transparent rates",
     heroProof3: "Reply within 2 hours",
@@ -335,7 +333,6 @@ const DICT = {
     heroTitle: "归家 · 享受静谧雅致的私享居所",
     heroBody: "地处 Landmark 81 与西贡河畔，五套高规格精装服务式公寓。定期保洁、24/7 前台、外籍暂住申报——一站式全包透明月租。",
     heroCta1: "查看所有房源",
-    heroCta2: "查询可订房源",
     heroProof1: "5 套精选公寓",
     heroProof2: "价格透明",
     heroProof3: "2 小时内回复",
@@ -487,7 +484,6 @@ const DICT = {
     heroTitle: "歸家 · 享受靜謐雅致的私享居所",
     heroBody: "地處 Landmark 81 與西貢河畔，五套高規格精裝服務式公寓。定期清潔、24/7 前台、外籍暫住申報——一站式全包透明月租。",
     heroCta1: "查看所有房源",
-    heroCta2: "查詢可訂房源",
     heroProof1: "5 套精選公寓",
     heroProof2: "價格透明",
     heroProof3: "2 小時內回覆",
@@ -985,15 +981,6 @@ export default function LandingPage() {
 
           {/* High-Contrast Action CTAs */}
           <div className="mt-8 flex flex-wrap items-center gap-4">
-            <Button
-              variant="gold"
-              size="lg"
-              icon="calendar-check"
-              onClick={() => handleOpenInquiry()}
-              style={{ minWidth: 230 }}
-            >
-              {t.heroCta2}
-            </Button>
             <Button
               variant="outline"
               size="lg"

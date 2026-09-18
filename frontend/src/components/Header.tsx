@@ -347,13 +347,27 @@ export function Header() {
               })}
             </div>
 
-
+            <button
+              type="button"
+              onClick={() => setMobileMenuOpen((open) => !open)}
+              aria-label={t.menuAria}
+              aria-expanded={mobileMenuOpen}
+              aria-controls="mobile-main-navigation"
+              className="inline-flex size-11 items-center justify-center border border-[#DCD6C8] bg-white text-[#1F3A2E] transition-colors hover:border-[#D4AF37] hover:bg-[#FAF8F5] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37] lg:hidden"
+            >
+              <Icon
+                name={mobileMenuOpen ? "x" : "menu"}
+                size={22}
+                color="currentColor"
+              />
+            </button>
           </div>
         </div>
 
         {/* Mobile Navigation Drawer */}
         {mobileMenuOpen && (
           <nav
+            id="mobile-main-navigation"
             aria-label={t.navAria}
             className="lg:hidden mt-3 border-t border-[#E8E4DB] bg-[#FAF8F5] flex flex-col divide-y divide-[#E8E4DB]"
           >

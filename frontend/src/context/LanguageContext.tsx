@@ -10,16 +10,16 @@ interface LanguageContextType {
 }
 
 const LanguageContext = createContext<LanguageContextType>({
-  lang: "vi",
+  lang: "cn",
   setLang: () => {},
 });
 
 const LANGUAGE_STORAGE_KEY = "gaoji-lang";
 const LANGUAGE_CHANGE_EVENT = "gaoji-language-change";
 const SUPPORTED_LANGUAGES: LanguageCode[] = ["vi", "en", "cn", "tw"];
-let memoryLanguage: LanguageCode = "vi";
+let memoryLanguage: LanguageCode = "cn";
 
-const getServerLanguage = (): LanguageCode => "vi";
+const getServerLanguage = (): LanguageCode => "cn";
 
 const getStoredLanguage = (): LanguageCode => {
   try {
@@ -43,7 +43,7 @@ const subscribeToLanguage = (onStoreChange: () => void) => {
 };
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  // The server snapshot stays Vietnamese during hydration; React reads localStorage
+  // The server snapshot stays Simplified Chinese during hydration; React reads localStorage
   // immediately after hydration without rendering different server/client text.
   const lang = useSyncExternalStore(
     subscribeToLanguage,

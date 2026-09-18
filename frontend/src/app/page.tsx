@@ -65,7 +65,6 @@ const DICT = {
     filterViewResults: "Xem Kết Quả",
     filterCloseLabel: "Đóng bảng bộ lọc",
     priceMillion: "Triệu VNĐ",
-    resultCount: (shown: number, total: number) => `${shown} / ${total} căn hộ phù hợp`,
     lblBeds: "Số Phòng Ngủ",
     tabAll: "Tất Cả",
     tab1PN: "1 Phòng Ngủ",
@@ -223,7 +222,6 @@ const DICT = {
     filterViewResults: "View Results",
     filterCloseLabel: "Close filter dialog",
     priceMillion: "Million VNĐ",
-    resultCount: (shown: number, total: number) => `${shown} of ${total} matching apartments`,
     lblBeds: "Bedrooms",
     tabAll: "All",
     tab1PN: "1 Bedroom",
@@ -376,7 +374,6 @@ const DICT = {
     filterViewResults: "查看结果",
     filterCloseLabel: "关闭筛选面板",
     priceMillion: "百万越南盾",
-    resultCount: (shown: number, total: number) => `${total} 套中有 ${shown} 套符合条件`,
     lblBeds: "卧室数量",
     tabAll: "全部",
     tab1PN: "一室一厅",
@@ -529,7 +526,6 @@ const DICT = {
     filterViewResults: "查看結果",
     filterCloseLabel: "關閉篩選面板",
     priceMillion: "百萬越南盾",
-    resultCount: (shown: number, total: number) => `${total} 套中有 ${shown} 套符合條件`,
     lblBeds: "臥室數量",
     tabAll: "全部",
     tab1PN: "一房一廳",
@@ -1239,12 +1235,8 @@ export default function LandingPage() {
               </div>
             )}
 
-            {/* Summary Row */}
-            <div className="flex flex-wrap items-center justify-between gap-3 p-3.5 sm:p-4.5 bg-[#FAF8F5] border-t border-[#E8E4DB]">
-              <span role="status" aria-live="polite" className="font-sans text-xs sm:text-[0.8125rem] font-semibold uppercase tracking-[0.15em] text-[#1A1A1A]">
-                {t.resultCount(filteredUnits.length, UNITS_DATA.length)}
-              </span>
-              {hasActiveUnitFilters && (
+            {hasActiveUnitFilters && (
+              <div className="flex justify-end border-t border-[#E8E4DB] bg-[#FAF8F5] p-3.5 sm:p-4.5">
                 <button
                   type="button"
                   onClick={clearUnitFilters}
@@ -1252,8 +1244,8 @@ export default function LandingPage() {
                 >
                   {t.btnClear}
                 </button>
-              )}
-            </div>
+              </div>
+            )}
           </div>
 
           {/* Units Grid (3 Columns) */}

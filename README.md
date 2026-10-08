@@ -58,6 +58,67 @@ Không commit access key vào Git. Chuyển storage backend chỉ áp dụng cho
 mới; cần sao chép các file đang có trong `backend/uploads/` vào đúng key prefix
 trên R2 trước khi đổi cấu hình ở môi trường đã có dữ liệu.
 
+### Chuyển static assets của frontend lên R2
+
+Sau khi khai báo các biến `HOMESTAY_R2_*`, chạy từ thư mục `backend`:
+
+```bash
+# Kiểm tra danh sách trước, không upload
+python scripts/migrate_public_assets_to_r2.py --dry-run
+
+# Upload frontend/public/assets/* thành assets/* trong bucket
+python scripts/migrate_public_assets_to_r2.py
+```
+
+Sau khi xác nhận URL `https://<public-r2-domain>/assets/...` trả ảnh thành công,
+đặt biến build/deploy của frontend và build lại:
+
+```env
+NEXT_PUBLIC_ASSET_BASE_URL=https://images.example.com
+```
+
+Frontend sẽ redirect toàn bộ `/assets/*` sang cùng đường dẫn trên R2. Nếu biến
+trên để trống, file local trong `frontend/public/assets` vẫn là fallback cho dev
+và rollback; chỉ xóa chúng khỏi repo sau khi đã kiểm tra production đầy đủ.
+
+## Deploy frontend lên Cloudflare Workers
+
+Trong Cloudflare Workers Builds, cấu hình chính xác:
+
+| Trường | Giá trị |
+| --- | --- |
+| Root directory | `/frontend` |
+| Deploy command | `npx wrangler deploy` |
+
+Root directory `/frontend` là bắt buộc với monorepo này. Nếu để `/` hoặc trống,
+OpenNext sẽ tìm `open-next.config.ts`, `package.json` và `wrangler.jsonc` ở sai
+thư mục, dẫn tới lỗi thiếu config dù các file đã được commit. Lệnh tương đương
+khi chạy thủ công từ repository root là:
+
+```bash
+cd frontend
+npx wrangler deploy
+```
+
+Không dùng `npx wrangler preview` làm production deploy command. Lệnh đó chỉ tạo
+branch Preview và dùng block `previews` riêng trong `wrangler.jsonc`. Khi cần tạo
+Preview thủ công, chạy:
+
+```bash
+npx wrangler preview
+```
+
+`frontend/wrangler.jsonc` chạy OpenNext build trước khi deploy và giữ tên Worker
+`gaojihouse` đồng nhất với service binding `WORKER_SELF_REFERENCE`. Hai giá trị
+này phải luôn giống nhau; nếu đổi tên Worker, phải đổi cả `name` và `service`.
+Không dùng cấu hình được auto-generate với `service: "frontend"`, vì Worker đó
+không tồn tại và Cloudflare sẽ trả lỗi API `10143`.
+
+OpenNext cũng yêu cầu `frontend/open-next.config.ts` phải được commit. Custom
+build cài adapter tạm thời bằng `--no-save --package-lock=false` trước khi chạy,
+do phiên bản adapter hiện tại chưa tương thích peer chính thức với Next 16.2.10;
+không xóa file config hoặc đổi build command về lệnh OpenNext trần.
+
 ## Test (Tempering Phase 2 — bắt buộc trước khi commit code booking)
 
 ```bash

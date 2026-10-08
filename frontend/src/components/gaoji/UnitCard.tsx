@@ -1,9 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import { Icon } from "./Icon";
+import { LazyImage } from "./LazyImage";
 import { RoomSpecs } from "./RoomSpecs";
 
 export type UnitRate =
@@ -116,19 +116,15 @@ export function UnitCard({
       <article
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
-        className="flex h-full flex-col overflow-hidden rounded-[14px] border border-[var(--hairline)] bg-[var(--surface-raised)] transition-[color,border-color,box-shadow] duration-200 hover:border-[var(--gold-700)] hover:shadow-[0_16px_42px_rgba(27,46,37,0.12)]"
+        className="group flex h-full flex-col overflow-hidden rounded-[14px] border border-[var(--hairline)] bg-[var(--surface-raised)] transition-[color,border-color,box-shadow] duration-200 hover:border-[var(--gold-700)] hover:shadow-[0_16px_42px_rgba(27,46,37,0.12)]"
       >
       {/* Photography remains the card's strongest sales signal. */}
       <div className="relative aspect-[5/4] overflow-hidden bg-[var(--surface-sunken)]">
-        <Image
+        <LazyImage
           src={photo}
           alt={unit.name}
-          fill
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          className="object-cover transition-transform duration-700 ease-out"
-          style={{
-            transform: hover ? "scale(1.04)" : "scale(1)",
-          }}
+          imageClassName="object-cover group-hover:scale-[1.04]"
         />
 
         {/* Status is intentionally quiet; the photo stays dominant. */}

@@ -37,6 +37,72 @@ Tài khoản demo: `owner@example.com` / `demo12345`.
 > Lưu ý Windows: dùng `127.0.0.1` thay vì `localhost` khi trỏ Postgres —
 > `localhost` có thể resolve sang `::1` (IPv6) và treo với docker port-mapping.
 
+## Lưu ảnh trên Cloudflare R2
+
+Backend mặc định tiếp tục dùng thư mục local để phát triển. Để lưu ảnh mới trên
+R2, tạo bucket, bật public access bằng custom domain (khuyến nghị) hoặc `r2.dev`,
+tạo S3 API token có quyền đọc/ghi bucket, rồi cấu hình các biến trong
+`backend/.env.example`:
+
+```env
+HOMESTAY_STORAGE_BACKEND=r2
+HOMESTAY_R2_ENDPOINT_URL=https://<account-id>.r2.cloudflarestorage.com
+HOMESTAY_R2_ACCESS_KEY_ID=<access-key-id>
+HOMESTAY_R2_SECRET_ACCESS_KEY=<secret-access-key>
+HOMESTAY_R2_BUCKET_NAME=homestay-images
+HOMESTAY_R2_PUBLIC_URL=https://images.example.com
+HOMESTAY_R2_KEY_PREFIX=property-images
+```
+
+Không commit access key vào Git. Chuyển storage backend chỉ áp dụng cho upload
+mới; cần sao chép các file đang có trong `backend/uploads/` vào đúng key prefix
+trên R2 trước khi đổi cấu hình ở môi trường đã có dữ liệu.
+
+### Chuyển static assets của frontend lên R2
+
+Sau khi khai báo các biến `HOMESTAY_R2_*`, chạy từ thư mục `backend`:
+
+```bash
+# Kiểm tra danh sách trước, không upload
+python scripts/migrate_public_assets_to_r2.py --dry-run
+
+# Upload frontend/public/assets/* thành assets/* trong bucket
+python scripts/migrate_public_assets_to_r2.py
+```
+
+Sau khi xác nhận URL `https://<public-r2-domain>/assets/...` trả ảnh thành công,
+đặt biến build/deploy của frontend và build lại:
+
+```env
+NEXT_PUBLIC_ASSET_BASE_URL=https://images.example.com
+```
+
+Frontend sẽ redirect toàn bộ `/assets/*` sang cùng đường dẫn trên R2. Nếu biến
+trên để trống, file local trong `frontend/public/assets` vẫn là fallback cho dev
+và rollback; chỉ xóa chúng khỏi repo sau khi đã kiểm tra production đầy đủ.
+
+## Deploy frontend lên Cloudflare Workers
+
+Cloudflare build phải chạy tại thư mục `frontend` với deploy command:
+
+```bash
+npx wrangler deploy
+```
+
+Không dùng `npx wrangler preview` làm production deploy command. Lệnh đó chỉ tạo
+branch Preview và dùng block `previews` riêng trong `wrangler.jsonc`. Khi cần tạo
+Preview thủ công, chạy:
+
+```bash
+npx wrangler preview
+```
+
+`frontend/wrangler.jsonc` chạy OpenNext build trước khi deploy và giữ tên Worker
+`gaojihouse` đồng nhất với service binding `WORKER_SELF_REFERENCE`. Hai giá trị
+này phải luôn giống nhau; nếu đổi tên Worker, phải đổi cả `name` và `service`.
+Không dùng cấu hình được auto-generate với `service: "frontend"`, vì Worker đó
+không tồn tại và Cloudflare sẽ trả lỗi API `10143`.
+
 ## Test (Tempering Phase 2 — bắt buộc trước khi commit code booking)
 
 ```bash

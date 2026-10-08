@@ -1,7 +1,15 @@
 "use client";
 
 import React from "react";
+import { useLanguage, type LanguageCode } from "@/context/LanguageContext";
 import { Icon } from "./Icon";
+
+const CONTACT_LABELS: Record<LanguageCode, { aside: string; call: string; email: string; inquire: string }> = {
+  vi: { aside: "Kênh liên hệ nhanh", call: "Gọi Hotline", email: "Gửi Email", inquire: "Hỏi Giá / Đặt Phòng" },
+  en: { aside: "Quick contact channels", call: "Call Hotline", email: "Send Email", inquire: "Request A Quote / Book Now" },
+  cn: { aside: "快速联系渠道", call: "拨打热线", email: "发送邮件", inquire: "询价 / 立即预订" },
+  tw: { aside: "快速聯絡方式", call: "撥打熱線", email: "傳送電郵", inquire: "詢價 / 立即預訂" },
+};
 
 export interface ContactRailProps {
   zalo?: string;
@@ -22,6 +30,8 @@ export function ContactRail({
   onInquire,
   style,
 }: ContactRailProps) {
+  const { lang } = useLanguage();
+  const labels = CONTACT_LABELS[lang];
   const items = [
     zalo && {
       icon: "message-circle",
@@ -43,13 +53,13 @@ export function ContactRail({
     },
     phone && {
       icon: "phone",
-      label: "Gọi Hotline",
+      label: labels.call,
       bgColor: "var(--jade-700, #1F3A2E)",
       href: `tel:${phone}`,
     },
     email && {
       icon: "mail",
-      label: "Gửi Email",
+      label: labels.email,
       bgColor: "var(--ink-900, #1A1A1A)",
       href: `mailto:${email}`,
     },
@@ -59,7 +69,7 @@ export function ContactRail({
     <aside
       className="fixed right-4 bottom-6 z-50 flex flex-col items-end gap-2.5 select-none"
       style={style}
-      aria-label="Kênh liên hệ nhanh"
+      aria-label={labels.aside}
     >
       {items.map((item) => (
         <a
@@ -85,7 +95,7 @@ export function ContactRail({
           onClick={onInquire}
           className="px-4 py-3 bg-[var(--gold-500)] text-[var(--ink-900)] font-sans text-[0.75rem] font-semibold uppercase tracking-[0.15em] shadow-lg border border-[var(--gold-500)] hover:bg-[var(--gold-600)] transition-colors cursor-pointer rounded-none"
         >
-          Hỏi Giá / Đặt Phòng
+          {labels.inquire}
         </button>
       )}
     </aside>

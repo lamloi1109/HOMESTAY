@@ -83,29 +83,10 @@ và rollback; chỉ xóa chúng khỏi repo sau khi đã kiểm tra production �
 
 ## Deploy frontend lên Cloudflare Workers
 
-Trong Cloudflare Workers Builds, cấu hình chính xác:
-
-| Trường | Giá trị |
-| --- | --- |
-| Root directory | `/frontend` |
-| Deploy command | `npx wrangler deploy` |
-
-Root directory `/frontend` là bắt buộc với monorepo này. Nếu để `/` hoặc trống,
-OpenNext sẽ tìm `open-next.config.ts`, `package.json` và `wrangler.jsonc` ở sai
-thư mục, dẫn tới lỗi thiếu config dù các file đã được commit. Lệnh tương đương
-khi chạy thủ công từ repository root là:
+Cloudflare build phải chạy tại thư mục `frontend` với deploy command:
 
 ```bash
-cd frontend
 npx wrangler deploy
-```
-
-Không dùng `npx wrangler preview` làm production deploy command. Lệnh đó chỉ tạo
-branch Preview và dùng block `previews` riêng trong `wrangler.jsonc`. Khi cần tạo
-Preview thủ công, chạy:
-
-```bash
-npx wrangler preview
 ```
 
 `frontend/wrangler.jsonc` chạy OpenNext build trước khi deploy và giữ tên Worker
@@ -114,10 +95,11 @@ này phải luôn giống nhau; nếu đổi tên Worker, phải đổi cả `na
 Không dùng cấu hình được auto-generate với `service: "frontend"`, vì Worker đó
 không tồn tại và Cloudflare sẽ trả lỗi API `10143`.
 
-OpenNext cũng yêu cầu `frontend/open-next.config.ts` phải được commit. Custom
-build cài adapter tạm thời bằng `--no-save --package-lock=false` trước khi chạy,
-do phiên bản adapter hiện tại chưa tương thích peer chính thức với Next 16.2.10;
-không xóa file config hoặc đổi build command về lệnh OpenNext trần.
+Build command cài tạm **cả** `@opennextjs/cloudflare` và `wrangler` cùng một
+`node_modules` trước khi gọi OpenNext. Không được bỏ `wrangler` khỏi lệnh này:
+OpenNext import Wrangler trực tiếp khi tạo bundle và sẽ dừng với
+`ERR_MODULE_NOT_FOUND` nếu Wrangler chỉ tồn tại trong cache `npx` của process
+deploy bên ngoài.
 
 ## Test (Tempering Phase 2 — bắt buộc trước khi commit code booking)
 

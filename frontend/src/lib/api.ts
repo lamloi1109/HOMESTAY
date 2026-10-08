@@ -5,7 +5,9 @@ const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://127.0.0.1:8000";
 
 /** URL tuyệt đối cho file tĩnh backend serve (vd /uploads/x.jpg). */
 export const assetUrl = (path: string) => {
-  if (path.startsWith("http") || path.startsWith("/")) return path;
+  if (path.startsWith("http")) return path;
+  if (path.startsWith("/uploads/")) return `${API_BASE}${path}`;
+  if (path.startsWith("/")) return path;
   return `${API_BASE}${path}`;
 };
 

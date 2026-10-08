@@ -1,5 +1,13 @@
 import React from "react";
+import { useLanguage, type LanguageCode } from "@/context/LanguageContext";
 import { Icon } from "./Icon";
+
+const SPEC_LABELS: Record<LanguageCode, { beds: string; baths: string; guests: string; kitchens: string }> = {
+  vi: { beds: "PN", baths: "WC", guests: "KHÁCH", kitchens: "BẾP" },
+  en: { beds: "BR", baths: "BATHS", guests: "GUESTS", kitchens: "KITCHENS" },
+  cn: { beds: "卧室", baths: "浴室", guests: "位客人", kitchens: "厨房" },
+  tw: { beds: "臥室", baths: "浴室", guests: "位房客", kitchens: "廚房" },
+};
 
 export interface RoomSpecsProps {
   beds?: number | null;
@@ -29,16 +37,18 @@ export function RoomSpecs({
   className = "",
   style,
 }: RoomSpecsProps) {
+  const { lang } = useLanguage();
+  const labels = SPEC_LABELS[lang];
   const actualBeds = beds ?? bedrooms;
 
   const items = [
     actualBeds != null && {
       icon: "bed-double",
-      text: `${actualBeds} PN`,
+      text: `${actualBeds} ${labels.beds}`,
     },
     baths != null && {
       icon: "bath",
-      text: `${baths} WC`,
+      text: `${baths} ${labels.baths}`,
     },
     sqm != null && {
       icon: "door-open",
@@ -46,11 +56,11 @@ export function RoomSpecs({
     },
     guests != null && {
       icon: "users",
-      text: `${guests} KHÁCH`,
+      text: `${guests} ${labels.guests}`,
     },
     kitchens != null && {
       icon: "cooking-pot",
-      text: `${kitchens} BẾP`,
+      text: `${kitchens} ${labels.kitchens}`,
     },
   ].filter(Boolean) as { icon: string; text: string }[];
 

@@ -3,6 +3,7 @@
 import React from "react";
 import { Badge } from "./Badge";
 import { IconButton } from "./IconButton";
+import { LazyImage } from "./LazyImage";
 import { RatingStars } from "./RatingStars";
 import { RoomSpecs, type RoomSpecsProps } from "./RoomSpecs";
 
@@ -87,9 +88,17 @@ export function PropertyCard({
           position: "relative",
           aspectRatio: aspect,
           overflow: "hidden",
-          background: image ? `center/cover no-repeat url("${image}")` : grad(title || location),
+          background: image ? "var(--surface-sunken)" : grad(title || location),
         }}
       >
+        {image && (
+          <LazyImage
+            src={image}
+            alt={title}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            imageClassName="object-cover"
+          />
+        )}
         {badge ? (
           <div style={{ position: "absolute", top: 12, left: 12, zIndex: 2 }}>
             <Badge tone={badge.tone || "gold"} icon={badge.icon} variant={badge.variant || "glass"}>

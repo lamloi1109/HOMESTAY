@@ -36,7 +36,7 @@ lead generation và Admin CMS; booking/payment cũ được giữ cho giai đo�
 | Validation/config | Pydantic 2, `pydantic-settings`, `email-validator` | `backend/requirements.txt`, `backend/app/core/config.py`, `backend/app/schemas/` |
 | Persistence | PostgreSQL 16; SQLAlchemy 2.0 async; `asyncpg`; Alembic | `docker-compose.yml`, `backend/requirements.txt`, `backend/migrations/` |
 | Auth/security | Bearer JWT (`PyJWT`, HS256 mặc định), bcrypt; permission-based RBAC | `backend/app/core/security.py`, `backend/app/api/deps.py`, `backend/app/core/permissions.py` |
-| Upload | FastAPI multipart + local disk; JPG/PNG/WebP kiểm tra magic bytes; public dưới `/uploads` | `backend/app/services/storage.py`, `backend/app/api/v1/catalog.py`, `backend/app/main.py` |
+| Upload | FastAPI multipart + adapter local disk/Cloudflare R2; JPG/PNG/WebP kiểm tra magic bytes | `backend/app/services/storage.py`, `backend/app/api/v1/catalog.py`, `backend/app/main.py` |
 | Backend quality | pytest, pytest-asyncio, HTTPX, Ruff | `backend/requirements-dev.txt`, `backend/pytest.ini`, `backend/ruff.toml` |
 | Frontend quality | ESLint 9 + Next core-web-vitals/TypeScript; production build là check bắt buộc | `frontend/eslint.config.mjs`, `frontend/package.json`, `.github/workflows/ci.yml` |
 | Local infrastructure | Docker Compose chỉ chạy PostgreSQL và tạo thêm DB test bằng init script | `docker-compose.yml`, `backend/scripts/init-test-db.sql` |
@@ -69,8 +69,8 @@ chỉ là định hướng/giai đoạn sau, không phải runtime đang triển
 **Backend**
 
 1. `uvicorn app.main:app` import singleton `app` do `create_app()` tạo.
-2. Factory cài CORS, gắn toàn bộ router dưới `/api/v1`, mount local upload tại
-   `/uploads`, và khai báo `/health`.
+2. Factory cài CORS, gắn toàn bộ router dưới `/api/v1`, chỉ mount `/uploads`
+   khi dùng local storage, và khai báo `/health`.
 3. `backend/app/api/v1/__init__.py` là composition root của API router.
 4. `python -m app.seed --demo` là entry point seed role, amenities và dữ liệu
    demo/Gaoji.
@@ -117,8 +117,9 @@ logic nghiệp vụ/concurrency hoặc cần abstraction để thay implementati
    `rooms`, `property_amenities`/`amenities`, hoặc `tour_services` đang active.
 3. Tạo inquiry: schema kiểm tra dữ liệu; route xác định organization (từ căn hộ
    hoặc organization mặc định), insert `inquiries`, commit và trả thông báo/mã.
-4. Ảnh DB chỉ lưu tên file; `StorageService` dựng public URL. Nội dung file được
-   `LocalDiskStorage` ghi vào `HOMESTAY_UPLOAD_DIR` và FastAPI phục vụ `/uploads`.
+4. Ảnh DB chỉ lưu tên file; `StorageService` dựng public URL. Backend được chọn
+   bằng `HOMESTAY_STORAGE_BACKEND`: local ghi vào `HOMESTAY_UPLOAD_DIR`, còn R2
+   dùng S3-compatible API và public domain cấu hình riêng.
 
 #### B. Admin CMS
 
@@ -302,9 +303,9 @@ theo organization của user. Đây là trạng thái code thực tế, không n
 5. **Expiry scheduler chưa triển khai:** có idempotent function và internal
    endpoint, nhưng không có cron/worker manifest. Hơn nữa cần xác minh cơ chế
    bảo vệ endpoint internal trước khi expose production.
-6. **Storage chỉ local disk:** interface cho phép thay backend, nhưng chưa có S3
-   implementation. Deploy ephemeral filesystem có thể mất ảnh nếu không mount
-   persistent volume; chưa thấy lifecycle/backup strategy.
+6. **Migration ảnh lên R2 là thao tác vận hành:** adapter R2 đã có, nhưng file
+   local tồn tại trước khi chuyển cấu hình phải được sao chép vào đúng key prefix;
+   chưa thấy lifecycle/backup strategy cho bucket.
 7. **Audit model chưa thành luồng:** bảng/model `audit_logs` tồn tại nhưng chưa
    thấy service hoặc route ghi audit cho auth/admin/booking/upload.
 8. **Frontend không có automated component/E2E tests:** lint và compile không

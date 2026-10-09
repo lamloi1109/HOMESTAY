@@ -24,9 +24,10 @@ def create_app() -> FastAPI:
     )
     app.include_router(api_router)
 
-    upload_dir = Path(settings.upload_dir)
-    upload_dir.mkdir(parents=True, exist_ok=True)
-    app.mount("/uploads", StaticFiles(directory=upload_dir), name="uploads")
+    if settings.storage_backend == "local":
+        upload_dir = Path(settings.upload_dir)
+        upload_dir.mkdir(parents=True, exist_ok=True)
+        app.mount("/uploads", StaticFiles(directory=upload_dir), name="uploads")
 
     @app.get("/health", tags=["health"])
     async def health() -> dict:

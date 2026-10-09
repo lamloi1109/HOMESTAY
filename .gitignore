@@ -1,3 +1,8 @@
 # Source photography is too large to keep in Git. Store originals externally and
 # commit only web-optimized assets under frontend/public/.
 /source-images/
+
+# OpenNext/Cloudflare generated output and local secrets.
+frontend/.open-next/
+frontend/.dev.vars
+frontend/worker-configuration.d.ts

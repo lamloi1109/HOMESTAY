@@ -1647,7 +1647,7 @@ export default function LandingPage() {
             >
               <section className="grid min-h-56 place-items-center bg-[#FAF8F5] p-8 text-center">
                 <a href="https://www.tiktok.com/@gaojihouse" target="_blank" rel="noreferrer" className="grid justify-items-center gap-3 text-[#1A1A1A]">
-                  <span className="relative size-16 overflow-hidden rounded-full border border-[#D8CFC2] bg-white"><Image src="/assets/logo-compact.png" alt="Gao Ji House trên TikTok" fill sizes="64px" className="object-cover" /></span>
+                  <span className="relative size-16 overflow-hidden rounded-full border border-[#D8CFC2] bg-white"><Image src="/assets/logo-brand-compact.webp" alt="Gao Ji House trên TikTok" fill sizes="64px" className="object-cover" /></span>
                   <strong className="font-sans text-sm uppercase tracking-[0.12em]">@gaojihouse</strong>
                 </a>
               </section>

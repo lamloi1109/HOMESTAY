@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import React from "react";
 
 export interface LogoProps {
@@ -19,16 +20,13 @@ export function Logo({
   className = "",
   style,
 }: LogoProps) {
-  const isDark = variant === "dark";
-
-  // Select optimal source based on variant (light/dark) and tagline presence
-  const src = isDark
-    ? showTagline
-      ? "/assets/logo-dark.png"
-      : "/assets/logo-dark-compact.png"
-    : showTagline
-    ? "/assets/logo-full.png"
-    : "/assets/logo-compact.png";
+  // The new artwork includes its own neutral gradient, so one source works on
+  // both light and dark surfaces. Keep `variant` in the public API because the
+  // shared component's callers use it to describe their surrounding surface.
+  void variant;
+  const src = showTagline
+    ? "/assets/logo-brand-full.webp"
+    : "/assets/logo-brand-compact.webp";
 
   // Height configurations for crisp rendering across all screen sizes
   const height =
@@ -52,9 +50,10 @@ export function Logo({
       } ${className}`.trim()}
       style={style}
     >
-      <img
+      <Image
         src={src}
         alt="Gao Ji House · Serviced Apartment"
+        width={Math.round(height * (showTagline ? 1100 / 620 : 1100 / 500))}
         height={height}
         style={{
           height: `${height}px`,
@@ -63,8 +62,7 @@ export function Logo({
           display: "block",
           objectFit: "contain",
         }}
-        loading="eager"
-        decoding="async"
+        priority
       />
     </div>
   );

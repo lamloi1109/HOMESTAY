@@ -15,6 +15,7 @@ import {
   SectionHeader,
   UnitCard,
 } from "@/components/gaoji";
+import { getComplexAmenities } from "@/data/complexAmenities";
 
 // Complete 4-Language Dictionary for Gao Ji House Landing Page
 const DICT = {
@@ -791,6 +792,7 @@ function SocialLogo({ network }: { network: SocialNetwork }) {
 export default function LandingPage() {
   const { lang } = useLanguage();
   const t = DICT[lang] || DICT.vi;
+  const complexAmenities = getComplexAmenities("vhcp");
 
   // Filter States for Section 4 (Units)
   const [unitFilter, setUnitFilter] = useState("all");
@@ -1584,7 +1586,7 @@ export default function LandingPage() {
 
           <div className="mt-[clamp(32px,4vw,48px)] grid gap-[clamp(20px,2vw,28px)] grid-cols-1 md:grid-cols-3">
             <FeatureCard
-              image="/assets/photos/pool-aerial.jpg"
+              image={complexAmenities.find((a) => a.category === "pool")?.thumbnailSrc || "/assets/photos/pool-aerial.jpg"}
               imageAlt="Hồ bơi nội khu ven sông"
               imageRatio="16 / 10"
               icon="sun"
@@ -1610,8 +1612,8 @@ export default function LandingPage() {
             </FeatureCard>
 
             <FeatureCard
-              image="/assets/photos/sky-terrace.jpg"
-              imageAlt="Sân thượng ngắm cảnh và hầm rượu"
+              image={complexAmenities.find((a) => a.category === "marina" || a.category === "park")?.thumbnailSrc || "/assets/photos/sky-terrace.jpg"}
+              imageAlt="Sân thượng ngắm cảnh và bến du thuyền"
               imageRatio="16 / 10"
               icon="wine"
               eyebrow={t.a3e}
@@ -1621,6 +1623,62 @@ export default function LandingPage() {
             >
               {t.a3b}
             </FeatureCard>
+          </div>
+
+          {/* Shared Complex Amenities Photo Inspection from R2 */}
+          <div className="mt-12 pt-8 border-t border-[#E8E4DB]">
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6">
+              <div>
+                <span className="font-sans text-xs font-semibold uppercase tracking-[0.14em] text-[var(--gold-900,#8C6B2D)]">
+                  Vinhomes Central Park · Tiện Ích Quần Thể
+                </span>
+                <h3 className="font-display text-2xl sm:text-3xl font-normal text-[#1A1A1A] mt-1">
+                  Hình Ảnh Thực Tế Tiện Ích Nội Khu
+                </h3>
+              </div>
+              <p className="font-sans text-xs sm:text-sm text-[#736B63] max-w-[400px]">
+                Cư dân và khách thuê Gao Ji House được sử dụng toàn bộ tiện ích chung của quần thể Vinhomes Central Park.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {complexAmenities.map((amenity) => (
+                <div
+                  key={amenity.id}
+                  className="group relative overflow-hidden bg-white border border-[#E8E4DB] flex flex-col"
+                >
+                  <a
+                    href={amenity.fullSrc}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="relative block aspect-[16/10] overflow-hidden bg-stone-100"
+                    title={`Xem ảnh lớn: ${amenity.name}`}
+                  >
+                    <Image
+                      src={amenity.thumbnailSrc}
+                      alt={amenity.alt}
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                      unoptimized={amenity.thumbnailSrc.startsWith("http")}
+                      className="object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                    <span className="absolute bottom-2 right-2 bg-black/60 backdrop-blur-sm text-white text-[10px] font-sans font-semibold uppercase tracking-wider px-2 py-0.5">
+                      Xem chi tiết
+                    </span>
+                  </a>
+                  <div className="p-4 flex-1 flex flex-col justify-between">
+                    <div>
+                      <h4 className="font-display text-base font-medium text-[#1A1A1A]">
+                        {amenity.name}
+                      </h4>
+                      <p className="font-sans text-xs text-[#736B63] mt-1 line-clamp-2">
+                        {amenity.description}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>

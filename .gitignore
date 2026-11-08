@@ -6,3 +6,21 @@
 frontend/.open-next/
 frontend/.dev.vars
 frontend/worker-configuration.d.ts
+
+# Recovery snapshots stay on this machine.
+/.local-backups/
+
+# Keep the existing shared UI skill; other installed catalogs are local tooling.
+/.agents/skills/*
+!/.agents/skills/ui-ux-pro-max/
+/.claude/skills/
+/skills-lock.json
+/.claude/settings.local.json
+/.vscode/
+
+# Design sources and referenced assets stay reviewable; scratch exports stay local.
+/design/uploads/
+/design/crops/
+/design/.thumbnail
+/frontend/find_comments.py
+/frontend/out.txt

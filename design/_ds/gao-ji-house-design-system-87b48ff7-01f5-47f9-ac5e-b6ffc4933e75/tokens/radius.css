@@ -1,0 +1,12 @@
+/* Gao Ji House — radius.
+   The brand is square. Corners are architectural, not soft: every card,
+   button, input and image frame is 0px. The only curves are circular
+   affordances (channel buttons, avatars) and the 2px focus ring.
+   NOTE: this replaces the claymorphic 8–56px radii in the earlier
+   frontend/src/styles/gaoji draft — that direction is retired. */
+:root {
+  --radius-none: 0px;
+  --radius-xs: 2px;       /* focus ring only */
+  --radius-pill: 999px;
+  --radius-circle: 50%;
+}

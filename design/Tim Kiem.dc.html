@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="ext-resource-dependency" content="assets/photos/living-open-plan.jpg" data-resource-id="livingOpen">
+<meta name="ext-resource-dependency" content="assets/photos/bedroom-master-river.jpg" data-resource-id="bedRiver">
+<meta name="ext-resource-dependency" content="assets/photos/bedroom-single-sunlit.jpg" data-resource-id="bedSunlit">
+<meta name="ext-resource-dependency" content="assets/photos/bedroom-twin-river.jpg" data-resource-id="bedTwin">
+<meta name="ext-resource-dependency" content="assets/photos/bedroom-tv-ensuite.jpg" data-resource-id="bedTv">
+<meta name="ext-resource-dependency" content="assets/photos/bedroom-platform-landmark.jpg" data-resource-id="bedPlatform">
+<link rel="stylesheet" href="_ds/gao-ji-house-design-system-87b48ff7-01f5-47f9-ac5e-b6ffc4933e75/tokens/fonts.css">
+<link rel="stylesheet" href="_ds/gao-ji-house-design-system-87b48ff7-01f5-47f9-ac5e-b6ffc4933e75/tokens/colors.css">
+<link rel="stylesheet" href="_ds/gao-ji-house-design-system-87b48ff7-01f5-47f9-ac5e-b6ffc4933e75/tokens/typography.css">
+<link rel="stylesheet" href="_ds/gao-ji-house-design-system-87b48ff7-01f5-47f9-ac5e-b6ffc4933e75/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/gao-ji-house-design-system-87b48ff7-01f5-47f9-ac5e-b6ffc4933e75/tokens/radius.css">
+<link rel="stylesheet" href="_ds/gao-ji-house-design-system-87b48ff7-01f5-47f9-ac5e-b6ffc4933e75/tokens/elevation.css">
+<link rel="stylesheet" href="_ds/gao-ji-house-design-system-87b48ff7-01f5-47f9-ac5e-b6ffc4933e75/tokens/motion.css">
+<link rel="stylesheet" href="_ds/gao-ji-house-design-system-87b48ff7-01f5-47f9-ac5e-b6ffc4933e75/tokens/base.css">
+<link rel="stylesheet" href="_ds/gao-ji-house-design-system-87b48ff7-01f5-47f9-ac5e-b6ffc4933e75/styles.css">
+<script src="_ds/gao-ji-house-design-system-87b48ff7-01f5-47f9-ac5e-b6ffc4933e75/_ds_bundle.js"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+  body { margin: 0; background: var(--canvas); color: var(--ink-900); font-family: var(--font-sans); }
+  img { display: block; }
+  a { color: var(--gold-900); }
+  a:hover { color: var(--clay-500); }
+  input::placeholder { color: rgba(250,243,234,.5); }
+</style>
+</helmet>
+
+<template id="__bundler_thumbnail">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400" data-bg-color="#F9F7F2">
+    <rect width="400" height="400" fill="#F9F7F2"></rect>
+    <circle cx="185" cy="180" r="72" fill="none" stroke="#1F3A2E" stroke-width="18"></circle>
+    <rect x="232" y="228" width="90" height="18" rx="0" fill="#B08D57" transform="rotate(45 232 228)"></rect>
+    <rect x="120" y="300" width="160" height="4" fill="#C27358"></rect>
+  </svg>
+</template>
+
+<div style="min-height:100vh;background:var(--canvas)">
+
+<header ref="{{ navRef }}" style="position:sticky;top:0;z-index:50;background:var(--glass-warm);backdrop-filter:blur(12px);border-bottom:1px solid var(--hairline-strong);padding:12px 0;transition:padding .3s cubic-bezier(.16,1,.3,1),box-shadow .3s cubic-bezier(.16,1,.3,1)">
+  <div style="max-width:1600px;margin:0 auto;padding:0 clamp(20px,4vw,56px);padding-right:max(72px,clamp(20px,4vw,56px));display:flex;align-items:center;justify-content:space-between;gap:clamp(14px,3vw,40px)">
+    <a href="Landing%20Page.dc.html" aria-label="Gao Ji House" style="display:inline-flex;text-decoration:none;flex:none">
+      <x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.Logo" size="sm" show-tagline="{{ no }}" hint-size="110px,52px"></x-import>
+    </a>
+    <div style="display:flex;align-items:center;gap:clamp(12px,2vw,28px);flex:none">
+      <a href="Landing%20Page.dc.html#units" style="font-family:var(--font-sans);font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-primary);text-decoration:none;min-height:44px;display:inline-flex;align-items:center">Danh Sách</a>
+      <a href="Thu%20Vien%20Anh.dc.html" style="font-family:var(--font-sans);font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-primary);text-decoration:none;min-height:44px;display:inline-flex;align-items:center">Thư Viện Ảnh</a>
+      <x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.Button" variant="gold" size="sm" icon="phone" on-click="{{ openModal }}" hint-size="150px,40px">Chat Zalo</x-import>
+    </div>
+  </div>
+</header>
+
+<section style="background:var(--jade-700);border-bottom:1px solid var(--gold-700)">
+  <div style="max-width:1600px;margin:0 auto;padding:clamp(28px,3.6vw,52px) clamp(20px,4vw,56px);padding-right:max(72px,clamp(20px,4vw,56px))">
+    <span style="display:inline-flex;align-items:center;gap:12px;font-family:var(--font-sans);font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-050)">
+      <span aria-hidden="true" style="width:32px;height:1px;background:var(--gold-700);flex:none"></span>
+      <span>Tìm Căn Hộ Dịch Vụ · Vinhomes Central Park</span>
+    </span>
+    <h1 style="margin:16px 0 0;max-width:20ch;font-family:var(--font-display);font-size:var(--fs-display-lg);font-weight:400;line-height:1.05;letter-spacing:-.02em;color:var(--text-inverse);text-wrap:pretty">Tìm Căn Hộ Phù Hợp</h1>
+    <form onSubmit="{{ onSubmit }}" style="margin-top:clamp(22px,2.6vw,34px);display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end">
+      <label style="flex:2 1 320px;min-width:0;display:grid;gap:8px">
+        <span style="font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-050)">Từ Khoá</span>
+        <input type="search" value="{{ query }}" onChange="{{ onQuery }}" placeholder="Mã căn, toà nhà, view sông, penthouse…" style="width:100%;min-height:52px;padding:0 16px;background:var(--jade-900);border:1px solid var(--gold-700);color:var(--text-inverse);font-family:var(--font-sans);font-size:1rem;border-radius:0;box-sizing:border-box">
+      </label>
+      <label style="flex:1 1 180px;min-width:0;display:grid;gap:8px">
+        <span style="font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-050)">Ngày Nhận Phòng</span>
+        <input type="date" style="width:100%;min-height:52px;padding:0 16px;background:var(--jade-900);border:1px solid var(--gold-700);color:var(--text-inverse);font-family:var(--font-sans);font-size:1rem;border-radius:0;box-sizing:border-box">
+      </label>
+      <label style="flex:1 1 150px;min-width:0;display:grid;gap:8px">
+        <span style="font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-050)">Số Khách</span>
+        <select onChange="{{ onGuests }}" style="width:100%;min-height:52px;padding:0 16px;background:var(--jade-900);border:1px solid var(--gold-700);color:var(--text-inverse);font-family:var(--font-sans);font-size:1rem;border-radius:0;box-sizing:border-box">
+          <option value="0">Bất Kỳ</option>
+          <option value="2">2 Khách</option>
+          <option value="4">4 Khách</option>
+          <option value="5">5 Khách</option>
+          <option value="6">6 Khách</option>
+        </select>
+      </label>
+      <x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.Button" variant="gold" size="lg" type="submit" icon="search" hint-size="200px,52px">Kiểm Tra Phòng Trống</x-import>
+    </form>
+  </div>
+</section>
+
+<div style="max-width:1600px;margin:0 auto;padding:clamp(28px,3.4vw,48px) clamp(20px,4vw,56px) clamp(48px,6vw,88px);padding-right:max(72px,clamp(20px,4vw,56px));display:flex;flex-wrap:wrap;gap:clamp(24px,3vw,48px);align-items:flex-start">
+
+  <aside style="flex:0 1 280px;min-width:min(100%,260px);align-self:flex-start;position:sticky;top:96px;display:grid;gap:clamp(20px,2.2vw,28px)">
+    <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;border-bottom:1px solid var(--hairline-strong);padding-bottom:12px">
+      <span style="font-family:var(--font-sans);font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-primary)">Bộ Lọc</span>
+      <button type="button" onClick="{{ clearAll }}" style="min-height:44px;padding:0;background:transparent;border:0;font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-900);text-decoration:underline;text-underline-offset:4px;cursor:pointer">Xoá Hết</button>
+    </div>
+
+    <fieldset style="margin:0;padding:0;border:0;display:grid;gap:10px">
+      <legend style="padding:0;font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)">Loại Căn Hộ</legend>
+      <sc-for list="{{ typeFacets }}" as="f" hint-placeholder-count="3">
+        <button type="button" onClick="{{ f.toggle }}" aria-pressed="{{ f.on }}" style="display:flex;align-items:center;gap:12px;width:100%;min-height:44px;padding:0;background:transparent;border:0;cursor:pointer;text-align:left">
+          <span aria-hidden="true" style="{{ f.box }}"></span>
+          <span style="flex:1;font-family:var(--font-sans);font-size:.9375rem;color:var(--text-body)">{{ f.label }}</span>
+          <span style="font-family:var(--font-sans);font-size:.8125rem;color:var(--text-muted)">{{ f.count }}</span>
+        </button>
+      </sc-for>
+    </fieldset>
+
+    <fieldset style="margin:0;padding:0;border:0;display:grid;gap:10px">
+      <legend style="padding:0;font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)">Toà Nhà</legend>
+      <sc-for list="{{ towerFacets }}" as="f" hint-placeholder-count="5">
+        <button type="button" onClick="{{ f.toggle }}" aria-pressed="{{ f.on }}" style="display:flex;align-items:center;gap:12px;width:100%;min-height:44px;padding:0;background:transparent;border:0;cursor:pointer;text-align:left">
+          <span aria-hidden="true" style="{{ f.box }}"></span>
+          <span style="flex:1;font-family:var(--font-sans);font-size:.9375rem;color:var(--text-body)">{{ f.label }}</span>
+          <span style="font-family:var(--font-sans);font-size:.8125rem;color:var(--text-muted)">{{ f.count }}</span>
+        </button>
+      </sc-for>
+    </fieldset>
+
+    <fieldset style="margin:0;padding:0;border:0;display:grid;gap:10px">
+      <legend style="padding:0;font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)">Giá Thuê Tháng</legend>
+      <sc-for list="{{ priceFacets }}" as="f" hint-placeholder-count="3">
+        <button type="button" onClick="{{ f.toggle }}" aria-pressed="{{ f.on }}" style="display:flex;align-items:center;gap:12px;width:100%;min-height:44px;padding:0;background:transparent;border:0;cursor:pointer;text-align:left">
+          <span aria-hidden="true" style="{{ f.box }}"></span>
+          <span style="flex:1;font-family:var(--font-sans);font-size:.9375rem;color:var(--text-body)">{{ f.label }}</span>
+          <span style="font-family:var(--font-sans);font-size:.8125rem;color:var(--text-muted)">{{ f.count }}</span>
+        </button>
+      </sc-for>
+    </fieldset>
+
+    <fieldset style="margin:0;padding:0;border:0;display:grid;gap:10px">
+      <legend style="padding:0;font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)">Tình Trạng</legend>
+      <button type="button" onClick="{{ toggleAvail }}" aria-pressed="{{ availOn }}" style="display:flex;align-items:center;gap:12px;width:100%;min-height:44px;padding:0;background:transparent;border:0;cursor:pointer;text-align:left">
+        <span aria-hidden="true" style="{{ availBox }}"></span>
+        <span style="flex:1;font-family:var(--font-sans);font-size:.9375rem;color:var(--text-body)">Chỉ Hiện Căn Còn Phòng</span>
+      </button>
+    </fieldset>
+
+    <div style="background:var(--canvas-warm);border:1px solid var(--hairline);padding:18px;display:grid;gap:10px">
+      <span style="font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-900)">Không Tìm Thấy Căn Ưng Ý?</span>
+      <p style="margin:0;font-family:var(--font-sans);font-size:.875rem;line-height:1.55;color:var(--text-body)">Gao Ji House còn căn tương tự ở tầng khác. Nhắn Zalo để nhận danh sách chờ.</p>
+      <x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.Button" variant="outline" full="{{ yes }}" icon="calendar-check" on-click="{{ openModal }}" hint-size="100%,44px">Nhận Danh Sách Chờ</x-import>
+    </div>
+  </aside>
+
+  <main style="flex:1 1 360px;min-width:0;display:grid;gap:clamp(18px,2vw,26px)">
+    <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;border-bottom:1px solid var(--hairline-strong);padding-bottom:14px">
+      <span style="font-family:var(--font-sans);font-size:.8125rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-primary)">{{ resultLine }}</span>
+      <label style="display:flex;align-items:center;gap:10px">
+        <span style="font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)">Sắp Xếp</span>
+        <select value="{{ sortValue }}" onChange="{{ onSort }}" style="min-height:44px;padding:0 12px;background:var(--surface-raised);border:1px solid var(--hairline-strong);color:var(--text-primary);font-family:var(--font-sans);font-size:.875rem;border-radius:0">
+          <option value="floor">Tầng Cao Nhất</option>
+          <option value="priceAsc">Giá Thấp → Cao</option>
+          <option value="priceDesc">Giá Cao → Thấp</option>
+          <option value="sqm">Diện Tích Lớn Nhất</option>
+        </select>
+      </label>
+    </div>
+
+    <sc-if value="{{ hasChips }}" hint-placeholder-val="{{ no }}">
+      <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+        <sc-for list="{{ chips }}" as="c" hint-placeholder-count="2">
+          <button type="button" onClick="{{ c.clear }}" style="display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 14px;background:var(--canvas-warm);border:1px solid var(--gold-700);color:var(--gold-900);font-family:var(--font-sans);font-size:.75rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;cursor:pointer">
+            <span>{{ c.label }}</span>
+            <span aria-hidden="true" style="font-size:1rem;line-height:1">×</span>
+          </button>
+        </sc-for>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ hasResults }}" hint-placeholder-val="{{ yes }}">
+      <div style="display:grid;gap:clamp(18px,2vw,26px);grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr))">
+        <sc-for list="{{ results }}" as="r" hint-placeholder-count="4">
+          <x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.UnitCard" dc-props="{{ r.card }}" hint-size="100%,660px"></x-import>
+        </sc-for>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ no }}">
+      <div style="border:1px solid var(--hairline-strong);background:var(--canvas-warm);padding:clamp(32px,4vw,56px);display:grid;gap:14px;justify-items:start">
+        <x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.Icon" name="search" size="{{ n28 }}" color="var(--gold-700)" hint-size="28px,28px"></x-import>
+        <h2 style="margin:0;font-family:var(--font-display);font-size:var(--fs-headline-sm);font-weight:400;line-height:1.2">Chưa Có Căn Nào Khớp Bộ Lọc</h2>
+        <p style="margin:0;max-width:52ch;font-family:var(--font-sans);font-size:1rem;line-height:1.6;color:var(--text-body)">Gao Ji House chỉ vận hành 5 căn hộ nên bộ lọc hẹp có thể không còn kết quả. Bỏ bớt một điều kiện, hoặc để lại yêu cầu — quản lý căn hộ sẽ báo ngay khi có căn phù hợp.</p>
+        <div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:12px">
+          <x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.Button" variant="primary" icon="calendar-check" on-click="{{ openModal }}" hint-size="230px,44px">Gửi Yêu Cầu Tìm Căn</x-import>
+          <x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.Button" variant="outline" on-click="{{ clearAll }}" hint-size="160px,44px">Xoá Bộ Lọc</x-import>
+        </div>
+      </div>
+    </sc-if>
+
+    <p style="margin:0;font-family:var(--font-italic);font-style:italic;font-size:1rem;line-height:1.55;color:var(--text-muted)">Giá hiển thị đã gồm phí quản lý, Internet và dọn phòng định kỳ. Khách chỉ thanh toán thêm điện, nước theo chỉ số thực tế.</p>
+  </main>
+</div>
+
+<x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.Footer" address="Vinhomes Central Park, 208 Nguyễn Hữu Cảnh, Phường 22, Bình Thạnh, TP. Hồ Chí Minh" phone="088 923 7833" email="stay@gaojihouse.vn" note="© 2026 Gao Ji House · Căn Hộ Dịch Vụ Cho Thuê · Vinhomes Central Park" dc-props="{{ footerProps }}" hint-size="100%,420px"></x-import>
+
+<x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.ContactRail" zalo="https://zalo.me/0889237833" phone="0889237833" email="stay@gaojihouse.vn" hint-size="60px,180px"></x-import>
+
+<x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.InquiryModal" open="{{ modalOpen }}" on-close="{{ closeModal }}" unit-types="{{ modalTypes }}" hint-size="1px,1px"></x-import>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:900},&quot;showAvailableOnly&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Bộ lọc&quot;},&quot;defaultSort&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Tầng Cao Nhất&quot;,&quot;Giá Thấp → Cao&quot;,&quot;Giá Cao → Thấp&quot;,&quot;Diện Tích Lớn Nhất&quot;],&quot;default&quot;:&quot;Tầng Cao Nhất&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Kết quả&quot;}}">
+class Component extends DCLogic {
+  state = { q: "", types: [], towers: [], price: [], avail: false, guests: 0, sort: "floor", modal: false };
+  navRef = React.createRef();
+
+  A = {
+    livingOpen: "assets/photos/living-open-plan.jpg",
+    bedRiver: "assets/photos/bedroom-master-river.jpg",
+    bedSunlit: "assets/photos/bedroom-single-sunlit.jpg",
+    bedTwin: "assets/photos/bedroom-twin-river.jpg",
+    bedTv: "assets/photos/bedroom-tv-ensuite.jpg",
+    bedPlatform: "assets/photos/bedroom-platform-landmark.jpg"
+  };
+
+  UNITS = [
+    { key: "L1.29.08", img: "bedRiver", group: "2 Phòng Ngủ", tower: "Landmark 1", lvl: 29, beds: 2, baths: 2, sqm: 92, guests: 4, month: 33000000, night: 2400000, status: "available",
+      title: "Căn 2PN View Sông & Landmark 81", type: "2 Phòng Ngủ · Tầng Cao", floor: "Tầng 29 · Landmark 1 · Vinhomes Central Park",
+      tags: "view sông river landmark 81 tầng cao 2pn hai phòng ngủ" },
+    { key: "P1.27.10", img: "bedSunlit", group: "1 Phòng Ngủ", tower: "Park 1", lvl: 27, beds: 1, baths: 1, sqm: 54, guests: 2, month: 24000000, night: 1600000, status: "available",
+      title: "Căn 1PN Nắng Chiều Hướng Sông Sài Gòn", type: "1 Phòng Ngủ · Park 1", floor: "Tầng 27 · Park 1 · Vinhomes Central Park",
+      tags: "nắng chiều view sông 1pn một phòng ngủ giá tốt dài hạn" },
+    { key: "L81.07.12", img: "bedTwin", group: "1 Phòng Ngủ", tower: "Landmark 81", lvl: 7, beds: 1, baths: 1, sqm: 58, guests: 2, month: 28000000, night: 1900000, status: "available",
+      title: "Căn 1PN Sky Suite Chuẩn Khách Sạn", type: "1 Phòng Ngủ · Landmark 81", floor: "Tầng 07 · Landmark 81 · Vinhomes Central Park",
+      tags: "sky suite khách sạn hotel 1pn chuyên gia nước ngoài lễ tân" },
+    { key: "P3.42.12", img: "bedTv", group: "2 Phòng Ngủ", tower: "Park 3", lvl: 42, beds: 2, baths: 2, sqm: 120, guests: 5, month: 46000000, night: 3200000, status: "held",
+      title: "Căn 2PN Nội Thất Gỗ Walnut Mộc", type: "2 Phòng Ngủ · Tân Trang 2026", floor: "Tầng 42 · Park 3 · Vinhomes Central Park",
+      tags: "walnut tân trang căn góc 2pn hai phòng ngủ marble rộng" },
+    { key: "L3.44.09", img: "bedPlatform", group: "Penthouse Duplex", tower: "Landmark 3", lvl: 44, beds: 3, baths: 3, sqm: 210, guests: 6, month: 110000000, night: 6500000, status: "available",
+      title: "Penthouse Duplex Thông Tầng Nhìn Landmark", type: "3 Phòng Ngủ · Duplex", floor: "Tầng 44 · Landmark 3 · Vinhomes Central Park",
+      tags: "penthouse duplex thông tầng 3pn ba phòng ngủ sân thượng gaggenau" }
+  ];
+
+  PRICES = [
+    { id: "lt30", label: "Dưới 30 Triệu", test: (u) => u.month < 30000000 },
+    { id: "30to50", label: "30 – 50 Triệu", test: (u) => u.month >= 30000000 && u.month <= 50000000 },
+    { id: "gt50", label: "Trên 50 Triệu", test: (u) => u.month > 50000000 }
+  ];
+
+  componentDidMount() {
+    this.onScroll = () => {
+      const n = this.navRef.current;
+      if (!n) return;
+      const s = window.scrollY > 30;
+      n.style.padding = s ? "6px 0" : "12px 0";
+      n.style.boxShadow = s ? "var(--shadow-nav)" : "none";
+    };
+    window.addEventListener("scroll", this.onScroll, { passive: true });
+    this.onScroll();
+    this.onKey = (e) => { if (e.key === "Escape") this.setState({ modal: false }); };
+    window.addEventListener("keydown", this.onKey);
+
+    const sortMap = { "Tầng Cao Nhất": "floor", "Giá Thấp → Cao": "priceAsc", "Giá Cao → Thấp": "priceDesc", "Diện Tích Lớn Nhất": "sqm" };
+    const q = new URLSearchParams(window.location.search).get("q");
+    const init = {};
+    if (q) init.q = q;
+    if (this.props.showAvailableOnly === true) init.avail = true;
+    const sk = sortMap[this.props.defaultSort];
+    if (sk) init.sort = sk;
+    if (Object.keys(init).length) this.setState(init);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.onScroll);
+    window.removeEventListener("keydown", this.onKey);
+  }
+
+  vnd(n) {
+    const m = n / 1e6;
+    const s = m % 1 === 0 ? String(m) : m.toFixed(1).replace(".", ",");
+    return s + " Triệu VNĐ";
+  }
+
+  norm(s) {
+    return String(s).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/đ/g, "d");
+  }
+
+  toggle(field, value) {
+    this.setState((s) => {
+      const list = s[field];
+      const next = list.indexOf(value) >= 0 ? list.filter((v) => v !== value) : list.concat([value]);
+      return { [field]: next };
+    });
+  }
+
+  box(on) {
+    return "width:18px;height:18px;flex:none;border:1px solid " + (on ? "var(--jade-700)" : "var(--hairline-strong)")
+      + ";background:" + (on ? "var(--jade-700)" : "var(--surface-raised)")
+      + ";box-shadow:" + (on ? "inset 0 0 0 3px var(--surface-raised),inset 0 0 0 9px var(--jade-700)" : "none")
+      + ";transition:background .15s,border-color .15s";
+  }
+
+  matchNoPrice(u, skip) {
+    const s = this.state;
+    if (s.types.length && s.types.indexOf(u.group) < 0) return false;
+    if (s.towers.length && s.towers.indexOf(u.tower) < 0) return false;
+    if (s.avail && u.status !== "available") return false;
+    if (s.guests && u.guests < s.guests) return false;
+    if (s.q.trim()) {
+      const q = this.norm(s.q.trim());
+      const hay = this.norm([u.key, u.title, u.type, u.floor, u.tags, u.tower].join(" "));
+      if (hay.indexOf(q) < 0) return false;
+    }
+    if (skip !== "price" && s.price.length) {
+      const defs = this.PRICES.filter((p) => s.price.indexOf(p.id) >= 0);
+      if (!defs.some((p) => p.test(u))) return false;
+    }
+    return true;
+  }
+
+  matches(u) {
+    return this.matchNoPrice(u, null);
+  }
+
+  renderVals() {
+    const s = this.state;
+    let rows = this.UNITS.filter((u) => this.matches(u));
+
+    const sorters = {
+      floor: (a, b) => b.lvl - a.lvl,
+      priceAsc: (a, b) => a.month - b.month,
+      priceDesc: (a, b) => b.month - a.month,
+      sqm: (a, b) => b.sqm - a.sqm
+    };
+    rows = rows.slice().sort(sorters[s.sort] || sorters.floor);
+
+    const countIf = (fn) => this.UNITS.filter(fn).length;
+
+    const typeFacets = ["1 Phòng Ngủ", "2 Phòng Ngủ", "Penthouse Duplex"].map((g) => {
+      const on = s.types.indexOf(g) >= 0;
+      return { label: g, on, box: this.box(on), count: countIf((u) => u.group === g), toggle: () => this.toggle("types", g) };
+    });
+
+    const towerFacets = ["Park 1", "Park 3", "Landmark 1", "Landmark 3", "Landmark 81"].map((t) => {
+      const on = s.towers.indexOf(t) >= 0;
+      return { label: t, on, box: this.box(on), count: countIf((u) => u.tower === t), toggle: () => this.toggle("towers", t) };
+    });
+
+    const priceFacets = this.PRICES.map((p) => {
+      const on = s.price.indexOf(p.id) >= 0;
+      return {
+        label: p.label, on, box: this.box(on),
+        count: this.UNITS.filter((u) => this.matchNoPrice(u, "price") && p.test(u)).length,
+        toggle: () => this.toggle("price", p.id)
+      };
+    });
+
+    const chips = [];
+    if (s.q.trim()) chips.push({ label: "“" + s.q.trim() + "”", clear: () => this.setState({ q: "" }) });
+    s.types.forEach((v) => chips.push({ label: v, clear: () => this.toggle("types", v) }));
+    s.towers.forEach((v) => chips.push({ label: v, clear: () => this.toggle("towers", v) }));
+    s.price.forEach((id) => {
+      const p = this.PRICES.find((x) => x.id === id);
+      if (p) chips.push({ label: p.label, clear: () => this.toggle("price", id) });
+    });
+    if (s.guests) chips.push({ label: s.guests + " Khách", clear: () => this.setState({ guests: 0 }) });
+    if (s.avail) chips.push({ label: "Còn Phòng", clear: () => this.setState({ avail: false }) });
+
+    const results = rows.map((u) => ({
+      key: u.key,
+      card: {
+        code: "CĂN HỘ " + u.key,
+        title: u.title,
+        image: this.A[u.img],
+        type: u.type,
+        floor: u.floor,
+        beds: u.beds, baths: u.baths, sqm: u.sqm,
+        monthlyRateVnd: u.month, nightlyRateVnd: u.night,
+        status: u.status,
+        statusLabel: u.status === "available" ? "Còn Phòng" : "Đã Giữ Chỗ · Nhận Chờ",
+        labels: { view: "Xem Chi Tiết Căn Hộ", inquire: "Đặt Phòng / Hỏi Giá" },
+        onView: () => { window.location.href = "Chi%20Tiet%20Can%20Ho.dc.html?unit=" + encodeURIComponent(u.key); },
+        onInquire: () => this.setState({ modal: true })
+      }
+    }));
+
+    const total = this.UNITS.length;
+    const resultLine = rows.length === total
+      ? "Toàn Bộ " + total + " Căn Hộ"
+      : rows.length + " / " + total + " Căn Khớp Bộ Lọc";
+
+    return {
+      yes: true, no: false, n28: 28,
+      navRef: this.navRef,
+
+      query: s.q,
+      onQuery: (e) => this.setState({ q: e.target.value }),
+      onGuests: (e) => this.setState({ guests: parseInt(e.target.value, 10) || 0 }),
+      sortValue: s.sort,
+      onSort: (e) => this.setState({ sort: e.target.value }),
+      onSubmit: (e) => { e.preventDefault(); },
+
+      typeFacets, towerFacets, priceFacets,
+      availOn: s.avail,
+      availBox: this.box(s.avail),
+      toggleAvail: () => this.setState((p) => ({ avail: !p.avail })),
+      clearAll: () => this.setState({ q: "", types: [], towers: [], price: [], avail: false, guests: 0 }),
+
+      chips,
+      hasChips: chips.length > 0,
+      results,
+      hasResults: rows.length > 0,
+      isEmpty: rows.length === 0,
+      resultLine,
+
+      modalOpen: s.modal,
+      openModal: () => this.setState({ modal: true }),
+      closeModal: () => this.setState({ modal: false }),
+      modalTypes: this.UNITS.map((u) => u.key + " · " + u.type).concat(["Chưa Xác Định"]),
+
+      footerProps: {
+        columns: [
+          { title: "Căn Hộ Dịch Vụ", items: ["1 Phòng Ngủ · Từ 24 Triệu", "2 Phòng Ngủ · Từ 33 Triệu", "Penthouse Duplex", "Lưu Trú Doanh Nghiệp"] },
+          { title: "Dịch Vụ Cư Dân", items: ["Dọn Phòng 2 Lần / Tuần", "Lễ Tân 24/7 Đa Ngữ", "Đăng Ký Tạm Trú", "Đưa Đón Sân Bay"] },
+          { title: "Liên Hệ", items: ["Zalo · 088 923 7833", "WeChat · HZM81MS", "Email · stay@gaojihouse.vn", "08:00 – 21:00 · T2–CN"] }
+        ]
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

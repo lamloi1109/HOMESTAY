@@ -1,0 +1,25 @@
+/* Gao Ji House — spacing & layout.
+   4px base. Editorial section rhythm: sections breathe, cards do not. */
+:root {
+  --space-3xs: 2px;
+  --space-2xs: 4px;
+  --space-xs: 8px;
+  --space-sm: 12px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+  --space-4xl: 96px;
+  --space-5xl: 128px;
+
+  --container-max: 1600px;    /* @kind spacing */ /* the export's outer frame */
+  --container-editorial: 1240px; /* @kind spacing */
+  --container-narrow: 880px; /* @kind spacing */
+  --page-gutter: clamp(20px, 4vw, 56px); /* @kind spacing */
+  --section-y: clamp(56px, 7vw, 112px); /* @kind spacing */
+  --grid-gap: var(--space-lg); /* @kind spacing */
+  --tap-min: 44px; /* @kind spacing */
+  --nav-h: 92px; /* @kind spacing */
+  --nav-h-scrolled: 60px; /* @kind spacing */
+}

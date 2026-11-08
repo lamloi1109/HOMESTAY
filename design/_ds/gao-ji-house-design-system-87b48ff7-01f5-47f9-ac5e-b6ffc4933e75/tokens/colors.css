@@ -1,0 +1,102 @@
+/* Gao Ji House — colour tokens.
+   Lifted verbatim from the client's landing-page export (gao-ji-house.html).
+   Four voices: warm paper canvases, jade architecture, gold ceremony,
+   clay warmth. Ink is a warm near-black, never pure #000. */
+:root {
+  /* Ink */
+  --ink-900: #1A1A1A;
+  --ink-800: #242424;
+  --ink-700: #383838;
+  --ink-500: #6B6255;
+
+  /* Jade — the architectural primary */
+  --jade-900: #0D3B22;
+  --jade-700: #1F3A2E;
+  --jade-500: #2E5344;
+  --jade-100: rgba(31, 58, 46, .12);
+
+  /* Gold — ceremony, rules, focus */
+  --gold-500: #D4AF37;
+  --gold-600: #C59B27;
+  --gold-700: #B08D57;
+  --gold-800: #9C721D;
+  --gold-900: #8A6214;
+  --gold-100: #EFEAD8;
+  --gold-050: #E2C068;
+
+  /* Clay — human warmth, the "welcome home" accent */
+  --clay-500: #C27358;
+  --clay-700: #A6573C;
+  --clay-100: #F3E2DA;
+
+  /* Paper — warm canvases */
+  --paper-000: #FFFFFF;
+  --paper-050: #FAF8F5;
+  --paper-100: #F9F7F2;
+  --paper-150: #FAF3EA;
+  --paper-200: #F6F3EB;
+  --paper-300: #EAE4D7;
+  --paper-400: #E8E4DB;
+
+  /* ── Semantic surfaces ── */
+  --canvas: var(--paper-100);
+  --canvas-warm: var(--paper-150);
+  --surface: var(--paper-050);
+  --surface-raised: var(--paper-000);
+  --surface-sunken: var(--paper-200);
+  --surface-inverse: var(--jade-700);
+  --surface-ink: var(--ink-900);
+
+  /* ── Semantic text ── */
+  --text-primary: var(--ink-900);
+  --text-body: var(--ink-800);
+  --text-muted: var(--ink-500);
+  --text-inverse: var(--paper-150);
+  --text-on-jade: var(--paper-150);
+  --text-on-gold: var(--ink-900);
+  --text-gold: var(--gold-900);
+
+  /* ── Lines ── */
+  --hairline: var(--paper-400);
+  --hairline-strong: rgba(31, 58, 46, .20);
+  --rule-gold: var(--gold-700);
+  --border-ink: var(--ink-900);
+
+  /* ── Accents ── */
+  --accent: var(--jade-700);
+  --accent-hover: var(--jade-900);
+  --accent-on: var(--paper-150);
+  --accent-2: var(--gold-500);
+  --accent-2-hover: var(--gold-600);
+  --accent-2-on: var(--ink-900);
+  --accent-3: var(--clay-500);
+  --accent-3-hover: var(--clay-700);
+  --accent-3-on: var(--paper-000);
+  --focus-ring: var(--gold-500);
+  --selection-bg: var(--clay-500);
+  --selection-fg: #FFFFFF;
+
+  /* ── Semantic status ── */
+  --success: #2E7D51;
+  --success-soft: #DFEAE1;
+  --warning: var(--gold-800);
+  --warning-soft: var(--gold-100);
+  --danger: #B50000;
+  --danger-soft: #F2DCDC;
+  --info: #3F6C86;
+  --info-soft: #E0EBF5;
+
+  /* ── Contact channels (the SOP hands off to these) ── */
+  --channel-zalo: #0068FF;
+  --channel-wechat: #07C160;
+  --channel-whatsapp: #25D366;
+
+  /* ── Overlays ── */
+  --scrim: rgba(13, 20, 15, .58);
+  --scrim-soft: rgba(26, 26, 26, .32);
+  --glass-warm: rgba(250, 243, 234, .95);
+  --glass-ink: rgba(26, 26, 26, .72);
+  /* Photography protection gradient — top-down, for text over imagery */
+  --protect-top: linear-gradient(180deg, rgba(13,20,15,.72) 0%, rgba(13,20,15,.28) 46%, rgba(13,20,15,.62) 100%); /* @kind color */
+  --protect-bottom: linear-gradient(0deg, rgba(13,20,15,.78) 0%, rgba(13,20,15,0) 62%); /* @kind color */
+}

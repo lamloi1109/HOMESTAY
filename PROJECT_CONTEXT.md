@@ -2,9 +2,7 @@
 
 > **Mục đích:** bản đồ kỹ thuật được suy ra từ mã nguồn và cấu hình đang được
 > version-control tại thời điểm khảo sát. Tài liệu này giúp AI agent định vị nhanh
-> trước khi lập trình; nó không thay thế nguồn scope
-> `docs/KE_HOACH_PHAT_TRIEN_HOMESTAY.md`, các quyết định trong
-> `.coordination/DECISIONS.md`, hay hướng dẫn bắt buộc trong `AGENTS.md`.
+> trước khi lập trình; kết hợp quy trình làm việc trong `WORKFLOW_VIBECODING_2026.md`.
 
 ## 1. Tổng quan Dự án & Tech Stack
 

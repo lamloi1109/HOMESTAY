@@ -75,7 +75,7 @@ class R2Storage:
         secret_access_key: str,
         bucket_name: str,
         public_url: str,
-        key_prefix: str = "property-images",
+        key_prefix: str = "properties",
         client: Any | None = None,
     ) -> None:
         if not all((endpoint_url, access_key_id, secret_access_key, bucket_name, public_url)):

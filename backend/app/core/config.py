@@ -32,7 +32,7 @@ class Settings(BaseSettings):
     r2_secret_access_key: str | None = None
     r2_bucket_name: str | None = None
     r2_public_url: str | None = None
-    r2_key_prefix: str = "property-images"
+    r2_key_prefix: str = "properties"
 
 
 @lru_cache

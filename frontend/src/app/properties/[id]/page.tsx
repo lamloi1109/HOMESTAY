@@ -22,6 +22,7 @@ import {
   type PropertyDetail,
 } from "@/lib/api";
 import { formatVnd } from "@/lib/format";
+import { getCuratedGallery } from "@/data/propertyGalleries";
 
 const DETAIL_LABELS: Record<LanguageCode, {
   loading: string; eyebrow: string; unit: string; tower: string; floor: string;
@@ -177,16 +178,20 @@ export default function PropertyDetailPage() {
     { id: `${unit.id}-bathroom`, src: "/assets/photos/bathroom-vanity.jpg", alt: "Phòng tắm của căn hộ", width: 1067, height: 1600, category: "bathroom" as const },
     { id: `${unit.id}-balcony`, src: "/assets/photos/landmark-81-balcony.jpg", alt: "Không gian ban công", width: 1600, height: 900, category: "balcony" as const },
   ];
-  // API hiện chưa trả kích thước/category; giữ ảnh ở nhóm "Khác" thay vì suy đoán từ tên file.
-  const galleryImages = unit.images.length > 0
-    ? unit.images.map((image) => ({
-        id: image.id,
-        src: assetUrl(image.url),
-        alt: image.alt || unit.name,
-        width: 1600,
-        height: 1200,
-      }))
-    : galleryFallbacks;
+  const curatedImages = getCuratedGallery(unit.unit_code || unit.slug || unit.id);
+  const galleryImages = curatedImages.length > 0
+    ? curatedImages
+    : (unit.images.length > 0
+        ? unit.images.map((image) => ({
+            id: image.id,
+            src: assetUrl(image.url),
+            thumbnailSrc: assetUrl(image.url),
+            fullSrc: assetUrl(image.url),
+            alt: image.alt || unit.name,
+            width: 1600,
+            height: 1200,
+          }))
+        : galleryFallbacks);
 
   return (
     <div className="gh-content-enter bg-[var(--canvas,#F9F7F2)] min-h-screen text-[var(--text-primary,#1A1A1A)] pb-24">

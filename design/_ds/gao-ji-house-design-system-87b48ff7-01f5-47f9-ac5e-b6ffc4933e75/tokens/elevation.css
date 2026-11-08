@@ -1,0 +1,13 @@
+/* Gao Ji House — elevation.
+   Depth comes from hairlines, offset frames and paper-tone contrast — not
+   from shadows. Only two shadows exist: a whisper for the sticky nav, and a
+   soft lift for modals over the scrim. */
+:root {
+  --level-0: none; /* @kind shadow */
+  --level-1: 0 1px 0 var(--hairline);                       /* @kind shadow */ /* hairline rule */
+  --shadow-nav: 0 1px 12px -6px rgba(26, 26, 26, .22);
+  --shadow-modal: 0 40px 80px -32px rgba(13, 20, 15, .45);
+  --frame-offset: 12px;   /* @kind spacing */ /* the signature offset frame: a hairline box shifted behind a photo */
+  --ring-focus: 0 0 0 2px var(--focus-ring); /* @kind shadow */
+  --blur-nav: 12px; /* @kind other */
+}

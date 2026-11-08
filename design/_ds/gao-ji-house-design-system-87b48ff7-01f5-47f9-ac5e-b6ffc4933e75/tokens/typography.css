@@ -1,0 +1,48 @@
+/* Gao Ji House — typography tokens.
+   Three roles, four faces:
+   - EB Garamond        every headline. The brand's voice.
+   - Newsreader italic  editorial asides, pull quotes, photo captions.
+   - Barlow Condensed   ALL body copy, UI, and caps labels. The workhorse.
+   - Great Vibes        the wordmark only. Never body, never headlines.
+   Fluid sizes copied verbatim from the client's landing-page export. */
+:root {
+  --font-display: "EB Garamond", Georgia, "Times New Roman", serif;
+  --font-italic: "Newsreader", "EB Garamond", Georgia, serif;
+  --font-sans: "Barlow Condensed", "Segoe UI", system-ui, sans-serif;
+  --font-body: var(--font-sans);
+  --font-script: "Great Vibes", "Dancing Script", cursive;
+  --font-mono: ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  --fw-light: 300; /* @kind font */
+  --fw-regular: 400; /* @kind font */
+  --fw-medium: 500; /* @kind font */
+  --fw-semibold: 600; /* @kind font */
+  --fw-bold: 700; /* @kind font */
+
+  /* Display — EB Garamond */
+  --fs-display-xl: clamp(3rem, 2.6rem + 2.1vw, 4.6rem);   /* @kind other */ /* addition: full-bleed hero */
+  --fs-display-lg: clamp(2.37rem, 2.2rem + .84vw, 3.16rem); /* @kind other */
+  --fs-headline-md: clamp(1.78rem, 1.65rem + .63vw, 2.37rem); /* @kind other */
+  --fs-headline-sm: clamp(1.33rem, 1.24rem + .47vw, 1.78rem); /* @kind other */
+
+  /* Body — Barlow Condensed */
+  --fs-body-lg: 1.12rem; /* @kind font */
+  --fs-body-md: 1rem; /* @kind font */
+  --fs-body-sm: .875rem; /* @kind font */
+  --fs-label: .75rem; /* @kind font */
+  --fs-micro: .625rem; /* @kind font */
+
+  --lh-display: 1.05; /* @kind font */
+  --lh-headline: 1.15; /* @kind font */
+  --lh-headline-sm: 1.25; /* @kind font */
+  --lh-body: 1.6; /* @kind font */
+  --lh-label: 1.2; /* @kind font */
+
+  --tracking-display: -.02em; /* @kind font */
+  --tracking-normal: 0; /* @kind font */
+  --tracking-caps: .15em; /* @kind font */
+  --tracking-caps-wide: .25em; /* @kind font */
+
+  /* Composite label token — the brand's most-used text style */
+  --label-caps-weight: var(--fw-semibold); /* @kind font */
+}

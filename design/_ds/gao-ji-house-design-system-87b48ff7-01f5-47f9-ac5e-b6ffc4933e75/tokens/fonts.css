@@ -1,0 +1,9 @@
+/* Gao Ji House — webfonts.
+   All four faces are Google Fonts, loaded from the Google CDN exactly as the
+   client's own landing-page export does. No self-hosted binaries, no
+   substitutions: every face below is the real face the brand uses.
+   - EB Garamond    display + editorial headlines (Vietnamese diacritics: yes)
+   - Barlow Condensed  UI, body, caps labels          (Vietnamese: yes)
+   - Newsreader     italic editorial asides            (Vietnamese: yes)
+   - Great Vibes    the "Gao Ji" script wordmark only  (Latin) */
+@import url("https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Great+Vibes&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&display=swap");

@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="ext-resource-dependency" content="assets/photos/living-open-plan.jpg" data-resource-id="photoLivingOpen">
+<meta name="ext-resource-dependency" content="assets/photos/living-dining.jpg" data-resource-id="photoLivingDining">
+<meta name="ext-resource-dependency" content="assets/photos/kitchen-island.jpg" data-resource-id="photoKitchen">
+<meta name="ext-resource-dependency" content="assets/photos/dining-room.jpg" data-resource-id="photoDining">
+<meta name="ext-resource-dependency" content="assets/photos/master-bedroom.jpg" data-resource-id="photoMaster">
+<meta name="ext-resource-dependency" content="assets/photos/bedroom-master-river.jpg" data-resource-id="photoBedRiver">
+<meta name="ext-resource-dependency" content="assets/photos/bedroom-twin-river.jpg" data-resource-id="photoBedTwin">
+<meta name="ext-resource-dependency" content="assets/photos/bedroom-single-sunlit.jpg" data-resource-id="photoBedSunlit">
+<meta name="ext-resource-dependency" content="assets/photos/bedroom-platform-landmark.jpg" data-resource-id="photoBedPlatform">
+<meta name="ext-resource-dependency" content="assets/photos/bedroom-tv-ensuite.jpg" data-resource-id="photoBedTv">
+<meta name="ext-resource-dependency" content="assets/photos/bathroom-vanity.jpg" data-resource-id="photoBathVanity">
+<meta name="ext-resource-dependency" content="assets/photos/bathroom-shower.jpg" data-resource-id="photoBathShower">
+<meta name="ext-resource-dependency" content="assets/photos/pool-aerial.jpg" data-resource-id="photoPool">
+<meta name="ext-resource-dependency" content="assets/photos/gym.webp" data-resource-id="photoGym">
+<meta name="ext-resource-dependency" content="assets/photos/sky-terrace.jpg" data-resource-id="photoTerrace">
+<meta name="ext-resource-dependency" content="assets/photos/landmark-81-balcony.jpg" data-resource-id="photoBalcony">
+<meta name="ext-resource-dependency" content="assets/photos/towers-skyline.jpg" data-resource-id="photoTowers">
+<link rel="stylesheet" href="_ds/gao-ji-house-design-system-87b48ff7-01f5-47f9-ac5e-b6ffc4933e75/tokens/fonts.css">
+<link rel="stylesheet" href="_ds/gao-ji-house-design-system-87b48ff7-01f5-47f9-ac5e-b6ffc4933e75/tokens/colors.css">
+<link rel="stylesheet" href="_ds/gao-ji-house-design-system-87b48ff7-01f5-47f9-ac5e-b6ffc4933e75/tokens/typography.css">
+<link rel="stylesheet" href="_ds/gao-ji-house-design-system-87b48ff7-01f5-47f9-ac5e-b6ffc4933e75/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/gao-ji-house-design-system-87b48ff7-01f5-47f9-ac5e-b6ffc4933e75/tokens/radius.css">
+<link rel="stylesheet" href="_ds/gao-ji-house-design-system-87b48ff7-01f5-47f9-ac5e-b6ffc4933e75/tokens/elevation.css">
+<link rel="stylesheet" href="_ds/gao-ji-house-design-system-87b48ff7-01f5-47f9-ac5e-b6ffc4933e75/tokens/motion.css">
+<link rel="stylesheet" href="_ds/gao-ji-house-design-system-87b48ff7-01f5-47f9-ac5e-b6ffc4933e75/tokens/base.css">
+<link rel="stylesheet" href="_ds/gao-ji-house-design-system-87b48ff7-01f5-47f9-ac5e-b6ffc4933e75/styles.css">
+<script src="_ds/gao-ji-house-design-system-87b48ff7-01f5-47f9-ac5e-b6ffc4933e75/_ds_bundle.js"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+body{margin:0;background:var(--canvas);font-family:var(--font-sans);color:var(--text-primary)}
+img{display:block}
+html{scroll-behavior:smooth}
+a{color:var(--gold-900)}
+a:hover{color:var(--clay-700)}
+::selection{background:var(--clay-500);color:#fff}
+:focus-visible{outline:2px solid var(--gold-500);outline-offset:3px;border-radius:2px}
+@media (prefers-reduced-motion: reduce){*{transition-duration:.01ms !important;animation-duration:.01ms !important}}
+</style>
+</helmet>
+
+<template id="__bundler_thumbnail">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400" data-bg-color="#FAF3EA">
+    <rect width="400" height="400" fill="#FAF3EA"></rect>
+    <g fill="none" stroke="#1F3A2E" stroke-width="6">
+      <rect x="120" y="120" width="112" height="90"></rect>
+      <rect x="168" y="190" width="112" height="90" fill="#FAF3EA"></rect>
+    </g>
+    <circle cx="212" cy="228" r="14" fill="#D4AF37"></circle>
+    <rect x="120" y="308" width="160" height="3" fill="#B08D57"></rect>
+  </svg>
+</template>
+
+<div style="min-height:100vh;overflow-x:hidden">
+
+<header ref="{{ navRef }}" style="position:sticky;top:0;z-index:50;background:var(--glass-warm);backdrop-filter:blur(12px);border-bottom:1px solid var(--hairline-strong);padding:12px 0;transition:padding .3s cubic-bezier(.16,1,.3,1),box-shadow .3s cubic-bezier(.16,1,.3,1)">
+  <div style="max-width:1600px;margin:0 auto;padding:0 clamp(20px,4vw,56px);display:flex;align-items:center;justify-content:space-between;gap:clamp(16px,3vw,40px)">
+    <a href="Landing%20Page.dc.html" aria-label="Gao Ji House · Trang chủ" style="display:inline-flex;border:0;text-decoration:none;flex:none">
+      <x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.Logo" size="sm" show-tagline="{{ no }}" hint-size="86px,52px"></x-import>
+    </a>
+    <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ yes }}">
+      <nav aria-label="Điều hướng chính" style="display:flex;align-items:center;gap:clamp(14px,1.8vw,30px)">
+        <a href="Landing%20Page.dc.html#units" style="font-family:var(--font-sans);font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-primary);text-decoration:none;padding:8px 0;border-bottom:1px solid transparent;transition:color .15s,border-color .15s" style-hover="color:var(--gold-900);border-bottom:1px solid var(--gold-700)">Căn Hộ &amp; Giá Thuê</a>
+        <a href="Landing%20Page.dc.html#included" style="font-family:var(--font-sans);font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-primary);text-decoration:none;padding:8px 0;border-bottom:1px solid transparent;transition:color .15s,border-color .15s" style-hover="color:var(--gold-900);border-bottom:1px solid var(--gold-700)">Trọn Gói Dịch Vụ</a>
+        <a href="Landing%20Page.dc.html#location" style="font-family:var(--font-sans);font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-primary);text-decoration:none;padding:8px 0;border-bottom:1px solid transparent;transition:color .15s,border-color .15s" style-hover="color:var(--gold-900);border-bottom:1px solid var(--gold-700)">Vị Trí</a>
+        <a href="Landing%20Page.dc.html#amenities" style="font-family:var(--font-sans);font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-primary);text-decoration:none;padding:8px 0;border-bottom:1px solid transparent;transition:color .15s,border-color .15s" style-hover="color:var(--gold-900);border-bottom:1px solid var(--gold-700)">Tiện Ích</a>
+        <a href="#library" aria-current="page" style="font-family:var(--font-sans);font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-900);text-decoration:none;padding:8px 0;border-bottom:1px solid var(--gold-700)">Thư Viện Ảnh</a>
+      </nav>
+    </sc-if>
+    <div style="display:flex;align-items:center;gap:14px;flex:none">
+      <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ yes }}">
+        <a href="tel:+84889237833" style="display:inline-flex;align-items:center;gap:8px;font-family:var(--font-sans);font-size:.8125rem;font-weight:600;letter-spacing:.1em;color:var(--jade-900);text-decoration:none;min-height:44px" style-hover="color:var(--clay-700)">
+          <x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.Icon" name="phone" size="{{ n15 }}" color="var(--gold-700)" hint-size="15px,15px"></x-import>088 923 7833
+        </a>
+      </sc-if>
+      <x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.Button" variant="gold" size="sm" icon="calendar-check" on-click="{{ openModal }}" hint-size="160px,40px">Đặt Phòng Ngay</x-import>
+      <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ no }}">
+        <button type="button" aria-label="Mở menu" onClick="{{ toggleMenu }}" style="width:44px;height:44px;display:grid;align-content:center;gap:5px;padding:0 11px;background:transparent;border:1px solid var(--hairline-strong);cursor:pointer">
+          <span style="display:block;height:1px;background:var(--jade-900)"></span>
+          <span style="display:block;height:1px;background:var(--jade-900)"></span>
+          <span style="display:block;height:1px;background:var(--jade-900)"></span>
+        </button>
+      </sc-if>
+    </div>
+  </div>
+  <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ no }}">
+    <nav aria-label="Điều hướng chính" style="margin-top:12px;border-top:1px solid var(--hairline);background:var(--canvas-warm);display:grid">
+      <a href="Landing%20Page.dc.html#units" onClick="{{ closeMenu }}" style="padding:15px clamp(20px,4vw,56px);font-family:var(--font-sans);font-size:.8125rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-primary);text-decoration:none;border-bottom:1px solid var(--hairline);min-height:44px">Căn Hộ &amp; Giá Thuê</a>
+      <a href="Landing%20Page.dc.html#included" onClick="{{ closeMenu }}" style="padding:15px clamp(20px,4vw,56px);font-family:var(--font-sans);font-size:.8125rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-primary);text-decoration:none;border-bottom:1px solid var(--hairline);min-height:44px">Trọn Gói Dịch Vụ</a>
+      <a href="Landing%20Page.dc.html#location" onClick="{{ closeMenu }}" style="padding:15px clamp(20px,4vw,56px);font-family:var(--font-sans);font-size:.8125rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-primary);text-decoration:none;border-bottom:1px solid var(--hairline);min-height:44px">Vị Trí</a>
+      <a href="Landing%20Page.dc.html#amenities" onClick="{{ closeMenu }}" style="padding:15px clamp(20px,4vw,56px);font-family:var(--font-sans);font-size:.8125rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-primary);text-decoration:none;border-bottom:1px solid var(--hairline);min-height:44px">Tiện Ích</a>
+      <a href="#library" onClick="{{ closeMenu }}" style="padding:15px clamp(20px,4vw,56px);font-family:var(--font-sans);font-size:.8125rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-900);text-decoration:none;border-bottom:1px solid var(--hairline);min-height:44px">Thư Viện Ảnh</a>
+      <a href="tel:+84889237833" style="padding:15px clamp(20px,4vw,56px);font-family:var(--font-sans);font-size:.8125rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-900);text-decoration:none;min-height:44px">Gọi 088 923 7833</a>
+    </nav>
+  </sc-if>
+</header>
+
+<section style="background:var(--jade-700);border-bottom:1px solid var(--gold-700);padding:clamp(44px,6vw,88px) clamp(20px,4vw,56px)">
+  <div style="max-width:1240px;margin:0 auto;display:grid;gap:clamp(26px,3.4vw,42px)">
+    <nav aria-label="Đường dẫn" style="display:flex;align-items:center;gap:12px;font-family:var(--font-sans);font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:rgba(250,243,234,.66)">
+      <a href="Landing%20Page.dc.html" style="color:var(--gold-050);text-decoration:none;border-bottom:1px solid var(--gold-700)">Trang Chủ</a>
+      <span aria-hidden="true">·</span>
+      <span>Thư Viện Hình Ảnh</span>
+    </nav>
+    <div style="display:grid;gap:clamp(20px,2.6vw,36px);grid-template-columns:repeat(auto-fit,minmax(320px,1fr));align-items:end">
+      <div style="display:grid;gap:18px;justify-items:start">
+        <span style="display:inline-flex;align-items:center;gap:12px;font-family:var(--font-sans);font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-050)"><span style="width:32px;height:1px;background:var(--gold-700)"></span>Hình Ảnh Thực Tế · Không Dựng 3D</span>
+        <h1 style="margin:0;max-width:20ch;font-family:var(--font-display);font-size:var(--fs-display-lg);font-weight:400;line-height:1.05;letter-spacing:-.02em;color:var(--text-inverse);text-wrap:pretty">Thư Viện Hình Ảnh Căn Hộ</h1>
+        <p style="margin:0;max-width:54ch;font-family:var(--font-sans);font-size:1.08rem;line-height:1.65;color:rgba(250,243,234,.82)">Toàn bộ khung ảnh dưới đây chụp trực tiếp tại năm căn hộ Gao Ji House đang cho thuê trong Vinhomes Central Park — nội thất, ánh sáng và tầm nhìn giữ nguyên hiện trạng bàn giao.</p>
+      </div>
+      <div style="display:grid;gap:1px;grid-template-columns:repeat(2,1fr);background:rgba(212,175,55,.30);border:1px solid rgba(212,175,55,.30)">
+        <div style="background:var(--jade-700);padding:clamp(16px,1.8vw,22px);display:grid;gap:6px">
+          <span style="font-family:var(--font-display);font-size:2rem;line-height:1;color:var(--gold-050)">17</span>
+          <span style="font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:rgba(250,243,234,.7)">Khung Ảnh</span>
+        </div>
+        <div style="background:var(--jade-700);padding:clamp(16px,1.8vw,22px);display:grid;gap:6px">
+          <span style="font-family:var(--font-display);font-size:2rem;line-height:1;color:var(--gold-050)">05</span>
+          <span style="font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:rgba(250,243,234,.7)">Căn Hộ</span>
+        </div>
+        <div style="background:var(--jade-700);padding:clamp(16px,1.8vw,22px);display:grid;gap:6px">
+          <span style="font-family:var(--font-display);font-size:2rem;line-height:1;color:var(--gold-050)">05</span>
+          <span style="font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:rgba(250,243,234,.7)">Nhóm Không Gian</span>
+        </div>
+        <div style="background:var(--jade-700);padding:clamp(16px,1.8vw,22px);display:grid;gap:6px">
+          <span style="font-family:var(--font-display);font-size:2rem;line-height:1;color:var(--gold-050)">08·26</span>
+          <span style="font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:rgba(250,243,234,.7)">Chụp Tháng</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="library" style="padding:clamp(36px,4.5vw,64px) clamp(20px,4vw,56px) clamp(56px,7vw,112px)">
+  <div style="max-width:1600px;margin:0 auto">
+    <div style="border:1px solid var(--hairline);background:var(--surface-raised)">
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;padding:16px 18px;border-bottom:1px solid var(--hairline)">
+        <span style="min-width:118px;font-family:var(--font-sans);font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)">Không Gian</span>
+        <x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.FilterTabs" tabs="{{ catTabs }}" value="{{ cat }}" on-change="{{ setCat }}" hint-size="620px,40px"></x-import>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 20px;padding:14px 18px;background:var(--surface-sunken)">
+        <span style="font-family:var(--font-sans);font-size:.8125rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--jade-900)">{{ resultLine }}</span>
+        <span style="display:inline-flex;align-items:center;gap:10px;font-family:var(--font-sans);font-size:.75rem;letter-spacing:.06em;color:var(--text-muted)">
+          <x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.Icon" name="images" size="{{ n15 }}" color="var(--gold-700)" hint-size="15px,15px"></x-import>Bấm vào ảnh để xem cỡ lớn · dùng ← → để chuyển ảnh
+        </span>
+      </div>
+    </div>
+
+    <div ref="{{ gridRef }}" onClick="{{ onGridClick }}" style="margin-top:clamp(24px,3vw,40px);columns:clamp(280px,26vw,420px) 3;column-gap:clamp(20px,2.2vw,30px)">
+
+      <figure data-cat="khach" style="margin:0 0 clamp(20px,2.2vw,30px);break-inside:avoid">
+        <button type="button" data-open="0" aria-label="Mở ảnh lớn: Hình 01 — Phòng Khách Liên Thông" style="width:100%;padding:0;border:1px solid var(--hairline);background:var(--surface-sunken);cursor:zoom-in;overflow:hidden;display:block;aspect-ratio:3 / 2">
+          <img src="assets/photos/living-open-plan.jpg" alt="Phòng khách liên thông với sofa da, cây xanh và ánh sáng buổi chiều" loading="lazy" style="width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.16,1,.3,1)" style-hover="transform:scale(1.04)">
+        </button>
+        <figcaption style="border:1px solid var(--hairline);border-top:0;background:var(--surface-raised);padding:14px 16px;display:grid;gap:8px">
+          <span style="font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)">Hình 01</span>
+          <span style="font-family:var(--font-display);font-size:1.18rem;line-height:1.2;color:var(--text-primary)">Phòng Khách Liên Thông</span>
+          <span data-unitrow="1" style="border-top:1px solid var(--hairline);padding-top:8px;font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--jade-900)">Căn Hộ L1.29.08 · 2PN · 92 M²</span>
+        </figcaption>
+      </figure>
+
+      <figure data-cat="ngu" style="margin:0 0 clamp(20px,2.2vw,30px);break-inside:avoid">
+        <button type="button" data-open="1" aria-label="Mở ảnh lớn: Hình 02 — Ngủ Master Hướng Sông Sài Gòn" style="width:100%;padding:0;border:1px solid var(--hairline);background:var(--surface-sunken);cursor:zoom-in;overflow:hidden;display:block;aspect-ratio:4 / 5">
+          <img src="assets/photos/bedroom-master-river.jpg" alt="Phòng ngủ master với ga trắng khách sạn và cửa kính hướng sông" loading="lazy" style="width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.16,1,.3,1)" style-hover="transform:scale(1.04)">
+        </button>
+        <figcaption style="border:1px solid var(--hairline);border-top:0;background:var(--surface-raised);padding:14px 16px;display:grid;gap:8px">
+          <span style="font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)">Hình 02</span>
+          <span style="font-family:var(--font-display);font-size:1.18rem;line-height:1.2;color:var(--text-primary)">Ngủ Master Hướng Sông Sài Gòn</span>
+          <span data-unitrow="1" style="border-top:1px solid var(--hairline);padding-top:8px;font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--jade-900)">Căn Hộ L1.29.08 · 2PN · Tầng 29</span>
+        </figcaption>
+      </figure>
+
+      <figure data-cat="tienich" style="margin:0 0 clamp(20px,2.2vw,30px);break-inside:avoid">
+        <button type="button" data-open="2" aria-label="Mở ảnh lớn: Hình 03 — Hồ Bơi Ven Sông Nội Khu" style="width:100%;padding:0;border:1px solid var(--hairline);background:var(--surface-sunken);cursor:zoom-in;overflow:hidden;display:block;aspect-ratio:3 / 2">
+          <img src="assets/photos/pool-aerial.jpg" alt="Hồ bơi nội khu ven sông nhìn từ trên cao" loading="lazy" style="width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.16,1,.3,1)" style-hover="transform:scale(1.04)">
+        </button>
+        <figcaption style="border:1px solid var(--hairline);border-top:0;background:var(--surface-raised);padding:14px 16px;display:grid;gap:8px">
+          <span style="font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)">Hình 03</span>
+          <span style="font-family:var(--font-display);font-size:1.18rem;line-height:1.2;color:var(--text-primary)">Hồ Bơi Ven Sông Nội Khu</span>
+          <span data-unitrow="1" style="border-top:1px solid var(--hairline);padding-top:8px;font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--jade-900)">Tiện Ích Nội Khu · Mở 6:00–21:00</span>
+        </figcaption>
+      </figure>
+
+      <figure data-cat="khach" style="margin:0 0 clamp(20px,2.2vw,30px);break-inside:avoid">
+        <button type="button" data-open="3" aria-label="Mở ảnh lớn: Hình 04 — Bếp Đảo &amp; Thiết Bị Âm Tủ" style="width:100%;padding:0;border:1px solid var(--hairline);background:var(--surface-sunken);cursor:zoom-in;overflow:hidden;display:block;aspect-ratio:4 / 5">
+          <img src="assets/photos/kitchen-island.jpg" alt="Bếp đảo với tủ gỗ walnut và thiết bị âm tủ" loading="lazy" style="width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.16,1,.3,1)" style-hover="transform:scale(1.04)">
+        </button>
+        <figcaption style="border:1px solid var(--hairline);border-top:0;background:var(--surface-raised);padding:14px 16px;display:grid;gap:8px">
+          <span style="font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)">Hình 04</span>
+          <span style="font-family:var(--font-display);font-size:1.18rem;line-height:1.2;color:var(--text-primary)">Bếp Đảo &amp; Thiết Bị Âm Tủ</span>
+          <span data-unitrow="1" style="border-top:1px solid var(--hairline);padding-top:8px;font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--jade-900)">Căn Hộ L3.44.09 · Penthouse Duplex</span>
+        </figcaption>
+      </figure>
+
+      <figure data-cat="tam" style="margin:0 0 clamp(20px,2.2vw,30px);break-inside:avoid">
+        <button type="button" data-open="4" aria-label="Mở ảnh lớn: Hình 05 — Phòng Tắm Đá Travertine" style="width:100%;padding:0;border:1px solid var(--hairline);background:var(--surface-sunken);cursor:zoom-in;overflow:hidden;display:block;aspect-ratio:3 / 2">
+          <img src="assets/photos/bathroom-vanity.jpg" alt="Phòng tắm với bàn đá travertine và gương lớn" loading="lazy" style="width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.16,1,.3,1)" style-hover="transform:scale(1.04)">
+        </button>
+        <figcaption style="border:1px solid var(--hairline);border-top:0;background:var(--surface-raised);padding:14px 16px;display:grid;gap:8px">
+          <span style="font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)">Hình 05</span>
+          <span style="font-family:var(--font-display);font-size:1.18rem;line-height:1.2;color:var(--text-primary)">Phòng Tắm Đá Travertine</span>
+          <span data-unitrow="1" style="border-top:1px solid var(--hairline);padding-top:8px;font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--jade-900)">Căn Hộ L1.29.08 · Bồn Rửa Đôi</span>
+        </figcaption>
+      </figure>
+
+      <figure data-cat="ngu" style="margin:0 0 clamp(20px,2.2vw,30px);break-inside:avoid">
+        <button type="button" data-open="5" aria-label="Mở ảnh lớn: Hình 06 — Phòng Ngủ Đôi View Sông" style="width:100%;padding:0;border:1px solid var(--hairline);background:var(--surface-sunken);cursor:zoom-in;overflow:hidden;display:block;aspect-ratio:3 / 2">
+          <img src="assets/photos/bedroom-twin-river.jpg" alt="Phòng ngủ hai giường đơn với tầm nhìn ra sông" loading="lazy" style="width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.16,1,.3,1)" style-hover="transform:scale(1.04)">
+        </button>
+        <figcaption style="border:1px solid var(--hairline);border-top:0;background:var(--surface-raised);padding:14px 16px;display:grid;gap:8px">
+          <span style="font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)">Hình 06</span>
+          <span style="font-family:var(--font-display);font-size:1.18rem;line-height:1.2;color:var(--text-primary)">Phòng Ngủ Đôi View Sông</span>
+          <span data-unitrow="1" style="border-top:1px solid var(--hairline);padding-top:8px;font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--jade-900)">Căn Hộ L81.07.12 · Sky Suite</span>
+        </figcaption>
+      </figure>
+
+      <figure data-cat="khach" style="margin:0 0 clamp(20px,2.2vw,30px);break-inside:avoid">
+        <button type="button" data-open="6" aria-label="Mở ảnh lớn: Hình 07 — Khách &amp; Bàn Ăn Thông Nhau" style="width:100%;padding:0;border:1px solid var(--hairline);background:var(--surface-sunken);cursor:zoom-in;overflow:hidden;display:block;aspect-ratio:4 / 5">
+          <img src="assets/photos/living-dining.jpg" alt="Khu vực khách và bàn ăn liên thông trong căn hộ" loading="lazy" style="width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.16,1,.3,1)" style-hover="transform:scale(1.04)">
+        </button>
+        <figcaption style="border:1px solid var(--hairline);border-top:0;background:var(--surface-raised);padding:14px 16px;display:grid;gap:8px">
+          <span style="font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)">Hình 07</span>
+          <span style="font-family:var(--font-display);font-size:1.18rem;line-height:1.2;color:var(--text-primary)">Khách &amp; Bàn Ăn Thông Nhau</span>
+          <span data-unitrow="1" style="border-top:1px solid var(--hairline);padding-top:8px;font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--jade-900)">Căn Hộ P3.42.12 · 2PN · 120 M²</span>
+        </figcaption>
+      </figure>
+
+      <figure data-cat="ngoai" style="margin:0 0 clamp(20px,2.2vw,30px);break-inside:avoid">
+        <button type="button" data-open="7" aria-label="Mở ảnh lớn: Hình 08 — Landmark 81 Từ Ban Công" style="width:100%;padding:0;border:1px solid var(--hairline);background:var(--surface-sunken);cursor:zoom-in;overflow:hidden;display:block;aspect-ratio:4 / 5">
+          <img src="assets/photos/landmark-81-balcony.jpg" alt="Landmark 81 nhìn từ ban công căn hộ" loading="lazy" style="width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.16,1,.3,1)" style-hover="transform:scale(1.04)">
+        </button>
+        <figcaption style="border:1px solid var(--hairline);border-top:0;background:var(--surface-raised);padding:14px 16px;display:grid;gap:8px">
+          <span style="font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)">Hình 08</span>
+          <span style="font-family:var(--font-display);font-size:1.18rem;line-height:1.2;color:var(--text-primary)">Landmark 81 Từ Ban Công</span>
+          <span data-unitrow="1" style="border-top:1px solid var(--hairline);padding-top:8px;font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--jade-900)">Tầm Nhìn · 0.2 KM Tới Landmark 81</span>
+        </figcaption>
+      </figure>
+
+      <figure data-cat="ngu" style="margin:0 0 clamp(20px,2.2vw,30px);break-inside:avoid">
+        <button type="button" data-open="8" aria-label="Mở ảnh lớn: Hình 09 — Phòng Ngủ Master Ga Trắng" style="width:100%;padding:0;border:1px solid var(--hairline);background:var(--surface-sunken);cursor:zoom-in;overflow:hidden;display:block;aspect-ratio:3 / 2">
+          <img src="assets/photos/master-bedroom.jpg" alt="Phòng ngủ master với ga trắng và khăn gấp" loading="lazy" style="width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.16,1,.3,1)" style-hover="transform:scale(1.04)">
+        </button>
+        <figcaption style="border:1px solid var(--hairline);border-top:0;background:var(--surface-raised);padding:14px 16px;display:grid;gap:8px">
+          <span style="font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)">Hình 09</span>
+          <span style="font-family:var(--font-display);font-size:1.18rem;line-height:1.2;color:var(--text-primary)">Phòng Ngủ Master Ga Trắng</span>
+          <span data-unitrow="1" style="border-top:1px solid var(--hairline);padding-top:8px;font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--jade-900)">Đổi Ga &amp; Khăn 2 Lần / Tuần</span>
+        </figcaption>
+      </figure>
+
+      <figure data-cat="tienich" style="margin:0 0 clamp(20px,2.2vw,30px);break-inside:avoid">
+        <button type="button" data-open="9" aria-label="Mở ảnh lớn: Hình 10 — Phòng Gym Technogym" style="width:100%;padding:0;border:1px solid var(--hairline);background:var(--surface-sunken);cursor:zoom-in;overflow:hidden;display:block;aspect-ratio:3 / 2">
+          <img src="assets/photos/gym.webp" alt="Phòng gym nội khu với thiết bị Technogym" loading="lazy" style="width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.16,1,.3,1)" style-hover="transform:scale(1.04)">
+        </button>
+        <figcaption style="border:1px solid var(--hairline);border-top:0;background:var(--surface-raised);padding:14px 16px;display:grid;gap:8px">
+          <span style="font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)">Hình 10</span>
+          <span style="font-family:var(--font-display);font-size:1.18rem;line-height:1.2;color:var(--text-primary)">Phòng Gym Technogym</span>
+          <span data-unitrow="1" style="border-top:1px solid var(--hairline);padding-top:8px;font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--jade-900)">Tiện Ích Nội Khu · Mở 5:00–23:00</span>
+        </figcaption>
+      </figure>
+
+      <figure data-cat="ngu" style="margin:0 0 clamp(20px,2.2vw,30px);break-inside:avoid">
+        <button type="button" data-open="10" aria-label="Mở ảnh lớn: Hình 11 — Phòng Ngủ Đơn Nắng Chiều" style="width:100%;padding:0;border:1px solid var(--hairline);background:var(--surface-sunken);cursor:zoom-in;overflow:hidden;display:block;aspect-ratio:4 / 5">
+          <img src="assets/photos/bedroom-single-sunlit.jpg" alt="Phòng ngủ đơn với nắng chiều qua rèm voan" loading="lazy" style="width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.16,1,.3,1)" style-hover="transform:scale(1.04)">
+        </button>
+        <figcaption style="border:1px solid var(--hairline);border-top:0;background:var(--surface-raised);padding:14px 16px;display:grid;gap:8px">
+          <span style="font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)">Hình 11</span>
+          <span style="font-family:var(--font-display);font-size:1.18rem;line-height:1.2;color:var(--text-primary)">Phòng Ngủ Đơn Nắng Chiều</span>
+          <span data-unitrow="1" style="border-top:1px solid var(--hairline);padding-top:8px;font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--jade-900)">Căn Hộ P1.27.10 · 1PN · 54 M²</span>
+        </figcaption>
+      </figure>
+
+      <figure data-cat="khach" style="margin:0 0 clamp(20px,2.2vw,30px);break-inside:avoid">
+        <button type="button" data-open="11" aria-label="Mở ảnh lớn: Hình 12 — Bàn Ăn Ánh Sáng Chiều" style="width:100%;padding:0;border:1px solid var(--hairline);background:var(--surface-sunken);cursor:zoom-in;overflow:hidden;display:block;aspect-ratio:3 / 2">
+          <img src="assets/photos/dining-room.jpg" alt="Bàn ăn gỗ dưới ánh sáng buổi chiều" loading="lazy" style="width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.16,1,.3,1)" style-hover="transform:scale(1.04)">
+        </button>
+        <figcaption style="border:1px solid var(--hairline);border-top:0;background:var(--surface-raised);padding:14px 16px;display:grid;gap:8px">
+          <span style="font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)">Hình 12</span>
+          <span style="font-family:var(--font-display);font-size:1.18rem;line-height:1.2;color:var(--text-primary)">Bàn Ăn Ánh Sáng Chiều</span>
+          <span data-unitrow="1" style="border-top:1px solid var(--hairline);padding-top:8px;font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--jade-900)">Căn Hộ P1.27.10 · Bàn Ăn 4 Chỗ</span>
+        </figcaption>
+      </figure>
+
+      <figure data-cat="tam" style="margin:0 0 clamp(20px,2.2vw,30px);break-inside:avoid">
+        <button type="button" data-open="12" aria-label="Mở ảnh lớn: Hình 13 — Buồng Tắm Kính Vòi Sen Mưa" style="width:100%;padding:0;border:1px solid var(--hairline);background:var(--surface-sunken);cursor:zoom-in;overflow:hidden;display:block;aspect-ratio:3 / 4">
+          <img src="assets/photos/bathroom-shower.jpg" alt="Buồng tắm kính với vòi sen mưa" loading="lazy" style="width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.16,1,.3,1)" style-hover="transform:scale(1.04)">
+        </button>
+        <figcaption style="border:1px solid var(--hairline);border-top:0;background:var(--surface-raised);padding:14px 16px;display:grid;gap:8px">
+          <span style="font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)">Hình 13</span>
+          <span style="font-family:var(--font-display);font-size:1.18rem;line-height:1.2;color:var(--text-primary)">Buồng Tắm Kính Vòi Sen Mưa</span>
+          <span data-unitrow="1" style="border-top:1px solid var(--hairline);padding-top:8px;font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--jade-900)">Căn Hộ P3.42.12 · Bình Nóng Lạnh Trung Tâm</span>
+        </figcaption>
+      </figure>
+
+      <figure data-cat="ngu" style="margin:0 0 clamp(20px,2.2vw,30px);break-inside:avoid">
+        <button type="button" data-open="13" aria-label="Mở ảnh lớn: Hình 14 — Ngủ Bục Nhìn Landmark 81" style="width:100%;padding:0;border:1px solid var(--hairline);background:var(--surface-sunken);cursor:zoom-in;overflow:hidden;display:block;aspect-ratio:3 / 2">
+          <img src="assets/photos/bedroom-platform-landmark.jpg" alt="Phòng ngủ giường bục nhìn ra Landmark 81" loading="lazy" style="width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.16,1,.3,1)" style-hover="transform:scale(1.04)">
+        </button>
+        <figcaption style="border:1px solid var(--hairline);border-top:0;background:var(--surface-raised);padding:14px 16px;display:grid;gap:8px">
+          <span style="font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)">Hình 14</span>
+          <span style="font-family:var(--font-display);font-size:1.18rem;line-height:1.2;color:var(--text-primary)">Ngủ Bục Nhìn Landmark 81</span>
+          <span data-unitrow="1" style="border-top:1px solid var(--hairline);padding-top:8px;font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--jade-900)">Căn Hộ L3.44.09 · Tầng 44</span>
+        </figcaption>
+      </figure>
+
+      <figure data-cat="tienich" style="margin:0 0 clamp(20px,2.2vw,30px);break-inside:avoid">
+        <button type="button" data-open="14" aria-label="Mở ảnh lớn: Hình 15 — Sân Thượng &amp; Hầm Rượu" style="width:100%;padding:0;border:1px solid var(--hairline);background:var(--surface-sunken);cursor:zoom-in;overflow:hidden;display:block;aspect-ratio:4 / 5">
+          <img src="assets/photos/sky-terrace.jpg" alt="Sân thượng ngắm cảnh và hầm rượu" loading="lazy" style="width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.16,1,.3,1)" style-hover="transform:scale(1.04)">
+        </button>
+        <figcaption style="border:1px solid var(--hairline);border-top:0;background:var(--surface-raised);padding:14px 16px;display:grid;gap:8px">
+          <span style="font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)">Hình 15</span>
+          <span style="font-family:var(--font-display);font-size:1.18rem;line-height:1.2;color:var(--text-primary)">Sân Thượng &amp; Hầm Rượu</span>
+          <span data-unitrow="1" style="border-top:1px solid var(--hairline);padding-top:8px;font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--jade-900)">Tiện Ích Nội Khu · Đặt Chỗ Trước 18:00</span>
+        </figcaption>
+      </figure>
+
+      <figure data-cat="ngu" style="margin:0 0 clamp(20px,2.2vw,30px);break-inside:avoid">
+        <button type="button" data-open="15" aria-label="Mở ảnh lớn: Hình 16 — Phòng Ngủ Có Ensuite" style="width:100%;padding:0;border:1px solid var(--hairline);background:var(--surface-sunken);cursor:zoom-in;overflow:hidden;display:block;aspect-ratio:3 / 2">
+          <img src="assets/photos/bedroom-tv-ensuite.jpg" alt="Phòng ngủ có TV và phòng tắm riêng" loading="lazy" style="width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.16,1,.3,1)" style-hover="transform:scale(1.04)">
+        </button>
+        <figcaption style="border:1px solid var(--hairline);border-top:0;background:var(--surface-raised);padding:14px 16px;display:grid;gap:8px">
+          <span style="font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)">Hình 16</span>
+          <span style="font-family:var(--font-display);font-size:1.18rem;line-height:1.2;color:var(--text-primary)">Phòng Ngủ Có Ensuite</span>
+          <span data-unitrow="1" style="border-top:1px solid var(--hairline);padding-top:8px;font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--jade-900)">Căn Hộ P3.42.12 · Tân Trang 2026</span>
+        </figcaption>
+      </figure>
+
+      <figure data-cat="ngoai" style="margin:0 0 clamp(20px,2.2vw,30px);break-inside:avoid">
+        <button type="button" data-open="16" aria-label="Mở ảnh lớn: Hình 17 — Cụm Tháp Bên Sông Sài Gòn" style="width:100%;padding:0;border:1px solid var(--hairline);background:var(--surface-sunken);cursor:zoom-in;overflow:hidden;display:block;aspect-ratio:3 / 2">
+          <img src="assets/photos/towers-skyline.jpg" alt="Cụm toà tháp Vinhomes Central Park bên sông Sài Gòn" loading="lazy" style="width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.16,1,.3,1)" style-hover="transform:scale(1.04)">
+        </button>
+        <figcaption style="border:1px solid var(--hairline);border-top:0;background:var(--surface-raised);padding:14px 16px;display:grid;gap:8px">
+          <span style="font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)">Hình 17</span>
+          <span style="font-family:var(--font-display);font-size:1.18rem;line-height:1.2;color:var(--text-primary)">Cụm Tháp Bên Sông Sài Gòn</span>
+          <span data-unitrow="1" style="border-top:1px solid var(--hairline);padding-top:8px;font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--jade-900)">Vinhomes Central Park · Bình Thạnh</span>
+        </figcaption>
+      </figure>
+
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--canvas-warm);border-top:1px solid var(--hairline);padding:clamp(56px,7vw,112px) clamp(20px,4vw,56px)">
+  <div style="max-width:1240px;margin:0 auto;background:var(--jade-700);border:1px solid var(--gold-700);padding:clamp(32px,4.5vw,64px);display:grid;gap:clamp(24px,3vw,44px);grid-template-columns:repeat(auto-fit,minmax(300px,1fr));align-items:center">
+    <div style="display:grid;gap:18px;justify-items:start">
+      <span style="display:inline-flex;align-items:center;gap:12px;font-family:var(--font-sans);font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-050)"><span style="width:32px;height:1px;background:var(--gold-700)"></span>Video Thực Tế · Phản Hồi Trong 2 Giờ</span>
+      <h2 style="margin:0;max-width:24ch;font-family:var(--font-display);font-size:var(--fs-headline-md);font-weight:400;line-height:1.15;text-transform:uppercase;color:var(--text-inverse);text-wrap:pretty">Muốn Xem Video Từng Căn?</h2>
+      <p style="margin:0;max-width:52ch;font-family:var(--font-sans);font-size:1.05rem;line-height:1.6;color:rgba(250,243,234,.82)">Nhắn Zalo tên căn hộ cần xem — quản lý gửi video quay dọc toàn căn, sơ đồ mặt bằng và tình trạng phòng trống theo ngày trong cùng buổi.</p>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:flex-end">
+      <x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.Button" variant="gold" size="lg" icon="phone" as="a" href="{{ channelHref }}" target="_blank" rel="noreferrer" hint-size="240px,56px">{{ channelLabel }}</x-import>
+      <x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.Button" variant="onDark" size="lg" icon="arrow-right" as="a" href="Landing%20Page.dc.html#units" hint-size="230px,56px">Xem Danh Sách Căn Hộ</x-import>
+    </div>
+  </div>
+</section>
+
+<x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.Footer" address="Vinhomes Central Park, 208 Nguyễn Hữu Cảnh, Phường 22, Bình Thạnh, TP. Hồ Chí Minh" phone="088 923 7833" email="stay@gaojihouse.vn" note="© 2026 Gao Ji House · Căn Hộ Dịch Vụ Cho Thuê · Vinhomes Central Park" dc-props="{{ footerProps }}" hint-size="100%,420px"></x-import>
+
+<x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.ContactRail" zalo="https://zalo.me/0889237833" phone="0889237833" email="stay@gaojihouse.vn" hint-size="60px,180px"></x-import>
+
+<x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.InquiryModal" open="{{ modalOpen }}" on-close="{{ closeModal }}" unit-types="{{ modalTypes }}" hint-size="1px,1px"></x-import>
+
+<sc-if value="{{ lbOpen }}" hint-placeholder-val="{{ no }}">
+  <div role="dialog" aria-modal="true" aria-label="Hình ảnh căn hộ" style="position:fixed;inset:0;z-index:120;background:var(--scrim);display:grid;place-items:center;padding:clamp(16px,4vw,48px)">
+    <div style="position:relative;width:min(1180px,100%);display:grid;gap:14px">
+      <img ref="{{ lbRef }}" src="assets/photos/living-open-plan.jpg" alt="{{ lbAlt }}" style="width:100%;max-height:74vh;object-fit:contain;background:var(--ink-900);border:1px solid var(--gold-700)">
+      <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px">
+        <span style="display:grid;gap:6px">
+          <span style="font-family:var(--font-sans);font-size:.8125rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-050)">{{ lbCaption }}</span>
+          <span style="font-family:var(--font-sans);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(250,243,234,.66)">{{ lbMeta }}</span>
+        </span>
+        <span style="display:flex;gap:10px">
+          <button type="button" onClick="{{ lbPrev }}" aria-label="Ảnh trước" style="min-width:48px;min-height:48px;padding:0 18px;background:transparent;border:1px solid var(--gold-700);color:var(--gold-050);font-family:var(--font-sans);font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;cursor:pointer">Trước</button>
+          <button type="button" onClick="{{ lbNext }}" aria-label="Ảnh sau" style="min-width:48px;min-height:48px;padding:0 18px;background:transparent;border:1px solid var(--gold-700);color:var(--gold-050);font-family:var(--font-sans);font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;cursor:pointer">Sau</button>
+          <button type="button" onClick="{{ lbClose }}" aria-label="Đóng" style="min-width:48px;min-height:48px;padding:0 18px;background:var(--gold-500);border:1px solid var(--gold-500);color:var(--ink-900);font-family:var(--font-sans);font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;cursor:pointer">Đóng</button>
+        </span>
+      </div>
+    </div>
+  </div>
+</sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;defaultCategory&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Tất Cả&quot;,&quot;Khách &amp; Bếp&quot;,&quot;Phòng Ngủ&quot;,&quot;Phòng Tắm&quot;,&quot;Tiện Ích&quot;,&quot;Tầm Nhìn&quot;],&quot;default&quot;:&quot;Tất Cả&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Thư viện&quot;},&quot;showUnitCodes&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Thư viện&quot;},&quot;primaryChannel&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Zalo&quot;,&quot;WeChat&quot;,&quot;Điện Thoại&quot;],&quot;default&quot;:&quot;Zalo&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Liên hệ&quot;}}">
+class Component extends DCLogic {
+  state = { cat: "all", lb: -1, modal: false, menu: false, isDesktop: true };
+  navRef = React.createRef();
+  gridRef = React.createRef();
+
+  PHOTOS = [
+    { id: "photoLivingOpen", cat: "khach", plate: "Hình 01", name: "Phòng Khách Liên Thông", meta: "Căn hộ L1.29.08 · 2PN · 92 m²", alt: "Phòng khách liên thông với sofa da, cây xanh và ánh sáng buổi chiều" },
+    { id: "photoBedRiver", cat: "ngu", plate: "Hình 02", name: "Ngủ Master Hướng Sông Sài Gòn", meta: "Căn hộ L1.29.08 · tầng 29", alt: "Phòng ngủ master với ga trắng khách sạn và cửa kính hướng sông" },
+    { id: "photoPool", cat: "tienich", plate: "Hình 03", name: "Hồ Bơi Ven Sông Nội Khu", meta: "Tiện ích nội khu · mở 6:00–21:00", alt: "Hồ bơi nội khu ven sông nhìn từ trên cao" },
+    { id: "photoKitchen", cat: "khach", plate: "Hình 04", name: "Bếp Đảo & Thiết Bị Âm Tủ", meta: "Căn hộ L3.44.09 · penthouse duplex", alt: "Bếp đảo với tủ gỗ walnut và thiết bị âm tủ" },
+    { id: "photoBathVanity", cat: "tam", plate: "Hình 05", name: "Phòng Tắm Đá Travertine", meta: "Căn hộ L1.29.08 · bồn rửa đôi", alt: "Phòng tắm với bàn đá travertine và gương lớn" },
+    { id: "photoBedTwin", cat: "ngu", plate: "Hình 06", name: "Phòng Ngủ Đôi View Sông", meta: "Căn hộ L81.07.12 · sky suite", alt: "Phòng ngủ hai giường đơn với tầm nhìn ra sông" },
+    { id: "photoLivingDining", cat: "khach", plate: "Hình 07", name: "Khách & Bàn Ăn Thông Nhau", meta: "Căn hộ P3.42.12 · 2PN · 120 m²", alt: "Khu vực khách và bàn ăn liên thông trong căn hộ" },
+    { id: "photoBalcony", cat: "ngoai", plate: "Hình 08", name: "Landmark 81 Từ Ban Công", meta: "Tầm nhìn · 0.2 km tới Landmark 81", alt: "Landmark 81 nhìn từ ban công căn hộ" },
+    { id: "photoMaster", cat: "ngu", plate: "Hình 09", name: "Phòng Ngủ Master Ga Trắng", meta: "Đổi ga & khăn 2 lần / tuần", alt: "Phòng ngủ master với ga trắng và khăn gấp" },
+    { id: "photoGym", cat: "tienich", plate: "Hình 10", name: "Phòng Gym Technogym", meta: "Tiện ích nội khu · mở 5:00–23:00", alt: "Phòng gym nội khu với thiết bị Technogym" },
+    { id: "photoBedSunlit", cat: "ngu", plate: "Hình 11", name: "Phòng Ngủ Đơn Nắng Chiều", meta: "Căn hộ P1.27.10 · 1PN · 54 m²", alt: "Phòng ngủ đơn với nắng chiều qua rèm voan" },
+    { id: "photoDining", cat: "khach", plate: "Hình 12", name: "Bàn Ăn Ánh Sáng Chiều", meta: "Căn hộ P1.27.10 · bàn ăn 4 chỗ", alt: "Bàn ăn gỗ dưới ánh sáng buổi chiều" },
+    { id: "photoBathShower", cat: "tam", plate: "Hình 13", name: "Buồng Tắm Kính Vòi Sen Mưa", meta: "Căn hộ P3.42.12 · nước nóng trung tâm", alt: "Buồng tắm kính với vòi sen mưa" },
+    { id: "photoBedPlatform", cat: "ngu", plate: "Hình 14", name: "Ngủ Bục Nhìn Landmark 81", meta: "Căn hộ L3.44.09 · tầng 44", alt: "Phòng ngủ giường bục nhìn ra Landmark 81" },
+    { id: "photoTerrace", cat: "tienich", plate: "Hình 15", name: "Sân Thượng & Hầm Rượu", meta: "Tiện ích nội khu · đặt chỗ trước 18:00", alt: "Sân thượng ngắm cảnh và hầm rượu" },
+    { id: "photoBedTv", cat: "ngu", plate: "Hình 16", name: "Phòng Ngủ Có Ensuite", meta: "Căn hộ P3.42.12 · tân trang 2026", alt: "Phòng ngủ có TV và phòng tắm riêng" },
+    { id: "photoTowers", cat: "ngoai", plate: "Hình 17", name: "Cụm Tháp Bên Sông Sài Gòn", meta: "Vinhomes Central Park · Bình Thạnh", alt: "Cụm toà tháp Vinhomes Central Park bên sông Sài Gòn" }
+  ];
+
+  ASSETS = {
+    photoLivingOpen: "assets/photos/living-open-plan.jpg",
+    photoLivingDining: "assets/photos/living-dining.jpg",
+    photoKitchen: "assets/photos/kitchen-island.jpg",
+    photoDining: "assets/photos/dining-room.jpg",
+    photoMaster: "assets/photos/master-bedroom.jpg",
+    photoBedRiver: "assets/photos/bedroom-master-river.jpg",
+    photoBedTwin: "assets/photos/bedroom-twin-river.jpg",
+    photoBedSunlit: "assets/photos/bedroom-single-sunlit.jpg",
+    photoBedPlatform: "assets/photos/bedroom-platform-landmark.jpg",
+    photoBedTv: "assets/photos/bedroom-tv-ensuite.jpg",
+    photoBathVanity: "assets/photos/bathroom-vanity.jpg",
+    photoBathShower: "assets/photos/bathroom-shower.jpg",
+    photoPool: "assets/photos/pool-aerial.jpg",
+    photoGym: "assets/photos/gym.webp",
+    photoTerrace: "assets/photos/sky-terrace.jpg",
+    photoBalcony: "assets/photos/landmark-81-balcony.jpg",
+    photoTowers: "assets/photos/towers-skyline.jpg"
+  };
+
+  CATS = [
+    { value: "all", label: "Tất Cả" },
+    { value: "khach", label: "Khách &amp; Bếp" },
+    { value: "ngu", label: "Phòng Ngủ" },
+    { value: "tam", label: "Phòng Tắm" },
+    { value: "tienich", label: "Tiện Ích" },
+    { value: "ngoai", label: "Tầm Nhìn" }
+  ];
+
+  res(id) {
+    if (window.__resources && window.__resources[id]) return window.__resources[id];
+    return this.ASSETS[id];
+  }
+
+  componentDidMount() {
+    const initial = this.props.defaultCategory;
+    const match = this.CATS.find((c) => c.label.replace("&amp;", "&") === initial);
+    if (match && match.value !== "all") this.setState({ cat: match.value });
+
+    this.syncAssets = () => {
+      if (!window.__resources) return;
+      const ids = Object.keys(this.ASSETS);
+      document.querySelectorAll("img[src]").forEach((img) => {
+        const raw = img.getAttribute("src");
+        const id = ids.find((k) => this.ASSETS[k] === raw);
+        if (id && window.__resources[id]) img.src = window.__resources[id];
+      });
+    };
+    this.syncAssets();
+    this.assetTimer = setInterval(this.syncAssets, 500);
+    setTimeout(() => clearInterval(this.assetTimer), 6000);
+
+    this.mq = window.matchMedia("(min-width: 1024px)");
+    this.onMq = () => this.setState({ isDesktop: this.mq.matches, menu: false });
+    this.onMq();
+    this.mq.addEventListener("change", this.onMq);
+
+    this.onScroll = () => {
+      const n = this.navRef.current;
+      if (!n) return;
+      const s = window.scrollY > 30;
+      n.style.padding = s ? "4px 0" : "12px 0";
+      n.style.boxShadow = s ? "var(--shadow-nav)" : "none";
+    };
+    window.addEventListener("scroll", this.onScroll, { passive: true });
+    this.onScroll();
+
+    this.onKey = (e) => {
+      if (e.key === "Escape") { this.setState({ lb: -1, modal: false, menu: false }); return; }
+      if (this.state.lb < 0) return;
+      if (e.key === "ArrowLeft") this.step(-1);
+      if (e.key === "ArrowRight") this.step(1);
+    };
+    window.addEventListener("keydown", this.onKey);
+    this.applyDom();
+  }
+
+  componentDidUpdate() { this.applyDom(); }
+
+  componentWillUnmount() {
+    clearInterval(this.assetTimer);
+    if (this.mq) this.mq.removeEventListener("change", this.onMq);
+    window.removeEventListener("scroll", this.onScroll);
+    window.removeEventListener("keydown", this.onKey);
+  }
+
+  applyDom() {
+    const grid = this.gridRef.current;
+    if (!grid) return;
+    const cat = this.state.cat;
+    grid.querySelectorAll("figure[data-cat]").forEach((fig) => {
+      fig.style.display = cat === "all" || fig.dataset.cat === cat ? "" : "none";
+    });
+    const showCodes = this.props.showUnitCodes !== false;
+    grid.querySelectorAll("[data-unitrow]").forEach((el) => {
+      el.style.display = showCodes ? "" : "none";
+    });
+  }
+
+  visible() {
+    const cat = this.state.cat;
+    return this.PHOTOS.map((p, i) => ({ p, i })).filter((x) => cat === "all" || x.p.cat === cat);
+  }
+
+  step(dir) {
+    const vis = this.visible();
+    if (!vis.length) return;
+    const pos = vis.findIndex((x) => x.i === this.state.lb);
+    const next = vis[(pos + dir + vis.length) % vis.length];
+    this.setState({ lb: next.i });
+  }
+
+  renderVals() {
+    const { cat, lb, modal, menu, isDesktop } = this.state;
+    const count = (v) => (v === "all" ? this.PHOTOS.length : this.PHOTOS.filter((p) => p.cat === v).length);
+    const vis = this.visible();
+    const cur = this.PHOTOS[lb] || null;
+    const pos = cur ? vis.findIndex((x) => x.i === lb) + 1 : 0;
+    const channel = this.props.primaryChannel || "Zalo";
+    const channels = {
+      Zalo: { label: "Nhắn Zalo Nhận Video", href: "https://zalo.me/0889237833" },
+      WeChat: { label: "Nhắn WeChat Nhận Video", href: "weixin://dl/chat?HZM81MS" },
+      "Điện Thoại": { label: "Gọi 088 923 7833", href: "tel:+84889237833" }
+    };
+
+    return {
+      yes: true, no: false, n15: 15, n22: 22,
+      isDesktop, isMobile: !isDesktop,
+      menuOpen: menu,
+      toggleMenu: () => this.setState((s) => ({ menu: !s.menu })),
+      closeMenu: () => this.setState({ menu: false }),
+      navRef: this.navRef,
+      gridRef: this.gridRef,
+
+      catTabs: this.CATS.map((c) => ({ value: c.value, label: c.label + " · " + count(c.value) })),
+      cat,
+      setCat: (v) => this.setState({ cat: v, lb: -1 }),
+      resultLine: vis.length + " khung ảnh hiển thị · " +
+        (cat === "all" ? "5 nhóm không gian · 5 căn hộ" : this.CATS.find((c) => c.value === cat).label.replace("&amp;", "&")),
+
+      onGridClick: (e) => {
+        const btn = e.target.closest && e.target.closest("[data-open]");
+        if (btn) this.setState({ lb: Number(btn.dataset.open) });
+      },
+
+      lbOpen: lb >= 0,
+      lbRef: (node) => { if (node && cur) node.src = this.res(cur.id); },
+      lbAlt: (cur || this.PHOTOS[0]).alt,
+      lbCaption: (cur || this.PHOTOS[0]).plate + " — " + (cur || this.PHOTOS[0]).name,
+      lbMeta: (cur || this.PHOTOS[0]).meta + " · " + pos + " / " + vis.length,
+      lbPrev: () => this.step(-1),
+      lbNext: () => this.step(1),
+      lbClose: () => this.setState({ lb: -1 }),
+
+      modalOpen: modal,
+      openModal: () => this.setState({ modal: true }),
+      closeModal: () => this.setState({ modal: false }),
+      modalTypes: ["1 Phòng Ngủ", "2 Phòng Ngủ", "Penthouse Duplex"],
+
+      channelLabel: channels[channel].label,
+      channelHref: channels[channel].href,
+
+      footerProps: {
+        columns: [
+          { title: "Căn Hộ Dịch Vụ", items: ["1 Phòng Ngủ · Từ 24 Triệu", "2 Phòng Ngủ · Từ 33 Triệu", "Penthouse Duplex", "Lưu Trú Doanh Nghiệp"] },
+          { title: "Dịch Vụ Cư Dân", items: ["Dọn Phòng 2 Lần / Tuần", "Lễ Tân 24/7 Đa Ngữ", "Đăng Ký Tạm Trú", "Đưa Đón Sân Bay"] },
+          { title: "Liên Hệ", items: ["Zalo · 088 923 7833", "WeChat · HZM81MS", "Email · stay@gaojihouse.vn", "08:00 – 21:00 · T2–CN"] }
+        ]
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

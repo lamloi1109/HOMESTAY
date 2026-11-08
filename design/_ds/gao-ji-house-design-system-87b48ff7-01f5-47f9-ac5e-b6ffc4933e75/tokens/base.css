@@ -1,0 +1,31 @@
+/* Gao Ji House — minimal reset + the handful of utilities the brand reuses. */
+*, *::before, *::after { box-sizing: border-box }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100% }
+body {
+  margin: 0;
+  background: var(--canvas);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: var(--fs-body-md);
+  line-height: var(--lh-body);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+h1, h2, h3, h4, h5, h6 { font-family: var(--font-display); font-weight: var(--fw-regular); margin: 0 }
+p { margin: 0 }
+::selection { background: var(--selection-bg); color: var(--selection-fg) }
+:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 3px; border-radius: var(--radius-xs) }
+a { color: var(--text-gold); text-decoration: none; border-bottom: 1px solid currentColor; transition: color var(--dur-fast) var(--ease-standard) }
+a:hover { color: var(--clay-700) }
+::-webkit-scrollbar { width: 5px; height: 5px }
+::-webkit-scrollbar-track { background: var(--canvas) }
+::-webkit-scrollbar-thumb { background: var(--ink-900) }
+
+/* Caps label — the single most-used text style in the brand. */
+.gj-label { font-family: var(--font-sans); font-size: var(--fs-label); font-weight: var(--fw-semibold); line-height: var(--lh-label); letter-spacing: var(--tracking-caps); text-transform: uppercase }
+.gj-display { font-family: var(--font-display); font-size: var(--fs-display-lg); line-height: var(--lh-display); letter-spacing: var(--tracking-display) }
+.gj-italic { font-family: var(--font-italic); font-style: italic }
+/* Hairline rule + short gold tick, used to open every section. */
+.gj-rule { height: 1px; background: var(--hairline); border: 0 }
+.gj-tick { display: inline-block; width: 32px; height: 1px; background: var(--rule-gold); vertical-align: middle }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important } }

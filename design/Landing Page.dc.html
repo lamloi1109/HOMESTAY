@@ -1,0 +1,1393 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="ext-resource-dependency" content="assets/photos/living-open-plan.jpg" data-resource-id="photoLivingOpen">
+<meta name="ext-resource-dependency" content="assets/photos/living-dining.jpg" data-resource-id="photoLivingDining">
+<meta name="ext-resource-dependency" content="assets/photos/towers-skyline.jpg" data-resource-id="photoTowers">
+<meta name="ext-resource-dependency" content="assets/photos/pool-aerial.jpg" data-resource-id="photoPool">
+<meta name="ext-resource-dependency" content="assets/photos/gym.webp" data-resource-id="photoGym">
+<meta name="ext-resource-dependency" content="assets/photos/sky-terrace.jpg" data-resource-id="photoTerrace">
+<meta name="ext-resource-dependency" content="assets/photos/kitchen-island.jpg" data-resource-id="photoKitchen">
+<meta name="ext-resource-dependency" content="assets/photos/master-bedroom.jpg" data-resource-id="photoMaster">
+<meta name="ext-resource-dependency" content="assets/photos/bathroom-vanity.jpg" data-resource-id="photoBathVanity">
+<meta name="ext-resource-dependency" content="assets/photos/dining-room.jpg" data-resource-id="photoDining">
+<meta name="ext-resource-dependency" content="assets/photos/landmark-81-balcony.jpg" data-resource-id="photoBalcony">
+<meta name="ext-resource-dependency" content="assets/photos/bedroom-master-river.jpg" data-resource-id="photoBedRiver">
+<meta name="ext-resource-dependency" content="assets/photos/bedroom-single-sunlit.jpg" data-resource-id="photoBedSunlit">
+<meta name="ext-resource-dependency" content="assets/photos/bedroom-twin-river.jpg" data-resource-id="photoBedTwin">
+<meta name="ext-resource-dependency" content="assets/photos/bedroom-tv-ensuite.jpg" data-resource-id="photoBedTv">
+<meta name="ext-resource-dependency" content="assets/photos/bedroom-platform-landmark.jpg" data-resource-id="photoBedPlatform">
+<link rel="stylesheet" href="_ds/gao-ji-house-design-system-87b48ff7-01f5-47f9-ac5e-b6ffc4933e75/tokens/fonts.css">
+<link rel="stylesheet" href="_ds/gao-ji-house-design-system-87b48ff7-01f5-47f9-ac5e-b6ffc4933e75/tokens/colors.css">
+<link rel="stylesheet" href="_ds/gao-ji-house-design-system-87b48ff7-01f5-47f9-ac5e-b6ffc4933e75/tokens/typography.css">
+<link rel="stylesheet" href="_ds/gao-ji-house-design-system-87b48ff7-01f5-47f9-ac5e-b6ffc4933e75/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/gao-ji-house-design-system-87b48ff7-01f5-47f9-ac5e-b6ffc4933e75/tokens/radius.css">
+<link rel="stylesheet" href="_ds/gao-ji-house-design-system-87b48ff7-01f5-47f9-ac5e-b6ffc4933e75/tokens/elevation.css">
+<link rel="stylesheet" href="_ds/gao-ji-house-design-system-87b48ff7-01f5-47f9-ac5e-b6ffc4933e75/tokens/motion.css">
+<link rel="stylesheet" href="_ds/gao-ji-house-design-system-87b48ff7-01f5-47f9-ac5e-b6ffc4933e75/tokens/base.css">
+<link rel="stylesheet" href="_ds/gao-ji-house-design-system-87b48ff7-01f5-47f9-ac5e-b6ffc4933e75/styles.css">
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="_ds/gao-ji-house-design-system-87b48ff7-01f5-47f9-ac5e-b6ffc4933e75/_ds_bundle.js"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+body{margin:0;background:var(--canvas);font-family:var(--font-sans);color:var(--text-primary)}
+img{display:block}
+html{scroll-behavior:smooth}
+a{color:var(--gold-900)}
+a:hover{color:var(--clay-700)}
+::selection{background:var(--clay-500);color:#fff}
+:focus-visible{outline:2px solid var(--gold-500);outline-offset:3px;border-radius:2px}
+@media (prefers-reduced-motion: reduce){*{transition-duration:.01ms !important;animation-duration:.01ms !important}}
+</style>
+  <style>
+    input[type="range"]{-webkit-appearance:none;appearance:none;width:100%;height:24px;background:transparent;pointer-events:none;margin:0}
+    input[type="range"]::-webkit-slider-runnable-track{height:24px;background:transparent;border:0}
+    input[type="range"]::-moz-range-track{height:24px;background:transparent;border:0}
+    input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;pointer-events:auto;width:16px;height:16px;margin-top:4px;border:1px solid var(--gold-700);background:var(--jade-700);cursor:pointer}
+    input[type="range"]::-moz-range-thumb{pointer-events:auto;width:16px;height:16px;border:1px solid var(--gold-700);border-radius:0;background:var(--jade-700);cursor:pointer}
+    input[type="range"]:focus-visible{outline:2px solid var(--gold-500);outline-offset:3px}
+  </style>
+</helmet>
+
+<template id="__bundler_thumbnail">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400" data-bg-color="#F9F7F2">
+    <rect width="400" height="400" fill="#F9F7F2"></rect>
+    <g transform="translate(120 132)" fill="none" stroke="#1F3A2E" stroke-width="6">
+      <path d="M0 60 L80 0 L160 60 L160 136 L0 136 Z"></path>
+      <rect x="30" y="82" width="38" height="38" fill="#D4AF37" stroke="none"></rect>
+      <rect x="92" y="82" width="38" height="38" fill="#D4AF37" stroke="none"></rect>
+    </g>
+    <rect x="120" y="296" width="160" height="3" fill="#B08D57"></rect>
+  </svg>
+</template>
+
+<div style="min-height:100vh;overflow-x:hidden">
+
+<header ref="{{ navRef }}" style="position:sticky;top:0;z-index:50;background:var(--glass-warm);backdrop-filter:blur(12px);border-bottom:1px solid var(--hairline-strong);padding:12px 0;transition:padding .3s cubic-bezier(.16,1,.3,1),box-shadow .3s cubic-bezier(.16,1,.3,1)">
+  <div style="max-width:1600px;margin:0 auto;padding:0 clamp(20px,4vw,56px);display:flex;align-items:center;justify-content:space-between;gap:clamp(16px,3vw,40px)">
+    <a href="#top" aria-label="Gao Ji House · Trang chủ" style="display:inline-flex;border:0;text-decoration:none;flex:none">
+      <x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.Logo" size="sm" show-tagline="{{ no }}" hint-size="86px,52px"></x-import>
+    </a>
+    <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ yes }}">
+      <nav aria-label="{{ t.navAria }}" style="display:flex;align-items:center;gap:clamp(14px,1.8vw,30px)">
+        <a href="#units" style="font-family:var(--font-sans);font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-primary);text-decoration:none;padding:8px 0;border-bottom:1px solid transparent;transition:color .15s,border-color .15s" style-hover="color:var(--gold-900);border-bottom:1px solid var(--gold-700)">{{ t.navUnits }}</a>
+        <a href="#amenities" style="font-family:var(--font-sans);font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-primary);text-decoration:none;padding:8px 0;border-bottom:1px solid transparent;transition:color .15s,border-color .15s" style-hover="color:var(--gold-900);border-bottom:1px solid var(--gold-700)">{{ t.navAmen }}</a>
+        <a href="#location" style="font-family:var(--font-sans);font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-primary);text-decoration:none;padding:8px 0;border-bottom:1px solid transparent;transition:color .15s,border-color .15s" style-hover="color:var(--gold-900);border-bottom:1px solid var(--gold-700)">{{ t.navLoc }}</a>
+        <a href="#about" style="font-family:var(--font-sans);font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-primary);text-decoration:none;padding:8px 0;border-bottom:1px solid transparent;transition:color .15s,border-color .15s" style-hover="color:var(--gold-900);border-bottom:1px solid var(--gold-700)">{{ t.navAbout }}</a>
+      </nav>
+    </sc-if>
+    <div style="display:flex;align-items:center;gap:14px;flex:none">
+      <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ yes }}">
+        <div role="group" aria-label="{{ t.langAria }}" style="display:flex;gap:1px;background:var(--hairline);border:1px solid var(--hairline-strong)">
+          <sc-for list="{{ langs }}" as="l" hint-placeholder-count="4">
+            <button type="button" onClick="{{ l.pick }}" aria-pressed="{{ l.on }}" style="{{ l.style }}">{{ l.label }}</button>
+          </sc-for>
+        </div>
+      </sc-if>
+      <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ yes }}">
+        <a href="tel:+84889237833" style="display:inline-flex;align-items:center;gap:8px;font-family:var(--font-sans);font-size:.8125rem;font-weight:600;letter-spacing:.1em;color:var(--jade-900);text-decoration:none;min-height:44px" style-hover="color:var(--clay-700)">
+          <x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.Icon" name="phone" size="{{ n15 }}" color="var(--gold-700)" hint-size="15px,15px"></x-import>088 923 7833
+        </a>
+      </sc-if>
+      <sc-if value="{{ signedOut }}" hint-placeholder-val="{{ yes }}">
+        <button type="button" onClick="{{ openAuth }}" style="display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 14px;background:transparent;border:1px solid var(--hairline-strong);color:var(--jade-900);font-family:var(--font-sans);font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;transition:border-color .15s,color .15s" style-hover="border-color:var(--gold-700);color:var(--gold-900)">{{ t.authOpen }}</button>
+      </sc-if>
+      <sc-if value="{{ signedIn }}" hint-placeholder-val="{{ no }}">
+        <span style="display:inline-flex;align-items:center;gap:10px;padding:0 4px 0 12px;border:1px solid var(--hairline-strong);min-height:40px">
+          <span style="font-family:var(--font-sans);font-size:.75rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--jade-900)">{{ userName }}</span>
+          <button type="button" onClick="{{ signOut }}" style="min-height:32px;padding:0 10px;background:transparent;border:0;border-left:1px solid var(--hairline);color:var(--text-muted);font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;cursor:pointer" style-hover="color:var(--clay-700)">{{ t.logout }}</button>
+        </span>
+      </sc-if>
+      <x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.Button" variant="gold" size="sm" icon="calendar-check" on-click="{{ openModal }}" hint-size="160px,40px">{{ t.btnBook }}</x-import>
+      <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ no }}">
+        <button type="button" aria-label="{{ t.menuAria }}" onClick="{{ toggleMenu }}" style="width:44px;height:44px;display:grid;align-content:center;gap:5px;padding:0 11px;background:transparent;border:1px solid var(--hairline-strong);cursor:pointer">
+          <span style="display:block;height:1px;background:var(--jade-900)"></span>
+          <span style="display:block;height:1px;background:var(--jade-900)"></span>
+          <span style="display:block;height:1px;background:var(--jade-900)"></span>
+        </button>
+      </sc-if>
+    </div>
+  </div>
+  <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ no }}">
+    <nav aria-label="{{ t.navAria }}" style="margin-top:12px;border-top:1px solid var(--hairline);background:var(--canvas-warm);display:grid">
+      <a href="#units" onClick="{{ closeMenu }}" style="padding:15px clamp(20px,4vw,56px);font-family:var(--font-sans);font-size:.8125rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-primary);text-decoration:none;border-bottom:1px solid var(--hairline);min-height:44px">{{ t.navUnits }}</a>
+      <a href="#amenities" onClick="{{ closeMenu }}" style="padding:15px clamp(20px,4vw,56px);font-family:var(--font-sans);font-size:.8125rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-primary);text-decoration:none;border-bottom:1px solid var(--hairline);min-height:44px">{{ t.navAmen }}</a>
+      <a href="#location" onClick="{{ closeMenu }}" style="padding:15px clamp(20px,4vw,56px);font-family:var(--font-sans);font-size:.8125rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-primary);text-decoration:none;border-bottom:1px solid var(--hairline);min-height:44px">{{ t.navLoc }}</a>
+      <a href="#about" onClick="{{ closeMenu }}" style="padding:15px clamp(20px,4vw,56px);font-family:var(--font-sans);font-size:.8125rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-primary);text-decoration:none;border-bottom:1px solid var(--hairline);min-height:44px">{{ t.navAbout }}</a>
+      <a href="tel:+84889237833" style="padding:15px clamp(20px,4vw,56px);font-family:var(--font-sans);font-size:.8125rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-900);text-decoration:none;min-height:44px">{{ t.navCall }}</a>
+      <button type="button" onClick="{{ openAuth }}" style="padding:15px clamp(20px,4vw,56px);text-align:left;background:transparent;border:0;border-bottom:1px solid var(--hairline);font-family:var(--font-sans);font-size:.8125rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--jade-900);min-height:44px;cursor:pointer">{{ t.authLine }}</button>
+      <div role="group" aria-label="{{ t.langAria }}" style="padding:14px clamp(20px,4vw,56px);border-top:1px solid var(--hairline);display:flex;gap:1px;background:var(--hairline)">
+        <sc-for list="{{ langsBig }}" as="l" hint-placeholder-count="4">
+          <button type="button" onClick="{{ l.pick }}" aria-pressed="{{ l.on }}" style="{{ l.style }}">{{ l.label }}</button>
+        </sc-for>
+      </div>
+    </nav>
+  </sc-if>
+</header>
+
+<section id="top" style="position:relative;min-height:clamp(600px,88vh,900px);display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;background:var(--jade-900)">
+  <img src="assets/photos/living-open-plan.jpg" alt="Phòng khách căn hộ dịch vụ Gao Ji House với ánh sáng buổi chiều" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+  <span aria-hidden="true" style="position:absolute;inset:0;background:var(--protect-top)"></span>
+  <span aria-hidden="true" style="position:absolute;left:0;right:0;bottom:0;height:clamp(110px,18vh,220px);background:linear-gradient(180deg,rgba(249,247,242,0) 0%,rgba(249,247,242,.35) 48%,rgba(249,247,242,.82) 80%,var(--canvas) 100%)"></span>
+  <div style="position:relative;width:100%;max-width:1600px;margin:0 auto;padding:clamp(80px,12vh,140px) clamp(20px,4vw,56px) 0">
+    <span style="display:inline-flex;align-items:center;gap:12px;font-family:var(--font-sans);font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-050)"><span style="width:32px;height:1px;background:var(--gold-700)"></span>{{ t.heroEye }}</span>
+    <h1 style="margin:18px 0 0;max-width:18ch;font-family:var(--font-display);font-size:var(--fs-display-xl);font-weight:400;line-height:1.05;letter-spacing:-.02em;text-transform:uppercase;color:var(--text-inverse);text-wrap:pretty">{{ t.heroTitle }}</h1>
+    <p style="margin:20px 0 0;max-width:54ch;font-family:var(--font-sans);font-size:1.12rem;line-height:1.6;color:rgba(250,243,234,.88)">{{ t.heroBody }}</p>
+    <div style="margin-top:32px;display:flex;flex-wrap:wrap;gap:12px">
+      <x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.Button" variant="gold" size="lg" icon-after="arrow-right" as="a" href="#units" hint-size="270px,56px">{{ t.heroCta }}</x-import>
+    </div>
+  </div>
+  <div style="position:relative;width:100%;padding:clamp(40px,7vh,72px) 0 0"></div>
+</section>
+
+<section style="padding:clamp(56px,7vw,112px) clamp(20px,4vw,56px)">
+  <div data-reveal="1" style="max-width:1240px;margin:0 auto;display:grid;gap:clamp(32px,5vw,72px);grid-template-columns:repeat(auto-fit,minmax(320px,1fr));align-items:center">
+    <div style="position:relative">
+      <span aria-hidden="true" style="position:absolute;inset:0;transform:translate(-12px,12px);border:1px solid var(--gold-700);pointer-events:none"></span>
+      <span aria-hidden="true" style="position:absolute;top:-18px;right:-18px;width:56px;height:56px;background:var(--clay-500)"></span>
+      <div style="position:relative;background:var(--surface-raised);border:1px solid var(--hairline);padding:clamp(28px,4vw,44px)">
+        <span style="display:inline-flex;align-items:center;gap:12px;font-family:var(--font-sans);font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-900)"><span style="width:32px;height:1px;background:var(--gold-700)"></span>{{ t.introEye }}</span>
+        <h2 style="margin:16px 0 0;font-family:var(--font-display);font-size:var(--fs-display-lg);font-weight:400;line-height:1.05;letter-spacing:-.02em;text-wrap:pretty">{{ t.introTitle }}</h2>
+        <p style="margin:20px 0 0;max-width:46ch;font-family:var(--font-sans);font-size:1.12rem;line-height:1.6;color:var(--text-body)">{{ t.introBody }}</p>
+        <hr style="height:1px;border:0;background:var(--hairline);margin:28px 0">
+        <div style="display:grid;gap:20px 24px;grid-template-columns:repeat(auto-fit,minmax(140px,1fr))">
+          <div>
+            <div style="font-family:var(--font-display);font-size:1.9rem;line-height:1;color:var(--jade-700)">{{ t.s1v }}</div>
+            <div style="margin-top:6px;font-family:var(--font-sans);font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)">{{ t.s1l }}</div>
+          </div>
+          <div>
+            <div style="font-family:var(--font-display);font-size:1.9rem;line-height:1;color:var(--jade-700)">{{ t.s2v }}</div>
+            <div style="margin-top:6px;font-family:var(--font-sans);font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)">{{ t.s2l }}</div>
+          </div>
+          <div>
+            <div style="font-family:var(--font-display);font-size:1.9rem;line-height:1;color:var(--jade-700)">24/7</div>
+            <div style="margin-top:6px;font-family:var(--font-sans);font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)">{{ t.s3l }}</div>
+          </div>
+        </div>
+        <div style="margin-top:32px;display:flex;flex-wrap:wrap;gap:12px">
+        </div>
+      </div>
+    </div>
+    <x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.PhotoPlate" src="assets/photos/landmark-81-balcony.jpg" alt="Landmark 81 và Vinhomes Central Park nhìn từ ban công căn hộ" ratio="4 / 5" offset="right" caption="{{ t.plate1 }}" hint-size="100%,520px"></x-import>
+  </div>
+</section>
+
+<section id="units" style="padding:clamp(56px,7vw,112px) clamp(20px,4vw,56px)">
+  <div style="max-width:1600px;margin:0 auto">
+    <x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.SectionHeader" eyebrow="{{ t.unitsEye }}" title="{{ t.unitsTitle }}" aside="{{ t.unitsAside }}" hint-size="100%,190px"></x-import>
+    <div style="margin-top:28px;border:1px solid var(--hairline);background:var(--surface-raised)">
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px 14px;padding:12px 14px">
+        <span style="flex:1 1 240px;min-width:0">
+          <x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.Input" icon="search" type="search" value="{{ q }}" on-change="{{ setQ }}" placeholder="{{ t.searchPh }}" aria-label="{{ t.lblSearch }}" hint-size="100%,46px"></x-import>
+        </span>
+        <button type="button" onClick="{{ toggleFilters }}" aria-expanded="{{ panelOpen }}" style="{{ filterBtnStyle }}">
+          <span aria-hidden="true" style="display:grid;gap:3px;justify-items:center">
+            <span style="display:block;width:14px;height:1.5px;background:currentColor"></span>
+            <span style="display:block;width:10px;height:1.5px;background:currentColor"></span>
+            <span style="display:block;width:6px;height:1.5px;background:currentColor"></span>
+          </span>{{ t.btnFilter }}<sc-if value="{{ filtered }}" hint-placeholder-val="{{ no }}"><span style="{{ filterCountStyle }}">{{ activeCount }}</span></sc-if>
+        </button>
+        <sc-if value="{{ filtered }}" hint-placeholder-val="{{ no }}">
+          <button type="button" onClick="{{ resetFilters }}" style="min-height:44px;padding:0 14px;background:transparent;border:1px solid var(--gold-700);color:var(--gold-900);font-family:var(--font-sans);font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;transition:background .15s,color .15s" style-hover="background:var(--gold-700);color:var(--gold-050)">{{ t.btnClear }}</button>
+        </sc-if>
+        <span style="margin-left:auto;font-family:var(--font-sans);font-size:.8125rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-primary)">{{ resultLine }}</span>
+      </div>
+    </div>
+    <div style="margin-top:28px;display:grid;gap:clamp(20px,2vw,28px);grid-template-columns:repeat(auto-fill,minmax(330px,1fr))">
+      <sc-for list="{{ units }}" as="u" hint-placeholder-count="3">
+        <x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.UnitCard" dc-props="{{ u.card }}" hint-size="100%,680px"></x-import>
+      </sc-for>
+    </div>
+    <sc-if value="{{ noResults }}" hint-placeholder-val="{{ no }}">
+      <div style="margin-top:28px;border:1px solid var(--hairline);background:var(--canvas-warm);padding:clamp(28px,4vw,48px);display:grid;gap:14px;justify-items:start">
+        <span style="display:inline-flex;align-items:center;gap:12px;font-family:var(--font-sans);font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-900)"><span style="width:32px;height:1px;background:var(--gold-700)"></span>{{ t.emptyEye }}</span>
+        <p style="margin:0;max-width:52ch;font-family:var(--font-display);font-size:1.5rem;line-height:1.25">{{ t.emptyBody }}</p>
+        <div style="display:flex;flex-wrap:wrap;gap:12px">
+          <x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.Button" variant="primary" icon="calendar-check" on-click="{{ openModal }}" hint-size="240px,44px">{{ t.emptyCta1 }}</x-import>
+          <x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.Button" variant="outline" on-click="{{ resetFilters }}" hint-size="180px,44px">{{ t.emptyCta2 }}</x-import>
+        </div>
+      </div>
+    </sc-if>
+    <p style="margin:24px 0 0;font-family:var(--font-sans);font-size:.8125rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)">{{ t.unitsNote }}</p>
+  </div>
+</section>
+
+<section id="amenities" style="background:var(--canvas-warm);padding:clamp(56px,7vw,112px) clamp(20px,4vw,56px)">
+  <div data-reveal="1" style="max-width:1600px;margin:0 auto">
+    <x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.SectionHeader" eyebrow="{{ t.amEye }}" title="{{ t.amTitle }}" aside="{{ t.amAside }}" hint-size="100%,190px"></x-import>
+    <div style="margin-top:clamp(32px,4vw,48px);display:grid;gap:clamp(20px,2vw,28px);grid-template-columns:repeat(auto-fit,minmax(300px,1fr))">
+      <x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.FeatureCard" image="assets/photos/pool-aerial.jpg" image-alt="Hồ bơi nội khu ven sông" image-ratio="16 / 10" icon="sun" eyebrow="{{ t.a1e }}" title="{{ t.a1t }}" bullets="{{ amenity1 }}" hint-size="100%,520px">{{ t.a1b }}</x-import>
+      <x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.FeatureCard" image="assets/photos/gym.webp" image-alt="Phòng gym nội khu với thiết bị Technogym" image-ratio="16 / 10" icon="dumbbell" eyebrow="{{ t.a2e }}" title="{{ t.a2t }}" bullets="{{ amenity2 }}" hint-size="100%,520px">{{ t.a2b }}</x-import>
+      <x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.FeatureCard" image="assets/photos/sky-terrace.jpg" image-alt="Sân thượng ngắm cảnh và hầm rượu" image-ratio="16 / 10" icon="wine" eyebrow="{{ t.a3e }}" title="{{ t.a3t }}" bullets="{{ amenity3 }}" hint-size="100%,520px">{{ t.a3b }}</x-import>
+    </div>
+  </div>
+</section>
+
+<section id="location" style="padding:clamp(56px,7vw,112px) clamp(20px,4vw,56px)">
+  <div data-reveal="1" style="max-width:1240px;margin:0 auto">
+    <div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:24px 40px">
+      <div style="flex:1 1 420px">
+        <span style="display:inline-flex;align-items:center;gap:12px;font-family:var(--font-sans);font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-900)"><span style="width:32px;height:1px;background:var(--gold-700)"></span>Vinhomes Central Park · Bình Thạnh</span>
+        <h2 style="margin:16px 0 0;font-family:var(--font-display);font-size:var(--fs-display-lg);font-weight:400;line-height:1.05;letter-spacing:-.02em;text-transform:uppercase;text-wrap:pretty">{{ t.locTitle }}</h2>
+        <p style="margin:20px 0 0;max-width:52ch;font-family:var(--font-sans);font-size:1.12rem;line-height:1.6;color:var(--text-body)">{{ t.locBody }}</p>
+      </div>
+      <div style="flex:none;display:grid;gap:12px;justify-items:start">
+        <span style="background:var(--jade-700);color:var(--gold-050);padding:10px 14px;font-family:var(--font-sans);font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;line-height:1.35;max-width:120px">{{ t.spotBadge }}</span>
+        <x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.FilterTabs" tabs="{{ trafficTabs }}" value="{{ traffic }}" on-change="{{ setTraffic }}" hint-size="360px,40px"></x-import>
+      </div>
+    </div>
+
+    <div style="margin-top:clamp(28px,3.5vw,44px);display:grid;gap:clamp(20px,2vw,28px);grid-template-columns:repeat(auto-fit,minmax(380px,1fr));align-items:start">
+      <div style="border:1px solid var(--hairline);background:var(--surface-raised)">
+        <div style="padding:18px 20px;border-bottom:1px solid var(--hairline)">
+          <span style="display:inline-flex;align-items:center;gap:12px;font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-900)"><span style="width:24px;height:1px;background:var(--gold-700)"></span>{{ t.spotEye }}</span>
+          <h3 style="margin:12px 0 0;font-family:var(--font-display);font-size:1.6rem;font-weight:400;line-height:1.15;letter-spacing:-.02em;text-transform:uppercase">{{ t.spotHead }}</h3>
+        </div>
+        <div style="max-height:430px;overflow:auto;padding:12px;display:grid;gap:8px">
+          <sc-for list="{{ spots }}" as="p" hint-placeholder-count="6">
+            <button type="button" onClick="{{ p.pick }}" aria-pressed="{{ p.on }}" style="{{ p.rowStyle }}">
+              <span style="{{ p.noStyle }}">{{ p.no }}</span>
+              <span style="display:grid;gap:5px;text-align:left;min-width:0">
+                <span style="{{ p.nameStyle }}">{{ p.name }}</span>
+                <span style="{{ p.metaStyle }}">{{ p.distLine }}</span>
+              </span>
+              <span style="{{ p.pillStyle }}">{{ p.timeLabel }}</span>
+            </button>
+          </sc-for>
+        </div>
+        <div style="margin:0 12px 12px;border:1px solid var(--hairline-strong);background:var(--canvas-warm);padding:16px 18px;display:grid;gap:12px">
+          <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px">
+            <span style="display:inline-flex;align-items:center;gap:8px;font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-900)">
+              <x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.Icon" name="map-pin" size="{{ n15 }}" color="currentColor" hint-size="15px,15px"></x-import>{{ infoHead }}
+            </span>
+            <span style="background:var(--ink-900);color:var(--gold-050);padding:5px 10px;font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase">{{ infoPill }}</span>
+          </div>
+          <p style="margin:0;font-family:var(--font-sans);font-size:.9375rem;line-height:1.6;color:var(--text-body)">{{ activeBlurb }}</p>
+          <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;padding-top:12px;border-top:1px solid var(--hairline)">
+            <span style="font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)">{{ activeAddr }}</span>
+            <a href="{{ activeDirHref }}" target="_blank" rel="noreferrer" style="display:inline-flex;align-items:center;gap:7px;font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-900)">{{ t.btnDir }}<x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.Icon" name="arrow-right" size="{{ n15 }}" color="currentColor" hint-size="15px,15px"></x-import></a>
+          </div>
+        </div>
+      </div>
+
+      <div style="border:1px solid var(--ink-900);background:var(--surface-raised);padding:clamp(14px,1.4vw,20px);display:grid;gap:14px">
+        <div style="display:grid;gap:10px">
+          <span style="display:inline-flex;align-items:center;gap:10px;font-family:var(--font-display);font-size:1.15rem;line-height:1.25;text-transform:uppercase;color:var(--ink-900)">
+            <x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.Icon" name="map-pin" size="{{ n18 }}" color="var(--gold-900)" hint-size="18px,18px"></x-import>{{ t.mapTitle }}
+          </span>
+          <span style="display:flex;flex-wrap:wrap;gap:8px 20px">
+            <span style="display:inline-flex;align-items:center;gap:8px;font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)"><span style="width:9px;height:9px;border-radius:50%;background:var(--clay-500)"></span>{{ t.legend1 }}</span>
+            <span style="display:inline-flex;align-items:center;gap:8px;font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)"><span style="width:9px;height:9px;border-radius:50%;background:var(--jade-700)"></span>{{ t.legend2 }}</span>
+          </span>
+        </div>
+        <div style="position:relative;border:1px solid var(--hairline-strong);background:var(--surface-sunken);min-height:clamp(360px,42vw,520px)">
+          <iframe src="{{ mapSrc }}" title="{{ t.mapTitle }}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" style="position:absolute;inset:0;width:100%;height:100%;border:0;display:block"></iframe>
+          <a href="{{ activeDirHref }}" target="_blank" rel="noreferrer" style="position:absolute;bottom:16px;right:16px;display:inline-flex;align-items:center;gap:9px;background:var(--ink-900);border:1px solid var(--gold-700);color:var(--gold-050);padding:12px 16px;min-height:44px;text-decoration:none;font-family:var(--font-sans);font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;transition:background .15s" style-hover="background:var(--jade-900)">{{ t.btnMaps }}<x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.Icon" name="arrow-right" size="{{ n15 }}" color="currentColor" hint-size="15px,15px"></x-import></a>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px 20px">
+          <span style="font-family:var(--font-italic);font-size:.8125rem;font-style:italic;line-height:1.5;color:var(--text-muted)">{{ trafficNote }}</span>
+          <span style="font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)">{{ t.mapFoot }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:clamp(40px,5vw,72px);display:grid;gap:clamp(28px,3.5vw,56px);grid-template-columns:repeat(auto-fit,minmax(320px,1fr));align-items:center">
+      <div style="position:relative;padding:0 12px 12px 0">
+        <span aria-hidden="true" style="position:absolute;left:12px;top:12px;right:0;bottom:0;border:1px solid var(--gold-700)"></span>
+        <div style="position:relative;background:var(--canvas-warm);border:1px solid var(--jade-700);padding:clamp(16px,2vw,30px)">
+          <div style="position:relative;border:1px solid var(--jade-700);aspect-ratio:4 / 3;overflow:hidden">
+            <img src="assets/photos/towers-skyline.jpg" alt="Tranh vẽ cụm toà tháp Vinhomes Central Park bên sông Sài Gòn" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 40%;display:block;filter:saturate(.72) contrast(1.14) brightness(1.04) sepia(.18)">
+            <span aria-hidden="true" style="position:absolute;inset:0;background:var(--clay-500);opacity:.14;mix-blend-mode:multiply"></span>
+            <span aria-hidden="true" style="position:absolute;inset:0;background:var(--canvas-warm);opacity:.16;mix-blend-mode:screen"></span>
+          </div>
+          <div style="margin-top:clamp(12px,1.4vw,18px);display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 20px">
+            <span style="font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-900)">{{ t.plate2 }}</span>
+            <span style="font-family:var(--font-display);font-style:italic;font-size:.9375rem;line-height:1.4;color:var(--text-muted)">{{ t.mapFoot }}</span>
+          </div>
+        </div>
+      </div>
+      <div style="background:var(--jade-700);border:1px solid var(--gold-700);padding:clamp(24px,2.8vw,36px);display:grid;gap:14px;justify-items:start">
+        <span style="display:inline-flex;align-items:center;gap:12px;font-family:var(--font-sans);font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-050)"><span style="width:32px;height:1px;background:var(--gold-700)"></span>{{ t.addrEye }}</span>
+        <p style="margin:0;max-width:34ch;font-family:var(--font-display);font-size:clamp(1.3rem,1.1rem + .7vw,1.75rem);line-height:1.28;color:var(--text-inverse)">208 Nguyễn Hữu Cảnh, Phường 22, Bình Thạnh, TP. Hồ Chí Minh</p>
+        <x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.Button" variant="onDark" icon="map-pin" as="a" href="https://maps.google.com/?q=Vinhomes+Central+Park+208+Nguyen+Huu+Canh" target="_blank" rel="noreferrer" hint-size="230px,44px">{{ t.btnMaps }}</x-import>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="about" style="padding:clamp(56px,7vw,112px) clamp(20px,4vw,56px)">
+  <div data-reveal="1" style="max-width:1240px;margin:0 auto">
+    <div style="display:grid;gap:clamp(32px,4vw,64px);grid-template-columns:repeat(auto-fit,minmax(320px,1fr));align-items:start">
+      <div style="display:grid;gap:20px;justify-items:start">
+        <span style="display:inline-flex;align-items:center;gap:12px;font-family:var(--font-sans);font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-900)"><span style="width:32px;height:1px;background:var(--gold-700)"></span>{{ t.abEye }}</span>
+        <h2 style="margin:0;max-width:22ch;font-family:var(--font-display);font-size:var(--fs-headline-md);font-weight:400;line-height:1.15;letter-spacing:-.02em;color:var(--ink-900);text-wrap:pretty">{{ t.abTitle }}</h2>
+        <p style="margin:0;max-width:56ch;font-family:var(--font-sans);font-size:1.08rem;line-height:1.65;color:var(--text-body)">{{ t.abP1 }}</p>
+        <p style="margin:0;max-width:56ch;font-family:var(--font-sans);font-size:1.08rem;line-height:1.65;color:var(--text-body)">{{ t.abP2 }}</p>
+        <div style="margin-top:8px;display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1px;background:var(--hairline);border:1px solid var(--hairline);width:100%">
+          <span style="background:var(--canvas);padding:18px 20px;display:grid;gap:6px"><span style="font-family:var(--font-display);font-size:1.75rem;line-height:1;color:var(--jade-900)">2019</span><span style="font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)">{{ t.ab1l }}</span></span>
+          <span style="background:var(--canvas);padding:18px 20px;display:grid;gap:6px"><span style="font-family:var(--font-display);font-size:1.75rem;line-height:1;color:var(--jade-900)">05</span><span style="font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)">{{ t.ab2l }}</span></span>
+          <span style="background:var(--canvas);padding:18px 20px;display:grid;gap:6px"><span style="font-family:var(--font-display);font-size:1.75rem;line-height:1;color:var(--jade-900)">06</span><span style="font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)">{{ t.ab3l }}</span></span>
+          <span style="background:var(--canvas);padding:18px 20px;display:grid;gap:6px"><span style="font-family:var(--font-display);font-size:1.75rem;line-height:1;color:var(--jade-900)">{{ t.ab4v }}</span><span style="font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)">Việt · English · 中文</span></span>
+        </div>
+      </div>
+
+      <div style="border:1px solid var(--hairline);background:var(--surface-raised)">
+        <div style="padding:18px 22px;border-bottom:1px solid var(--hairline);background:var(--surface-sunken);display:flex;align-items:baseline;justify-content:space-between;gap:16px">
+          <span style="font-family:var(--font-sans);font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--jade-900)">{{ t.teamHead }}</span>
+          <span style="font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)">{{ t.teamSub }}</span>
+        </div>
+        <div style="padding:20px 22px;border-bottom:1px solid var(--hairline);display:grid;gap:8px">
+          <span style="font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-900)">{{ t.r1l }}</span>
+          <span style="font-family:var(--font-display);font-size:1.35rem;line-height:1.2;color:var(--ink-900)">Lâm Lợi</span>
+          <p style="margin:0;font-family:var(--font-sans);font-size:.9375rem;line-height:1.6;color:var(--text-body)">{{ t.r1b }}</p>
+        </div>
+        <div style="padding:20px 22px;border-bottom:1px solid var(--hairline);display:grid;gap:8px">
+          <span style="font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-900)">Guest Relations · Zalo &amp; WeChat</span>
+          <span style="font-family:var(--font-display);font-size:1.35rem;line-height:1.2;color:var(--ink-900)">Trần Mỹ Duyên</span>
+          <p style="margin:0;font-family:var(--font-sans);font-size:.9375rem;line-height:1.6;color:var(--text-body)">{{ t.r2b }}</p>
+        </div>
+        <div style="padding:20px 22px;border-bottom:1px solid var(--hairline);display:grid;gap:8px">
+          <span style="font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-900)">{{ t.r3l }}</span>
+          <span style="font-family:var(--font-display);font-size:1.35rem;line-height:1.2;color:var(--ink-900)">{{ t.r3n }}</span>
+          <p style="margin:0;font-family:var(--font-sans);font-size:.9375rem;line-height:1.6;color:var(--text-body)">{{ t.r3b }}</p>
+        </div>
+        <div style="padding:20px 22px;display:grid;gap:8px">
+          <span style="font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-900)">{{ t.r4l }}</span>
+          <span style="font-family:var(--font-display);font-size:1.35rem;line-height:1.2;color:var(--ink-900)">Nguyễn Thanh Hà</span>
+          <p style="margin:0;font-family:var(--font-sans);font-size:.9375rem;line-height:1.6;color:var(--text-body)">{{ t.r4b }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:clamp(28px,3.4vw,48px);background:var(--canvas-warm);border:1px solid var(--hairline-strong);padding:clamp(24px,2.8vw,36px);display:grid;gap:clamp(20px,2.4vw,32px);grid-template-columns:repeat(auto-fit,minmax(280px,1fr));align-items:center">
+      <div style="display:grid;gap:10px;justify-items:start">
+        <span style="display:inline-flex;align-items:center;gap:12px;font-family:var(--font-sans);font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-900)"><span style="width:32px;height:1px;background:var(--gold-700)"></span>{{ t.socEye }}</span>
+        <p style="margin:0;max-width:44ch;font-family:var(--font-sans);font-size:1rem;line-height:1.6;color:var(--text-body)">{{ t.socBody }}</p>
+      </div>
+      <div style="display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(180px,1fr))">
+        <a href="https://zalo.me/0889237833" target="_blank" rel="noreferrer" style="border:1px solid var(--hairline-strong);background:var(--surface-raised);padding:14px 16px;display:grid;gap:5px;text-decoration:none;min-height:44px;transition:border-color .15s,background .15s" style-hover="border-color:var(--gold-700);background:var(--surface-sunken)">
+          <span style="font-family:var(--font-sans);font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--jade-900)">Zalo</span>
+          <span style="font-family:var(--font-sans);font-size:.875rem;letter-spacing:.04em;color:var(--text-muted)">088 923 7833</span>
+        </a>
+        <a href="https://facebook.com/gaojihouse" target="_blank" rel="noreferrer" style="border:1px solid var(--hairline-strong);background:var(--surface-raised);padding:14px 16px;display:grid;gap:5px;text-decoration:none;min-height:44px;transition:border-color .15s,background .15s" style-hover="border-color:var(--gold-700);background:var(--surface-sunken)">
+          <span style="font-family:var(--font-sans);font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--jade-900)">Facebook</span>
+          <span style="font-family:var(--font-sans);font-size:.875rem;letter-spacing:.04em;color:var(--text-muted)">fb.com/gaojihouse</span>
+        </a>
+        <a href="https://instagram.com/gaojihouse" target="_blank" rel="noreferrer" style="border:1px solid var(--hairline-strong);background:var(--surface-raised);padding:14px 16px;display:grid;gap:5px;text-decoration:none;min-height:44px;transition:border-color .15s,background .15s" style-hover="border-color:var(--gold-700);background:var(--surface-sunken)">
+          <span style="font-family:var(--font-sans);font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--jade-900)">Instagram</span>
+          <span style="font-family:var(--font-sans);font-size:.875rem;letter-spacing:.04em;color:var(--text-muted)">@gaojihouse</span>
+        </a>
+        <a href="https://youtube.com/@gaojihouse" target="_blank" rel="noreferrer" style="border:1px solid var(--hairline-strong);background:var(--surface-raised);padding:14px 16px;display:grid;gap:5px;text-decoration:none;min-height:44px;transition:border-color .15s,background .15s" style-hover="border-color:var(--gold-700);background:var(--surface-sunken)">
+          <span style="font-family:var(--font-sans);font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--jade-900)">YouTube</span>
+          <span style="font-family:var(--font-sans);font-size:.875rem;letter-spacing:.04em;color:var(--text-muted)">{{ t.ytSub }}</span>
+        </a>
+        <a href="weixin://dl/chat?HZM81MS" style="border:1px solid var(--hairline-strong);background:var(--surface-raised);padding:14px 16px;display:grid;gap:5px;text-decoration:none;min-height:44px;transition:border-color .15s,background .15s" style-hover="border-color:var(--gold-700);background:var(--surface-sunken)">
+          <span style="font-family:var(--font-sans);font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--jade-900)">WeChat</span>
+          <span style="font-family:var(--font-sans);font-size:.875rem;letter-spacing:.04em;color:var(--text-muted)">HZM81MS</span>
+        </a>
+        <a href="https://t.me/HZM81MS" target="_blank" rel="noreferrer" style="border:1px solid var(--hairline-strong);background:var(--surface-raised);padding:14px 16px;display:grid;gap:5px;text-decoration:none;min-height:44px;transition:border-color .15s,background .15s" style-hover="border-color:var(--gold-700);background:var(--surface-sunken)">
+          <span style="font-family:var(--font-sans);font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--jade-900)">Telegram</span>
+          <span style="font-family:var(--font-sans);font-size:.875rem;letter-spacing:.04em;color:var(--text-muted)">@HZM81MS</span>
+        </a>
+        <a href="mailto:stay@gaojihouse.vn" style="border:1px solid var(--hairline-strong);background:var(--surface-raised);padding:14px 16px;display:grid;gap:5px;text-decoration:none;min-height:44px;transition:border-color .15s,background .15s" style-hover="border-color:var(--gold-700);background:var(--surface-sunken)">
+          <span style="font-family:var(--font-sans);font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--jade-900)">Email</span>
+          <span style="font-family:var(--font-sans);font-size:.875rem;letter-spacing:.04em;color:var(--text-muted)">stay@gaojihouse.vn</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" style="padding:clamp(56px,7vw,112px) clamp(20px,4vw,56px)">
+  <div data-reveal="1" style="max-width:1240px;margin:0 auto;background:var(--jade-700);border:1px solid var(--gold-700);padding:clamp(32px,4.5vw,64px);display:grid;gap:clamp(28px,4vw,56px);grid-template-columns:repeat(auto-fit,minmax(300px,1fr));align-items:start">
+    <div style="display:grid;gap:18px;justify-items:start">
+      <span style="display:inline-flex;align-items:center;gap:12px;font-family:var(--font-sans);font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-050)"><span style="width:32px;height:1px;background:var(--gold-700)"></span>{{ t.ctEye }}</span>
+      <h2 style="margin:0;max-width:22ch;font-family:var(--font-display);font-size:var(--fs-headline-md);font-weight:400;line-height:1.15;text-transform:uppercase;color:var(--text-inverse);text-wrap:pretty">{{ t.ctTitle }}</h2>
+      <p style="margin:0;max-width:52ch;font-family:var(--font-sans);font-size:1.05rem;line-height:1.6;color:rgba(250,243,234,.82)">{{ t.ctBody }}</p>
+      <div style="display:flex;flex-wrap:wrap;gap:12px">
+        <x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.Button" variant="gold" size="lg" icon="phone" as="a" href="{{ channelHref }}" target="_blank" rel="noreferrer" hint-size="240px,56px">{{ channelLabel }}</x-import>
+        <x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.Button" variant="onDark" size="lg" icon="calendar-check" on-click="{{ openModal }}" hint-size="230px,56px">{{ t.ctCta2 }}</x-import>
+      </div>
+      <div style="width:100%;margin-top:6px;padding-top:22px;border-top:1px solid rgba(212,175,55,.35);display:grid;gap:14px">
+        <span style="display:inline-flex;align-items:center;gap:12px;font-family:var(--font-sans);font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-050)"><span style="width:24px;height:1px;background:var(--gold-700)"></span>{{ t.qrEye }}</span>
+        <div style="display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(150px,180px))">
+        <a href="weixin://dl/chat?HZM81MS" target="_blank" rel="noreferrer" style="display:grid;gap:10px;justify-items:center;padding:14px;background:var(--surface-raised);border:1px solid var(--gold-700);text-decoration:none;transition:border-color .15s" style-hover="border-color:var(--gold-050)">
+          <img src="assets/qr-wechat.png" alt="Mã QR WeChat của Gao Ji House" loading="lazy" style="display:block;width:100%;max-width:132px;aspect-ratio:1 / 1;object-fit:contain">
+          <span style="display:grid;gap:3px;justify-items:center">
+            <span style="font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--jade-900)">WeChat</span>
+            <span style="font-family:var(--font-sans);font-size:.8125rem;letter-spacing:.04em;color:var(--text-muted)">HZM81MS</span>
+          </span>
+        </a>
+        <a href="https://t.me/HZM81MS" target="_blank" rel="noreferrer" style="display:grid;gap:10px;justify-items:center;padding:14px;background:var(--surface-raised);border:1px solid var(--gold-700);text-decoration:none;transition:border-color .15s" style-hover="border-color:var(--gold-050)">
+          <img src="assets/qr-telegram.png" alt="Mã QR Telegram của Gao Ji House" loading="lazy" style="display:block;width:100%;max-width:132px;aspect-ratio:1 / 1;object-fit:contain">
+          <span style="display:grid;gap:3px;justify-items:center">
+            <span style="font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--jade-900)">Telegram</span>
+            <span style="font-family:var(--font-sans);font-size:.8125rem;letter-spacing:.04em;color:var(--text-muted)">@HZM81MS</span>
+          </span>
+        </a>
+        </div>
+      </div>
+    </div>
+    <div style="border:1px solid rgba(212,175,55,.35);display:grid">
+      <div style="padding:18px 22px;border-bottom:1px solid rgba(212,175,55,.35);display:flex;justify-content:space-between;gap:16px;align-items:baseline">
+        <span style="font-family:var(--font-sans);font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-050)">Zalo · WeChat</span>
+        <span style="font-family:var(--font-display);font-size:1.25rem;color:var(--text-inverse)">088 923 7833</span>
+      </div>
+      <div style="padding:18px 22px;border-bottom:1px solid rgba(212,175,55,.35);display:flex;justify-content:space-between;gap:16px;align-items:baseline">
+        <span style="font-family:var(--font-sans);font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-050)">Telegram · WeChat</span>
+        <span style="font-family:var(--font-display);font-size:1.25rem;color:var(--text-inverse)">@HZM81MS</span>
+      </div>
+      <div style="padding:18px 22px;border-bottom:1px solid rgba(212,175,55,.35);display:flex;justify-content:space-between;gap:16px;align-items:baseline">
+        <span style="font-family:var(--font-sans);font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-050)">Email</span>
+        <span style="font-family:var(--font-display);font-size:1.25rem;color:var(--text-inverse)">stay@gaojihouse.vn</span>
+      </div>
+      <div style="padding:18px 22px;border-bottom:1px solid rgba(212,175,55,.35);display:flex;justify-content:space-between;gap:16px;align-items:baseline">
+        <span style="font-family:var(--font-sans);font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-050)">{{ t.rowHours }}</span>
+        <span style="font-family:var(--font-display);font-size:1.25rem;color:var(--text-inverse)">{{ t.hoursVal }}</span>
+      </div>
+      <div style="padding:18px 22px;display:flex;justify-content:space-between;gap:16px;align-items:baseline">
+        <span style="font-family:var(--font-sans);font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-050)">{{ t.rowLang }}</span>
+        <span style="font-family:var(--font-display);font-size:1.25rem;color:var(--text-inverse)">Tiếng Việt · English · 中文</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.Footer" address="Vinhomes Central Park, 208 Nguyễn Hữu Cảnh, Phường 22, Bình Thạnh, TP. Hồ Chí Minh" phone="088 923 7833" email="stay@gaojihouse.vn" note="{{ t.footNote }}" dc-props="{{ footerProps }}" hint-size="100%,420px"></x-import>
+
+<x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.ContactRail" zalo="https://zalo.me/0889237833" phone="0889237833" email="stay@gaojihouse.vn" hint-size="60px,180px"></x-import>
+
+<x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.InquiryModal" open="{{ modalOpen }}" on-close="{{ closeModal }}" unit-types="{{ modalTypes }}" hint-size="1px,1px"></x-import>
+
+<sc-if value="{{ panelOpen }}" hint-placeholder-val="{{ no }}">
+  <div role="dialog" aria-modal="true" aria-label="{{ t.btnFilter }}" style="position:fixed;inset:0;z-index:105;background:var(--scrim);display:grid;place-items:center;padding:clamp(16px,4vw,48px);overflow:auto">
+    <div style="width:min(760px,100%);background:var(--surface-raised);border:1px solid var(--hairline-strong)">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 22px;border-bottom:1px solid var(--hairline)">
+        <span style="display:grid;gap:6px">
+          <span style="display:inline-flex;align-items:center;gap:10px;font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-900)"><span style="width:24px;height:1px;background:var(--gold-700)"></span>{{ t.unitsEye }}</span>
+          <span style="font-family:var(--font-display);font-size:1.5rem;line-height:1.2;text-transform:uppercase;color:var(--ink-900)">{{ t.btnFilter }}</span>
+        </span>
+        <button type="button" onClick="{{ closeFilters }}" aria-label="{{ t.closeAria }}" style="flex:none;width:38px;height:38px;display:grid;place-items:center;background:transparent;border:1px solid var(--hairline-strong);cursor:pointer;color:var(--text-muted)" style-hover="border-color:var(--gold-700);color:var(--gold-900)">
+          <x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.Icon" name="x" size="{{ n15 }}" color="currentColor" hint-size="15px,15px"></x-import>
+        </button>
+      </div>
+      <div style="padding:22px;display:grid;gap:22px">
+        <div style="display:grid;gap:10px">
+          <span style="font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)">{{ t.lblType }}</span>
+          <x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.FilterTabs" tabs="{{ unitTabs }}" value="{{ filter }}" on-change="{{ setFilter }}" hint-size="100%,40px"></x-import>
+        </div>
+        <div style="display:grid;gap:10px">
+          <span style="font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)">{{ t.lblBeds }}</span>
+          <x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.FilterTabs" tabs="{{ bedTabs }}" value="{{ beds }}" on-change="{{ setBeds }}" hint-size="100%,40px"></x-import>
+        </div>
+        <div style="display:grid;gap:10px">
+          <span style="font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)">{{ t.lblFloor }}</span>
+          <x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.FilterTabs" tabs="{{ floorTabs }}" value="{{ floor }}" on-change="{{ setFloor }}" hint-size="100%,40px"></x-import>
+        </div>
+        <div style="display:grid;gap:12px">
+          <span style="display:flex;align-items:baseline;justify-content:space-between;gap:12px">
+            <span style="font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)">{{ t.lblPrice }}</span>
+            <span style="font-family:var(--font-display);font-size:1.15rem;line-height:1.2;color:var(--jade-900)">{{ priceReadout }}</span>
+          </span>
+          <span style="position:relative;display:block;height:24px">
+            <span aria-hidden="true" style="position:absolute;left:8px;right:8px;top:11px;height:2px;background:var(--hairline-strong)"></span>
+            <span aria-hidden="true" style="{{ priceFillStyle }}"></span>
+            <input type="range" min="{{ priceMin }}" max="{{ priceMax }}" step="{{ priceStep }}" value="{{ pMin }}" onChange="{{ setPMin }}" aria-label="{{ t.ariaMin }}" style="position:absolute;inset:0;width:100%">
+            <input type="range" min="{{ priceMin }}" max="{{ priceMax }}" step="{{ priceStep }}" value="{{ pMax }}" onChange="{{ setPMax }}" aria-label="{{ t.ariaMax }}" style="position:absolute;inset:0;width:100%">
+          </span>
+          <span style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)">
+            <span>{{ priceFloorLabel }}</span>
+            <span>{{ priceCeilLabel }}</span>
+          </span>
+        </div>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding:16px 22px;border-top:1px solid var(--hairline);background:var(--surface-sunken)">
+        <button type="button" onClick="{{ resetFilters }}" style="min-height:44px;padding:0 14px;background:transparent;border:1px solid var(--gold-700);color:var(--gold-900);font-family:var(--font-sans);font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;transition:background .15s,color .15s" style-hover="background:var(--gold-700);color:var(--gold-050)">{{ t.btnClear }}</button>
+        <x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.Button" variant="primary" icon-after="arrow-right" on-click="{{ closeFilters }}" hint-size="220px,48px">{{ applyLabel }}</x-import>
+      </div>
+    </div>
+  </div>
+</sc-if>
+
+<sc-if value="{{ authOpen }}" hint-placeholder-val="{{ no }}">
+  <div role="dialog" aria-modal="true" aria-label="{{ t.authOpen }}" style="position:fixed;inset:0;z-index:110;background:var(--scrim);display:grid;place-items:center;padding:clamp(16px,4vw,48px);overflow:auto">
+    <div style="width:min(460px,100%);background:var(--surface-raised);border:1px solid var(--hairline-strong)">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:22px 24px 18px">
+        <span style="display:grid;gap:8px">
+          <span style="display:inline-flex;align-items:center;gap:10px;font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-900)"><span style="width:24px;height:1px;background:var(--gold-700)"></span>Gao Ji House</span>
+          <span style="font-family:var(--font-display);font-size:1.5rem;line-height:1.2;color:var(--ink-900)">{{ authTitle }}</span>
+        </span>
+        <button type="button" onClick="{{ closeAuth }}" aria-label="{{ t.closeAria }}" style="flex:none;width:36px;height:36px;display:grid;place-items:center;background:transparent;border:1px solid var(--hairline-strong);cursor:pointer;color:var(--text-muted)" style-hover="border-color:var(--gold-700);color:var(--gold-900)">
+          <x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.Icon" name="x" size="{{ n15 }}" color="currentColor" hint-size="15px,15px"></x-import>
+        </button>
+      </div>
+      <p style="margin:0;padding:0 24px 18px;font-family:var(--font-sans);font-size:.9375rem;line-height:1.6;color:var(--text-body)">{{ authSub }}</p>
+      <div role="tablist" style="display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--hairline);border-bottom:1px solid var(--hairline)">
+        <sc-for list="{{ authTabs }}" as="a" hint-placeholder-count="2">
+          <button type="button" role="tab" aria-selected="{{ a.on }}" onClick="{{ a.pick }}" style="{{ a.style }}">{{ a.label }}</button>
+        </sc-for>
+      </div>
+      <div style="padding:22px 24px 24px;display:grid;gap:16px">
+        <sc-if value="{{ isRegister }}" hint-placeholder-val="{{ no }}">
+          <x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.Input" label="{{ t.fName }}" value="{{ fName }}" on-change="{{ setName }}" placeholder="{{ t.phName }}" hint-size="100%,72px"></x-import>
+        </sc-if>
+        <x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.Input" label="{{ t.fEmail }}" type="email" icon="badge-check" value="{{ fEmail }}" on-change="{{ setEmail }}" placeholder="{{ t.phEmail }}" hint-size="100%,72px"></x-import>
+        <sc-if value="{{ isRegister }}" hint-placeholder-val="{{ no }}">
+          <x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.Input" label="{{ t.fPhone }}" type="tel" icon="phone" value="{{ fPhone }}" on-change="{{ setPhone }}" placeholder="{{ t.phPhone }}" hint-size="100%,72px"></x-import>
+        </sc-if>
+        <x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.Input" label="{{ t.fPass }}" type="password" value="{{ fPass }}" on-change="{{ setPass }}" placeholder="{{ t.phPass }}" hint-size="100%,72px"></x-import>
+        <sc-if value="{{ isRegister }}" hint-placeholder-val="{{ no }}">
+          <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer">
+            <input type="checkbox" checked="{{ agreed }}" onChange="{{ toggleAgree }}" style="width:18px;height:18px;margin:2px 0 0;accent-color:var(--jade-700);flex:none">
+            <span style="font-family:var(--font-sans);font-size:.8125rem;line-height:1.55;color:var(--text-body)">{{ t.agree }}</span>
+          </label>
+        </sc-if>
+        <sc-if value="{{ authErr }}" hint-placeholder-val="{{ no }}">
+          <p style="margin:0;padding:10px 12px;border:1px solid var(--danger);font-family:var(--font-sans);font-size:.8125rem;line-height:1.5;color:var(--danger)">{{ authErrMsg }}</p>
+        </sc-if>
+        <x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.Button" variant="primary" size="lg" icon-after="arrow-right" on-click="{{ submitAuth }}" hint-size="100%,52px">{{ authCta }}</x-import>
+        <div style="display:flex;align-items:center;gap:12px">
+          <span style="flex:1;height:1px;background:var(--hairline)"></span>
+          <span style="font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)">{{ t.orZalo }}</span>
+          <span style="flex:1;height:1px;background:var(--hairline)"></span>
+        </div>
+        <a href="https://zalo.me/0889237833" target="_blank" rel="noreferrer" style="display:flex;align-items:center;justify-content:center;gap:10px;min-height:48px;border:1px solid #0068FF;color:#0068FF;text-decoration:none;font-family:var(--font-sans);font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;transition:background .15s,color .15s" style-hover="background:#0068FF;color:#FFFFFF">{{ t.btnZalo }}</a>
+        <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px">
+          <button type="button" onClick="{{ switchAuth }}" style="padding:0;background:transparent;border:0;color:var(--gold-900);font-family:var(--font-sans);font-size:.8125rem;text-decoration:underline;cursor:pointer" style-hover="color:var(--clay-700)">{{ authSwitch }}</button>
+          <sc-if value="{{ isLogin }}" hint-placeholder-val="{{ yes }}">
+            <span style="font-family:var(--font-sans);font-size:.8125rem;color:var(--text-muted)">{{ t.forgot }}</span>
+          </sc-if>
+        </div>
+      </div>
+    </div>
+  </div>
+</sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;priceMode&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Giá Tháng&quot;,&quot;Giá Đêm&quot;,&quot;Cả Hai&quot;],&quot;default&quot;:&quot;Cả Hai&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Bảng giá căn hộ&quot;},&quot;primaryChannel&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Zalo&quot;,&quot;WeChat&quot;,&quot;Điện Thoại&quot;],&quot;default&quot;:&quot;Zalo&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Liên hệ&quot;}}">
+class Component extends DCLogic {
+  state = { filter: "all", floor: "all", traffic: "off", modal: false, menu: false, isDesktop: true, lang: "vi", pmin: 20, pmax: 120, beds: "all", q: "", spot: 0, fopen: false, auth: false, authTab: "login", user: null, fName: "", fEmail: "", fPhone: "", fPass: "", agreed: false, authErr: "" };
+  navRef = React.createRef();
+
+  componentDidMount() {
+    this.syncAssets = () => {
+      if (!window.__resources) return;
+      const ids = Object.keys(this.ASSETS);
+      document.querySelectorAll("img[src]").forEach((img) => {
+        const raw = img.getAttribute("src");
+        const id = ids.find((k) => this.ASSETS[k] === raw);
+        if (id && window.__resources[id]) img.src = window.__resources[id];
+      });
+    };
+    this.syncAssets();
+    this.assetTimer = setInterval(this.syncAssets, 500);
+    setTimeout(() => clearInterval(this.assetTimer), 6000);
+
+    try {
+      const saved = window.localStorage.getItem("gaoji-lang");
+      if (saved && this.LANGS.some((l) => l.code === saved)) this.setState({ lang: saved });
+      this.applyHtmlLang(saved || "vi");
+    } catch (e) { this.applyHtmlLang("vi"); }
+
+    this.mq = window.matchMedia("(min-width: 1024px)");
+    this.onMq = () => this.setState({ isDesktop: this.mq.matches, menu: false });
+    this.onMq();
+    this.mq.addEventListener("change", this.onMq);
+
+    this.onScroll = () => {
+      const n = this.navRef.current;
+      if (!n) return;
+      const s = window.scrollY > 30;
+      n.style.padding = s ? "4px 0" : "12px 0";
+      n.style.boxShadow = s ? "var(--shadow-nav)" : "none";
+    };
+    window.addEventListener("scroll", this.onScroll, { passive: true });
+    this.onScroll();
+
+    this.onKey = (e) => {
+      if (e.key !== "Escape") return;
+      this.setState({ modal: false, menu: false, auth: false, fopen: false });
+    };
+    window.addEventListener("keydown", this.onKey);
+
+    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      this.revealTimer = setTimeout(() => {
+        const els = Array.from(document.querySelectorAll("[data-reveal]"));
+        els.forEach((el) => {
+          el.style.opacity = "0";
+          el.style.transform = "translateY(24px)";
+          el.style.transition = "opacity .5s cubic-bezier(.16,1,.3,1), transform .5s cubic-bezier(.16,1,.3,1)";
+        });
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach((e) => {
+            if (!e.isIntersecting) return;
+            e.target.style.opacity = "1";
+            e.target.style.transform = "none";
+            io.unobserve(e.target);
+          });
+        }, { rootMargin: "0px 0px -8% 0px" });
+        els.forEach((el) => io.observe(el));
+        this.io = io;
+      }, 120);
+    }
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.assetTimer);
+    if (this.mq) this.mq.removeEventListener("change", this.onMq);
+    window.removeEventListener("scroll", this.onScroll);
+    window.removeEventListener("keydown", this.onKey);
+    clearTimeout(this.revealTimer);
+    if (this.io) this.io.disconnect();
+  }
+
+  LANGS = [
+    { code: "vi", label: "VI", html: "vi" },
+    { code: "en", label: "EN", html: "en" },
+    { code: "cn", label: "简体", html: "zh-CN" },
+    { code: "tw", label: "繁體", html: "zh-TW" }
+  ];
+
+  UNITS = [
+    { key: "L1.29.08", lvl: 29, flr: "29", tower: "Landmark 1", zone: "landmark", beds: 2, baths: 2, sqm: 92, month: 33000000, night: 2400000, status: "available", img: "photoBedRiver" },
+    { key: "P1.27.10", lvl: 27, flr: "27", tower: "Park 1", zone: "park", beds: 1, baths: 1, sqm: 54, month: 24000000, night: 1600000, status: "available", img: "photoBedSunlit" },
+    { key: "L81.07.12", lvl: 7, flr: "07", tower: "Landmark 81", zone: "landmark", beds: 1, baths: 1, sqm: 58, month: 28000000, night: 1900000, status: "available", img: "photoBedTwin" },
+    { key: "P3.42.12", lvl: 42, flr: "42", tower: "Park 3", zone: "park", beds: 2, baths: 2, sqm: 120, month: 46000000, night: 3200000, status: "held", img: "photoBedTv" },
+    { key: "L3.44.09", lvl: 44, flr: "44", tower: "Landmark 3", zone: "landmark", beds: 3, baths: 3, sqm: 210, month: 110000000, night: 6500000, status: "available", img: "photoBedPlatform" }
+  ];
+
+  SPOTS = [
+    { no: "01", km: "0.2 KM", off: 2, peak: 3, walk: true, ll: "10.7949,106.7218", addr: "Nguyễn Hữu Cảnh · Bình Thạnh" },
+    { no: "02", km: "0.4 KM", off: 5, peak: 5, walk: true, ll: "10.7938,106.7203", addr: "Vinhomes Central Park · Nội Khu" },
+    { no: "03", km: "2.0 KM", off: 5, peak: 12, walk: false, ll: "10.7810,106.7215", addr: "Thủ Thiêm · Quận 2" },
+    { no: "04", km: "2.5 KM", off: 7, peak: 15, walk: false, ll: "10.8035,106.7345", addr: "Thảo Điền · Quận 2" },
+    { no: "05", km: "3.5 KM", off: 10, peak: 22, walk: false, ll: "10.7743,106.7038", addr: "Nguyễn Huệ · Quận 1" },
+    { no: "06", km: "3.5 KM", off: 10, peak: 22, walk: false, ll: "10.7769,106.7030", addr: "Công Trường Lam Sơn · Quận 1" },
+    { no: "07", km: "3.8 KM", off: 11, peak: 24, walk: false, ll: "10.7877,106.7047", addr: "Nguyễn Bỉnh Khiêm · Quận 1" },
+    { no: "08", km: "4.2 KM", off: 12, peak: 25, walk: false, ll: "10.7797,106.6990", addr: "Hàn Thuyên · Quận 1" },
+    { no: "09", km: "4.5 KM", off: 13, peak: 26, walk: false, ll: "10.7725,106.6980", addr: "Lê Lợi · Quận 1" },
+    { no: "10", km: "5.5 KM", off: 15, peak: 28, walk: false, ll: "10.7688,106.7050", addr: "Nam Kỳ Khởi Nghĩa · Quận 3" },
+    { no: "11", km: "6.8 KM", off: 18, peak: 32, walk: false, ll: "10.7295,106.7215", addr: "Nguyễn Lương Bằng · Quận 7" },
+    { no: "12", km: "8.5 KM", off: 25, peak: 45, walk: false, ll: "10.8188,106.6520", addr: "Trường Sơn · Tân Bình" }
+  ];
+
+  ASSETS = {
+      "photoLivingOpen": "assets/photos/living-open-plan.jpg",
+      "photoLivingDining": "assets/photos/living-dining.jpg",
+      "photoTowers": "assets/photos/towers-skyline.jpg",
+      "photoPool": "assets/photos/pool-aerial.jpg",
+      "photoGym": "assets/photos/gym.webp",
+      "photoTerrace": "assets/photos/sky-terrace.jpg",
+      "photoKitchen": "assets/photos/kitchen-island.jpg",
+      "photoMaster": "assets/photos/master-bedroom.jpg",
+      "photoBathVanity": "assets/photos/bathroom-vanity.jpg",
+      "photoDining": "assets/photos/dining-room.jpg",
+      "photoBalcony": "assets/photos/landmark-81-balcony.jpg",
+      "photoBedRiver": "assets/photos/bedroom-master-river.jpg",
+      "photoBedSunlit": "assets/photos/bedroom-single-sunlit.jpg",
+      "photoBedTwin": "assets/photos/bedroom-twin-river.jpg",
+      "photoBedTv": "assets/photos/bedroom-tv-ensuite.jpg",
+      "photoBedPlatform": "assets/photos/bedroom-platform-landmark.jpg"
+  };
+
+  DICT = {
+    vi: {
+      authOpen: "Đăng Nhập", authLine: "Đăng Nhập / Đăng Ký", tabLogin: "Đăng Nhập", tabReg: "Đăng Ký", logout: "Đăng Xuất",
+      authTitleL: "Đăng Nhập Tài Khoản Khách Thuê", authSubL: "Xem hợp đồng, lịch dọn phòng, hoá đơn và yêu cầu bảo trì của căn đang thuê.",
+      authTitleR: "Tạo Tài Khoản Khách Thuê", authSubR: "Gao Ji House xác nhận tài khoản qua Zalo trong 2 giờ làm việc.",
+      fName: "Họ Và Tên", fEmail: "Email", fPhone: "Số Điện Thoại · Zalo", fPass: "Mật Khẩu",
+      phName: "Nguyễn Văn A", phEmail: "ten@congty.vn", phPhone: "09xx xxx xxx", phPass: "Tối thiểu 8 ký tự",
+      btnLogin: "Đăng Nhập", btnReg: "Tạo Tài Khoản", forgot: "Quên mật khẩu? Nhắn Zalo",
+      orZalo: "Hoặc", btnZalo: "Tiếp Tục Với Zalo",
+      agree: "Đồng ý điều khoản thuê và chính sách lưu trữ thông tin của Gao Ji House.",
+      errEmpty: "Vui lòng nhập đầy đủ thông tin.", errAgree: "Vui lòng đồng ý điều khoản thuê.",
+      switchToReg: "Chưa có tài khoản? Đăng ký", switchToLogin: "Đã có tài khoản? Đăng nhập",
+      closeAria: "Đóng",
+      navAria: "Điều hướng chính", menuAria: "Mở menu", langAria: "Ngôn ngữ",
+      navUnits: "Căn Hộ & Giá Thuê", navAmen: "Tiện Ích", navLoc: "Vị Trí", navAbout: "Về Chúng Tôi",
+      btnBook: "Đặt Phòng Ngay", navCall: "Gọi 088 923 7833",
+      heroEye: "Gao Ji House · Căn Hộ Dịch Vụ Cao Cấp · Vinhomes Central Park",
+      heroTitle: "Về Nhà · Tận Hưởng Không Gian Sống",
+      heroBody: "Năm căn hộ dịch vụ đầy đủ nội thất cạnh Landmark 81 và sông Sài Gòn. Dọn phòng định kỳ, lễ tân 24/7, hỗ trợ đăng ký tạm trú — trọn gói trong một mức giá.",
+      heroCta: "Kiểm Tra Phòng Trống",
+      introEye: "Cho Thuê Căn Hộ · Landmark & Vinhomes Central Park", introTitle: "Căn Hộ Cho Thuê Trong Landmark Và Vinhomes Central Park",
+      introBody: "Gao Ji House cho thuê năm căn hộ tại các toà Landmark 1, Landmark 3, Landmark 81 và Park 1, Park 3 trong Vinhomes Central Park. Thuê theo tháng hoặc theo đêm, nội thất hoàn thiện sẵn, giá đã gồm phí quản lý, internet và dọn phòng định kỳ.",
+      s1v: "5 Toà", s1l: "Landmark & Park", s2v: "1 PN – 3 PN", s2l: "Từ 24 Triệu / Tháng", s3l: "Lễ Tân Đa Ngữ",
+      plate1: "Hình 01 — Landmark 81 Nhìn Từ Ban Công Căn Hộ",
+      unitsEye: "Bảng Giá Thuê & Mặt Bằng", unitsTitle: "Danh Sách Căn Hộ Dịch Vụ",
+      unitsAside: "Năm căn hộ tại Park 1, Park 3, Landmark 1, Landmark 3 và Landmark 81 — cập nhật tình trạng phòng trống ngày 11.08.2026.",
+      lblType: "Toà Nhà", lblFloor: "Tầng", btnClear: "Bỏ Bộ Lọc",
+      lblSearch: "Tìm Kiếm", searchPh: "Mã căn, toà nhà hoặc tên căn hộ",
+      lblPrice: "Giá Thuê / Tháng", btnFilter: "Bộ Lọc", ariaMin: "Giá thấp nhất", ariaMax: "Giá cao nhất",
+      lblBeds: "Số Phòng Ngủ", b1: "1 PN", b2: "2 PN", b3: "3 PN+", applyWord: "Xem Kết Quả",
+      emptyEye: "Chưa Có Căn Trống Đúng Tiêu Chí",
+      emptyBody: "Gao Ji House còn căn tương tự ở tầng khác — nhắn Zalo để nhận danh sách chờ trong ngày.",
+      emptyCta1: "Nhận Danh Sách Chờ", emptyCta2: "Xem Tất Cả 5 Căn",
+      unitsNote: "Giá thuê đã gồm phí quản lý · Internet · Dọn phòng định kỳ · Không phí dịch vụ đặt phòng",
+      unitWord: "CĂN HỘ", tabAll: "Tất Cả", tabLandmark: "Landmark", tabPark: "Vinhomes Central Park",
+      fAll: "Mọi Tầng", fLow: "01–20", fMid: "21–40", fHigh: "41+",
+      fsLow: " · tầng 01–20", fsMid: " · tầng 21–40", fsHigh: " · tầng 41+",
+      statusAvail: "Còn Phòng", statusHeld: "Đã Giữ Chỗ · Nhận Chờ",
+      cardView: "Xem Chi Tiết Căn Hộ", cardInquire: "Đặt Phòng / Hỏi Giá",
+      resNone: "Không có căn nào khớp bộ lọc hiện tại",
+      money: (n) => (n / 1e6).toLocaleString("vi-VN", { maximumFractionDigits: 1 }) + " Triệu VNĐ",
+      resLine: (n, a, m, s) => n + " căn hiển thị · " + a + " còn phòng · từ " + m + "/tháng" + s,
+      floorOf: (f, tw) => "Tầng " + f + " · " + tw + " · Vinhomes Central Park",
+      u: {
+        "L1.29.08": { title: "Căn 2PN View Sông & Landmark 81", type: "2 Phòng Ngủ · Tầng Cao" },
+        "P1.27.10": { title: "Căn 1PN Nắng Chiều Hướng Sông Sài Gòn", type: "1 Phòng Ngủ · Park 1" },
+        "L81.07.12": { title: "Căn 1PN Sky Suite Chuẩn Khách Sạn", type: "1 Phòng Ngủ · Landmark 81" },
+        "P3.42.12": { title: "Căn 2PN Nội Thất Gỗ Walnut Mộc", type: "2 Phòng Ngủ · Tân Trang 2026" },
+        "L3.44.09": { title: "Penthouse Duplex Thông Tầng Nhìn Landmark", type: "3 Phòng Ngủ · Duplex" }
+      },
+      amEye: "Tiện Ích Nội Khu Dành Cho Cư Dân", amTitle: "Tiện Ích & Dịch Vụ Cư Dân",
+      amAside: "Khách lưu trú Gao Ji House dùng tiện ích nội khu như cư dân — thẻ ra vào được cấp trong ngày nhận phòng.",
+      a1e: "Hồ Bơi · Công Viên Bờ Sông", a1t: "Hồ Bơi Ngoài Trời & 14 Ha Công Viên",
+      a1b: "Hồ bơi tràn bờ mở 6:00–21:00, kèm 14 ha công viên ven sông Sài Gòn ngay dưới chân toà nhà.",
+      a1l: ["Mở 6:00 – 21:00 hằng ngày", "Khăn hồ bơi cấp tại lễ tân", "Đường chạy ven sông 1.2 km"],
+      a2e: "Thể Chất · Không Phụ Phí", a2t: "Phòng Gym Technogym Nội Khu",
+      a2b: "Phòng gym thiết bị Technogym mở 5:00–23:00, đã bao gồm trong giá thuê cho toàn bộ khách lưu trú.",
+      a2l: ["Mở 5:00 – 23:00 hằng ngày", "Thiết bị Technogym", "Phòng yoga & sauna tuyết tùng"],
+      a3e: "Sky Terrace · Hầm Rượu Riêng Tư", a3t: "Hầm Rượu Vang Sommelier Tuyển Chọn",
+      a3b: "Sân thượng ngắm Landmark 81 và hầm rượu do sommelier tuyển chọn, đặt chỗ qua lễ tân trước 18:00.",
+      a3l: ["Đặt chỗ qua lễ tân trước 18:00", "Sommelier tuyển chọn theo mùa", "Tầm nhìn Landmark 81 & sông"],
+      locTitle: "Vị Trí & Bán Kính Kết Nối",
+      locBody: "Thời gian di chuyển thực tế bằng ô tô từ sảnh toà nhà, đo trong hai khung giờ của Sài Gòn.",
+      tOff: "Giờ Thấp Điểm", tPeak: "Giờ Cao Điểm",
+      noteOff: "Đo 10:00–15:00 các ngày trong tuần · Google Maps",
+      notePeak: "Đo 17:30–19:00 các ngày trong tuần · Google Maps",
+      mins: (n) => n + " phút",
+      spotEye: "Địa Điểm Lân Cận", spotHead: "Danh Sách 12 Địa Điểm Nổi Tiếng", spotBadge: "12 Địa Điểm",
+      mapTitle: "Gao Ji House · Bán Kính Di Chuyển & Bản Đồ Ven Sông",
+      legend1: "Gao Ji Residence", legend2: "Sông Sài Gòn",
+      infoWord: "Địa Điểm", infoTail: "Thông Tin", distLbl: "Khoảng Cách", walk: "Đi Bộ", drive: "Xe Hơi",
+      btnDir: "Chỉ Đường Maps", mapFoot: "Quận 1 · Bờ Sông Sài Gòn",
+      spots: [
+        { name: "Landmark 81 & Công Viên Bờ Sông", blurb: "Toà nhà cao nhất Việt Nam với TTTM Vincom, nhà hàng tầng cao và công viên ven sông 14 ha." },
+        { name: "Vinschool & Vinmec Central Park", blurb: "Trường liên cấp và bệnh viện quốc tế ngay trong nội khu, đi bộ 5 phút từ sảnh toà nhà." },
+        { name: "Trung Tâm Tài Chính Thủ Thiêm", blurb: "Khu đô thị mới bên kia sông qua cầu Thủ Thiêm, nơi đặt trụ sở nhiều ngân hàng và quỹ đầu tư." },
+        { name: "Khu Phố Ngoại Giao Thảo Điền", blurb: "Cụm nhà hàng, cà phê và trường quốc tế của cộng đồng nước ngoài tại Quận 2." },
+        { name: "Trung Tâm Quận 1 & Phố Đi Bộ", blurb: "Phố đi bộ Nguyễn Huệ, các cao ốc văn phòng và khu mua sắm trung tâm thành phố." },
+        { name: "Nhà Hát Thành Phố", blurb: "Nhà hát Opera thời Pháp thuộc, sát khách sạn Continental và phố Đồng Khởi." },
+        { name: "Thảo Cầm Viên & Bảo Tàng Lịch Sử", blurb: "Vườn thú lâu đời nhất thành phố cùng bảo tàng lịch sử, điểm đến cuối tuần cho gia đình." },
+        { name: "Nhà Thờ Đức Bà & Bưu Điện Thành Phố", blurb: "Hai công trình biểu tượng thế kỷ 19 giữa trung tâm hành chính Quận 1." },
+        { name: "Chợ Bến Thành", blurb: "Chợ trung tâm và ga metro Bến Thành, đầu mối tuyến metro số 1." },
+        { name: "Bệnh Viện Đại Học Y Dược & FV Sài Gòn", blurb: "Cụm bệnh viện lớn tại Quận 3 với khoa quốc tế và phòng khám chuyên sâu." },
+        { name: "Bệnh Viện FV · Quận 7", blurb: "Bệnh viện quốc tế tiêu chuẩn Pháp, cấp cứu 24/7 và bác sĩ nói tiếng Anh." },
+        { name: "Sân Bay Tân Sơn Nhất", blurb: "Nhà ga quốc nội và quốc tế, có dịch vụ đưa đón riêng của Gao Ji House." }
+      ],
+      plate2: "Hình 02 — Vinhomes Central Park · Sông Sài Gòn",
+      addrEye: "Địa Chỉ Nhận Phòng", btnMaps: "Mở Google Maps",
+      abEye: "Về Chúng Tôi · Vận Hành Từ 2019", abTitle: "Gao Ji House · Chủ Căn Hộ Cũng Là Người Vận Hành",
+      abP1: "Gao Ji House bắt đầu năm 2019 với một căn hộ cho thuê trong Park 1. Đến nay đội ngũ tự vận hành năm căn hộ trong Vinhomes Central Park — không qua đơn vị trung gian, không nhận uỷ thác từ chủ nhà khác. Mỗi căn đều do Gao Ji House sở hữu, tự thiết kế nội thất và tự chịu trách nhiệm bảo trì.",
+      abP2: "Khách thuê chủ yếu là chuyên gia nước ngoài công tác dài hạn, gia đình chờ nhận nhà và khách doanh nghiệp lưu trú theo tháng. Quy trình buồng phòng, đổi ga khăn và bảo trì thiết bị dựng theo chuẩn khách sạn, do chính người trong đội kiểm tra định kỳ.",
+      ab1l: "Năm Bắt Đầu", ab2l: "Căn Hộ Tự Vận Hành", ab3l: "Người Trong Đội", ab4v: "3 Ngữ",
+      teamHead: "Đội Ngũ Vận Hành", teamSub: "Liên Hệ Trực Tiếp",
+      r1l: "Chủ Đầu Tư & Quản Lý Căn Hộ", r1b: "Chốt hợp đồng thuê, giá dài hạn và mọi yêu cầu đặc biệt của khách doanh nghiệp.",
+      r2b: "Trả lời tin nhắn trong 2 giờ, gửi video thực tế, xếp lịch xem căn và đưa đón sân bay.",
+      r3l: "Buồng Phòng & Bảo Trì", r3n: "Tổ 3 Người · Nội Bộ", r3b: "Dọn phòng 2 lần / tuần, đổi ga khăn, kiểm tra thiết bị bếp và điều hoà mỗi 6 tháng.",
+      r4l: "Thủ Tục & Pháp Lý", r4b: "Hợp đồng công chứng, hoá đơn VAT và đăng ký tạm trú cho khách nước ngoài.",
+      socEye: "Mạng Xã Hội & Kênh Liên Hệ",
+      socBody: "Ảnh căn hộ mới, tình trạng phòng trống và video quay dọc từng căn được đăng trước tại các kênh dưới đây.",
+      ytSub: "Gao Ji House · Video Căn Hộ",
+      ctEye: "Guest Relations · Phản Hồi Trong 2 Giờ", ctTitle: "Giữ Chỗ Căn Hộ Qua Zalo",
+      ctBody: "Nhắn Zalo để nhận bảng giá đầy đủ, video thực tế của từng căn và tình trạng phòng trống theo ngày. Quản lý căn hộ trả lời trực tiếp, không qua tổng đài.",
+      ctCta2: "Gửi Yêu Cầu Đặt Phòng",
+      rowHours: "Giờ Làm Việc", hoursVal: "08:00 – 21:00 · T2–CN", rowLang: "Ngôn Ngữ", qrEye: "Quét Mã Để Liên Hệ · WeChat & Telegram",
+      chZalo: "Chat Zalo Ngay", chWeChat: "Kết Nối WeChat", chPhone: "Gọi 088 923 7833",
+      mTypes: ["1 Phòng Ngủ", "2 Phòng Ngủ", "Penthouse Duplex", "Chưa Xác Định"],
+      footNote: "© 2026 Gao Ji House · Căn Hộ Dịch Vụ Cho Thuê · Vinhomes Central Park",
+      foot: [
+        { title: "Căn Hộ Dịch Vụ", items: ["1 Phòng Ngủ · Từ 24 Triệu", "2 Phòng Ngủ · Từ 33 Triệu", "Penthouse Duplex", "Lưu Trú Doanh Nghiệp"] },
+        { title: "Dịch Vụ Cư Dân", items: ["Dọn Phòng 2 Lần / Tuần", "Lễ Tân 24/7 Đa Ngữ", "Đăng Ký Tạm Trú", "Đưa Đón Sân Bay"] },
+        { title: "Liên Hệ", items: ["Zalo · 088 923 7833", "Telegram · @HZM81MS", "WeChat · HZM81MS", "Email · stay@gaojihouse.vn"] }
+      ]
+    },
+    en: {
+      authOpen: "Sign In", authLine: "Sign In / Register", tabLogin: "Sign In", tabReg: "Register", logout: "Sign Out",
+      authTitleL: "Sign In To Your Tenant Account", authSubL: "View your lease, housekeeping schedule, invoices and maintenance requests.",
+      authTitleR: "Create A Tenant Account", authSubR: "Gao Ji House confirms the account over Zalo within 2 working hours.",
+      fName: "Full Name", fEmail: "Email", fPhone: "Phone · Zalo", fPass: "Password",
+      phName: "Jane Cooper", phEmail: "name@company.com", phPhone: "+84 9xx xxx xxx", phPass: "At least 8 characters",
+      btnLogin: "Sign In", btnReg: "Create Account", forgot: "Forgot password? Message Zalo",
+      orZalo: "Or", btnZalo: "Continue With Zalo",
+      agree: "I agree to the Gao Ji House lease terms and information-retention policy.",
+      errEmpty: "Please fill in every field.", errAgree: "Please accept the lease terms.",
+      switchToReg: "No account yet? Register", switchToLogin: "Already registered? Sign in",
+      closeAria: "Close",
+      navAria: "Main navigation", menuAria: "Open menu", langAria: "Language",
+      navUnits: "Apartments & Rates", navAmen: "Amenities", navLoc: "Location", navAbout: "About Us",
+      btnBook: "Book Now", navCall: "Call 088 923 7833",
+      heroEye: "Gao Ji House · Premium Serviced Apartments · Vinhomes Central Park",
+      heroTitle: "Come Home · Enjoy The Space",
+      heroBody: "Five fully furnished serviced apartments beside Landmark 81 and the Saigon River. Periodic housekeeping, 24/7 reception, temporary-residence registration — all in one rate.",
+      heroCta: "Check Availability",
+      introEye: "Apartments For Rent · Landmark & Vinhomes Central Park", introTitle: "Apartments For Rent In Landmark And Vinhomes Central Park",
+      introBody: "Gao Ji House rents five apartments across the Landmark 1, Landmark 3, Landmark 81, Park 1 and Park 3 towers of Vinhomes Central Park. Monthly or nightly, fully furnished, with management fees, internet and periodic housekeeping already in the rate.",
+      s1v: "5 Towers", s1l: "Landmark & Park", s2v: "1 – 3 Bedrooms", s2l: "From 24M VND / Month", s3l: "Multilingual Reception",
+      plate1: "Fig. 01 — Landmark 81 From The Apartment Balcony",
+      unitsEye: "Rates & Floorplans", unitsTitle: "Serviced Apartment Listing",
+      unitsAside: "Five apartments across Park 1, Park 3, Landmark 1, Landmark 3 and Landmark 81 — availability updated 11.08.2026.",
+      lblType: "Tower", lblFloor: "Floor", btnClear: "Clear Filters",
+      lblSearch: "Search", searchPh: "Unit code, tower or apartment name",
+      lblPrice: "Rate / Month", btnFilter: "Filters", ariaMin: "Minimum rate", ariaMax: "Maximum rate",
+      lblBeds: "Bedrooms", b1: "1 BR", b2: "2 BR", b3: "3 BR+", applyWord: "Show Results",
+      emptyEye: "No Unit Matches Those Criteria",
+      emptyBody: "Gao Ji House has similar units on other floors — message Zalo for the same-day waitlist.",
+      emptyCta1: "Join The Waitlist", emptyCta2: "View All 5 Units",
+      unitsNote: "Rates include management fee · Internet · Periodic housekeeping · No booking service fee",
+      unitWord: "APARTMENT", tabAll: "All", tabLandmark: "Landmark", tabPark: "Vinhomes Central Park",
+      fAll: "All", fLow: "01–20", fMid: "21–40", fHigh: "41+",
+      fsLow: " · floors 01–20", fsMid: " · floors 21–40", fsHigh: " · floors 41+",
+      statusAvail: "Available", statusHeld: "Held · Waitlist Open",
+      cardView: "View Apartment", cardInquire: "Book / Ask Price",
+      resNone: "No unit matches the current filters",
+      money: (n) => (n / 1e6).toLocaleString("en-US", { maximumFractionDigits: 1 }) + "M VND",
+      resLine: (n, a, m, s) => n + " units shown · " + a + " available · from " + m + "/month" + s,
+      floorOf: (f, tw) => "Floor " + f + " · " + tw + " · Vinhomes Central Park",
+      u: {
+        "L1.29.08": { title: "2BR With River & Landmark 81 View", type: "2 Bedrooms · High Floor" },
+        "P1.27.10": { title: "1BR With Afternoon Light Over The River", type: "1 Bedroom · Park 1" },
+        "L81.07.12": { title: "1BR Sky Suite, Hotel Standard", type: "1 Bedroom · Landmark 81" },
+        "P3.42.12": { title: "2BR In Natural Walnut Joinery", type: "2 Bedrooms · Renovated 2026" },
+        "L3.44.09": { title: "Duplex Penthouse Facing Landmark 81", type: "3 Bedrooms · Duplex" }
+      },
+      amEye: "Resident Amenities On Site", amTitle: "Amenities & Resident Services",
+      amAside: "Gao Ji House guests use the on-site amenities as residents do — access cards are issued on check-in day.",
+      a1e: "Pool · Riverside Park", a1t: "Outdoor Pool & 14 Ha Park",
+      a1b: "An infinity pool open 6:00–21:00, with 14 hectares of Saigon riverside park at the foot of the tower.",
+      a1l: ["Open 6:00 – 21:00 daily", "Pool towels at reception", "1.2 km riverside running path"],
+      a2e: "Fitness · No Extra Fee", a2t: "On-Site Technogym Gym",
+      a2b: "A Technogym-equipped gym open 5:00–23:00, included in the rate for every guest.",
+      a2l: ["Open 5:00 – 23:00 daily", "Technogym equipment", "Yoga room & cedar sauna"],
+      a3e: "Sky Terrace · Private Wine Cellar", a3t: "Sommelier-Curated Wine Cellar",
+      a3b: "A sky terrace facing Landmark 81 and a sommelier-curated cellar, reserved through reception before 18:00.",
+      a3l: ["Reserve via reception before 18:00", "Seasonal sommelier selection", "Landmark 81 & river views"],
+      locTitle: "Location & Connection Radius",
+      locBody: "Real drive times by car from the tower lobby, measured across two Saigon traffic windows.",
+      tOff: "Off-Peak", tPeak: "Peak Hours",
+      noteOff: "Measured 10:00–15:00 on weekdays · Google Maps",
+      notePeak: "Measured 17:30–19:00 on weekdays · Google Maps",
+      mins: (n) => n + " min",
+      spotEye: "Nearby Attractions", spotHead: "12 Notable Places Nearby", spotBadge: "12 Locations",
+      mapTitle: "Gao Ji House · Central Distance Radar & Riverfront Map",
+      legend1: "Gao Ji Residence", legend2: "Saigon River",
+      infoWord: "Location", infoTail: "Info", distLbl: "Distance", walk: "Walk", drive: "Drive",
+      btnDir: "Directions On Maps", mapFoot: "District 1 · Saigon Riverfront",
+      spots: [
+        { name: "Landmark 81 & Riverside Park", blurb: "Vietnam's tallest tower, with the Vincom mall, sky-level restaurants and a 14-hectare riverside park." },
+        { name: "Vinschool & Vinmec Central Park", blurb: "An all-through school and international hospital inside the compound, five minutes on foot from the lobby." },
+        { name: "Thủ Thiêm Financial Centre", blurb: "The new district across the Thủ Thiêm bridge, home to banks and investment funds." },
+        { name: "Thảo Điền Diplomatic Quarter", blurb: "The expatriate cluster of restaurants, cafés and international schools in District 2." },
+        { name: "District 1 CBD & Walking Street", blurb: "Nguyễn Huệ walking street, the office towers and the city's central shopping blocks." },
+        { name: "Municipal Opera House", blurb: "The French-colonial opera house, beside the Continental hotel and Đồng Khởi street." },
+        { name: "Botanical Garden & History Museum", blurb: "The city's oldest zoo and its history museum — a family weekend destination." },
+        { name: "Notre-Dame Cathedral & Central Post Office", blurb: "Two 19th-century landmarks in the administrative heart of District 1." },
+        { name: "Bến Thành Market", blurb: "The central market and Bến Thành metro station, terminus of metro line 1." },
+        { name: "University Medical Centre & FV Saigon", blurb: "Major District 3 hospitals with international wings and specialist clinics." },
+        { name: "FV Hospital · District 7", blurb: "French-standard international hospital, 24/7 emergency care and English-speaking doctors." },
+        { name: "Tân Sơn Nhất Airport", blurb: "Domestic and international terminals, with a private Gao Ji House transfer available." }
+      ],
+      plate2: "Fig. 02 — Vinhomes Central Park · Saigon River",
+      addrEye: "Check-In Address", btnMaps: "Open Google Maps",
+      abEye: "About Us · Operating Since 2019", abTitle: "Gao Ji House · Owner-Operated Apartments",
+      abP1: "Gao Ji House started in 2019 with one rental apartment in Park 1. Today the team runs five apartments inside Vinhomes Central Park — no agency in between, no units managed on behalf of other landlords. Every apartment is owned, furnished and maintained by Gao Ji House.",
+      abP2: "Guests are mostly expatriate professionals on long assignments, families waiting on a handover, and corporate tenants staying by the month. Housekeeping, linen changes and appliance maintenance follow hotel procedure, checked by the team itself.",
+      ab1l: "Year Founded", ab2l: "Self-Operated Units", ab3l: "People On The Team", ab4v: "3 Languages",
+      teamHead: "Operations Team", teamSub: "Direct Contact",
+      r1l: "Owner & Apartment Manager", r1b: "Closes leases, long-stay rates and any special request from corporate guests.",
+      r2b: "Replies within 2 hours, sends real walkthrough videos, schedules viewings and airport pickup.",
+      r3l: "Housekeeping & Maintenance", r3n: "In-House Team Of 3", r3b: "Housekeeping twice a week, linen changes, kitchen and air-conditioning checks every 6 months.",
+      r4l: "Paperwork & Legal", r4b: "Notarised contracts, VAT invoices and temporary-residence registration for foreign guests.",
+      socEye: "Social & Contact Channels",
+      socBody: "New apartment photos, live availability and vertical walkthrough videos are posted to the channels below first.",
+      ytSub: "Gao Ji House · Unit Videos",
+      ctEye: "Guest Relations · Reply Within 2 Hours", ctTitle: "Hold An Apartment Over Zalo",
+      ctBody: "Message Zalo for the full rate sheet, real video of each unit and day-by-day availability. The apartment manager answers directly — no call centre.",
+      ctCta2: "Send A Booking Request",
+      rowHours: "Working Hours", hoursVal: "08:00 – 21:00 · Mon–Sun", rowLang: "Languages", qrEye: "Scan To Reach Us · WeChat & Telegram",
+      chZalo: "Chat On Zalo", chWeChat: "Connect On WeChat", chPhone: "Call 088 923 7833",
+      mTypes: ["1 Bedroom", "2 Bedrooms", "Penthouse Duplex", "Not Decided Yet"],
+      footNote: "© 2026 Gao Ji House · Serviced Apartments For Rent · Vinhomes Central Park",
+      foot: [
+        { title: "Serviced Apartments", items: ["1 Bedroom · From 24M VND", "2 Bedrooms · From 33M VND", "Penthouse Duplex", "Corporate Stays"] },
+        { title: "Resident Services", items: ["Housekeeping Twice A Week", "24/7 Multilingual Reception", "Residence Registration", "Airport Pickup"] },
+        { title: "Contact", items: ["Zalo · 088 923 7833", "Telegram · @HZM81MS", "WeChat · HZM81MS", "Email · stay@gaojihouse.vn"] }
+      ]
+    },
+    cn: {
+      authOpen: "登录", authLine: "登录 / 注册", tabLogin: "登录", tabReg: "注册", logout: "退出登录",
+      authTitleL: "登录租客账户", authSubL: "查看租约、清洁安排、账单以及维修请求。",
+      authTitleR: "创建租客账户", authSubR: "Gao Ji House 将在 2 个工作小时内通过 Zalo 确认账户。",
+      fName: "姓名", fEmail: "邮箱", fPhone: "电话 · Zalo", fPass: "密码",
+      phName: "张伟", phEmail: "name@company.com", phPhone: "+84 9xx xxx xxx", phPass: "至少 8 位字符",
+      btnLogin: "登录", btnReg: "创建账户", forgot: "忘记密码？请通过 Zalo 联系",
+      orZalo: "或", btnZalo: "使用 Zalo 继续",
+      agree: "我同意 Gao Ji House 的租赁条款与信息保存政策。",
+      errEmpty: "请填写所有信息。", errAgree: "请先同意租赁条款。",
+      switchToReg: "还没有账户？立即注册", switchToLogin: "已有账户？直接登录",
+      closeAria: "关闭",
+      navAria: "主导航", menuAria: "打开菜单", langAria: "语言",
+      navUnits: "公寓与房价", navAmen: "配套设施", navLoc: "地理位置", navAbout: "关于我们",
+      btnBook: "立即预订", navCall: "致电 088 923 7833",
+      heroEye: "Gao Ji House · 高级服务式公寓 · Vinhomes Central Park",
+      heroTitle: "回家 · 享受生活空间",
+      heroBody: "五套家具齐全的服务式公寓，紧邻 Landmark 81 与西贡河。定期清洁、24/7 前台、临时居住登记 — 全部包含在一个价格内。",
+      heroCta: "查询空房",
+      introEye: "公寓出租 · Landmark 与 Vinhomes Central Park", introTitle: "Landmark 与 Vinhomes Central Park 公寓出租",
+      introBody: "Gao Ji House 在 Vinhomes Central Park 的 Landmark 1、Landmark 3、Landmark 81 与 Park 1、Park 3 楼栋出租五套公寓。可按月或按夜租住，家具齐全，租金已含物业管理费、网络与定期清洁。",
+      s1v: "5 座楼栋", s1l: "Landmark 与 Park", s2v: "一房 – 三房", s2l: "2400 万越盾 / 月起", s3l: "多语种前台",
+      plate1: "图 01 — 自公寓阳台远眺 Landmark 81",
+      unitsEye: "租金与户型", unitsTitle: "服务式公寓一览",
+      unitsAside: "五套公寓分布于 Park 1、Park 3、Landmark 1、Landmark 3 与 Landmark 81 — 空房状态更新于 2026.08.11。",
+      lblType: "楼栋", lblFloor: "楼层", btnClear: "清除筛选",
+      lblSearch: "搜索", searchPh: "房号、楼栋或公寓名称",
+      lblPrice: "月租金", btnFilter: "筛选", ariaMin: "最低租金", ariaMax: "最高租金",
+      lblBeds: "卧室数量", b1: "一房", b2: "两房", b3: "三房+", applyWord: "查看结果",
+      emptyEye: "暂无符合条件的房源",
+      emptyBody: "Gao Ji House 在其他楼层还有相似房源 — 通过 Zalo 联系可当日获取候补名单。",
+      emptyCta1: "加入等候名单", emptyCta2: "查看全部 5 套",
+      unitsNote: "租金已含物业管理费 · 网络 · 定期清洁 · 不收预订服务费",
+      unitWord: "公寓", tabAll: "全部", tabLandmark: "Landmark 楼栋", tabPark: "Vinhomes Central Park",
+      fAll: "全部", fLow: "01–20", fMid: "21–40", fHigh: "41+",
+      fsLow: " · 01–20 层", fsMid: " · 21–40 层", fsHigh: " · 41 层以上",
+      statusAvail: "可入住", statusHeld: "已预留 · 可候补",
+      cardView: "查看公寓详情", cardInquire: "预订 / 询价",
+      resNone: "没有符合当前筛选条件的房源",
+      money: (n) => (n / 1e4).toLocaleString("en-US", { maximumFractionDigits: 0 }) + " 万越盾",
+      resLine: (n, a, m, s) => "显示 " + n + " 套 · " + a + " 套可入住 · " + m + "/月起" + s,
+      floorOf: (f, tw) => f + " 层 · " + tw + " · Vinhomes Central Park",
+      u: {
+        "L1.29.08": { title: "两房 · 河景与 Landmark 81 景观", type: "两房 · 高楼层" },
+        "P1.27.10": { title: "一房 · 午后阳光西贡河景", type: "一房 · Park 1" },
+        "L81.07.12": { title: "一房 Sky Suite · 酒店标准", type: "一房 · Landmark 81" },
+        "P3.42.12": { title: "两房 · 原木胡桃木家具", type: "两房 · 2026 年翻新" },
+        "L3.44.09": { title: "复式顶层公寓 · 面向 Landmark 81", type: "三房 · 复式" }
+      },
+      amEye: "社区住户配套设施", amTitle: "设施与住户服务",
+      amAside: "Gao Ji House 的客人如住户一样使用社区设施 — 门禁卡于入住当日发放。",
+      a1e: "泳池 · 河滨公园", a1t: "户外无边泳池与 14 公顷公园",
+      a1b: "无边泳池每日 6:00–21:00 开放，楼下即是 14 公顷西贡河滨公园。",
+      a1l: ["每日 6:00 – 21:00 开放", "前台提供泳池毛巾", "1.2 公里河滨跑道"],
+      a2e: "健身 · 无额外费用", a2t: "社区 Technogym 健身房",
+      a2b: "Technogym 器械健身房每日 5:00–23:00 开放，已包含在所有客人的租金内。",
+      a2l: ["每日 5:00 – 23:00 开放", "Technogym 器械", "瑜伽室与雪松桑拿"],
+      a3e: "空中露台 · 私人酒窖", a3t: "侍酒师精选酒窖",
+      a3b: "空中露台正对 Landmark 81，酒窖由侍酒师精选，请于 18:00 前通过前台预约。",
+      a3l: ["18:00 前经前台预约", "侍酒师按季精选", "Landmark 81 与河景视野"],
+      locTitle: "位置与交通半径",
+      locBody: "以下为自大堂出发的实际驾车时间，分别在西贡两个交通时段测得。",
+      tOff: "非高峰时段", tPeak: "高峰时段",
+      noteOff: "工作日 10:00–15:00 测得 · Google 地图",
+      notePeak: "工作日 17:30–19:00 测得 · Google 地图",
+      mins: (n) => n + " 分钟",
+      spotEye: "周边热门景点", spotHead: "周边 12 处知名地点", spotBadge: "12 个地点",
+      mapTitle: "Gao Ji House · 中心距离雷达与河滨地图",
+      legend1: "Gao Ji 公寓", legend2: "西贡河",
+      infoWord: "地点", infoTail: "资讯", distLbl: "距离", walk: "步行", drive: "驾车",
+      btnDir: "在地图中导航", mapFoot: "第一区 · 西贡河滨",
+      spots: [
+        { name: "Landmark 81 与河滨公园", blurb: "越南第一高楼，设有 Vincom 购物中心、高层餐厅以及 14 公顷河滨公园。" },
+        { name: "Vinschool 与 Vinmec Central Park", blurb: "社区内的一贯制学校与国际医院，自大堂步行 5 分钟即达。" },
+        { name: "守添金融中心", blurb: "守添大桥对岸的新城区，多家银行与投资基金总部所在地。" },
+        { name: "草田外交社区", blurb: "第二区外籍人士聚集地，餐厅、咖啡馆与国际学校集中。" },
+        { name: "第一区 CBD 与步行街", blurb: "阮惠步行街、写字楼群与市中心购物区。" },
+        { name: "市立歌剧院", blurb: "法国殖民时期的歌剧院，紧邻大陆酒店与同起街。" },
+        { name: "西贡动植物园与历史博物馆", blurb: "全市最古老的动物园与历史博物馆，适合家庭周末前往。" },
+        { name: "圣母大教堂与中央邮局", blurb: "第一区行政中心的两座 19 世纪地标建筑。" },
+        { name: "槟城市场", blurb: "市中心市场与槟城地铁站，地铁 1 号线终点。" },
+        { name: "医药大学医院与 FV 西贡", blurb: "第三区大型医院群，设有国际部与专科门诊。" },
+        { name: "FV 医院 · 第七区", blurb: "法国标准国际医院，24/7 急诊并配备英语医生。" },
+        { name: "新山一国际机场", blurb: "国内与国际航站楼，Gao Ji House 提供专车接送。" }
+      ],
+      plate2: "图 02 — Vinhomes Central Park · 西贡河",
+      addrEye: "入住地址", btnMaps: "打开 Google 地图",
+      abEye: "关于我们 · 2019 年起运营", abTitle: "Gao Ji House · 业主自营公寓",
+      abP1: "Gao Ji House 于 2019 年以 Park 1 的一套出租公寓起步。如今团队在 Vinhomes Central Park 自营五套公寓 — 不经中介，也不代管他人房源。每套公寓均由 Gao Ji House 持有、自行设计装修并负责维护。",
+      abP2: "客人以长期驻外的外籍专业人士、等待交房的家庭以及按月入住的企业客户为主。客房清洁、床品更换与设备维护均按酒店流程执行，由团队成员亲自定期检查。",
+      ab1l: "创立年份", ab2l: "自营公寓", ab3l: "团队成员", ab4v: "三种语言",
+      teamHead: "运营团队", teamSub: "直接联系",
+      r1l: "业主与公寓管理", r1b: "负责签订租约、长租价格以及企业客户的特殊需求。",
+      r2b: "2 小时内回复消息，发送实拍视频，安排看房与机场接送。",
+      r3l: "客房与维护", r3n: "3 人内部团队", r3b: "每周清洁两次，更换床品，每 6 个月检查厨房设备与空调。",
+      r4l: "手续与法务", r4b: "公证租约、VAT 发票以及外籍客人的临时居住登记。",
+      socEye: "社交与联系渠道",
+      socBody: "最新公寓照片、空房状态与竖屏实拍视频会优先发布在以下渠道。",
+      ytSub: "Gao Ji House · 公寓视频",
+      ctEye: "客户关系 · 2 小时内回复", ctTitle: "通过 Zalo 预留公寓",
+      ctBody: "通过 Zalo 联系可获取完整价目表、每套公寓的实拍视频以及每日空房状态。由公寓管理人直接回复，不经呼叫中心。",
+      ctCta2: "发送预订请求",
+      rowHours: "工作时间", hoursVal: "08:00 – 21:00 · 周一至周日", rowLang: "语言", qrEye: "扫码联系我们 · 微信与 Telegram",
+      chZalo: "立即 Zalo 咨询", chWeChat: "添加微信", chPhone: "致电 088 923 7833",
+      mTypes: ["一房", "两房", "顶层复式", "尚未确定"],
+      footNote: "© 2026 Gao Ji House · 服务式公寓租赁 · Vinhomes Central Park",
+      foot: [
+        { title: "服务式公寓", items: ["一房 · 2400 万越盾起", "两房 · 3300 万越盾起", "顶层复式公寓", "企业长租"] },
+        { title: "住户服务", items: ["每周清洁两次", "24/7 多语种前台", "临时居住登记", "机场接送"] },
+        { title: "联系方式", items: ["Zalo · 088 923 7833", "Telegram · @HZM81MS", "微信 · HZM81MS", "邮箱 · stay@gaojihouse.vn"] }
+      ]
+    },
+    tw: {
+      authOpen: "登入", authLine: "登入 / 註冊", tabLogin: "登入", tabReg: "註冊", logout: "登出",
+      authTitleL: "登入租客帳戶", authSubL: "查看租約、清潔安排、帳單以及維修請求。",
+      authTitleR: "建立租客帳戶", authSubR: "Gao Ji House 將在 2 個工作小時內透過 Zalo 確認帳戶。",
+      fName: "姓名", fEmail: "電子郵件", fPhone: "電話 · Zalo", fPass: "密碼",
+      phName: "陳雅婷", phEmail: "name@company.com", phPhone: "+84 9xx xxx xxx", phPass: "至少 8 位字元",
+      btnLogin: "登入", btnReg: "建立帳戶", forgot: "忘記密碼？請透過 Zalo 聯繫",
+      orZalo: "或", btnZalo: "使用 Zalo 繼續",
+      agree: "我同意 Gao Ji House 的租賃條款與資訊保存政策。",
+      errEmpty: "請填寫所有資訊。", errAgree: "請先同意租賃條款。",
+      switchToReg: "還沒有帳戶？立即註冊", switchToLogin: "已有帳戶？直接登入",
+      closeAria: "關閉",
+      navAria: "主導覽", menuAria: "開啟選單", langAria: "語言",
+      navUnits: "公寓與房價", navAmen: "配套設施", navLoc: "地理位置", navAbout: "關於我們",
+      btnBook: "立即預訂", navCall: "致電 088 923 7833",
+      heroEye: "Gao Ji House · 高級服務式公寓 · Vinhomes Central Park",
+      heroTitle: "回家 · 享受生活空間",
+      heroBody: "五套家具齊全的服務式公寓，緊鄰 Landmark 81 與西貢河。定期清潔、24/7 前台、臨時居住登記 — 全部包含在一個價格內。",
+      heroCta: "查詢空房",
+      introEye: "公寓出租 · Landmark 與 Vinhomes Central Park", introTitle: "Landmark 與 Vinhomes Central Park 公寓出租",
+      introBody: "Gao Ji House 在 Vinhomes Central Park 的 Landmark 1、Landmark 3、Landmark 81 與 Park 1、Park 3 樓棟出租五套公寓。可按月或按夜租住，家具齊全，租金已含管理費、網路與定期清潔。",
+      s1v: "5 座樓棟", s1l: "Landmark 與 Park", s2v: "一房 – 三房", s2l: "2400 萬越盾 / 月起", s3l: "多語種前台",
+      plate1: "圖 01 — 自公寓陽台遠眺 Landmark 81",
+      unitsEye: "租金與戶型", unitsTitle: "服務式公寓一覽",
+      unitsAside: "五套公寓分佈於 Park 1、Park 3、Landmark 1、Landmark 3 與 Landmark 81 — 空房狀態更新於 2026.08.11。",
+      lblType: "樓棟", lblFloor: "樓層", btnClear: "清除篩選",
+      lblSearch: "搜尋", searchPh: "房號、樓棟或公寓名稱",
+      lblPrice: "月租金", btnFilter: "篩選", ariaMin: "最低租金", ariaMax: "最高租金",
+      lblBeds: "臥室數量", b1: "一房", b2: "兩房", b3: "三房+", applyWord: "查看結果",
+      emptyEye: "暫無符合條件的房源",
+      emptyBody: "Gao Ji House 在其他樓層還有相似房源 — 透過 Zalo 聯繫可當日取得候補名單。",
+      emptyCta1: "加入等候名單", emptyCta2: "查看全部 5 套",
+      unitsNote: "租金已含管理費 · 網路 · 定期清潔 · 不收預訂服務費",
+      unitWord: "公寓", tabAll: "全部", tabLandmark: "Landmark 樓棟", tabPark: "Vinhomes Central Park",
+      fAll: "全部", fLow: "01–20", fMid: "21–40", fHigh: "41+",
+      fsLow: " · 01–20 樓", fsMid: " · 21–40 樓", fsHigh: " · 41 樓以上",
+      statusAvail: "可入住", statusHeld: "已預留 · 可候補",
+      cardView: "查看公寓詳情", cardInquire: "預訂 / 詢價",
+      resNone: "沒有符合目前篩選條件的房源",
+      money: (n) => (n / 1e4).toLocaleString("en-US", { maximumFractionDigits: 0 }) + " 萬越盾",
+      resLine: (n, a, m, s) => "顯示 " + n + " 套 · " + a + " 套可入住 · " + m + "/月起" + s,
+      floorOf: (f, tw) => f + " 樓 · " + tw + " · Vinhomes Central Park",
+      u: {
+        "L1.29.08": { title: "兩房 · 河景與 Landmark 81 景觀", type: "兩房 · 高樓層" },
+        "P1.27.10": { title: "一房 · 午後陽光西貢河景", type: "一房 · Park 1" },
+        "L81.07.12": { title: "一房 Sky Suite · 飯店標準", type: "一房 · Landmark 81" },
+        "P3.42.12": { title: "兩房 · 原木胡桃木家具", type: "兩房 · 2026 年翻新" },
+        "L3.44.09": { title: "複式頂層公寓 · 面向 Landmark 81", type: "三房 · 複式" }
+      },
+      amEye: "社區住戶配套設施", amTitle: "設施與住戶服務",
+      amAside: "Gao Ji House 的客人如住戶一樣使用社區設施 — 門禁卡於入住當日發放。",
+      a1e: "泳池 · 河濱公園", a1t: "戶外無邊泳池與 14 公頃公園",
+      a1b: "無邊泳池每日 6:00–21:00 開放，樓下即是 14 公頃西貢河濱公園。",
+      a1l: ["每日 6:00 – 21:00 開放", "前台提供泳池毛巾", "1.2 公里河濱跑道"],
+      a2e: "健身 · 無額外費用", a2t: "社區 Technogym 健身房",
+      a2b: "Technogym 器械健身房每日 5:00–23:00 開放，已包含在所有客人的租金內。",
+      a2l: ["每日 5:00 – 23:00 開放", "Technogym 器械", "瑜珈室與雪松桑拿"],
+      a3e: "空中露臺 · 私人酒窖", a3t: "侍酒師精選酒窖",
+      a3b: "空中露臺正對 Landmark 81，酒窖由侍酒師精選，請於 18:00 前透過前台預約。",
+      a3l: ["18:00 前經前台預約", "侍酒師依季精選", "Landmark 81 與河景視野"],
+      locTitle: "位置與交通半徑",
+      locBody: "以下為自大廳出發的實際駕車時間，分別在西貢兩個交通時段測得。",
+      tOff: "非高峰時段", tPeak: "高峰時段",
+      noteOff: "平日 10:00–15:00 測得 · Google 地圖",
+      notePeak: "平日 17:30–19:00 測得 · Google 地圖",
+      mins: (n) => n + " 分鐘",
+      spotEye: "周邊熱門景點", spotHead: "周邊 12 處知名地點", spotBadge: "12 個地點",
+      mapTitle: "Gao Ji House · 中心距離雷達與河濱地圖",
+      legend1: "Gao Ji 公寓", legend2: "西貢河",
+      infoWord: "地點", infoTail: "資訊", distLbl: "距離", walk: "步行", drive: "駕車",
+      btnDir: "在地圖中導航", mapFoot: "第一區 · 西貢河濱",
+      spots: [
+        { name: "Landmark 81 與河濱公園", blurb: "越南第一高樓，設有 Vincom 購物中心、高層餐廳以及 14 公頃河濱公園。" },
+        { name: "Vinschool 與 Vinmec Central Park", blurb: "社區內的一貫制學校與國際醫院，自大廳步行 5 分鐘即達。" },
+        { name: "守添金融中心", blurb: "守添大橋對岸的新城區，多家銀行與投資基金總部所在地。" },
+        { name: "草田外交社區", blurb: "第二區外籍人士聚集地，餐廳、咖啡館與國際學校集中。" },
+        { name: "第一區 CBD 與步行街", blurb: "阮惠步行街、辦公大樓群與市中心購物區。" },
+        { name: "市立歌劇院", blurb: "法國殖民時期的歌劇院，緊鄰大陸酒店與同起街。" },
+        { name: "西貢動植物園與歷史博物館", blurb: "全市最古老的動物園與歷史博物館，適合家庭週末前往。" },
+        { name: "聖母大教堂與中央郵局", blurb: "第一區行政中心的兩座 19 世紀地標建築。" },
+        { name: "檳城市場", blurb: "市中心市場與檳城地鐵站，地鐵 1 號線終點。" },
+        { name: "醫藥大學醫院與 FV 西貢", blurb: "第三區大型醫院群，設有國際部與專科門診。" },
+        { name: "FV 醫院 · 第七區", blurb: "法國標準國際醫院，24/7 急診並配備英語醫生。" },
+        { name: "新山一國際機場", blurb: "國內與國際航廈，Gao Ji House 提供專車接送。" }
+      ],
+      plate2: "圖 02 — Vinhomes Central Park · 西貢河",
+      addrEye: "入住地址", btnMaps: "開啟 Google 地圖",
+      abEye: "關於我們 · 2019 年起營運", abTitle: "Gao Ji House · 業主自營公寓",
+      abP1: "Gao Ji House 於 2019 年以 Park 1 的一套出租公寓起步。如今團隊在 Vinhomes Central Park 自營五套公寓 — 不經仲介，也不代管他人房源。每套公寓均由 Gao Ji House 持有、自行設計裝修並負責維護。",
+      abP2: "客人以長期駐外的外籍專業人士、等待交屋的家庭以及按月入住的企業客戶為主。客房清潔、床品更換與設備維護均依飯店流程執行，由團隊成員親自定期檢查。",
+      ab1l: "創立年份", ab2l: "自營公寓", ab3l: "團隊成員", ab4v: "三種語言",
+      teamHead: "營運團隊", teamSub: "直接聯繫",
+      r1l: "業主與公寓管理", r1b: "負責簽訂租約、長租價格以及企業客戶的特殊需求。",
+      r2b: "2 小時內回覆訊息，傳送實拍影片，安排看房與機場接送。",
+      r3l: "客房與維護", r3n: "3 人內部團隊", r3b: "每週清潔兩次，更換床品，每 6 個月檢查廚房設備與空調。",
+      r4l: "手續與法務", r4b: "公證租約、VAT 發票以及外籍客人的臨時居住登記。",
+      socEye: "社交與聯繫管道",
+      socBody: "最新公寓照片、空房狀態與直式實拍影片會優先發佈在以下管道。",
+      ytSub: "Gao Ji House · 公寓影片",
+      ctEye: "客戶關係 · 2 小時內回覆", ctTitle: "透過 Zalo 預留公寓",
+      ctBody: "透過 Zalo 聯繫可取得完整價目表、每套公寓的實拍影片以及每日空房狀態。由公寓管理人直接回覆，不經客服中心。",
+      ctCta2: "發送預訂請求",
+      rowHours: "工作時間", hoursVal: "08:00 – 21:00 · 週一至週日", rowLang: "語言", qrEye: "掃碼聯繫我們 · 微信與 Telegram",
+      chZalo: "立即 Zalo 諮詢", chWeChat: "加入微信", chPhone: "致電 088 923 7833",
+      mTypes: ["一房", "兩房", "頂層複式", "尚未確定"],
+      footNote: "© 2026 Gao Ji House · 服務式公寓租賃 · Vinhomes Central Park",
+      foot: [
+        { title: "服務式公寓", items: ["一房 · 2400 萬越盾起", "兩房 · 3300 萬越盾起", "頂層複式公寓", "企業長租"] },
+        { title: "住戶服務", items: ["每週清潔兩次", "24/7 多語種前台", "臨時居住登記", "機場接送"] },
+        { title: "聯繫方式", items: ["Zalo · 088 923 7833", "Telegram · @HZM81MS", "微信 · HZM81MS", "Email · stay@gaojihouse.vn"] }
+      ]
+    }
+  };
+
+  applyHtmlLang(code) {
+    const l = this.LANGS.find((x) => x.code === code);
+    if (l && typeof document !== "undefined") document.documentElement.lang = l.html;
+  }
+
+  setLang(code) {
+    this.setState({ lang: code, menu: false });
+    this.applyHtmlLang(code);
+    try { window.localStorage.setItem("gaoji-lang", code); } catch (e) {}
+  }
+
+  res(id) {
+    const r = (typeof window !== "undefined" && window.__resources) || null;
+    return (r && r[id]) || this.ASSETS[id] || "";
+  }
+
+  renderVals() {
+    const code = this.DICT[this.state.lang] ? this.state.lang : "vi";
+    const t = this.DICT[code];
+    const mode = this.props.priceMode || "Cả Hai";
+    const filter = this.state.filter;
+    const floor = this.state.floor;
+    const PMIN = 20, PMAX = 120;
+    const pmin = Math.min(this.state.pmin, this.state.pmax);
+    const pmax = Math.max(this.state.pmin, this.state.pmax);
+    const beds = this.state.beds;
+    const q = (this.state.q || "").trim().toLowerCase();
+    const BANDS = { low: [1, 20], mid: [21, 40], high: [41, 999] };
+    const inBand = (u, b) => b === "all" || (u.lvl >= BANDS[b][0] && u.lvl <= BANDS[b][1]);
+    const inPrice = (u) => u.month >= pmin * 1e6 && u.month <= pmax * 1e6;
+    const inBeds = (u, b) => b === "all" || (b === "3" ? u.beds >= 3 : String(u.beds) === b);
+    const byType = (u, f) => f === "all" || u.zone === f;
+    const matchQ = (u) => !q || (u.key + " " + u.tower + " " + t.u[u.key].title + " " + t.u[u.key].type).toLowerCase().indexOf(q) > -1;
+    const pass = (u, o) => byType(u, "filter" in o ? o.filter : filter) && inBand(u, "floor" in o ? o.floor : floor)
+      && inPrice(u) && inBeds(u, "beds" in o ? o.beds : beds) && matchQ(u);
+    const rows = this.UNITS.filter((u) => pass(u, {}));
+    const countType = (f) => this.UNITS.filter((u) => pass(u, { filter: f })).length;
+    const countBand = (b) => this.UNITS.filter((u) => pass(u, { floor: b })).length;
+    const countBeds = (b) => this.UNITS.filter((u) => pass(u, { beds: b })).length;
+    const units = rows.map((u) => ({
+      key: u.key,
+      card: {
+        code: t.unitWord + " " + u.key,
+        title: t.u[u.key].title,
+        image: this.res(u.img),
+        type: t.u[u.key].type,
+        floor: t.floorOf(u.flr, u.tower),
+        beds: u.beds, baths: u.baths, sqm: u.sqm,
+        monthlyRateVnd: mode === "Giá Đêm" ? null : u.month,
+        nightlyRateVnd: mode === "Giá Tháng" ? null : u.night,
+        status: u.status,
+        statusLabel: u.status === "available" ? t.statusAvail : t.statusHeld,
+        labels: { view: t.cardView, inquire: t.cardInquire },
+        onView: () => { window.location.href = "Chi%20Tiet%20Can%20Ho.dc.html?unit=" + encodeURIComponent(u.key) + "&lang=" + code; },
+        onInquire: () => this.setState({ modal: true })
+      }
+    }));
+
+    const avail = rows.filter((u) => u.status === "available").length;
+    const from = rows.length ? Math.min.apply(null, rows.map((u) => u.month)) : 0;
+    const traffic = this.state.traffic;
+    const si = Math.min(this.state.spot, this.SPOTS.length - 1);
+    const sp = this.SPOTS[si];
+    const floorSuffix = floor === "all" ? "" : floor === "low" ? t.fsLow : floor === "mid" ? t.fsMid : t.fsHigh;
+
+    const channel = this.props.primaryChannel || "Zalo";
+    const channels = {
+      "Zalo": { label: t.chZalo, href: "https://zalo.me/0889237833" },
+      "WeChat": { label: t.chWeChat, href: "weixin://dl/chat?HZM81MS" },
+      "Điện Thoại": { label: t.chPhone, href: "tel:+84889237833" }
+    };
+
+    const langBtn = (active, big) =>
+      "min-height:" + (big ? "44px" : "32px") + ";padding:" + (big ? "0 18px" : "6px 10px") +
+      ";flex:" + (big ? "1" : "none") + ";border:0;cursor:pointer;font-family:var(--font-sans);font-size:" +
+      (big ? ".8125rem" : ".6875rem") + ";font-weight:600;letter-spacing:.12em;transition:background .15s,color .15s;background:" +
+      (active ? "var(--jade-700)" : "var(--surface-raised)") + ";color:" + (active ? "var(--gold-050)" : "var(--text-muted)");
+    const langList = (big) => this.LANGS.map((l) => ({
+      code: l.code, label: l.label, on: l.code === code,
+      pick: () => this.setLang(l.code),
+      style: langBtn(l.code === code, big)
+    }));
+
+    return {
+      yes: true, no: false, n15: 15, n18: 18, n22: 22, n26: 26,
+      t,
+      langs: langList(false),
+      langsBig: langList(true),
+      navRef: this.navRef,
+      isDesktop: this.state.isDesktop,
+      isMobile: !this.state.isDesktop,
+      menuOpen: this.state.menu && !this.state.isDesktop,
+      toggleMenu: () => this.setState((s) => ({ menu: !s.menu })),
+      closeMenu: () => this.setState({ menu: false }),
+
+      signedIn: !!this.state.user,
+      signedOut: !this.state.user,
+      userName: this.state.user ? this.state.user.name : "",
+      signOut: () => this.setState({ user: null }),
+      authOpen: this.state.auth,
+      openAuth: () => this.setState({ auth: true, authTab: "login", authErr: "", menu: false }),
+      closeAuth: () => this.setState({ auth: false, authErr: "" }),
+      isLogin: this.state.authTab === "login",
+      isRegister: this.state.authTab === "register",
+      authTitle: this.state.authTab === "login" ? t.authTitleL : t.authTitleR,
+      authSub: this.state.authTab === "login" ? t.authSubL : t.authSubR,
+      authCta: this.state.authTab === "login" ? t.btnLogin : t.btnReg,
+      authSwitch: this.state.authTab === "login" ? t.switchToReg : t.switchToLogin,
+      switchAuth: () => this.setState((s) => ({ authTab: s.authTab === "login" ? "register" : "login", authErr: "" })),
+      authTabs: [
+        { key: "login", label: t.tabLogin },
+        { key: "register", label: t.tabReg }
+      ].map((x) => ({
+        label: x.label, on: this.state.authTab === x.key,
+        pick: () => this.setState({ authTab: x.key, authErr: "" }),
+        style: "min-height:48px;padding:0 12px;border:0;cursor:pointer;font-family:var(--font-sans);font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;transition:background .15s,color .15s;background:"
+          + (this.state.authTab === x.key ? "var(--jade-700)" : "transparent") + ";color:"
+          + (this.state.authTab === x.key ? "var(--gold-050)" : "var(--text-muted)")
+      })),
+      fName: this.state.fName, fEmail: this.state.fEmail, fPhone: this.state.fPhone, fPass: this.state.fPass,
+      setName: (e) => this.setState({ fName: e.target.value }),
+      setEmail: (e) => this.setState({ fEmail: e.target.value }),
+      setPhone: (e) => this.setState({ fPhone: e.target.value }),
+      setPass: (e) => this.setState({ fPass: e.target.value }),
+      agreed: this.state.agreed,
+      toggleAgree: () => this.setState((s) => ({ agreed: !s.agreed })),
+      authErr: !!this.state.authErr,
+      authErrMsg: this.state.authErr,
+      submitAuth: () => {
+        const s = this.state;
+        const reg = s.authTab === "register";
+        const missing = !s.fEmail.trim() || !s.fPass.trim() || (reg && (!s.fName.trim() || !s.fPhone.trim()));
+        if (missing) { this.setState({ authErr: t.errEmpty }); return; }
+        if (reg && !s.agreed) { this.setState({ authErr: t.errAgree }); return; }
+        const name = reg ? s.fName.trim() : s.fEmail.split("@")[0];
+        this.setState({ user: { name }, auth: false, authErr: "", fPass: "" });
+      },
+
+      modalTypes: t.mTypes,
+      modalOpen: this.state.modal,
+      openModal: () => this.setState({ modal: true, menu: false }),
+      closeModal: () => this.setState({ modal: false }),
+
+      unitTabs: [
+        { value: "all", label: t.tabAll + " · " + countType("all") },
+        { value: "landmark", label: t.tabLandmark + " · " + countType("landmark") },
+        { value: "park", label: t.tabPark + " · " + countType("park") }
+      ],
+      filter,
+      setFilter: (v) => this.setState({ filter: v }),
+      floorTabs: [
+        { value: "all", label: t.fAll + " · " + countBand("all") },
+        { value: "low", label: t.fLow + " · " + countBand("low") },
+        { value: "mid", label: t.fMid + " · " + countBand("mid") },
+        { value: "high", label: t.fHigh + " · " + countBand("high") }
+      ],
+      floor,
+      setFloor: (v) => this.setState({ floor: v }),
+      priceMin: PMIN, priceMax: PMAX, priceStep: 2,
+      pMin: pmin, pMax: pmax,
+      setPMin: (e) => { const v = Number(e.target.value); this.setState((s) => ({ pmin: Math.min(v, s.pmax - 2) })); },
+      setPMax: (e) => { const v = Number(e.target.value); this.setState((s) => ({ pmax: Math.max(v, s.pmin + 2) })); },
+      priceReadout: t.money(pmin * 1e6) + " – " + t.money(pmax * 1e6),
+      priceFloorLabel: t.money(PMIN * 1e6),
+      priceCeilLabel: t.money(PMAX * 1e6),
+      priceFillStyle: "position:absolute;top:11px;height:2px;background:var(--jade-700);left:calc(8px + " +
+        ((pmin - PMIN) / (PMAX - PMIN) * 100).toFixed(2) + "% - " + ((pmin - PMIN) / (PMAX - PMIN) * 16).toFixed(2) + "px);right:calc(" +
+        ((PMAX - pmax) / (PMAX - PMIN) * 100).toFixed(2) + "% + 8px - " + ((PMAX - pmax) / (PMAX - PMIN) * 16).toFixed(2) + "px)",
+      bedTabs: [
+        { value: "all", label: t.tabAll + " · " + countBeds("all") },
+        { value: "1", label: t.b1 + " · " + countBeds("1") },
+        { value: "2", label: t.b2 + " · " + countBeds("2") },
+        { value: "3", label: t.b3 + " · " + countBeds("3") }
+      ],
+      beds,
+      setBeds: (v) => this.setState({ beds: v }),
+      panelOpen: this.state.fopen,
+      toggleFilters: () => this.setState((s) => ({ fopen: !s.fopen })),
+      closeFilters: () => this.setState({ fopen: false }),
+      applyLabel: t.applyWord + " · " + rows.length,
+      activeCount: (filter !== "all" ? 1 : 0) + (floor !== "all" ? 1 : 0) + (beds !== "all" ? 1 : 0) + (pmin > PMIN || pmax < PMAX ? 1 : 0) + (q ? 1 : 0),
+      filterBtnStyle: "display:inline-flex;align-items:center;gap:10px;min-height:46px;padding:0 16px;cursor:pointer;font-family:var(--font-sans);font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;transition:background .15s,color .15s,border-color .15s;border:1px solid " +
+        (this.state.fopen ? "var(--jade-700)" : "var(--hairline-strong)") + ";background:" + (this.state.fopen ? "var(--jade-700)" : "transparent") +
+        ";color:" + (this.state.fopen ? "var(--gold-050)" : "var(--jade-900)"),
+      filterCountStyle: "display:grid;place-items:center;min-width:20px;height:20px;padding:0 5px;font-size:.6875rem;letter-spacing:.06em;background:" +
+        (this.state.fopen ? "var(--gold-700)" : "var(--jade-700)") + ";color:var(--gold-050)",
+      q: this.state.q,
+      setQ: (e) => this.setState({ q: e.target.value }),
+      filtered: filter !== "all" || floor !== "all" || beds !== "all" || pmin > PMIN || pmax < PMAX || !!q,
+      resetFilters: () => this.setState({ filter: "all", floor: "all", beds: "all", pmin: PMIN, pmax: PMAX, q: "" }),
+      noResults: rows.length === 0,
+      units,
+      resultLine: rows.length === 0 ? t.resNone : t.resLine(rows.length, avail, t.money(from), floorSuffix),
+
+      trafficTabs: [
+        { value: "off", label: t.tOff },
+        { value: "peak", label: t.tPeak }
+      ],
+      traffic,
+      setTraffic: (v) => this.setState({ traffic: v }),
+      spots: this.SPOTS.map((p, i) => {
+        const on = i === si;
+        const rowStyle = "display:flex;align-items:center;gap:14px;width:100%;padding:13px 14px;cursor:pointer;text-align:left;border:1px solid " +
+          (on ? "var(--ink-900)" : "var(--hairline)") + ";background:" + (on ? "var(--ink-900)" : "var(--surface-raised)") +
+          ";transition:border-color .15s,background .15s";
+        return {
+          no: p.no, on,
+          pick: () => this.setState({ spot: i }),
+          name: t.spots[i].name,
+          distLine: t.distLbl + ": " + p.km,
+          timeLabel: t.mins(traffic === "peak" ? p.peak : p.off),
+          rowStyle,
+          noStyle: "flex:none;width:34px;height:34px;display:grid;place-items:center;font-family:var(--font-sans);font-size:.75rem;font-weight:600;letter-spacing:.08em;border:1px solid " +
+            (on ? "var(--gold-700)" : "var(--hairline-strong)") + ";color:" + (on ? "var(--gold-500)" : "var(--text-muted)"),
+          nameStyle: "font-family:var(--font-display);font-style:italic;font-size:1.08rem;line-height:1.25;color:" + (on ? "var(--gold-050)" : "var(--text-primary)") +
+            ";overflow:hidden;text-overflow:ellipsis;white-space:nowrap",
+          metaStyle: "font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:" + (on ? "rgba(250,243,234,.72)" : "var(--text-muted)"),
+          pillStyle: "flex:none;margin-left:auto;padding:7px 11px;font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;border:1px solid " +
+            (on ? "transparent" : "var(--hairline-strong)") + ";background:" + (on ? "var(--clay-500)" : "transparent") + ";color:" + (on ? "var(--gold-050)" : "var(--text-primary)")
+        };
+      }),
+      infoHead: t.infoWord + " #" + sp.no + " · " + t.infoTail,
+      infoPill: sp.km + " · " + t.mins(traffic === "peak" ? sp.peak : sp.off) + " " + (sp.walk ? t.walk : t.drive),
+      activeBlurb: t.spots[si].blurb,
+      activeAddr: sp.addr,
+      activeDirHref: "https://www.google.com/maps/dir/?api=1&origin=208+Nguyen+Huu+Canh,+Binh+Thanh,+Ho+Chi+Minh&destination=" + sp.ll + "&travelmode=" + (sp.walk ? "walking" : "driving"),
+      mapSrc: "https://www.google.com/maps?q=" + sp.ll + "&hl=" + (this.LANGS.find((l) => l.code === code) || { html: "vi" }).html + "&z=15&output=embed",
+      trafficNote: traffic === "peak" ? t.notePeak : t.noteOff,
+
+      amenity1: t.a1l,
+      amenity2: t.a2l,
+      amenity3: t.a3l,
+
+      channelLabel: channels[channel].label,
+      channelHref: channels[channel].href,
+
+      footerProps: { columns: t.foot }
+    };
+  }
+}
+</script>
+</body>
+</html>

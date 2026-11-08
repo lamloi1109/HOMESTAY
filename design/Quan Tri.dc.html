@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/gao-ji-house-design-system-87b48ff7-01f5-47f9-ac5e-b6ffc4933e75/tokens/fonts.css">
+<link rel="stylesheet" href="_ds/gao-ji-house-design-system-87b48ff7-01f5-47f9-ac5e-b6ffc4933e75/tokens/colors.css">
+<link rel="stylesheet" href="_ds/gao-ji-house-design-system-87b48ff7-01f5-47f9-ac5e-b6ffc4933e75/tokens/typography.css">
+<link rel="stylesheet" href="_ds/gao-ji-house-design-system-87b48ff7-01f5-47f9-ac5e-b6ffc4933e75/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/gao-ji-house-design-system-87b48ff7-01f5-47f9-ac5e-b6ffc4933e75/tokens/radius.css">
+<link rel="stylesheet" href="_ds/gao-ji-house-design-system-87b48ff7-01f5-47f9-ac5e-b6ffc4933e75/tokens/elevation.css">
+<link rel="stylesheet" href="_ds/gao-ji-house-design-system-87b48ff7-01f5-47f9-ac5e-b6ffc4933e75/tokens/motion.css">
+<link rel="stylesheet" href="_ds/gao-ji-house-design-system-87b48ff7-01f5-47f9-ac5e-b6ffc4933e75/tokens/base.css">
+<link rel="stylesheet" href="_ds/gao-ji-house-design-system-87b48ff7-01f5-47f9-ac5e-b6ffc4933e75/styles.css">
+<script src="_ds/gao-ji-house-design-system-87b48ff7-01f5-47f9-ac5e-b6ffc4933e75/_ds_bundle.js"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+  body { margin: 0; background: var(--canvas); color: var(--ink-900); font-family: var(--font-sans); }
+  a { color: var(--gold-900); }
+  a:hover { color: var(--clay-500); }
+  select, input { border-radius: 0; font-family: var(--font-sans); }
+</style>
+</helmet>
+
+<template id="__bundler_thumbnail">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400" data-bg-color="#F9F7F2">
+    <rect width="400" height="400" fill="#F9F7F2"></rect>
+    <rect x="0" y="0" width="104" height="400" fill="#1F3A2E"></rect>
+    <rect x="24" y="60" width="56" height="8" fill="#D4AF37"></rect>
+    <rect x="24" y="96" width="56" height="5" fill="#8FA79A"></rect>
+    <rect x="24" y="118" width="56" height="5" fill="#8FA79A"></rect>
+    <rect x="140" y="60" width="150" height="10" fill="#1A1A1A"></rect>
+    <rect x="140" y="120" width="220" height="2" fill="#E8E4DB"></rect>
+    <rect x="140" y="164" width="220" height="2" fill="#E8E4DB"></rect>
+    <rect x="140" y="208" width="220" height="2" fill="#E8E4DB"></rect>
+    <rect x="140" y="252" width="220" height="2" fill="#E8E4DB"></rect>
+    <rect x="140" y="296" width="220" height="2" fill="#E8E4DB"></rect>
+  </svg>
+</template>
+
+<div style="min-height:100vh;background:var(--canvas);display:flex;flex-wrap:wrap;align-items:stretch">
+
+<aside style="flex:0 0 auto;width:100%;max-width:none;background:var(--jade-900);display:flex;flex-direction:column;gap:0" ref="{{ sideRef }}">
+  <div style="padding:22px 20px;border-bottom:1px solid rgba(212,175,55,.22);display:grid;gap:8px;justify-items:start">
+    <x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.Logo" variant="dark" size="sm" show-tagline="{{ no }}" hint-size="120px,54px"></x-import>
+    <span style="font-family:var(--font-sans);font-size:.625rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:rgba(250,243,234,.55)">Bảng Điều Hành Nội Bộ</span>
+  </div>
+
+  <nav aria-label="Khu vực quản trị" style="display:grid;gap:1px;background:rgba(212,175,55,.16);border-bottom:1px solid rgba(212,175,55,.22)">
+    <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="4">
+      <button type="button" onClick="{{ n.go }}" aria-current="{{ n.cur }}" style="{{ n.style }}">
+        <x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.Icon" name="{{ n.icon }}" size="{{ n18 }}" color="currentColor" hint-size="18px,18px"></x-import>
+        <span style="flex:1;text-align:left">{{ n.label }}</span>
+        <sc-if value="{{ n.hasBadge }}" hint-placeholder-val="{{ no }}">
+          <span style="min-width:22px;padding:2px 6px;background:var(--gold-500);color:var(--jade-900);font-size:.6875rem;font-weight:600;letter-spacing:.06em;text-align:center">{{ n.badge }}</span>
+        </sc-if>
+      </button>
+    </sc-for>
+  </nav>
+
+  <div style="margin-top:auto;padding:18px 20px;display:grid;gap:12px;border-top:1px solid rgba(212,175,55,.22)">
+    <label style="display:grid;gap:6px">
+      <span style="font-family:var(--font-sans);font-size:.625rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:rgba(250,243,234,.55)">Đang Đăng Nhập</span>
+      <select value="{{ role }}" onChange="{{ onRole }}" style="width:100%;min-height:44px;padding:0 10px;background:var(--jade-700);border:1px solid rgba(212,175,55,.35);color:var(--gold-050);font-size:.875rem;box-sizing:border-box">
+        <option value="owner">Chủ Nhà · Owner</option>
+        <option value="ops">Quản Lý Vận Hành</option>
+      </select>
+    </label>
+    <p style="margin:0;font-family:var(--font-sans);font-size:.75rem;line-height:1.5;color:rgba(250,243,234,.5)">{{ roleNote }}</p>
+    <a href="Landing%20Page.dc.html" style="font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-500);text-decoration:none;min-height:44px;display:inline-flex;align-items:center;gap:8px">← Về Trang Khách</a>
+  </div>
+</aside>
+
+<main style="flex:1 1 520px;min-width:0;display:flex;flex-direction:column">
+  <header style="border-bottom:1px solid var(--hairline-strong);background:var(--canvas-warm);padding:clamp(20px,2.4vw,30px) clamp(20px,3vw,40px);display:flex;flex-wrap:wrap;gap:18px;align-items:flex-end;justify-content:space-between">
+    <div style="display:grid;gap:8px;min-width:0">
+      <span style="font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-900)">{{ viewEyebrow }}</span>
+      <h1 style="margin:0;font-family:var(--font-display);font-size:clamp(1.75rem,2.4vw,2.4rem);font-weight:400;line-height:1.1;letter-spacing:-.01em">{{ viewTitle }}</h1>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+      <span style="font-family:var(--font-sans);font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)">Thứ Tư · 12.08.2026</span>
+      <x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.Button" variant="primary" size="sm" icon="calendar-check" on-click="{{ newRequest }}" hint-size="180px,40px">Thêm Yêu Cầu Mới</x-import>
+    </div>
+  </header>
+
+  <div style="flex:1;padding:clamp(22px,2.6vw,36px) clamp(20px,3vw,40px) clamp(40px,5vw,64px);display:grid;gap:clamp(22px,2.4vw,32px);align-content:start">
+
+    <sc-if value="{{ isStatus }}" hint-placeholder-val="{{ yes }}">
+      <div style="display:grid;gap:clamp(22px,2.4vw,32px)">
+        <div style="display:grid;gap:1px;background:var(--surface-raised);border:1px solid var(--hairline-strong);grid-template-columns:repeat(auto-fit,minmax(min(100%,140px),1fr))">
+          <sc-for list="{{ stats }}" as="s" hint-placeholder-count="4">
+            <div style="background:var(--surface-raised);outline:1px solid var(--hairline-strong);padding:20px 22px;display:grid;gap:8px">
+              <span style="font-family:var(--font-display);font-size:2.25rem;line-height:1;color:{{ s.color }}">{{ s.value }}</span>
+              <span style="font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)">{{ s.label }}</span>
+            </div>
+          </sc-for>
+        </div>
+
+        <div style="border:1px solid var(--hairline-strong);background:var(--surface-raised)">
+          <div style="padding:18px 22px;border-bottom:1px solid var(--hairline);display:flex;flex-wrap:wrap;gap:12px;align-items:baseline;justify-content:space-between">
+            <h2 style="margin:0;font-family:var(--font-display);font-size:1.375rem;font-weight:400;line-height:1.2">Tình Trạng Thực Tế 5 Căn Hộ</h2>
+            <span style="font-family:var(--font-sans);font-size:.75rem;color:var(--text-muted)">Cập nhật thủ công · lần cuối 08:40 hôm nay</span>
+          </div>
+          <div style="display:grid;gap:1px;background:var(--hairline)">
+            <sc-for list="{{ board }}" as="b" hint-placeholder-count="5">
+              <div style="background:var(--surface-raised);padding:18px 22px;display:flex;flex-wrap:wrap;gap:18px;align-items:center">
+                <span aria-hidden="true" style="width:4px;align-self:stretch;min-height:44px;background:{{ b.color }};flex:none"></span>
+                <div style="flex:1 1 180px;min-width:0;display:grid;gap:4px">
+                  <span style="font-family:var(--font-sans);font-size:.8125rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-900)">{{ b.code }}</span>
+                  <span style="font-family:var(--font-sans);font-size:.8125rem;color:var(--text-muted)">{{ b.spec }}</span>
+                </div>
+                <div style="flex:1 1 200px;min-width:0;display:grid;gap:4px">
+                  <span style="font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:{{ b.color }}">{{ b.status }}</span>
+                  <span style="font-family:var(--font-sans);font-size:.9375rem;color:var(--text-body)">{{ b.who }}</span>
+                </div>
+                <div style="flex:1 1 160px;min-width:0;display:grid;gap:4px">
+                  <span style="font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)">Mốc Kế Tiếp</span>
+                  <span style="font-family:var(--font-sans);font-size:.9375rem;color:var(--text-body)">{{ b.next }}</span>
+                </div>
+                <span style="flex:1 1 200px;min-width:0;font-family:var(--font-italic);font-style:italic;font-size:.9375rem;line-height:1.45;color:{{ b.todoColor }}">{{ b.todo }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isInbox }}" hint-placeholder-val="{{ no }}">
+      <div style="display:grid;gap:clamp(18px,2vw,26px)">
+        <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+          <sc-for list="{{ stageTabs }}" as="t" hint-placeholder-count="5">
+            <button type="button" onClick="{{ t.go }}" aria-pressed="{{ t.on }}" style="{{ t.style }}">{{ t.label }}</button>
+          </sc-for>
+        </div>
+
+        <div style="display:flex;flex-wrap:wrap;gap:clamp(18px,2vw,26px);align-items:flex-start">
+          <div style="flex:1 1 220px;min-width:0;border:1px solid var(--hairline-strong);background:var(--surface-raised)">
+            <sc-if value="{{ hasReqs }}" hint-placeholder-val="{{ yes }}">
+              <div style="display:grid;gap:1px;background:var(--hairline)">
+                <sc-for list="{{ requests }}" as="r" hint-placeholder-count="6">
+                  <button type="button" onClick="{{ r.open }}" aria-pressed="{{ r.on }}" style="{{ r.rowStyle }}">
+                    <span style="flex:0 0 auto;padding:4px 8px;background:{{ r.chanBg }};color:{{ r.chanFg }};font-family:var(--font-sans);font-size:.625rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase">{{ r.channel }}</span>
+                    <span style="flex:1 1 160px;min-width:0;display:grid;gap:3px;text-align:left">
+                      <span style="font-family:var(--font-display);font-size:1.125rem;line-height:1.25;color:var(--ink-900)">{{ r.name }}</span>
+                      <span style="font-family:var(--font-sans);font-size:.8125rem;color:var(--text-muted)">{{ r.want }}</span>
+                    </span>
+                    <span style="flex:0 1 120px;font-family:var(--font-sans);font-size:.8125rem;color:var(--text-body);text-align:left">{{ r.checkin }}</span>
+                    <span style="flex:0 0 auto;font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:{{ r.stageColor }}">{{ r.stage }}</span>
+                  </button>
+                </sc-for>
+              </div>
+            </sc-if>
+            <sc-if value="{{ noReqs }}" hint-placeholder-val="{{ no }}">
+              <p style="margin:0;padding:36px 24px;font-family:var(--font-italic);font-style:italic;font-size:1rem;color:var(--text-muted)">Không có yêu cầu nào ở trạng thái này.</p>
+            </sc-if>
+          </div>
+
+          <aside style="flex:0 1 300px;min-width:min(100%,280px);border:1px solid var(--hairline-strong);background:var(--canvas-warm);padding:22px;display:grid;gap:16px;align-self:flex-start">
+            <sc-if value="{{ hasSel }}" hint-placeholder-val="{{ yes }}">
+              <div style="display:grid;gap:16px">
+                <div style="display:grid;gap:6px">
+                  <span style="font-family:var(--font-sans);font-size:.625rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-900)">{{ selChannel }} · {{ selAgo }}</span>
+                  <span style="font-family:var(--font-display);font-size:1.5rem;line-height:1.2">{{ selName }}</span>
+                  <span style="font-family:var(--font-sans);font-size:.9375rem;color:var(--text-body)">{{ selContact }}</span>
+                </div>
+                <hr style="height:1px;border:0;background:var(--hairline);margin:0">
+                <dl style="margin:0;display:grid;gap:12px">
+                  <div style="display:flex;justify-content:space-between;gap:12px">
+                    <dt style="font-family:var(--font-sans);font-size:.75rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted)">Căn Quan Tâm</dt>
+                    <dd style="margin:0;font-family:var(--font-sans);font-size:.9375rem;color:var(--ink-900);text-align:right">{{ selUnit }}</dd>
+                  </div>
+                  <div style="display:flex;justify-content:space-between;gap:12px">
+                    <dt style="font-family:var(--font-sans);font-size:.75rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted)">Ngày Nhận</dt>
+                    <dd style="margin:0;font-family:var(--font-sans);font-size:.9375rem;color:var(--ink-900);text-align:right">{{ selCheckin }}</dd>
+                  </div>
+                  <div style="display:flex;justify-content:space-between;gap:12px">
+                    <dt style="font-family:var(--font-sans);font-size:.75rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted)">Thời Hạn</dt>
+                    <dd style="margin:0;font-family:var(--font-sans);font-size:.9375rem;color:var(--ink-900);text-align:right">{{ selTerm }}</dd>
+                  </div>
+                </dl>
+                <p style="margin:0;padding:14px;background:var(--surface-raised);border:1px solid var(--hairline);font-family:var(--font-italic);font-style:italic;font-size:.9375rem;line-height:1.55;color:var(--text-body)">{{ selNote }}</p>
+                <label style="display:grid;gap:6px">
+                  <span style="font-family:var(--font-sans);font-size:.625rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--text-muted)">Chuyển Trạng Thái</span>
+                  <select value="{{ selStage }}" onChange="{{ onStage }}" style="width:100%;min-height:44px;padding:0 10px;background:var(--surface-raised);border:1px solid var(--hairline-strong);color:var(--text-primary);font-size:.9375rem;box-sizing:border-box">
+                    <option value="new">Mới</option>
+                    <option value="talking">Đang Tư Vấn</option>
+                    <option value="hold">Giữ Chỗ</option>
+                    <option value="won">Đã Chốt</option>
+                    <option value="lost">Không Thành</option>
+                  </select>
+                </label>
+                <x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.Button" variant="gold" full="{{ yes }}" icon="phone" as="a" href="{{ selZalo }}" target="_blank" rel="noreferrer" hint-size="100%,44px">Trả Lời Qua Zalo</x-import>
+              </div>
+            </sc-if>
+            <sc-if value="{{ noSel }}" hint-placeholder-val="{{ no }}">
+              <p style="margin:0;font-family:var(--font-italic);font-style:italic;font-size:1rem;line-height:1.55;color:var(--text-muted)">Chọn một yêu cầu bên trái để xem chi tiết và chuyển trạng thái.</p>
+            </sc-if>
+          </aside>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isUnits }}" hint-placeholder-val="{{ no }}">
+      <div style="border:1px solid var(--hairline-strong);background:var(--surface-raised)">
+        <div style="padding:18px 22px;border-bottom:1px solid var(--hairline);display:flex;flex-wrap:wrap;gap:12px;align-items:baseline;justify-content:space-between">
+          <h2 style="margin:0;font-family:var(--font-display);font-size:1.375rem;font-weight:400;line-height:1.2">5 Căn Hộ Đang Vận Hành</h2>
+          <span style="font-family:var(--font-sans);font-size:.75rem;color:var(--text-muted)">{{ editHint }}</span>
+        </div>
+        <div style="display:grid;gap:1px;background:var(--hairline)">
+          <sc-for list="{{ unitRows }}" as="u" hint-placeholder-count="5">
+            <div style="background:var(--surface-raised);padding:18px 22px;display:flex;flex-wrap:wrap;gap:18px;align-items:center">
+              <div style="flex:1 1 190px;min-width:0;display:grid;gap:4px">
+                <span style="font-family:var(--font-sans);font-size:.8125rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-900)">{{ u.code }}</span>
+                <span style="font-family:var(--font-sans);font-size:.8125rem;color:var(--text-muted)">{{ u.spec }}</span>
+              </div>
+              <label style="flex:0 1 190px;min-width:150px;display:grid;gap:6px">
+                <span style="font-family:var(--font-sans);font-size:.625rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)">Giá Thuê Tháng</span>
+                <span style="display:flex;align-items:center;gap:8px">
+                  <input type="number" step="1" value="{{ u.priceM }}" onChange="{{ u.onPrice }}" disabled="{{ u.locked }}" style="{{ u.priceStyle }}">
+                  <span style="font-family:var(--font-sans);font-size:.8125rem;color:var(--text-muted);white-space:nowrap">triệu</span>
+                </span>
+              </label>
+              <label style="flex:0 1 190px;min-width:160px;display:grid;gap:6px">
+                <span style="font-family:var(--font-sans);font-size:.625rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)">Trạng Thái</span>
+                <select value="{{ u.status }}" onChange="{{ u.onStatus }}" style="width:100%;min-height:44px;padding:0 10px;background:var(--surface-raised);border:1px solid var(--hairline-strong);color:var(--text-primary);font-size:.9375rem;box-sizing:border-box">
+                  <option value="available">Còn Trống</option>
+                  <option value="held">Giữ Chỗ</option>
+                  <option value="occupied">Đang Cho Thuê</option>
+                  <option value="maintenance">Bảo Trì</option>
+                </select>
+              </label>
+              <div style="flex:0 1 120px;min-width:100px;display:grid;gap:4px">
+                <span style="font-family:var(--font-sans);font-size:.625rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)">Ảnh</span>
+                <span style="font-family:var(--font-sans);font-size:.9375rem;color:var(--text-body)">{{ u.photos }} tấm</span>
+              </div>
+              <a href="{{ u.href }}" target="_blank" rel="noreferrer" style="flex:0 0 auto;min-height:44px;display:inline-flex;align-items:center;padding:0 14px;border:1px solid var(--hairline-strong);font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-primary);text-decoration:none">Xem Trang Khách</a>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isLeases }}" hint-placeholder-val="{{ no }}">
+      <div style="display:grid;gap:clamp(18px,2vw,26px)">
+        <sc-if value="{{ hasAlerts }}" hint-placeholder-val="{{ yes }}">
+          <div style="border:1px solid var(--clay-500);background:var(--canvas-warm);padding:18px 22px;display:grid;gap:10px">
+            <span style="display:inline-flex;align-items:center;gap:10px;font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--clay-500)">
+              <x-import component-from-global-scope="GaoJiHouseDesignSystem_87b48f.Icon" name="shield-check" size="{{ n18 }}" color="var(--clay-500)" hint-size="18px,18px"></x-import>
+              <span>Cần Xử Lý Trong 30 Ngày</span>
+            </span>
+            <sc-for list="{{ alerts }}" as="a" hint-placeholder-count="2">
+              <span style="font-family:var(--font-sans);font-size:.9375rem;line-height:1.55;color:var(--text-body)">{{ a.text }}</span>
+            </sc-for>
+          </div>
+        </sc-if>
+
+        <div style="border:1px solid var(--hairline-strong);background:var(--surface-raised)">
+          <div style="padding:18px 22px;border-bottom:1px solid var(--hairline)">
+            <h2 style="margin:0;font-family:var(--font-display);font-size:1.375rem;font-weight:400;line-height:1.2">Hợp Đồng &amp; Khách Thuê</h2>
+          </div>
+          <div style="display:grid;gap:1px;background:var(--hairline)">
+            <sc-for list="{{ leases }}" as="l" hint-placeholder-count="4">
+              <div style="background:var(--surface-raised);padding:18px 22px;display:flex;flex-wrap:wrap;gap:18px;align-items:center">
+                <div style="flex:1 1 200px;min-width:0;display:grid;gap:4px">
+                  <span style="font-family:var(--font-display);font-size:1.125rem;line-height:1.25;color:var(--ink-900)">{{ l.name }}</span>
+                  <span style="font-family:var(--font-sans);font-size:.8125rem;color:var(--text-muted)">{{ l.unit }} · {{ l.nationality }}</span>
+                </div>
+                <div style="flex:1 1 190px;min-width:0;display:grid;gap:4px">
+                  <span style="font-family:var(--font-sans);font-size:.625rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)">Hạn Hợp Đồng</span>
+                  <span style="font-family:var(--font-sans);font-size:.9375rem;color:{{ l.dueColor }}">{{ l.due }}</span>
+                </div>
+                <div style="flex:0 1 160px;min-width:0;display:grid;gap:4px">
+                  <span style="font-family:var(--font-sans);font-size:.625rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)">Tạm Trú</span>
+                  <span style="font-family:var(--font-sans);font-size:.9375rem;color:{{ l.resColor }}">{{ l.residence }}</span>
+                </div>
+                <div style="flex:1 1 180px;min-width:0;display:grid;gap:4px">
+                  <span style="font-family:var(--font-sans);font-size:.625rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)">Giấy Tờ</span>
+                  <span style="font-family:var(--font-sans);font-size:.9375rem;color:{{ l.docColor }}">{{ l.docs }}</span>
+                </div>
+                <button type="button" onClick="{{ l.remind }}" style="flex:0 0 auto;min-height:44px;padding:0 14px;background:transparent;border:1px solid var(--gold-700);color:var(--gold-900);font-family:var(--font-sans);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;cursor:pointer">{{ l.remindLabel }}</button>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+  </div>
+</main>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:900},&quot;startView&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Tình Trạng Căn Hộ&quot;,&quot;Hộp Yêu Cầu&quot;,&quot;Quản Lý Căn Hộ&quot;,&quot;Hợp Đồng &amp; Khách&quot;],&quot;default&quot;:&quot;Tình Trạng Căn Hộ&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Màn hình&quot;},&quot;startRole&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Chủ Nhà · Owner&quot;,&quot;Quản Lý Vận Hành&quot;],&quot;default&quot;:&quot;Chủ Nhà · Owner&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Phân quyền&quot;}}">
+class Component extends DCLogic {
+  state = { view: "status", role: "owner", stage: "all", sel: 1, stages: {}, prices: {}, statuses: {}, reminded: {} };
+  sideRef = React.createRef();
+
+  UNITS = [
+    { code: "L1.29.08", spec: "2PN · 92 m² · Landmark 1 · Tầng 29", price: 33, status: "occupied", photos: 24 },
+    { code: "P1.27.10", spec: "1PN · 54 m² · Park 1 · Tầng 27", price: 24, status: "available", photos: 18 },
+    { code: "L81.07.12", spec: "1PN · 58 m² · Landmark 81 · Tầng 07", price: 28, status: "occupied", photos: 21 },
+    { code: "P3.42.12", spec: "2PN · 120 m² · Park 3 · Tầng 42", price: 46, status: "held", photos: 26 },
+    { code: "L3.44.09", spec: "3PN Duplex · 210 m² · Landmark 3 · Tầng 44", price: 110, status: "occupied", photos: 32 }
+  ];
+
+  BOARD = [
+    { code: "L1.29.08", spec: "2PN · 92 m²", status: "Đang cho thuê", who: "Nguyễn Minh Anh", next: "Hết hạn 30.11.2026", todo: "Không có việc cần làm", tone: "ok" },
+    { code: "P1.27.10", spec: "1PN · 54 m²", status: "Còn trống", who: "Sẵn sàng nhận khách", next: "Trống từ hôm nay", todo: "3 yêu cầu đang chờ trả lời", tone: "free" },
+    { code: "L81.07.12", spec: "1PN · 58 m²", status: "Đang cho thuê", who: "Chen Wei", next: "Hết hạn 05.09.2026", todo: "Còn 24 ngày — hỏi gia hạn tuần này", tone: "warn" },
+    { code: "P3.42.12", spec: "2PN · 120 m²", status: "Giữ chỗ", who: "Yamamoto Kenji", next: "Giữ đến 15.08.2026", todo: "Còn 3 ngày — chưa nhận cọc", tone: "warn" },
+    { code: "L3.44.09", spec: "3PN Duplex · 210 m²", status: "Đang cho thuê", who: "James Whitfield", next: "Hết hạn 31.03.2027", todo: "Không có việc cần làm", tone: "ok" }
+  ];
+
+  REQS = [
+    { id: 1, name: "Lê Thu Hà", channel: "Zalo", contact: "0938 214 770", unit: "P1.27.10", want: "1PN · Park 1", checkin: "20.08.2026", term: "6 tháng", stage: "new", ago: "2 giờ trước", note: "Chị Hà làm ở Quận 1, hỏi có chỗ để xe máy và có cho nuôi mèo không." },
+    { id: 2, name: "Chen Wei", channel: "Gọi điện", contact: "0908 662 145", unit: "L81.07.12", want: "Gia hạn hợp đồng", checkin: "06.09.2026", term: "12 tháng", stage: "talking", ago: "5 giờ trước", note: "Khách đang thuê, muốn gia hạn thêm 12 tháng nhưng đề nghị giữ nguyên giá cũ." },
+    { id: 3, name: "Sarah Kim", channel: "Form web", contact: "sarah.kim@nordicgroup.sg", unit: "Chưa xác định", want: "2PN bất kỳ", checkin: "01.09.2026", term: "3 tháng", stage: "new", ago: "hôm qua", note: "Công ty đặt cho chuyên gia sang làm dự án 3 tháng, cần hoá đơn VAT." },
+    { id: 4, name: "Phạm Đức Long", channel: "Email", contact: "long.pham@vietcap.vn", unit: "L3.44.09", want: "Penthouse Duplex", checkin: "15.10.2026", term: "12 tháng", stage: "talking", ago: "2 ngày trước", note: "Đã xem ảnh, muốn hẹn đi xem thực tế cuối tuần này. Hỏi thêm về chỗ đậu 2 ô tô." },
+    { id: 5, name: "Yamamoto Kenji", channel: "Zalo", contact: "0912 448 903", unit: "P3.42.12", want: "2PN · Park 3", checkin: "16.08.2026", term: "6 tháng", stage: "hold", ago: "3 ngày trước", note: "Đã giữ chỗ đến 15.08. Hẹn chuyển cọc nhưng chưa thấy — cần nhắc hôm nay." },
+    { id: 6, name: "Ngô Thanh Vân", channel: "Form web", contact: "0977 130 288", unit: "P1.27.10", want: "1PN · ngắn ngày", checkin: "25.08.2026", term: "3 tuần", stage: "new", ago: "3 ngày trước", note: "Ở ngắn ngày trong lúc sửa nhà. Hỏi giá theo tuần." },
+    { id: 7, name: "David Chen", channel: "Zalo", contact: "0903 771 620", unit: "L1.29.08", want: "2PN · view sông", checkin: "01.12.2026", term: "12 tháng", stage: "talking", ago: "4 ngày trước", note: "Chờ căn L1.29.08 hết hạn 30.11. Đã báo giá, khách đang cân nhắc." },
+    { id: 8, name: "Hoàng Yến", channel: "Gọi điện", contact: "0918 505 412", unit: "P1.27.10", want: "1PN · 1 tháng", checkin: "10.08.2026", term: "1 tháng", stage: "won", ago: "1 tuần trước", note: "Đã ký và nhận phòng. Hoá đơn tháng đầu đã thanh toán." }
+  ];
+
+  LEASES = [
+    { name: "Nguyễn Minh Anh", unit: "L1.29.08", nationality: "Việt Nam", due: "30.11.2026 · còn 110 ngày", days: 110, residence: "Đã đăng ký", resOk: true, docs: "CCCD · đầy đủ", docOk: true },
+    { name: "Chen Wei", unit: "L81.07.12", nationality: "Trung Quốc", due: "05.09.2026 · còn 24 ngày", days: 24, residence: "Đã đăng ký", resOk: true, docs: "Visa hết hạn 20.09.2026", docOk: false },
+    { name: "James Whitfield", unit: "L3.44.09", nationality: "Anh", due: "31.03.2027 · còn 231 ngày", days: 231, residence: "Đã đăng ký", resOk: true, docs: "Hộ chiếu · TRC 2028", docOk: true },
+    { name: "Yamamoto Kenji", unit: "P3.42.12", nationality: "Nhật Bản", due: "Giữ chỗ đến 15.08.2026", days: 3, residence: "Chưa đăng ký", resOk: false, docs: "Chưa nộp hộ chiếu", docOk: false }
+  ];
+
+  STAGES = {
+    new: { label: "Mới", color: "var(--clay-500)" },
+    talking: { label: "Đang Tư Vấn", color: "var(--gold-900)" },
+    hold: { label: "Giữ Chỗ", color: "var(--jade-700)" },
+    won: { label: "Đã Chốt", color: "var(--jade-900)" },
+    lost: { label: "Không Thành", color: "var(--text-muted)" }
+  };
+
+  CHANNELS = {
+    "Zalo": { bg: "#0068FF", fg: "#FFFFFF" },
+    "Gọi điện": { bg: "var(--jade-700)", fg: "var(--gold-050)" },
+    "Form web": { bg: "var(--gold-500)", fg: "var(--jade-900)" },
+    "Email": { bg: "var(--clay-500)", fg: "#FFFFFF" }
+  };
+
+  VIEWS = {
+    status: { eyebrow: "Vận Hành Hằng Ngày", title: "Tình Trạng Căn Hộ", icon: "door-open", label: "Tình Trạng Căn Hộ" },
+    inbox: { eyebrow: "Guest Relations", title: "Hộp Yêu Cầu Từ Khách", icon: "users", label: "Hộp Yêu Cầu" },
+    units: { eyebrow: "Danh Mục Cho Thuê", title: "Quản Lý Căn Hộ", icon: "bed-double", label: "Quản Lý Căn Hộ" },
+    leases: { eyebrow: "Pháp Lý & Cư Trú", title: "Hợp Đồng & Khách Thuê", icon: "shield-check", label: "Hợp Đồng & Khách" }
+  };
+
+  componentDidMount() {
+    this.mq = window.matchMedia("(min-width: 900px)");
+    this.onMq = () => {
+      const el = this.sideRef.current;
+      if (!el) return;
+      const wide = this.mq.matches;
+      el.style.width = wide ? "260px" : "100%";
+      el.style.flex = wide ? "0 0 260px" : "0 0 auto";
+      el.style.minHeight = wide ? "100vh" : "0";
+      el.style.position = wide ? "sticky" : "static";
+      el.style.top = wide ? "0" : "auto";
+      el.style.alignSelf = wide ? "flex-start" : "auto";
+    };
+    this.onMq();
+    this.mq.addEventListener("change", this.onMq);
+
+    const viewMap = { "Tình Trạng Căn Hộ": "status", "Hộp Yêu Cầu": "inbox", "Quản Lý Căn Hộ": "units", "Hợp Đồng & Khách": "leases" };
+    const init = {};
+    const vk = viewMap[this.props.startView];
+    if (vk) init.view = vk;
+    if (this.props.startRole === "Quản Lý Vận Hành") init.role = "ops";
+    if (Object.keys(init).length) this.setState(init);
+  }
+
+  componentDidUpdate() { if (this.onMq) this.onMq(); }
+
+  componentWillUnmount() { if (this.mq) this.mq.removeEventListener("change", this.onMq); }
+
+  stageOf(r) { return this.state.stages[r.id] || r.stage; }
+  priceOf(u) { const v = this.state.prices[u.code]; return v === undefined ? u.price : v; }
+  statusOf(u) { return this.state.statuses[u.code] || u.status; }
+
+  toneColor(t) {
+    if (t === "warn") return "var(--clay-500)";
+    if (t === "free") return "var(--gold-900)";
+    return "var(--jade-700)";
+  }
+
+  renderVals() {
+    const s = this.state;
+    const v = this.VIEWS[s.view] || this.VIEWS.status;
+    const isOwner = s.role === "owner";
+
+    const newCount = this.REQS.filter((r) => this.stageOf(r) === "new").length;
+    const navItems = Object.keys(this.VIEWS).map((k) => {
+      const on = s.view === k;
+      return {
+        label: this.VIEWS[k].label,
+        icon: this.VIEWS[k].icon,
+        cur: on ? "page" : "false",
+        hasBadge: k === "inbox" && newCount > 0,
+        badge: String(newCount),
+        go: () => this.setState({ view: k }),
+        style: "display:flex;align-items:center;gap:12px;width:100%;min-height:52px;padding:0 20px;border:0;cursor:pointer;font-family:var(--font-sans);font-size:.8125rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;transition:background .15s,color .15s;"
+          + (on ? "background:var(--jade-700);color:var(--gold-050);" : "background:var(--jade-900);color:rgba(250,243,234,.62);")
+      };
+    });
+
+    const stats = [
+      { value: String(this.UNITS.filter((u) => this.statusOf(u) === "occupied").length) + " / 5", label: "Đang Cho Thuê", color: "var(--jade-700)" },
+      { value: String(this.UNITS.filter((u) => this.statusOf(u) === "available").length), label: "Còn Trống", color: "var(--gold-900)" },
+      { value: String(newCount), label: "Yêu Cầu Chưa Trả Lời", color: "var(--clay-500)" },
+      { value: "2", label: "Việc Gấp Trong 30 Ngày", color: "var(--clay-500)" }
+    ];
+
+    const board = this.BOARD.map((b) => ({
+      code: b.code, spec: b.spec, status: b.status, who: b.who, next: b.next, todo: b.todo,
+      color: this.toneColor(b.tone),
+      todoColor: b.tone === "warn" ? "var(--clay-500)" : "var(--text-muted)"
+    }));
+
+    const tabDefs = [["all", "Tất Cả"], ["new", "Mới"], ["talking", "Đang Tư Vấn"], ["hold", "Giữ Chỗ"], ["won", "Đã Chốt"]];
+    const stageTabs = tabDefs.map((t) => {
+      const on = s.stage === t[0];
+      const n = t[0] === "all" ? this.REQS.length : this.REQS.filter((r) => this.stageOf(r) === t[0]).length;
+      return {
+        label: t[1] + " · " + n,
+        on,
+        go: () => {
+          const first = this.REQS.find((r) => t[0] === "all" || this.stageOf(r) === t[0]);
+          this.setState({ stage: t[0], sel: first ? first.id : 0 });
+        },
+        style: "min-height:44px;padding:0 16px;font-family:var(--font-sans);font-size:.75rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:background .15s,color .15s;"
+          + (on ? "background:var(--jade-700);border:1px solid var(--jade-700);color:var(--gold-050);"
+                : "background:transparent;border:1px solid var(--hairline-strong);color:var(--text-primary);")
+      };
+    });
+
+    const rows = this.REQS.filter((r) => s.stage === "all" || this.stageOf(r) === s.stage);
+    const requests = rows.map((r) => {
+      const st = this.STAGES[this.stageOf(r)] || this.STAGES.new;
+      const ch = this.CHANNELS[r.channel] || this.CHANNELS.Email;
+      const on = s.sel === r.id;
+      return {
+        id: r.id, name: r.name, want: r.want, checkin: r.checkin,
+        channel: r.channel, chanBg: ch.bg, chanFg: ch.fg,
+        stage: st.label, stageColor: st.color,
+        on,
+        open: () => this.setState({ sel: r.id }),
+        rowStyle: "display:flex;flex-wrap:wrap;align-items:center;gap:14px;width:100%;padding:16px 20px;border:0;cursor:pointer;text-align:left;transition:background .15s;"
+          + (on ? "background:var(--canvas-warm);" : "background:var(--surface-raised);")
+      };
+    });
+
+    const sel = this.REQS.find((r) => r.id === s.sel);
+    const selStage = sel ? this.stageOf(sel) : "new";
+
+    const unitRows = this.UNITS.map((u) => {
+      const locked = !isOwner;
+      return {
+        code: u.code, spec: u.spec, photos: u.photos,
+        priceM: this.priceOf(u),
+        status: this.statusOf(u),
+        locked,
+        priceStyle: "width:100%;min-height:44px;padding:0 10px;border:1px solid var(--hairline-strong);font-size:.9375rem;box-sizing:border-box;"
+          + (locked ? "background:var(--surface-sunken);color:var(--text-muted);cursor:not-allowed;" : "background:var(--surface-raised);color:var(--ink-900);"),
+        onPrice: (e) => {
+          const val = parseFloat(e.target.value);
+          this.setState((p) => ({ prices: Object.assign({}, p.prices, { [u.code]: isNaN(val) ? u.price : val }) }));
+        },
+        onStatus: (e) => {
+          const val = e.target.value;
+          this.setState((p) => ({ statuses: Object.assign({}, p.statuses, { [u.code]: val }) }));
+        },
+        href: "Chi%20Tiet%20Can%20Ho.dc.html?unit=" + encodeURIComponent(u.code)
+      };
+    });
+
+    const leases = this.LEASES.map((l, i) => ({
+      name: l.name, unit: l.unit, nationality: l.nationality, due: l.due,
+      dueColor: l.days <= 30 ? "var(--clay-500)" : "var(--text-body)",
+      residence: l.residence, resColor: l.resOk ? "var(--jade-700)" : "var(--clay-500)",
+      docs: l.docs, docColor: l.docOk ? "var(--text-body)" : "var(--clay-500)",
+      remindLabel: s.reminded[i] ? "Đã Nhắc" : "Gửi Nhắc",
+      remind: () => this.setState((p) => ({ reminded: Object.assign({}, p.reminded, { [i]: true }) }))
+    }));
+
+    const alerts = [
+      { text: "Chen Wei · L81.07.12 — hợp đồng hết hạn 05.09.2026 (còn 24 ngày) và visa hết hạn 20.09.2026." },
+      { text: "Yamamoto Kenji · P3.42.12 — giữ chỗ hết hạn 15.08.2026 (còn 3 ngày), chưa nhận cọc và chưa nộp hộ chiếu." }
+    ];
+
+    return {
+      yes: true, no: false, n18: 18,
+      sideRef: this.sideRef,
+
+      navItems,
+      role: s.role,
+      onRole: (e) => this.setState({ role: e.target.value }),
+      roleNote: isOwner ? "Toàn quyền: sửa giá thuê, xem hợp đồng và giấy tờ khách." : "Chỉ vận hành: đổi trạng thái căn và trả lời khách. Giá thuê khoá.",
+
+      viewEyebrow: v.eyebrow,
+      viewTitle: v.title,
+      newRequest: () => {
+        const first = this.REQS.find((r) => this.stageOf(r) === "new");
+        this.setState({ view: "inbox", stage: "new", sel: first ? first.id : 0 });
+      },
+
+      isStatus: s.view === "status",
+      isInbox: s.view === "inbox",
+      isUnits: s.view === "units",
+      isLeases: s.view === "leases",
+
+      stats, board,
+
+      stageTabs, requests,
+      hasReqs: requests.length > 0,
+      noReqs: requests.length === 0,
+      hasSel: !!sel,
+      noSel: !sel,
+      selName: sel ? sel.name : "",
+      selChannel: sel ? sel.channel : "",
+      selAgo: sel ? sel.ago : "",
+      selContact: sel ? sel.contact : "",
+      selUnit: sel ? sel.unit : "",
+      selCheckin: sel ? sel.checkin : "",
+      selTerm: sel ? sel.term : "",
+      selNote: sel ? sel.note : "",
+      selStage,
+      selZalo: sel ? "https://zalo.me/" + String(sel.contact).replace(/[^0-9]/g, "") : "https://zalo.me/0889237833",
+      onStage: (e) => {
+        const val = e.target.value;
+        if (!sel) return;
+        this.setState((p) => ({ stages: Object.assign({}, p.stages, { [sel.id]: val }) }));
+      },
+
+      unitRows,
+      editHint: isOwner ? "Sửa trực tiếp giá và trạng thái · lưu tự động" : "Quản lý vận hành chỉ đổi được trạng thái",
+
+      leases, alerts, hasAlerts: alerts.length > 0
+    };
+  }
+}
+</script>
+</body>
+</html>

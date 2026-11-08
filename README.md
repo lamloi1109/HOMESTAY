@@ -1,7 +1,7 @@
 # Homestay Booking Platform (MVP)
 
 Nền tảng đặt phòng trực tiếp + quản lý vận hành cho homestay Việt Nam.
-Scope/phase: `docs/KE_HOACH_PHAT_TRIEN_HOMESTAY.md` (nguồn sự thật — D-004).
+Scope/phase & ngữ cảnh: `PROJECT_CONTEXT.md`, quy trình: `WORKFLOW_VIBECODING_2026.md`.
 Kiến trúc: FastAPI backend + Next.js frontend + PostgreSQL (D-005).
 
 ```
@@ -144,6 +144,6 @@ compose) vì race-condition test cần đúng semantics `FOR UPDATE`:
 
 Cron expire: gọi `POST /api/v1/internal/expire-bookings` mỗi phút (idempotent).
 
-## Cấu trúc coordination
+## Cấu trúc dự án & Workflow
 
-Đọc `.coordination/AGENT_ONBOARDING.md` trước khi làm việc trong repo này.
+Đọc `PROJECT_CONTEXT.md` và `WORKFLOW_VIBECODING_2026.md` trước khi làm việc trong repo này.

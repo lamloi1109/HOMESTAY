@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import React from "react";
 
 export interface LogoProps {
@@ -21,7 +22,9 @@ export function Logo({
 }: LogoProps) {
   const isDark = variant === "dark";
 
-  // Select optimal source based on variant (light/dark) and tagline presence
+  // Select optimal source based on variant (light/dark) and tagline presence.
+  // All assets are 100% transparent RGBA with preserved vertical clearance
+  // so brand text and descenders are never clipped.
   const src = isDark
     ? showTagline
       ? "/assets/logo-dark.png"
@@ -44,27 +47,32 @@ export function Logo({
       ? 60
       : 52;
 
+  // Aspect ratio: compact is 640x360 (16/9), full is 680x400 (17/10)
+  const aspectRatio = showTagline ? 680 / 400 : 640 / 360;
+  const width = Math.round(height * aspectRatio);
+
   return (
     <div
       onClick={onClick}
-      className={`inline-flex flex-col items-center justify-center select-none ${
+      className={`inline-flex flex-col items-center justify-center select-none bg-transparent ${
         onClick ? "cursor-pointer" : "cursor-default"
       } ${className}`.trim()}
       style={style}
     >
-      <img
+      <Image
         src={src}
         alt="Gao Ji House · Serviced Apartment"
+        width={width}
         height={height}
+        priority
         style={{
           height: `${height}px`,
           width: "auto",
           maxWidth: "100%",
           display: "block",
           objectFit: "contain",
+          background: "transparent",
         }}
-        loading="eager"
-        decoding="async"
       />
     </div>
   );

@@ -23,6 +23,7 @@
   "images": {
     "binding": "IMAGES"
   },
+  // Cloudflare Worker Previews configuration block
   "previews": {
     "images": {
       "binding": "IMAGES"

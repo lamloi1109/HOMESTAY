@@ -142,4 +142,3 @@ export async function availableRooms(pool: Pool, roomTypeId: string, from: strin
   if (from >= to) return [];
   return (await pool.query(`SELECT r.id,r.room_type_id,r.code,r.status FROM rooms r WHERE r.room_type_id=$1 AND r.status='active' AND NOT EXISTS (SELECT 1 FROM booking_nights bn JOIN bookings b ON b.id=bn.booking_id WHERE bn.room_id=r.id AND bn.night >= $2::date AND bn.night < $3::date AND ${holdingBooking}) ORDER BY r.code`, [roomTypeId, from, to])).rows;
 }
-

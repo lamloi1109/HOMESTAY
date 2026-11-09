@@ -1,149 +1,138 @@
-# Homestay Booking Platform (MVP)
+# Homestay Booking Platform
 
-Nền tảng đặt phòng trực tiếp + quản lý vận hành cho homestay Việt Nam.
-Scope/phase & ngữ cảnh: `PROJECT_CONTEXT.md`, quy trình: `WORKFLOW_VIBECODING_2026.md`.
-Kiến trúc: FastAPI backend + Next.js frontend + PostgreSQL (D-005).
+Nền tảng đặt phòng trực tiếp và quản lý vận hành homestay Việt Nam.
 
-```
-backend/    FastAPI + SQLAlchemy 2.0 async + Alembic — booking engine, RBAC, auth
-frontend/   Next.js App Router (TypeScript, Tailwind) — SSR/SSG cho SEO
-docker-compose.yml   PostgreSQL 16 (dev + test database)
-```
+- `backend/`: Node.js 24, Express 5, strict TypeScript, PostgreSQL (`pg`).
+- `frontend/`: Next.js App Router, TypeScript, Tailwind.
+- `docker-compose.yml`: PostgreSQL 16 với database dev và test riêng.
 
-## Chạy dev
+## Chạy local
 
-Yêu cầu: Docker Desktop, Python 3.12+, Node 20+.
+Cần Docker Desktop và Node.js **24.22.0** (xem `backend/.node-version`).
 
 ```bash
-# 1. Database
 docker compose up -d db
-
-# 2. Backend (http://127.0.0.1:8000, docs tại /docs)
 cd backend
-python -m venv .venv
-.venv/Scripts/pip install -r requirements-dev.txt   # Windows
-.venv/Scripts/python -m alembic upgrade head
-.venv/Scripts/python -m app.seed --demo             # roles + amenities + data demo
-.venv/Scripts/python -m uvicorn app.main:app --reload
-
-# 3. Frontend (http://localhost:3000)
-cd frontend
-npm install
+npm ci
+# Sao chép .env.example thành .env, chỉnh cấu hình nếu cần.
+npm run db:migrate
+npm run db:seed -- --demo
 npm run dev
 ```
 
-Tài khoản demo: `owner@example.com` / `demo12345`.
-
-> Lưu ý Windows: dùng `127.0.0.1` thay vì `localhost` khi trỏ Postgres —
-> `localhost` có thể resolve sang `::1` (IPv6) và treo với docker port-mapping.
-
-## Lưu ảnh trên Cloudflare R2
-
-Backend mặc định tiếp tục dùng thư mục local để phát triển. Để lưu ảnh mới trên
-R2, tạo bucket, bật public access bằng custom domain (khuyến nghị) hoặc `r2.dev`,
-tạo S3 API token có quyền đọc/ghi bucket, rồi cấu hình các biến trong
-`backend/.env.example`:
-
-```env
-HOMESTAY_STORAGE_BACKEND=r2
-HOMESTAY_R2_ENDPOINT_URL=https://<account-id>.r2.cloudflarestorage.com
-HOMESTAY_R2_ACCESS_KEY_ID=<access-key-id>
-HOMESTAY_R2_SECRET_ACCESS_KEY=<secret-access-key>
-HOMESTAY_R2_BUCKET_NAME=homestay-images
-HOMESTAY_R2_PUBLIC_URL=https://images.example.com
-HOMESTAY_R2_KEY_PREFIX=property-images
-```
-
-Không commit access key vào Git. Chuyển storage backend chỉ áp dụng cho upload
-mới; cần sao chép các file đang có trong `backend/uploads/` vào đúng key prefix
-trên R2 trước khi đổi cấu hình ở môi trường đã có dữ liệu.
-
-### Chuyển static assets của frontend lên R2
-
-Sau khi khai báo các biến `HOMESTAY_R2_*`, chạy từ thư mục `backend`:
+Backend ở `http://127.0.0.1:8000`; health: `GET /health`. Ở terminal khác:
 
 ```bash
-# Kiểm tra danh sách trước, không upload
-python scripts/migrate_public_assets_to_r2.py --dry-run
-
-# Upload frontend/public/assets/* thành assets/* trong bucket
-python scripts/migrate_public_assets_to_r2.py
+cd frontend
+npm ci
+npm run dev
 ```
 
-Sau khi xác nhận URL `https://<public-r2-domain>/assets/...` trả ảnh thành công,
-đặt biến build/deploy của frontend và build lại:
+Frontend mặc định gọi `http://127.0.0.1:8000`; có thể đặt `NEXT_PUBLIC_API_URL`.
+Tài khoản demo: `owner@example.com` / `demo12345` (chỉ tạo khi chạy `--demo`).
+`npm run db:seed` chỉ thêm reference data còn thiếu. Startup không chạy seed hoặc sửa dữ liệu.
 
-```env
-NEXT_PUBLIC_ASSET_BASE_URL=https://images.example.com
+## Kiểm tra
+
+```bash
+cd backend
+npm run typecheck
+npm run build
+npm test
+# Kiểm tra backend đang chạy bằng HTTP thật, không chấp nhận fallback frontend:
+npm run smoke
+
+cd ../frontend
+npm test
+npm run lint
+npx tsc --noEmit
+npm run build
 ```
 
-Frontend sẽ redirect toàn bộ `/assets/*` sang cùng đường dẫn trên R2. Nếu biến
-trên để trống, file local trong `frontend/public/assets` vẫn là fallback cho dev
-và rollback; chỉ xóa chúng khỏi repo sau khi đã kiểm tra production đầy đủ.
+Test backend dùng PostgreSQL thật. `HOMESTAY_TEST_DATABASE_URL` mặc định trỏ tới
+`homestay_test` từ Docker Compose. Tên database phải kết thúc `_test`; mỗi fixture
+có schema và thư mục upload riêng, tự dọn sau test. Test bao gồm HTTP contracts,
+RBAC, tương thích mật khẩu/JWT Python, migration legacy, ảnh local/R2 và concurrency.
+CI chạy cả frontend và backend; pre-commit chạy kiểm tra cho phần được sửa.
+
+## Runtime và triển khai backend
+
+```bash
+cd backend
+npm ci
+npm run typecheck
+npm run build
+# Bước release riêng, với backup và kiểm tra migration trước:
+node dist/db/migrate.js
+node dist/db/seed.js
+NODE_ENV=production npm start
+```
+
+Trên PowerShell, đặt `$env:NODE_ENV='production'` trước `npm start`.
+`backend/Procfile`, `railpack.json` và `Dockerfile` dùng Node; không cần Python
+trong runtime. Với Railpack, root là `backend`, build command `npm run build`,
+start command `npm start`. Với Docker, build bằng `docker build -t homestay-api backend`.
+Chạy migration bằng một release job riêng trước khi chuyển traffic. Không seed demo
+trong production. Giữ nguyên JWT secret để token cũ tiếp tục dùng được.
+
+Cấu hình trong `backend/.env.example`: `HOMESTAY_DATABASE_URL`,
+`HOMESTAY_JWT_SECRET`, `HOMESTAY_ACCESS_TOKEN_EXPIRE_MINUTES`,
+`HOMESTAY_BOOKING_HOLD_MINUTES`, `HOMESTAY_MAX_BOOKING_NIGHTS`,
+`HOMESTAY_CORS_ORIGINS` (JSON array), `PORT` và storage. Các URL legacy
+`postgresql+asyncpg://` hoặc `postgresql+psycopg://` được chuẩn hóa ở boundary config.
+Production phải đặt JWT secret riêng. Local uploads cần volume bền vững; R2 không cần volume.
+
+Xem [migration, cutover và rollback](docs/backend-migration.md) trước khi triển khai,
+và [HTTP contract baseline](docs/backend-api-contract.md) để tra endpoint.
+Python `backend/app`, `tests` và Alembic `migrations` được giữ làm reference/rollback;
+chúng không tham gia build, test hay startup Node. Không chạy test Python cũ trên DB đang sử dụng.
+
+## Booking
+
+Ba lớp chống đặt trùng được giữ nguyên trong cùng transaction/connection:
+
+1. Khóa row phòng bằng `SELECT ... FOR UPDATE`.
+2. Thu hồi hold quá hạn và kiểm tra các đêm trùng bên trong khóa.
+3. Ràng buộc database `UNIQUE(room_id, night)`.
+
+Giá tính bằng PostgreSQL NUMERIC và cộng số nguyên chính xác, trả tiền dưới dạng chuỗi.
+Hold mặc định 15 phút, tối đa 30 đêm (có thể cấu hình). Scheduler hiện có tiếp tục gọi
+`POST /api/v1/internal/expire-bookings` mỗi phút; endpoint idempotent.
+Quyền quản lý tài sản/booking/doanh thu dựa vào permission trong organization.
+API `/admin/*` giữ chính sách legacy: chỉ yêu cầu tài khoản active; thay đổi policy là scope riêng.
+
+## Ảnh và Cloudflare R2
+
+Local là mặc định phát triển: `HOMESTAY_STORAGE_BACKEND=local`,
+`HOMESTAY_UPLOAD_DIR=uploads`. Với deployment, đặt `HOMESTAY_STORAGE_BACKEND=r2`
+và các biến `HOMESTAY_R2_ENDPOINT_URL`, `HOMESTAY_R2_ACCESS_KEY_ID`,
+`HOMESTAY_R2_SECRET_ACCESS_KEY`, `HOMESTAY_R2_BUCKET_NAME`,
+`HOMESTAY_R2_PUBLIC_URL`, `HOMESTAY_R2_KEY_PREFIX` như `.env.example`.
+Không commit credentials. Giữ nguyên domain public và prefix `properties/`, `assets/`
+theo ADR; migration không upload lại ảnh hay đổi object key.
+
+Frontend dùng `NEXT_PUBLIC_ASSET_BASE_URL` để redirect `/assets/*` sang R2.
+Để trống biến này sẽ dùng file local làm fallback. Công cụ Python cũ
+`backend/scripts/migrate_public_assets_to_r2.py` chỉ giữ làm reference cho migration ảnh trước đây,
+không phải bước triển khai backend mới.
 
 ## Deploy frontend lên Cloudflare Workers
 
-Trong Cloudflare Workers Builds, cấu hình chính xác:
+Trong Cloudflare Workers Builds:
 
 | Trường | Giá trị |
 | --- | --- |
 | Root directory | `/frontend` |
 | Deploy command | `npx wrangler deploy` |
 
-Root directory `/frontend` là bắt buộc với monorepo này. Nếu để `/` hoặc trống,
-OpenNext sẽ tìm `open-next.config.ts`, `package.json` và `wrangler.jsonc` ở sai
-thư mục, dẫn tới lỗi thiếu config dù các file đã được commit. Lệnh tương đương
-khi chạy thủ công từ repository root là:
+Root `/frontend` là bắt buộc để OpenNext tìm đúng config. Lệnh tương đương từ repo root:
 
 ```bash
 cd frontend
 npx wrangler deploy
 ```
 
-Không dùng `npx wrangler preview` làm production deploy command. Lệnh đó chỉ tạo
-branch Preview và dùng block `previews` riêng trong `wrangler.jsonc`. Khi cần tạo
-Preview thủ công, chạy:
-
-```bash
-npx wrangler preview
-```
-
-`frontend/wrangler.jsonc` chạy OpenNext build trước khi deploy và giữ tên Worker
-`gaojihouse` đồng nhất với service binding `WORKER_SELF_REFERENCE`. Hai giá trị
-này phải luôn giống nhau; nếu đổi tên Worker, phải đổi cả `name` và `service`.
-Không dùng cấu hình được auto-generate với `service: "frontend"`, vì Worker đó
-không tồn tại và Cloudflare sẽ trả lỗi API `10143`.
-
-OpenNext cũng yêu cầu `frontend/open-next.config.ts` phải được commit. Custom
-build cài adapter tạm thời bằng `--no-save --package-lock=false` trước khi chạy,
-do phiên bản adapter hiện tại chưa tương thích peer chính thức với Next 16.2.10;
-không xóa file config hoặc đổi build command về lệnh OpenNext trần.
-
-## Test (Tempering Phase 2 — bắt buộc trước khi commit code booking)
-
-```bash
-cd backend
-.venv/Scripts/python -m pytest -v
-```
-
-Test chạy trên database Postgres thật (`homestay_test`, tự tạo bởi docker
-compose) vì race-condition test cần đúng semantics `FOR UPDATE`:
-
-- `test_booking_race.py` — N request đồng thời đặt cùng phòng → đúng 1 thành công.
-- `test_booking_ttl.py` — pending quá 15 phút tự expire, nhả phòng; optimistic
-  `version` chặn double-confirm; IPN muộn sau expire bị từ chối.
-- `test_rbac.py` — staff không xem được doanh thu, không tạo được property.
-
-## Booking engine — 3 tầng chống double-booking
-
-1. `SELECT ... FOR UPDATE` trên row `rooms` (qua interface `LockService` —
-   swap Redis ở Phase 7+ không đụng business logic).
-2. Check trùng đêm trên `booking_nights` trong lock (kèm expire tại chỗ các
-   hold quá hạn).
-3. `UNIQUE (room_id, night)` ở DB — phòng tuyến cuối, kể cả khi 1–2 có bug.
-
-Cron expire: gọi `POST /api/v1/internal/expire-bookings` mỗi phút (idempotent).
-
-## Cấu trúc dự án & Workflow
-
-Đọc `PROJECT_CONTEXT.md` và `WORKFLOW_VIBECODING_2026.md` trước khi làm việc trong repo này.
+`npx wrangler preview` chỉ tạo branch preview, không dùng làm production deploy command.
+Giữ `frontend/open-next.config.ts` trong Git. `frontend/wrangler.jsonc` chạy OpenNext
+build trước khi deploy; `name` và service binding `WORKER_SELF_REFERENCE` phải cùng là
+`gaojihouse`. Không dùng config tự sinh với `service: "frontend"` vì Worker đó không tồn tại.

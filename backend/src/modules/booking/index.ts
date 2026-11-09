@@ -1,22 +1,15 @@
 ﻿import type { Express } from 'express';
 import { z } from 'zod';
-import { asyncRoute, optionalUser, requirePermission, requireUser, uuid, validate, type AppContext } from '../../core.js';
+import { asyncRoute, dateOnly as date, optionalUser, requirePermission, requireUser, uuid, validate, type AppContext } from '../../core.js';
 import { availableRooms, bookingResponse, createBooking, expireBookings, getBooking, getBookingByCode, listBookings, transitionBooking, unavailableNights } from './service.js';
+import { emailAddress } from '../../email.js';
 
-// Keep dates as calendar strings; Date normalization must not accept 2030-02-30.
-const date = z.string().regex(/^\d{4}-\d{2}-\d{2}$/).refine(value => {
-  const parsed = new Date(`${value}T00:00:00.000Z`);
-  return !Number.isNaN(parsed.valueOf()) && parsed.toISOString().slice(0, 10) === value;
-}, 'Invalid date');
 const createSchema = z.object({
   room_id: uuid,
   check_in: date,
   check_out: date,
   guest_name: z.string().min(1).max(255),
-  guest_email: z.email().max(320).transform(value => {
-    const at = value.lastIndexOf('@');
-    return value.slice(0, at) + value.slice(at).toLowerCase();
-  }),
+  guest_email: emailAddress,
   guest_phone: z.string().max(32).nullable().default(null),
   num_guests: z.number().int().min(1).max(40).default(1),
   note: z.string().max(1000).nullable().default(null),

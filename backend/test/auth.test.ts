@@ -60,3 +60,35 @@ test('organization ownership and permission data enforce staff and cross-organiz
     await request(ctx.app).post('/api/v1/orgs').send({name:'No',slug:'no'}).expect(401);
   } finally { await ctx.close(); }
 });
+
+test('legacy Unicode email accounts and normalized IDN domains remain usable across auth and members', async () => {
+  const ctx = await setupTest();
+  try {
+    const f = await seedFixture(ctx.pool);
+    const hash = '$2b$12$gqyLWv6.npLQF1dUTYMs..THkXLYFozAMMrnC09PvC0P.js/oEGa2';
+    await ctx.pool.query(`INSERT INTO users(email,hashed_password,full_name,is_active)
+      VALUES('tôi@example.com',$1,'Unicode',true),('user@bücher.de',$1,'IDN',true)`, [hash]);
+    for (const email of ['tôi@example.com','user@xn--bcher-kva.de']) {
+      await request(ctx.app).post('/api/v1/auth/login').send({email,password:'legacy123'}).expect(200);
+      await request(ctx.app).post(`/api/v1/orgs/${f.orgId}/members`).auth(f.ownerToken,{type:'bearer'})
+        .send({email,role_code:'staff'}).expect(201);
+    }
+    const registered = await request(ctx.app).post('/api/v1/auth/register')
+      .send({email:'MỚI@xn--bcher-kva.de',password:'legacy123',full_name:'New account'}).expect(201);
+    assert.equal(registered.body.email,'mới@bücher.de');
+    const check_in = new Date(Date.now()+86400000).toISOString().slice(0,10);
+    const check_out = new Date(Date.now()+2*86400000).toISOString().slice(0,10);
+    const booking = await request(ctx.app).post('/api/v1/bookings').send({room_id:f.roomId,
+      check_in,check_out,guest_name:'Unicode',guest_email:'tôi@xn--bcher-kva.de'}).expect(201);
+    assert.equal(booking.body.guest_email,'tôi@bücher.de');
+  } finally { await ctx.close(); }
+});
+
+test('signed tokens issued in the future are rejected like the legacy PyJWT decoder', async () => {
+  const ctx = await setupTest();
+  try {
+    const f = await seedFixture(ctx.pool);
+    const token = jwt.sign({sub:f.ownerId,iat:Math.floor(Date.now()/1000)+3600},testSecret,{expiresIn:'2h'});
+    await request(ctx.app).get('/api/v1/auth/me').auth(token,{type:'bearer'}).expect(401);
+  } finally { await ctx.close(); }
+});

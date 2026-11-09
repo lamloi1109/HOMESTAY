@@ -25,9 +25,11 @@ return 401 for protected endpoints; organization permission failures return 403.
 | POST `/orgs/:org_id/members` | `org:manage` in org | `email`, `role_code` | 201 `{user_id,org_id,role}`; replaces an existing membership's role; 404 user; 422 role |
 | GET `/orgs/:org_id/revenue` | `revenue:read` in org | — | 200 `{org_id,room_revenue,currency:"VND"}` from ledger credits to `room_revenue` |
 
-User projection: `id,email,full_name,phone`. Email lookup is normalized lowercase.
-Existing bcrypt hashes, HS256 JWT `sub` UUID and `exp` claims remain usable with
-the same secret. `system:admin` bypasses individual permission checks only when
+User projection: `id,email,full_name,phone`. Email lookup is normalized lowercase,
+retaining Unicode local parts, NFC normalization and Unicode IDNA domains (including
+punycode input). Booking guest emails preserve local-part case. Existing bcrypt
+hashes and HS256 JWT claims remain usable with the same secret; expired tokens and
+future `iat` values are rejected as in PyJWT. `system:admin` bypasses individual permission checks only when
 that permission belongs to a membership in the relevant organization. Membership
 in a different organization grants no access.
 

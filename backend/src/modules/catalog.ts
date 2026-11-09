@@ -3,14 +3,13 @@ import type { Express } from 'express';
 import multer from 'multer';
 import { z } from 'zod';
 import type { Pool, PoolClient } from 'pg';
-import { type AppContext, asyncRoute, HttpError, requireUser, requirePermission, validate, uuid, type User } from '../core.js';
+import { type AppContext, asyncRoute, HttpError, requireUser, requirePermission, transaction, validate, uuid, type User } from '../core.js';
 import { detectImageExt, MAX_IMAGE_BYTES, type StorageService } from './storage.js';
 
 export const propertyFields = 'id, org_id, name, slug, unit_code, tower, floor, view_type, price_monthly, price_nightly, sqm, bedrooms, bathrooms, max_guests, room_layout, operational_status, description, address, city, status';
 const roomTypeFields = 'id, property_id, name, description, base_price, capacity_adults, capacity_children';
 const roomFields = 'id, room_type_id, code, status';
-export { uuid } from '../core.js';
-export const dateOnly = z.string().regex(/^\d{4}-\d{2}-\d{2}$/).refine(s => !Number.isNaN(Date.parse(s)) && new Date(s).toISOString().slice(0, 10) === s, 'Invalid date');
+export { uuid, dateOnly } from '../core.js';
 export const money = z.union([z.string().regex(/^[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?$/), z.number().finite()]).transform(String);
 export const optionalText = z.string().nullable().optional();
 const propertyCreate = z.object({ name: z.string().min(1).max(255), slug: z.string().min(1).max(255).regex(/^[a-z0-9-]+$/), description: optionalText, address: z.string().max(500).nullable().optional(), city: z.string().max(120).nullable().optional() });
@@ -82,13 +81,11 @@ export class CatalogService {
     const amenities = (await this.ctx.pool.query('SELECT id,code,name,icon,group_name FROM amenities WHERE code=ANY($1::text[])', [codes])).rows;
     const missing = [...new Set(codes)].filter(code => !amenities.some(a => a.code === code)).sort();
     if (missing.length) throw new HttpError(422, `Tiện ích không có trong danh mục: [${missing.map(s => `'${s}'`).join(', ')}]`);
-    const db = await this.ctx.pool.connect();
-    try {
-      await db.query('BEGIN'); await db.query('SELECT id FROM properties WHERE id=$1 FOR UPDATE', [id]);
+    await transaction(this.ctx.pool, async db => {
+      await db.query('SELECT id FROM properties WHERE id=$1 FOR UPDATE', [id]);
       await db.query('DELETE FROM property_amenities WHERE property_id=$1', [id]);
       for (const amenity of amenities) await insertRow(db, 'property_amenities', {property_id: id, amenity_id: amenity.id});
-      await db.query('COMMIT');
-    } catch (error) { await db.query('ROLLBACK'); throw error; } finally { db.release(); }
+    });
     return amenities.map(({id: _id, ...a}) => a);
   }
   async uploadImage(user: User, id: string, data: Buffer, originalName: string, alt: string | null) {

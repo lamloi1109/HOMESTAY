@@ -2,8 +2,8 @@ import type { Express } from 'express';
 import { z } from 'zod';
 import { asyncRoute, requirePermission, requireUser, uuid, validate, type AppContext } from '../../core.js';
 import { register, login, publicUser, createOrganization, addMember } from './service.js';
+import { emailAddress as email } from '../../email.js';
 
-const email = z.string().trim().email().max(320);
 const registration = z.object({ email, password: z.string().min(8).max(128),
   full_name: z.string().min(1).max(255), phone: z.string().max(32).nullable().default(null) });
 

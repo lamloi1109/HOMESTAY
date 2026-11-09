@@ -36,12 +36,24 @@ export function validate<T extends z.ZodType>(schema: T, input: unknown): z.infe
 // Pydantic UUID accepts all versions, including existing fixed demo identifiers.
 export const uuid = z.string().regex(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i).transform(value => value.toLowerCase());
 
+export const dateOnly = z.string().regex(/^\d{4}-\d{2}-\d{2}$/).refine(value => {
+  const parsed = new Date(`${value}T00:00:00.000Z`);
+  return !Number.isNaN(parsed.valueOf()) && parsed.toISOString().slice(0, 10) === value;
+}, 'Invalid date');
+
 export async function optionalUser(ctx: AppContext, req: Request): Promise<User | null> {
   const header = req.header('authorization');
   if (!header?.match(/^Bearer /i)) return null;
   try {
     const payload = jwt.verify(header.slice(7), ctx.config.jwtSecret, { algorithms: ['HS256'] });
     if (typeof payload === 'string' || !uuid.safeParse(payload.sub).success) return null;
+    // PyJWT checks iat by default; jsonwebtoken only checks exp and nbf.
+    if (payload.iat !== undefined) {
+      const claim: unknown = payload.iat;
+      const issuedAt = typeof claim === 'number' ? Math.trunc(claim)
+        : typeof claim === 'string' && /^-?\d+$/.test(claim) ? Number(claim) : NaN;
+      if (!Number.isFinite(issuedAt) || issuedAt > Math.floor(Date.now() / 1000)) return null;
+    }
     const result = await ctx.pool.query<User>('SELECT * FROM users WHERE id=$1 AND is_active=true', [payload.sub]);
     return result.rows[0] ?? null;
   } catch (error) {

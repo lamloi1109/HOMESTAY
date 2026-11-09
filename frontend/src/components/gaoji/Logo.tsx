@@ -20,13 +20,18 @@ export function Logo({
   className = "",
   style,
 }: LogoProps) {
-  // The new artwork includes its own neutral gradient, so one source works on
-  // both light and dark surfaces. Keep `variant` in the public API because the
-  // shared component's callers use it to describe their surrounding surface.
-  void variant;
-  const src = showTagline
-    ? "/assets/logo-brand-full.webp"
-    : "/assets/logo-brand-compact.webp";
+  const isDark = variant === "dark";
+
+  // Select optimal source based on variant (light/dark) and tagline presence.
+  // All assets are 100% transparent RGBA with preserved vertical clearance
+  // so brand text and descenders are never clipped.
+  const src = isDark
+    ? showTagline
+      ? "/assets/logo-dark.png"
+      : "/assets/logo-dark-compact.png"
+    : showTagline
+    ? "/assets/logo-full.png"
+    : "/assets/logo-compact.png";
 
   // Height configurations for crisp rendering across all screen sizes
   const height =
@@ -42,10 +47,14 @@ export function Logo({
       ? 60
       : 52;
 
+  // Aspect ratio: compact is 640x360 (16/9), full is 680x400 (17/10)
+  const aspectRatio = showTagline ? 680 / 400 : 640 / 360;
+  const width = Math.round(height * aspectRatio);
+
   return (
     <div
       onClick={onClick}
-      className={`inline-flex flex-col items-center justify-center select-none ${
+      className={`inline-flex flex-col items-center justify-center select-none bg-transparent ${
         onClick ? "cursor-pointer" : "cursor-default"
       } ${className}`.trim()}
       style={style}
@@ -53,16 +62,17 @@ export function Logo({
       <Image
         src={src}
         alt="Gao Ji House · Serviced Apartment"
-        width={Math.round(height * (showTagline ? 1100 / 620 : 1100 / 500))}
+        width={width}
         height={height}
+        priority
         style={{
           height: `${height}px`,
           width: "auto",
           maxWidth: "100%",
           display: "block",
           objectFit: "contain",
+          background: "transparent",
         }}
-        priority
       />
     </div>
   );

@@ -15,7 +15,7 @@ export const testSecret = 'test-only-jwt-secret-never-used-in-production';
 export async function setupTest(options: { storage?: StorageService; initialize?: boolean } = {}) {
   const connectionString = (process.env.HOMESTAY_TEST_DATABASE_URL ??
     'postgresql://homestay:homestay@127.0.0.1:5432/homestay_test')
-    .replace(/^postgresql\+asyncpg:/, 'postgresql:');
+    .replace(/^postgresql\+(asyncpg|psycopg):/, 'postgresql:');
   const url = new URL(connectionString);
   if (!url.pathname.endsWith('_test')) throw new Error('Test database name must end in _test');
   const admin = new pg.Pool({ connectionString, connectionTimeoutMillis: 5000 });

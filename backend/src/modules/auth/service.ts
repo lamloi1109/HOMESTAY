@@ -3,6 +3,9 @@ import jwt from 'jsonwebtoken';
 import type { AppContext, User } from '../../core.js';
 import { HttpError, transaction } from '../../core.js';
 
+// bcrypt only uses 72 bytes; legacy bcrypt 5 rejected longer passwords instead of truncating.
+const tooLongForBcrypt = (password: string) => Buffer.byteLength(password, 'utf8') > 72;
+
 export function publicUser(user: User) {
   return { id: user.id, email: user.email, full_name: user.full_name, phone: user.phone };
 }
@@ -11,6 +14,7 @@ export async function register(ctx: AppContext, body: { email: string; password:
   const email = body.email.toLowerCase();
   const existing = await ctx.pool.query('SELECT id FROM users WHERE email=$1', [email]);
   if (existing.rowCount) throw new HttpError(409, 'Email đã được đăng ký');
+  if (tooLongForBcrypt(body.password)) throw new HttpError(422, 'Mật khẩu vượt quá 72 byte');
   const hashed = await hash(body.password, 12);
   try {
     const { rows } = await ctx.pool.query<User>(`INSERT INTO users(email,hashed_password,full_name,phone,is_active)
@@ -25,7 +29,7 @@ export async function register(ctx: AppContext, body: { email: string; password:
 export async function login(ctx: AppContext, email: string, password: string) {
   const { rows: [user] } = await ctx.pool.query<User>('SELECT * FROM users WHERE email=$1', [email.toLowerCase()]);
   let matches = false;
-  if (user?.is_active && user.hashed_password) {
+  if (user?.is_active && user.hashed_password && !tooLongForBcrypt(password)) {
     try { matches = await compare(password, user.hashed_password); } catch { matches = false; }
   }
   if (!matches) throw new HttpError(401, 'Email hoặc mật khẩu không đúng');

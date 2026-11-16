@@ -39,9 +39,12 @@ export function createApp(ctx: AppContext & { storage?: StorageService }) {
     }
     if (error instanceof multer.MulterError) { res.status(422).json({ detail: error.message }); return; }
     if (error instanceof SyntaxError && 'body' in error) { res.status(422).json({ detail: 'Invalid JSON' }); return; }
+    if (error && typeof error === 'object' && 'type' in error && 'status' in error && typeof error.status === 'number' && error.status >= 400 && error.status < 500) {
+      res.status(error.status).json({ detail: error instanceof Error ? error.message : 'Bad Request' }); return;
+    }
     if (error && typeof error === 'object' && 'code' in error) {
       if (error.code === '23505') { res.status(409).json({ detail: 'Record already exists' }); return; }
-      if (['23503', '23502', '23514', '22P02', '22003'].includes(String(error.code))) {
+      if (['23503', '23502', '23514', '22P02', '22003', '22001'].includes(String(error.code))) {
         res.status(422).json({ detail: 'Invalid data' }); return;
       }
     }

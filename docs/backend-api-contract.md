@@ -142,3 +142,33 @@ Framework-specific validation error wording is replaced by equivalent 422 errors
 with a detail envelope. Database integrity violations are returned as controlled
 4xx errors instead of uncaught framework 500s. These do not expand access or change
 successful response projections.
+
+## Recorded differences from the Python service
+
+These differences were reviewed during the Express parity audit and are kept on
+purpose. Clients in this repository are not affected.
+
+- **Stricter input types.** JSON integers, booleans and UUIDs must be sent in
+  their native form. The canonical hyphenated UUID form is required. Pydantic's
+  lax coercions are rejected with 422: `"2"` for an integer, `"yes"` for a
+  boolean, and unhyphenated, `{…}` or `urn:uuid:` UUIDs. Money values that
+  round to 0 in `numeric(12,0)` are rejected where the legacy schema required a
+  value greater than 0.
+- **Validation error shape.** 422 responses keep `{detail:[{type,loc,msg}]}`.
+  However, `type` holds Zod issue codes, `loc` always starts with `body`, and
+  only the first invalid parameter group is reported. Invalid JSON returns the
+  string detail `Invalid JSON`.
+- **Integrity errors** return 409 (unique) or 422 (other constraint, length or
+  range violations) instead of 500.
+- **Oversized JSON bodies** (over 100 KB) return 413. FastAPI applied no limit.
+- **Passwords longer than 72 UTF-8 bytes.** Registration rejects them with 422,
+  and login returns 401. Legacy bcrypt raised an error (500 on register) rather
+  than silently truncating them.
+- **Timestamps** serialize with millisecond precision, as JavaScript `Date`
+  values do. Pydantic emitted microseconds.
+- **Lease `days_remaining`** is computed against the current UTC date. Python
+  used the server's local date.
+- **R2 configuration** is validated when the app starts. An incomplete R2
+  configuration aborts startup instead of failing on the first request.
+- **Multipart uploads** accept exactly one part named `file`. Extra file parts
+  return 422.

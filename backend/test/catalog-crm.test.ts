@@ -36,6 +36,7 @@ test('catalog writes enforce organization permissions and public details retain 
     assert.equal(missing.status, 422);
     assert.equal((await request(ctx.app).get('/api/v1/properties/not-a-uuid')).status, 422);
     assert.equal((await request(ctx.app).get('/api/v1/properties/00000000-0000-0000-0000-000000000001')).status, 404);
+    assert.equal((await request(ctx.app).post(`/api/v1/properties/${created.body.id}/room-types`).auth(f.ownerToken, {type:'bearer'}).send({name:'ZeroRound', base_price:'0.4'})).status, 422);
   } finally { await ctx.close(); }
 });
 
@@ -52,6 +53,10 @@ test('image uploads validate bytes, serialize concurrent ordering, publish URLs 
     const uploaded = await Promise.all(Array.from({length:6}, (_,i) => request(ctx.app).post(path).auth(f.ownerToken,{type:'bearer'}).field('alt',`Front ${i}`).attach('file',png,`a${i}.exe`)));
     for (const response of uploaded) assert.equal(response.status,201,response.text);
     assert.deepEqual(uploaded.map(r => r.body.sort_order).sort(),[0,1,2,3,4,5]);
+    const utf8 = await request(ctx.app).post(path).auth(f.ownerToken,{type:'bearer'}).attach('file',png,'ảnh phòng.png');
+    assert.equal(utf8.status,201,utf8.text);
+    assert.equal((await ctx.pool.query('SELECT original_name FROM property_images WHERE id=$1',[utf8.body.id])).rows[0].original_name,'ảnh phòng.png');
+    await request(ctx.app).delete(`/api/v1/property-images/${utf8.body.id}`).auth(f.ownerToken,{type:'bearer'});
     const detail = await request(ctx.app).get(`/api/v1/properties/${f.propertyId}`);
     assert.equal(detail.body.images.length,6);
     assert.match(detail.body.images[0].url,/^\/uploads\/[a-f0-9]+\.png$/);
@@ -140,6 +145,17 @@ test('administrative units, tour services and lease workflows preserve money and
     const expiring = await request(ctx.app).get('/api/v1/admin/leases').auth(f.staffToken,{type:'bearer'}).query({expiring_days:1});
     assert.equal(expiring.status,200,expiring.text);
     assert.equal(expiring.body[0].id,lease.body.id);
+    for (const badUnit of [{price_monthly:'1000000000000'},{sqm:2147483648},{operational_status:'x'.repeat(65)},{status:null}]) {
+      assert.equal((await request(ctx.app).patch(unitPath).auth(f.staffToken,{type:'bearer'}).send(badUnit)).status,422);
+    }
+    const svc2 = await request(ctx.app).post('/api/v1/admin/services').auth(f.staffToken,{type:'bearer'}).send({name:'Laundry',category:'Living',price:0});
+    assert.equal(svc2.status,201,svc2.text);
+    for (const badSvc of [{price:'1000000000000'},{sort_order:2147483648},{name:'x'.repeat(256)},{name:null},{price:null}]) {
+      assert.equal((await request(ctx.app).patch(`/api/v1/admin/services/${svc2.body.id}`).auth(f.staffToken,{type:'bearer'}).send(badSvc)).status,422);
+    }
+    for (const badLease of [{monthly_rent:'1000000000000'},{phone:'x'.repeat(33)},{guest_name:null},{monthly_rent:null}]) {
+      assert.equal((await request(ctx.app).patch(`/api/v1/admin/leases/${lease.body.id}`).auth(f.staffToken,{type:'bearer'}).send(badLease)).status,422);
+    }
   } finally { await ctx.close(); }
 });
 
@@ -157,11 +173,26 @@ test('administrative errors and authenticated-account policy stay compatible wit
       assert.equal((await request(ctx.app).get(path).auth(token,{type:'bearer'})).status,404);
       assert.equal((await request(ctx.app).patch(path).auth(token,{type:'bearer'}).send({note:'new'})).status,404);
     }
-    assert.equal((await request(ctx.app).patch(`/api/v1/admin/services/${absent}`).auth(token,{type:'bearer'}).send({price:1})).status,404);
+    const missingUnit = await request(ctx.app).get(`/api/v1/admin/units/${absent}`).auth(token,{type:'bearer'});
+    assert.equal(missingUnit.body.detail,'Căn hộ không tồn tại');
+    assert.equal((await request(ctx.app).post('/api/v1/admin/leases').auth(token,{type:'bearer'}).send({property_id:absent,guest_name:'Guest',start_date:'2027-01-01',end_date:'2027-02-01',monthly_rent:1000})).body.detail,'Căn hộ không tồn tại');
+    assert.equal((await request(ctx.app).get('/api/v1/admin/unknown')).status,404);
+    assert.equal((await request(ctx.app).put('/api/v1/admin/units')).status,404);
+    assert.equal((await request(ctx.app).get('/api/v1/admin/units')).status,401);
+    const unitId = (await request(ctx.app).get('/api/v1/admin/units').auth(token,{type:'bearer'})).body[0].id;
+    const before = (await ctx.pool.query('SELECT updated_at FROM properties WHERE id=$1',[unitId])).rows[0].updated_at;
+    assert.equal((await request(ctx.app).patch(`/api/v1/admin/units/${unitId}`).auth(token,{type:'bearer'}).send({})).status,200);
+    assert.deepEqual((await ctx.pool.query('SELECT updated_at FROM properties WHERE id=$1',[unitId])).rows[0].updated_at,before);
+    assert.equal((await request(ctx.app).post('/api/v1/inquiries').set('content-type','application/json').send(JSON.stringify({guest_name:'x'.repeat(200*1024)}))).status,413);
+    assert.equal((await request(ctx.app).patch(`/api/v1/admin/services/${absent}`).auth(token,{type:'bearer'}).send({price:'1000000000000'})).status,404);
     assert.equal((await request(ctx.app).patch(`/api/v1/admin/leases/${absent}`).auth(token,{type:'bearer'}).send({note:'new'})).status,404);
     assert.equal((await request(ctx.app).get('/api/v1/admin/leases').auth(token,{type:'bearer'}).query({expiring_days:'invalid'})).status,422);
+    assert.equal((await request(ctx.app).get('/api/v1/admin/leases?expiring_days=').auth(token,{type:'bearer'})).status,422);
+    assert.equal((await request(ctx.app).get('/api/v1/admin/inquiries?offset=').auth(token,{type:'bearer'})).status,422);
     assert.equal((await request(ctx.app).post('/api/v1/admin/leases').auth(token,{type:'bearer'}).send({property_id:absent,guest_name:'Guest',start_date:'2027-01-01',end_date:'2027-02-01',monthly_rent:1000})).status,404);
     assert.equal((await request(ctx.app).post('/api/v1/admin/services').auth(token,{type:'bearer'}).send({name:'Negative',category:'Test',price:-1})).status,422);
+    assert.equal((await request(ctx.app).post('/api/v1/admin/services').auth(token,{type:'bearer'}).send({name:'NegativeFraction',category:'Test',price:'-0.4'})).status,422);
+    assert.equal((await request(ctx.app).post('/api/v1/admin/leases').auth(token,{type:'bearer'}).send({property_id:absent,guest_name:'Guest',start_date:'2027-01-01',end_date:'2027-02-01',monthly_rent:'0.4'})).status,422);
     await ctx.pool.query('DELETE FROM organizations');
     assert.equal((await request(ctx.app).post('/api/v1/admin/services').auth(token,{type:'bearer'}).send({name:'Missing org',category:'Test',price:1000})).status,400);
     assert.equal((await request(ctx.app).post('/api/v1/inquiries').send({guest_name:'Missing org',phone:'0123456789'})).status,500);

@@ -19,6 +19,10 @@ test('registration normalizes email, rejects duplicates, and login projects curr
     assert.deepEqual(me.body, registered.body);
     await request(ctx.app).post('/api/v1/auth/login').send({ ...body, password: 'wrong' }).expect(401);
     await request(ctx.app).post('/api/v1/auth/register').send({ ...body, email: 'invalid', password: 'short' }).expect(422);
+    // bcrypt ignores bytes after 72; reject rather than accept a truncated secret.
+    const longPassword = 'mật'.repeat(20);
+    await request(ctx.app).post('/api/v1/auth/register').send({ ...body, email: 'long@example.com', password: longPassword }).expect(422);
+    await request(ctx.app).post('/api/v1/auth/login').send({ email: body.email, password: body.password + 'x'.repeat(80) }).expect(401);
   } finally { await ctx.close(); }
 });
 

@@ -13,7 +13,7 @@ export { uuid, dateOnly } from '../core.js';
 export const money = z.union([z.string().regex(/^[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?$/), z.number().finite()]).transform(String);
 export const optionalText = z.string().nullable().optional();
 const propertyCreate = z.object({ name: z.string().min(1).max(255), slug: z.string().min(1).max(255).regex(/^[a-z0-9-]+$/), description: optionalText, address: z.string().max(500).nullable().optional(), city: z.string().max(120).nullable().optional() });
-const roomTypeCreate = z.object({ name: z.string().min(1).max(255), description: optionalText, base_price: money.refine(s => Number(s) > 0), capacity_adults: z.number().int().min(1).max(20).default(2), capacity_children: z.number().int().min(0).max(20).default(0) });
+const roomTypeCreate = z.object({ name: z.string().min(1).max(255), description: optionalText, base_price: money.refine(s => Math.round(Number(s)) > 0), capacity_adults: z.number().int().min(1).max(20).default(2), capacity_children: z.number().int().min(0).max(20).default(0) });
 export const unitUpdate = z.object({ price_monthly: money.nullable().optional(), price_nightly: money.nullable().optional(), operational_status: optionalText, description: optionalText, status: z.enum(['draft','active','inactive']).nullable().optional(), view_type: optionalText, sqm: z.number().int().nullable().optional(), bedrooms: z.number().int().nullable().optional(), bathrooms: z.number().int().nullable().optional(), max_guests: z.number().int().nullable().optional(), room_layout: z.union([z.record(z.string(), z.unknown()), z.array(z.record(z.string(), z.unknown()))]).nullable().optional() });
 
 // Identifiers below are trusted module constants; values always use SQL parameters.
@@ -25,17 +25,19 @@ export async function insertRow(db: Pool | PoolClient, table: string, data: Reco
 }
 export async function updateRow(db: Pool | PoolClient, table: string, id: string, data: Record<string, unknown>, fields = '*') {
   const entries = Object.entries(data).filter(([, value]) => value !== undefined);
+  // Like SQLAlchemy, an empty partial update issues no UPDATE and keeps updated_at.
+  if (!entries.length) return (await db.query(`SELECT ${fields} FROM ${table} WHERE id=$1`, [id])).rows[0];
   const values = entries.map(([key, value]) => key === 'room_layout' && value != null ? JSON.stringify(value) : value);
   const assignments = [...entries.map(([key], i) => `${key}=$${i + 1}`), 'updated_at=now()'];
   return (await db.query(`UPDATE ${table} SET ${assignments.join(',')} WHERE id=$${values.length + 1} RETURNING ${fields}`, [...values, id])).rows[0];
 }
-export async function getProperty(ctx: AppContext, id: string) {
+export async function getProperty(ctx: AppContext, id: string, missing = 'Property không tồn tại') {
   const row = (await ctx.pool.query(`SELECT ${propertyFields} FROM properties WHERE id=$1`, [id])).rows[0];
-  if (!row) throw new HttpError(404, 'Property không tồn tại');
+  if (!row) throw new HttpError(404, missing);
   return row;
 }
-export async function propertyDetail(ctx: AppContext, id: string, storage: StorageService) {
-  const prop = await getProperty(ctx, id);
+export async function propertyDetail(ctx: AppContext, id: string, storage: StorageService, missing?: string) {
+  const prop = await getProperty(ctx, id, missing);
   const roomTypes = (await ctx.pool.query(`SELECT ${roomTypeFields} FROM room_types WHERE property_id=$1`, [id])).rows;
   for (const roomType of roomTypes) roomType.rooms = (await ctx.pool.query(`SELECT ${roomFields} FROM rooms WHERE room_type_id=$1`, [roomType.id])).rows;
   const amenities = (await ctx.pool.query('SELECT a.code,a.name,a.icon,a.group_name FROM amenities a JOIN property_amenities pa ON pa.amenity_id=a.id WHERE pa.property_id=$1', [id])).rows;
@@ -131,7 +133,7 @@ export function registerCatalog(app: Express, ctx: AppContext, storage: StorageS
     const user = await requireUser(ctx, req); const body = validate(z.object({amenity_codes: z.array(z.string())}), req.body);
     res.json(await service.setAmenities(user, validate(uuid, req.params.property_id), body.amenity_codes));
   }));
-  const upload = multer({storage: multer.memoryStorage(), limits: {fileSize: MAX_IMAGE_BYTES, files: 1}}).single('file');
+  const upload = multer({storage: multer.memoryStorage(), defParamCharset: 'utf8', limits: {fileSize: MAX_IMAGE_BYTES, files: 1}}).single('file');
   app.post(`${prefix}/properties/:property_id/images`, asyncRoute(async (req, res) => {
     const user = await requireUser(ctx, req); const id = validate(uuid, req.params.property_id);
     await service.authorizePropertyWrite(user, id);

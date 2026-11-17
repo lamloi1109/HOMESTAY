@@ -1,0 +1,2 @@
+# Keep migration checksums identical across Windows and Linux checkouts.
+src/db/baseline.sql text eol=lf

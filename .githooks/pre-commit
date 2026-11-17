@@ -30,32 +30,10 @@ if [ -n "$FRONTEND_STAGED" ] && [ -f "$REPO_ROOT/frontend/package.json" ]; then
 fi
 
 if [ -n "$BACKEND_STAGED" ]; then
-  if [ -x "$REPO_ROOT/backend/.venv/bin/ruff" ]; then
-    RUFF="$REPO_ROOT/backend/.venv/bin/ruff"
-    PY="$REPO_ROOT/backend/.venv/bin/python"
-  elif [ -f "$REPO_ROOT/backend/.venv/Scripts/python.exe" ]; then
-    RUFF="$REPO_ROOT/backend/.venv/Scripts/ruff.exe"
-    PY="$REPO_ROOT/backend/.venv/Scripts/python.exe"
-  elif command -v ruff >/dev/null 2>&1; then
-    RUFF="ruff"
-    PY="python3"
-  else
-    RUFF=""
-  fi
-
-  if [ -n "$RUFF" ]; then
-    echo "pre-commit: backend/ có thay đổi — chạy ruff check..."
-    if ! (cd "$REPO_ROOT/backend" && "$RUFF" check .); then
-      echo "pre-commit: ruff FAILED." >&2
-      fail=1
-    fi
-    echo "pre-commit: chạy pytest backend (cần Postgres tại HOMESTAY_DATABASE_URL)..."
-    if ! (cd "$REPO_ROOT/backend" && "$PY" -m pytest -q); then
-      echo "pre-commit: pytest FAILED." >&2
-      fail=1
-    fi
-  else
-    echo "pre-commit: backend/ có thay đổi nhưng không tìm thấy ruff (chưa tạo backend/.venv?) — BỎ QUA kiểm tra backend, tự chạy 'ruff check .' + 'pytest' tay trước khi push." >&2
+  echo "pre-commit: backend TypeScript, build and HTTP/PostgreSQL tests..."
+  if ! (cd "$REPO_ROOT/backend" && npm run typecheck && npm run build && npm test); then
+    echo "pre-commit: backend checks FAILED." >&2
+    fail=1
   fi
 fi
 
